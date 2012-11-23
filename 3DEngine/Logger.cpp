@@ -30,7 +30,7 @@ void Logger::Log(char* argPMessage, int argSeverity, char* argPFile, int argFile
 
 	for each(LogStrategy* strat in this->strategies)
 	{
-		strat->Write(argPMessage, argSeverity, __DATE__, __TIME__, argPFile, argFileNumber);
+		strat->Write(argPMessage, severity, __DATE__, __TIME__, argPFile, argFileNumber);
 	}
 }
 
