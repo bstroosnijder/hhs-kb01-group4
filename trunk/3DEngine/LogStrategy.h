@@ -7,7 +7,7 @@ public:
 	LogStrategy();
 	virtual ~LogStrategy();
 
-	virtual void Write(char* argPMessage, char* argSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)=0;
+	virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)=0;
 };
 
 #endif
