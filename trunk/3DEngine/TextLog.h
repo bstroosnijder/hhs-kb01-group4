@@ -8,5 +8,5 @@ public:
 	TextLog(void);
 	~TextLog(void);
 
-	virtual void Write(char* argPMessage, int argSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
+	virtual void Write(char* argPMessage, char* argSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
 };
