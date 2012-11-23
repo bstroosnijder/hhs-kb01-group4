@@ -9,14 +9,14 @@ Logger::Logger()
 	
 }
 
-void Logger::AddStrategy(LogStrategy* strategy) 
+void Logger::AddStrategy(LogStrategy* argPStrategy) 
 {
-	this->strategies.push_back(strategy);
+	this->strategies.push_back(argPStrategy);
 }
 
-void Logger::RemoveStrategy(LogStrategy* strategy)
+void Logger::RemoveStrategy(LogStrategy* argPStrategy)
 {
-	this->strategies.remove(strategy);
+	this->strategies.remove(argPStrategy);
 }
 
 std::list<LogStrategy*> Logger::GetStrategies()
@@ -24,23 +24,36 @@ std::list<LogStrategy*> Logger::GetStrategies()
 	return this->strategies;
 }
 
-void Logger::Log(char* message, int severity)
-{
-	//Get current datetime.
-	time_t now = time(0);
-	tm *ltm = localtime(&now);
-
-	//Extract the date out of the datetime.
-	char* year = (char*)(1900 + ltm->tm_year);
-
-
-	/*time.now();
-	datum
-	tijd
-	file name line number*/
+void Logger::Log(char* argPMessage, int argSeverity, char* argPFile, int argFileNumber)
+{	
+	char* severity = GetSeverity(argSeverity);
 
 	for each(LogStrategy* strat in this->strategies)
 	{
-		strat->Write(message, severity);
+		strat->Write(argPMessage, argSeverity, __DATE__, __TIME__, argPFile, argFileNumber);
 	}
+}
+
+//Private methods
+char* Logger::GetSeverity(int argSeverity)
+{
+	char* severity;
+
+	switch(argSeverity)
+	{
+	case LOG_LEVEL_INFO:
+		severity = "INFO";
+		break;
+	case LOG_LEVEL_WARNING:
+		severity = "WARNING";
+		break;
+	case LOG_LEVEL_ERROR:
+		severity = "ERROR";
+		break;
+	default:
+		severity = "UNKNOWN SEVERITY";
+		break;
+	}
+	
+	return severity;
 }
