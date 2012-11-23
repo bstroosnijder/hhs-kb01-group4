@@ -11,9 +11,9 @@ ConsoleLog::~ConsoleLog(void)
 
 }
 
-void ConsoleLog::Write(char* message, int severity)
+void ConsoleLog::Write(char* argPMessage, int argSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
 {
-	printf("%s %d\n", message, severity);
+	printf("%s %d\n", argPMessage, argSeverity);
 
 
 	//std::cout << *message << " " << severity;
