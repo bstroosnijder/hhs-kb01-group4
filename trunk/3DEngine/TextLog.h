@@ -1,4 +1,6 @@
 #include "LogStrategy.h"
+#include <fstream>
+#include <iostream>
 
 class TextLog : public LogStrategy
 {
