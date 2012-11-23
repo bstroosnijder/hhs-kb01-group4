@@ -10,7 +10,7 @@ TextLog::~TextLog(void)
 
 }
 
-void TextLog::Write(char* argPMessage, char* argSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
+void TextLog::Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
 {
 	std::ofstream logFile;	
 	//ate is used of at end and in is used for input

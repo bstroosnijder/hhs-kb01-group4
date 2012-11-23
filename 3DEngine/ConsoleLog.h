@@ -6,5 +6,5 @@ public:
 	ConsoleLog(void);
 	~ConsoleLog(void);
 
-	virtual void Write(char* argPMessage, char* argSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
+	virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
 };
