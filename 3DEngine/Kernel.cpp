@@ -1,13 +1,18 @@
 #include "Kernel.h"
 #include "WindowManager.h"
+//#include "SceneManager.h"
 
-
-Kernel::Kernel(void)
+ 
+ 
+engine::Kernel::Kernel(void)
 {
 	WindowManager* windowManager = new WindowManager();
+	//SceneManager* sceneManager = new SceneManager();
+	
+
 }
 
 
-Kernel::~Kernel(void)
+engine::Kernel::~Kernel(void)
 {
 }
