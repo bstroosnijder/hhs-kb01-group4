@@ -61,16 +61,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleLog.cpp" />
+    <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LogStrategy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TextLog.cpp" />
+    <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h" />
+    <ClInclude Include="Kernel.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LogStrategy.h" />
     <ClInclude Include="TextLog.h" />
+    <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
