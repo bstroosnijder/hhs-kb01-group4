@@ -13,48 +13,72 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{a53200e0-cabe-48df-a0ad-1ab529f5a3e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\logger">
+      <UniqueIdentifier>{88e1a227-12f3-4926-ae00-3767644e96e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\kernel">
+      <UniqueIdentifier>{b69471dd-a641-43ab-8650-97db458eb6f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{b47a14df-e3f1-4ad6-b22f-8c54df75a09d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\kernel">
+      <UniqueIdentifier>{aa68a324-957d-4836-96a3-74879b6ff8f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\logger">
+      <UniqueIdentifier>{4074e6b1-525e-4de5-aee1-d362bd0ab789}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LogStrategy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConsoleLog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextLog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Kernel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
     <ClCompile Include="WindowManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="TextLog.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="LogStrategy.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleLog.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogStrategy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextLog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Kernel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleLog.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="TextLog.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="LogStrategy.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

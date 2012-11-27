@@ -1,8 +1,10 @@
-#define KERNEL_H_
-class WindowManager
+namespace engine
 {
-public:
-	WindowManager(void);
-	~WindowManager(void);
-};
+	class WindowManager
+	{
+	public:
+		WindowManager(void);
+		~WindowManager(void);
+	};
+}
 
