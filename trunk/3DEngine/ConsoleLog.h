@@ -1,10 +1,17 @@
+#ifndef CONSOLELOG_H_
+#define CONSOLELOG_H_
 #include "LogStrategy.h"
 
-class ConsoleLog : public LogStrategy
+namespace engine
 {
-public:
-	ConsoleLog(void);
-	~ConsoleLog(void);
+	class ConsoleLog : public LogStrategy
+	{
+	public:
+		ConsoleLog(void);
+		~ConsoleLog(void);
 
-	virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
-};
+		virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
+	};
+}
+
+#endif

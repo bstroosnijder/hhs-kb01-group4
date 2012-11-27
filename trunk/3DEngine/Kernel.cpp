@@ -1,20 +1,28 @@
 #include "Kernel.h"
 
-static Logger textLogger; 
-static Logger consoleLogger;
-engine::Kernel::Kernel(void)
+namespace engine
 {
-	WindowManager* windowManager = new WindowManager();
-	//SceneManager* sceneManager = new SceneManager();
-	LogStrategy* textStrat = new TextLog();
-	LogStrategy* consoleStrat = new ConsoleLog();
+	Kernel::Kernel(void)
+	{
+		logger = Logger();
 
-	textLogger.AddStrategy(textStrat);
-	consoleLogger.AddStrategy(consoleStrat);
+		WindowManager* windowManager = new WindowManager();
+		SceneManager* sceneManager = new SceneManager();
 
-}
+		LogStrategy* textStrat = new TextLog();
+		LogStrategy* consoleStrat = new ConsoleLog();
 
+		logger.AddStrategy(textStrat);
+		logger.AddStrategy(consoleStrat);
+	}
 
-engine::Kernel::~Kernel(void)
-{
+	Kernel::~Kernel(void)
+	{
+
+	}
+
+	Logger Kernel::GetLogger()
+	{
+		return this->logger;
+	}
 }

@@ -1,11 +1,14 @@
 #include "LogStrategy.h"
 
-LogStrategy::LogStrategy()
+namespace engine
 {
-	//Nothing here?
-}
+	LogStrategy::LogStrategy()
+	{
+		//Nothing here?
+	}
 
-LogStrategy::~LogStrategy()
-{
-	//Todo
+	LogStrategy::~LogStrategy()
+	{
+		//Todo
+	}
 }

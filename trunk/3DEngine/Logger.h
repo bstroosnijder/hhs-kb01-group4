@@ -1,28 +1,36 @@
+#ifndef LOGGER_H_
+#define LOGGER_H_
+
 #include <iostream>
 #include <list>
 #include <ctime>
 #include "LogStrategy.h"
 
-class Logger
+namespace engine
 {
-private:
-	//Private attributes.
-	std::list<LogStrategy*> strategies;
+	class Logger
+	{
+	private:
+		//Private attributes.
+		std::list<LogStrategy*> strategies;
 
-	//Private methods.
-	char* Logger::GetSeverity(int argSeverity);
-public:
-	//Constructors.
-	Logger();
+		//Private methods.
+		char* Logger::GetSeverity(int argSeverity);
+	public:
+		//Constructors.
+		Logger();
 	
-	//Public attributes.
-	static const int LOG_LEVEL_INFO;
-	static const int LOG_LEVEL_WARNING;
-	static const int LOG_LEVEL_ERROR;
+		//Public attributes.
+		static const int LOG_LEVEL_INFO;
+		static const int LOG_LEVEL_WARNING;
+		static const int LOG_LEVEL_ERROR;
 
-	//Public methods.
-	void AddStrategy(LogStrategy* strat);
-	void RemoveStrategy(LogStrategy* strat);
-	std::list<LogStrategy*> GetStrategies();
-	void Log(char* argPMessage, int argSeverity, char* argPFileName, int argLineNumber);
-};
+		//Public methods.
+		void AddStrategy(LogStrategy* strat);
+		void RemoveStrategy(LogStrategy* strat);
+		std::list<LogStrategy*> GetStrategies();
+		void Log(char* argPMessage, int argSeverity, char* argPFileName, int argLineNumber);
+	};
+}
+
+#endif

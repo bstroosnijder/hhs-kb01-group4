@@ -1,11 +1,15 @@
 #include "WindowManager.h"
 
-
-WindowManager::WindowManager(void)
+namespace engine
 {
-}
+	WindowManager::WindowManager(void)
+	{
+		//Nothing here?
+	}
 
 
-WindowManager::~WindowManager(void)
-{
+	WindowManager::~WindowManager(void)
+	{
+		//Todo
+	}
 }
