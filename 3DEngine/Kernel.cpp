@@ -2,7 +2,7 @@
 
 namespace engine
 {
-	Kernel::Kernel(void)
+	Kernel::Kernel()
 	{
 		windowManager = new WindowManager();
 		sceneManager = new SceneManager();
@@ -16,11 +16,11 @@ namespace engine
 		logger.AddStrategy(consoleStrat);
 	}
 
-	Kernel::~Kernel(void)
+	Kernel::~Kernel()
 	{
 	}
 
-	void Kernel::Run(void)
+	void Kernel::Run()
 	{
 	}
 

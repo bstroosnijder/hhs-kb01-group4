@@ -2,13 +2,13 @@
 
 namespace engine
 {
-	InputManager::InputManager(void)
+	InputManager::InputManager()
 	{
 		//Nothing here?
 	}
 
 
-	InputManager::~InputManager(void)
+	InputManager::~InputManager()
 	{
 		//Todo
 	}

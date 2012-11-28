@@ -1,7 +1,6 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
-#include "stdlib.h"
 #include "WindowManager.h"
 #include "Logger.h"
 #include "TextLog.h"
@@ -22,10 +21,10 @@ namespace engine {
 		InputManager* inputManager;
 	public:
 		//Public methods
-		Kernel(void);
-		~Kernel(void);
-		void Run(void);
-		Logger GetLogger(void);
+		Kernel();
+		~Kernel();
+		void Run();
+		Logger GetLogger();
 	};
 }
 #endif

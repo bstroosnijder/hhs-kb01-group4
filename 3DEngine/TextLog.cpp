@@ -3,12 +3,12 @@
 
 namespace engine
 {
-	TextLog::TextLog(void)
+	TextLog::TextLog()
 	{
 
 	}
 
-	TextLog::~TextLog(void)
+	TextLog::~TextLog()
 	{
 
 	}

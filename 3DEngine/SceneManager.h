@@ -1,10 +1,23 @@
+#include <vector>
+#include "Scene.h"
+
 namespace engine
 {
 	class SceneManager
 	{
+	private:
+		//---Private attributes---
+		std::vector<Scene*> scenes;
+
 	public:
-		SceneManager(void);
-		~SceneManager(void);
+		//---Public methods---
+		SceneManager();
+		~SceneManager();
+
+		void AddScene(Scene* scene);
+		void RemoveScene(Scene* scene);
+		Scene* GetScene(int index);
+		std::vector<Scene*> GetScenes();
 	};
 }
 

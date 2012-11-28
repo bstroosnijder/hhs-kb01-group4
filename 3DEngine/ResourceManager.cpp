@@ -2,13 +2,13 @@
 
 namespace engine
 {
-	ResourceManager::ResourceManager(void)
+	ResourceManager::ResourceManager()
 	{
 		//Nothing here?
 	}
 
 
-	ResourceManager::~ResourceManager(void)
+	ResourceManager::~ResourceManager()
 	{
 		//Todo
 	}
