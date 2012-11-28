@@ -1,15 +1,13 @@
-
 namespace engine
 {
 	/**
-	 *	This class defines an interface for a window.
-	*/
+	 * This class defines an interface for a window.
+	 */
 	class Window
 	{
 	public:
-		//---Public methods---
-		Window(void);
-		virtual ~Window(void);
+		Window();
+		virtual ~Window();
 		virtual int Show()=0;
 	};
 }

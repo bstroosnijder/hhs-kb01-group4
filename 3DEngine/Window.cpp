@@ -3,20 +3,19 @@
 namespace engine
 {
 	/**
-		Constructor for Window class.
-	*/
+	 * Constructor for Window class.
+	 */
 	Window::Window()
 	{
 
 	}
 
 	/**
-		Destructor for Window class.
-		@return void
-	*/
+	 * Destructor for Window class.
+	 * @return void
+	 */
 	Window::~Window()
 	{
 
 	}
-
 }

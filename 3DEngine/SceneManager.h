@@ -3,14 +3,14 @@
 
 namespace engine
 {
+	/**
+	 * The SceneManager is responsible for all the scenes that the engine contains or will contain.
+	 */
 	class SceneManager
 	{
 	private:
-		//---Private attributes---
 		std::vector<Scene*> scenes;
-
 	public:
-		//---Public methods---
 		SceneManager();
 		~SceneManager();
 

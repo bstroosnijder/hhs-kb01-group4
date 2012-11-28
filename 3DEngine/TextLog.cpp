@@ -3,35 +3,41 @@
 
 namespace engine
 {
+	//---Private attributes---
+	//---Public attributes---
+	//---Private methods---
+	//---Public methods---
+
 	/**
-	 *	Constructor for TextLog class.
-	*/
+	 * Constructs the TextLog object.
+	 */
 	TextLog::TextLog()
 	{
 
 	}
 
 	/**
-	 *	Destructor for TextLog class.
-	 *	@return void
-	*/
+	 * Destroys the TextLog object.
+	 * @return	void
+	 */
 	TextLog::~TextLog()
 	{
 
 	}
 
 	/**
-	 *	The write method prints text to the logfile.
-	 *	@param argPMessage		The message to be printed.
-	 *	@param argPSeverity		Specifies the severity.
-	 *	@param argPDate			The date to be printed.
-	 *	@param argPTime			The time to be printed.
-	 *	@param argPFileName		The file where this method is called. Use __FILE__.
-	 *	@param argLineNumber	Line number where this method is called. Use __LINE__.
-	*/
+	 * Write a message to a text file.
+	 * @param	argPMessage		Char pointer that contains the message to be printed to the console.
+	 * @param	argPSeverity	Char pointer that contains the textual representation of the severity of the log item.
+	 * @param	argPDate		Char pointer that contains the date on which this message was emitted.
+	 * @param	argPTime		Char pointer that contains the time on which this message was emitted.
+	 * @param	argPFileName	Char pointer that contains the file name in which this message was emitted.
+	 * @param	argLineNumber	Integer that indicates the line number on which this message was emitted.
+	 * @return	void
+	 */
 	void TextLog::Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
 	{
-		//File gets created and opened. If the file exists the file will just be opened
+		//File gets created and opened. If the file exists the file will just be opened.
 		std::ofstream logFile("Logs//logTest.txt", std::ofstream::app);
 		logFile << "[" << argPDate << "][" <<  argPTime << "][" << argPSeverity << 
 			"]["<< argPMessage << "]["<< argPFileName << " on line " << argLineNumber <<"]" << std::endl;

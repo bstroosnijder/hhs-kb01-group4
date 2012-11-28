@@ -10,17 +10,20 @@
 #include "ResourceManager.h"
 
 namespace engine {
+	/**
+	 * This class is responsible for managing the entire engine.
+	 * It will check the status of, and communicate with all the sub-managers.
+	 * These sub-managers are in turn responsible for running their respective parts of the engine.
+	 */
 	class Kernel
 	{
 	private:
-		//Private attributes
 		Logger logger;
 		WindowManager* windowManager;
 		SceneManager* sceneManager;
 		ResourceManager* resourceManager;
 		InputManager* inputManager;
 	public:
-		//Public methods
 		Kernel();
 		~Kernel();
 		void Run();

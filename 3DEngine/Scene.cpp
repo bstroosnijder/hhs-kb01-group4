@@ -2,11 +2,14 @@
 
 namespace engine
 {
+	//---Private attributes---
+	//---Public attributes---
+	//---Private methods---
 	//---Public methods---
 
 	/**
 	 * Construct the Scene object.
-	*/
+	 */
 	Scene::Scene()
 	{
 		entities = std::vector<Entity*>();
@@ -14,7 +17,8 @@ namespace engine
 
 	/**
 	 * Destruct the Scene object.
-	*/
+	 * @return	void
+	 */
 	Scene::~Scene()
 	{
 		//Todo
@@ -23,7 +27,8 @@ namespace engine
 	/**
 	 * Add an entity pointer to the list of entities.
 	 * @param	entity		The Entity pointer to add to the collection of entities.
-	*/
+	 * @return	void
+	 */
 	void Scene::AddEntity(Entity* entity)
 	{
 		entities.push_back(entity);
@@ -32,7 +37,8 @@ namespace engine
 	/**
 	 * Remove an entity pointer from the collection of entities.
 	 * @param	entity		The entity pointer to remove from the collection of entities.
-	*/
+	 * @return	void
+	 */
 	void Scene::RemoveEntity(Entity* entity)
 	{
 		//Find the position of the given entity and store it in 'position'.
@@ -49,7 +55,7 @@ namespace engine
 	 * Obtain the Entity pointer using an index.
 	 * @param	index			The index in the collection by which to obtain the entity pointer.
 	 * @return	entity			The entity at the given index, NULL returned if no entity exists on the given index.
-	*/
+	 */
 	Entity* Scene::GetEntity(int index)
 	{
 		return entities.at(index);
@@ -58,7 +64,7 @@ namespace engine
 	/**
 	 * Obtain all the entity pointers in the entities collection.
 	 * @return	entities		The entire entity collection.
-	*/
+	 */
 	std::vector<Entity*> Scene::GetEntities()
 	{
 		return entities;
@@ -66,7 +72,8 @@ namespace engine
 
 	/**
 	 * Draw each entity in the entities collection.
-	*/
+	 * @return	void
+	 */
 	void Scene::Draw()
 	{
 		for each(Entity* entity in entities)
@@ -77,7 +84,8 @@ namespace engine
 
 	/**
 	 * Update each entity in the entities collection.
-	*/
+	 * @return	void
+	 */
 	void Scene::Update()
 	{
 		for each(Entity* entity in entities)

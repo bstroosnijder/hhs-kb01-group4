@@ -70,17 +70,17 @@
     <ClInclude Include="WindowManager.h">
       <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>Header Files\engine\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="entity.h">
-      <Filter>Header Files\engine\scene</Filter>
-    </ClInclude>
     <ClInclude Include="Win32Window.h">
       <Filter>Header Files\engine\window</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\engine\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
