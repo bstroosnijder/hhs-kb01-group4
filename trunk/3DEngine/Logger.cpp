@@ -2,15 +2,29 @@
 
 namespace engine
 {
+	//---Public attributes---
+
 	//One-time initialisation of the logger's constant variables.
 	const int Logger::LOG_LEVEL_INFO = 1;
 	const int Logger::LOG_LEVEL_WARNING = 2;
 	const int Logger::LOG_LEVEL_ERROR = 3;
 
-	//Constructor for the Logger.
+	//---Public methods---
+
+	/**
+	 * Construct the Logger object.
+	*/
 	Logger::Logger()
 	{
 		//Nothing here?
+	}
+
+	/**
+	 * Destruct the Logger object.
+	*/
+	Logger::~Logger()
+	{
+		//Todo
 	}
 
 	/**
@@ -19,7 +33,7 @@ namespace engine
 	*/
 	void Logger::AddStrategy(LogStrategy* argPStrategy) 
 	{
-		this->strategies.push_back(argPStrategy);
+		strategies.push_back(argPStrategy);
 	}
 
 	/**
@@ -28,16 +42,16 @@ namespace engine
 	*/
 	void Logger::RemoveStrategy(LogStrategy* argPStrategy)
 	{
-		this->strategies.remove(argPStrategy);
+		strategies.remove(argPStrategy);
 	}
 
 	/**
 	 * Obtain all the strategies the logger is currently logging to.
-	 * @return			A list containing LogStrategy items which the logger is currently logging to.
+	 * @return					A list containing LogStrategy items which the logger is currently logging to.
 	*/
 	std::list<LogStrategy*> Logger::GetStrategies()
 	{
-		return this->strategies;
+		return strategies;
 	}
 
 	/**
@@ -53,13 +67,19 @@ namespace engine
 		char* severity = GetSeverity(argSeverity);
 
 		//Log the message, severity (info/warning/error), current date, current time, file location and line number to each strategy.
-		for each(LogStrategy* strat in this->strategies)
+		for each(LogStrategy* strat in strategies)
 		{
 			strat->Write(argPMessage, severity, __DATE__, __TIME__, argPFile, argLineNumber);
 		}
 	}
 
-	//Private methods
+	//---Private methods---
+
+	/**
+	 * Obtain a string representation of the severity of the log item.
+	 * @param	argSeverity		The integer representing the severity of the log item which should countain either 1, 2 or 3.
+	 * @return					The string (char pointer) representing the severity of the log item.
+	*/
 	char* Logger::GetSeverity(int argSeverity)
 	{
 		char* severity;

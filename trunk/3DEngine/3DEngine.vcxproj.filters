@@ -1,120 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\engine">
-      <UniqueIdentifier>{a53200e0-cabe-48df-a0ad-1ab529f5a3e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\engine\logger">
-      <UniqueIdentifier>{88e1a227-12f3-4926-ae00-3767644e96e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\engine\kernel">
-      <UniqueIdentifier>{b69471dd-a641-43ab-8650-97db458eb6f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\engine">
-      <UniqueIdentifier>{b47a14df-e3f1-4ad6-b22f-8c54df75a09d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\engine\kernel">
-      <UniqueIdentifier>{aa68a324-957d-4836-96a3-74879b6ff8f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\engine\logger">
-      <UniqueIdentifier>{4074e6b1-525e-4de5-aee1-d362bd0ab789}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-<<<<<<< .mine
-=======
-    <ClCompile Include="Kernel.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
->>>>>>> .r23
-    <ClCompile Include="WindowManager.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="TextLog.cpp">
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ConsoleLog.cpp">
       <Filter>Source Files\engine\logger</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
+    <ClCompile Include="TextLog.cpp">
       <Filter>Source Files\engine\logger</Filter>
     </ClCompile>
     <ClCompile Include="LogStrategy.cpp">
       <Filter>Source Files\engine\logger</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleLog.cpp">
+    <ClCompile Include="Logger.cpp">
       <Filter>Source Files\engine\logger</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Kernel.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
-<<<<<<< .mine
-    <ClCompile Include="Win32Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-=======
-    <ClCompile Include="InputManager.cpp">
+    <ClCompile Include="SceneManager.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
->>>>>>> .r23
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32Window.cpp">
+      <Filter>Source Files\engine\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\engine\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Kernel.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowManager.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
     <ClInclude Include="ConsoleLog.h">
-      <Filter>Header Files\engine\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="TextLog.h">
-      <Filter>Header Files\engine\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
       <Filter>Header Files\engine\logger</Filter>
     </ClInclude>
     <ClInclude Include="LogStrategy.h">
       <Filter>Header Files\engine\logger</Filter>
     </ClInclude>
-<<<<<<< .mine
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files\engine\logger</Filter>
     </ClInclude>
-    <ClInclude Include="Win32Window.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TextLog.h">
+      <Filter>Header Files\engine\logger</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Kernel.h">
       <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
+    <ClInclude Include="SceneManager.h">
       <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
->>>>>>> .r23
+    <ClInclude Include="WindowManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32Window.h">
+      <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3a4f6caa-2d11-4d3a-acd0-bf2151b304a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{29f88b32-0558-4900-80ca-158be7dec2b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{14dd7603-2901-4537-a122-258ad8f47fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{b13cc8c1-0247-4a5d-a551-b4865217ec0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\kernel">
+      <UniqueIdentifier>{6def05c8-7e2a-4959-ac1e-a3b0ecc20379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\logger">
+      <UniqueIdentifier>{53599088-4483-4cbe-86f6-055258cc3eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\scene">
+      <UniqueIdentifier>{979c5425-d220-48a5-88d0-2ccebcc9e2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{a11a2137-97ac-43e1-9289-6cbbd802f1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\kernel">
+      <UniqueIdentifier>{be7a2683-d6ef-4214-8df2-f443edce9617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\logger">
+      <UniqueIdentifier>{ccee35f7-47c6-4c11-9624-79b889ab1275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\scene">
+      <UniqueIdentifier>{2af26ff9-9153-467f-90c0-83cb2dbcaf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\window">
+      <UniqueIdentifier>{db2e4290-21df-4cf4-ac57-5926cdb1ad47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\window">
+      <UniqueIdentifier>{bea5175d-40c1-4213-a455-4c5422e213fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

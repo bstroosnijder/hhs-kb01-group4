@@ -3,12 +3,12 @@
 
 namespace engine
 {
-	ConsoleLog::ConsoleLog(void)
+	ConsoleLog::ConsoleLog()
 	{
 
 	}
 
-	ConsoleLog::~ConsoleLog(void)
+	ConsoleLog::~ConsoleLog()
 	{
 
 	}

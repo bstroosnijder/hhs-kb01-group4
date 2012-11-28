@@ -7,8 +7,8 @@ namespace engine
 	class ConsoleLog : public LogStrategy
 	{
 	public:
-		ConsoleLog(void);
-		~ConsoleLog(void);
+		ConsoleLog();
+		~ConsoleLog();
 
 		virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
 	};
