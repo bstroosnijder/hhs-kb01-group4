@@ -7,21 +7,26 @@
 #include "TextLog.h"
 #include "ConsoleLog.h" 
 #include "SceneManager.h"
+#include "InputManager.h"
+#include "ResourceManager.h"
 
-namespace engine {  
+namespace engine {
 	class Kernel
 	{
 	private:
 		//Private attributes
 		Logger logger;
-
-		//Private methods
-		Logger GetLogger(void);
+		WindowManager* windowManager;
+		SceneManager* sceneManager;
+		ResourceManager* resourceManager;
+		InputManager* inputManager;
 	public:
+		//Public methods
 		Kernel(void);
 		~Kernel(void);
+		void Run(void);
+		Logger GetLogger(void);
 	};
 }
-
 #endif
 
