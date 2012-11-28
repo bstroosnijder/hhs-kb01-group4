@@ -33,9 +33,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< .mine
+=======
     <ClCompile Include="Kernel.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
+>>>>>>> .r23
     <ClCompile Include="WindowManager.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
@@ -60,9 +63,21 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
+<<<<<<< .mine
+    <ClCompile Include="Win32Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+=======
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\engine\kernel</Filter>
     </ClCompile>
+>>>>>>> .r23
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h">
@@ -83,6 +98,14 @@
     <ClInclude Include="LogStrategy.h">
       <Filter>Header Files\engine\logger</Filter>
     </ClInclude>
+<<<<<<< .mine
+    <ClInclude Include="Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+=======
     <ClInclude Include="SceneManager.h">
       <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
@@ -92,5 +115,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>Header Files\engine\kernel</Filter>
     </ClInclude>
+>>>>>>> .r23
   </ItemGroup>
 </Project>
