@@ -2,13 +2,18 @@
 
 namespace engine
 {
+	/**
+	 *	Constructor for LogStrategy class.
+	*/
 	LogStrategy::LogStrategy()
 	{
-		//Nothing here?
 	}
 
+	/**
+	 *	Destructor for LogStrategy class.
+	 *	@return void
+	*/
 	LogStrategy::~LogStrategy()
 	{
-		//Todo
 	}
 }

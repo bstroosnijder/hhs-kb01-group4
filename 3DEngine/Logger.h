@@ -8,6 +8,9 @@
 
 namespace engine
 {
+	/**
+	 *	The Logger class holds the strategies which define the output methods of the logger.
+	*/
 	class Logger
 	{
 	private:
