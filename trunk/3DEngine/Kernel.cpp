@@ -2,6 +2,14 @@
 
 namespace engine
 {
+	//---Private attributes---
+	//---Public attributes---
+	//---Private methods---
+	//---Public methods---
+
+	/**
+	 * Construct the Kernel object.
+	 */
 	Kernel::Kernel()
 	{
 		windowManager = new WindowManager();
@@ -16,14 +24,28 @@ namespace engine
 		logger.AddStrategy(consoleStrat);
 	}
 
+	/**
+	 * Destruct the Kernel object.
+	 * @return	void
+	 */
 	Kernel::~Kernel()
 	{
+
 	}
 
+	/**
+	 * Run the kernel.
+	 * @return	void
+	 */
 	void Kernel::Run()
 	{
+
 	}
 
+	/**
+	 * Obtain the Logger object associated with the Kernel.
+	 * @return	logger	Returns the logger associated with the kernel.
+	 */
 	Logger Kernel::GetLogger()
 	{
 		return this->logger;

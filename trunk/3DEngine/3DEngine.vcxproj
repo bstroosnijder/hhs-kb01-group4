@@ -77,13 +77,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h" />
-    <ClInclude Include="entity.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LogStrategy.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="scene.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TextLog.h" />
     <ClInclude Include="Win32Window.h" />

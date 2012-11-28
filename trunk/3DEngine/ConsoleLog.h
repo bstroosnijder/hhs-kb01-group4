@@ -5,15 +5,13 @@
 namespace engine
 {
 	/**
-	 *	The ConsoleLog class is responsible for printing log messages to a console.
+	 * The ConsoleLog class is responsible for printing log messages to a console.
 	*/
 	class ConsoleLog : public LogStrategy
 	{
 	public:
-		//---Public methods---
 		ConsoleLog();
 		~ConsoleLog();
-
 		virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
 	};
 }

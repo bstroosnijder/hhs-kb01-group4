@@ -9,23 +9,19 @@
 namespace engine
 {
 	/**
-	 *	The Logger class holds the strategies which define the output methods of the logger.
+	 * The Logger class holds the strategies which define the output methods of the logger.
 	*/
 	class Logger
 	{
 	private:
-		//---Private attributes---
 		std::list<LogStrategy*> strategies;
 
-		//---Private methods---
 		char* Logger::GetSeverity(int argSeverity);
 	public:
-		//---Public attributes---
 		static const int LOG_LEVEL_INFO;
 		static const int LOG_LEVEL_WARNING;
 		static const int LOG_LEVEL_ERROR;
 
-		//---Public methods---
 		Logger();
 		~Logger();
 		void AddStrategy(LogStrategy* strat);
