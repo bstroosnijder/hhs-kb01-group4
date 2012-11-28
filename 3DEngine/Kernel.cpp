@@ -4,10 +4,10 @@ namespace engine
 {
 	Kernel::Kernel(void)
 	{
-		logger = Logger();
-
-		WindowManager* windowManager = new WindowManager();
-		SceneManager* sceneManager = new SceneManager();
+		windowManager = new WindowManager();
+		sceneManager = new SceneManager();
+		resourceManager = new ResourceManager();
+		inputManager = new InputManager();
 
 		LogStrategy* textStrat = new TextLog();
 		LogStrategy* consoleStrat = new ConsoleLog();
@@ -18,7 +18,10 @@ namespace engine
 
 	Kernel::~Kernel(void)
 	{
+	}
 
+	void Kernel::Run(void)
+	{
 	}
 
 	Logger Kernel::GetLogger()
