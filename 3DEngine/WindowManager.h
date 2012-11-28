@@ -1,10 +1,11 @@
+
 namespace engine
 {
 	class WindowManager
 	{
 	public:
-		WindowManager(void);
-		~WindowManager(void);
+		WindowManager();
+		~WindowManager();
+		void MakeWindow(unsigned int argWidth, unsigned int argHeight);
 	};
 }
-
