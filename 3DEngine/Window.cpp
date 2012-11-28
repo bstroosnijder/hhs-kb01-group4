@@ -1,11 +1,22 @@
 #include "Window.h"
 
-engine::Window::Window(void)
+namespace engine
 {
+	/**
+		Constructor for Window class.
+	*/
+	Window::Window()
+	{
 
-}
+	}
 
-engine::Window::~Window(void)
-{
+	/**
+		Destructor for Window class.
+		@return void
+	*/
+	Window::~Window()
+	{
+
+	}
 
 }
