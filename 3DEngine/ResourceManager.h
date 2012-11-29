@@ -10,4 +10,3 @@ namespace engine
 		~ResourceManager();
 	};
 }
-

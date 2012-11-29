@@ -11,7 +11,7 @@ namespace engine
 	 * Constructor for Win32Window class.
 	 * @param argWidth		Defines the width of the window.
 	 * @param argHeight	Defines the height of the window.
-	*/
+	 */
 	Win32Window::Win32Window(const unsigned int argWidth, const unsigned int argHeight)
 	: 
 		width(argWidth),
@@ -23,7 +23,7 @@ namespace engine
 	/**
 	 * Destructor for Win32Window class.
 	 * @return void
-	*/
+	 */
 	Win32Window::~Win32Window()
 	{
 
@@ -32,7 +32,7 @@ namespace engine
 	/**
 	 * The Show function creates a window for a Windows Application.
 	 * @return int 
-	*/
+	 */
 	int Win32Window::Show()
 	{
 		// Name of the class to register the window.
@@ -122,7 +122,7 @@ namespace engine
 	/**
 	 * WinProc callback for the window.
 	 * This funcion receives and responds to messages send by the window.
-	*/
+	 */
 	LRESULT CALLBACK Win32Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		PAINTSTRUCT ps;
