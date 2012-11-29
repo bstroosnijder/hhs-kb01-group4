@@ -6,7 +6,7 @@ namespace engine
 	/**
 	 * The LogStrategy class defines an interface which must be implemented by its child classes. 
 	 * This interface is using the Strategy Design Pattern. This lets us change the log output during runtime.
-	*/
+	 */
 	class LogStrategy
 	{
 	public:

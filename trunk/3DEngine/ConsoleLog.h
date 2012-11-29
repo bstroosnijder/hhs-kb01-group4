@@ -6,7 +6,7 @@ namespace engine
 {
 	/**
 	 * The ConsoleLog class is responsible for printing log messages to a console.
-	*/
+	 */
 	class ConsoleLog : public LogStrategy
 	{
 	public:

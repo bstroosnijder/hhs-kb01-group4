@@ -6,7 +6,7 @@ namespace engine
 {
 	/**
 	 * The TextLog class is responsible for printing log messages to a logfile.
-	*/
+	 */
 	class TextLog : public LogStrategy
 	{
 	public:
