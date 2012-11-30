@@ -100,7 +100,7 @@ namespace engine
 	 * Draws a primitive figure.
 	 * TODO more info
 	 */
-	void DrawPrimitive()
+	void DirectX9Renderer::DrawPrimitive()
 	{
 
 	}
@@ -109,7 +109,7 @@ namespace engine
 	 * Sets the FVF.
 	 * TODO more info
 	 */
-	void SetFVF()
+	void DirectX9Renderer::SetFVF()
 	{
 
 	}
@@ -118,7 +118,7 @@ namespace engine
 	 * Sets the stream source.
 	 * TODO more info
 	 */
-	void SetStreamSource()
+	void DirectX9Renderer::SetStreamSource()
 	{
 
 	}
