@@ -54,7 +54,7 @@ namespace engine
 	 * Lazy cleanup method for destructing
 	 * @return		void
 	 */
-	void Win32Window::Cleanup()
+	void Win32Window::CleanUp()
 	{
 	}
 

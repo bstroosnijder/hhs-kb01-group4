@@ -16,7 +16,7 @@ namespace engine
 	public:
 		Win32Window();
 		~Win32Window();
-		void Cleanup();
+		void CleanUp();
 		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);
 		void SetTitle(char* argTitle);
 		char* GetTitle();
