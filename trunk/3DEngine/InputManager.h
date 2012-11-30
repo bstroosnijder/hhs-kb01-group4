@@ -1,3 +1,6 @@
+#ifndef INPUTMANAGER_H_
+#define INPUTMANAGER_H_
+
 namespace engine
 {
 	/**
@@ -12,3 +15,4 @@ namespace engine
 	};
 }
 
+#endif

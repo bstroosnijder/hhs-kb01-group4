@@ -1,3 +1,6 @@
+#ifndef SCENEMANAGER_H_
+#define SCENEMANAGER_H_
+
 #include <vector>
 #include <algorithm>
 #include "Scene.h"
@@ -22,3 +25,4 @@ namespace engine
 	};
 }
 
+#endif

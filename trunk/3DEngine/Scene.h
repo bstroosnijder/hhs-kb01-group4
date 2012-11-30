@@ -1,3 +1,6 @@
+#ifndef SCENE_H_
+#define SCENE_H_
+
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -25,3 +28,5 @@ namespace engine
 		void Update();
 	};
 }
+
+#endif

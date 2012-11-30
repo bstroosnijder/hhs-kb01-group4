@@ -1,5 +1,5 @@
-#ifndef N00b_H_
-#define N00b_H_
+#ifndef N00B_H_
+#define N00B_H_
 
 namespace engine
 {

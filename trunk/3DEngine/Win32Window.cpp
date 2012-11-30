@@ -1,23 +1,44 @@
-#include <Windows.h>
-#include <stdlib.h>
-#include <string.h>
-#include <tchar.h>
-
 #include "Win32Window.h"
 
 namespace engine
 {
+	//---Public attributes---
+	//---Private attributes---
+	//---Public methods---
+
 	/**
 	 * Constructor for Win32Window class.
-	 * @param argWidth		Defines the width of the window.
-	 * @param argHeight	Defines the height of the window.
 	 */
-	Win32Window::Win32Window(const unsigned int argWidth, const unsigned int argHeight)
-	: 
-		width(argWidth),
-		height(argHeight)
+	Win32Window::Win32Window()
 	{
+		this->title = "My First Window";
+		this->x = 100;
+		this->y = 100;
+		this->width = 300;
+		this->height = 200;
 
+		WNDCLASSEX wc = 
+		{
+			sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
+			GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+			"3DEngine", NULL
+		};
+
+		RegisterClassEx(&wc);
+
+		this->hWin = CreateWindow(	"3DEngine", this->title, WS_OVERLAPPEDWINDOW,
+									this->x, this->y, this->width, this->height,
+									NULL, NULL, wc.hInstance, NULL);
+
+		ShowWindow(this->hWin, SW_SHOWDEFAULT);
+		UpdateWindow(this->hWin);
+
+		MSG msg;
+		while(GetMessage(&msg, NULL, 0, 0))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 	}
 
 	/**
@@ -26,132 +47,86 @@ namespace engine
 	 */
 	Win32Window::~Win32Window()
 	{
-
+		this->Cleanup();
 	}
 
 	/**
-	 * The Show function creates a window for a Windows Application.
-	 * @return int 
+	 * Lazy cleanup method for destructing
+	 * @return		void
 	 */
-	int Win32Window::Show()
+	void Win32Window::Cleanup()
 	{
-		// Name of the class to register the window.
-		static TCHAR szWindowClass[] = _T("3DGameEngineWindow");
-		// Title of the window
-		static TCHAR szTitle[] = _T("KB01 - 3D Game Engine");
-
-		HINSTANCE hInstance = GetModuleHandle(NULL);
-
-		// Setup window variables.
-		WNDCLASSEX wcex;
-		wcex.cbSize = sizeof(WNDCLASSEX);
-		wcex.style          = CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc    = Win32Window::WndProc;
-		wcex.cbClsExtra     = 0;
-		wcex.cbWndExtra     = 0;
-		wcex.hInstance      = hInstance;
-		wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
-		wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
-		wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-		wcex.lpszMenuName   = NULL;
-		wcex.lpszClassName  = szWindowClass;
-		wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));
-
-		if (!RegisterClassEx(&wcex))
-		{
-			MessageBox(NULL,
-				_T("Call to RegisterClassEx failed!"),
-				_T(szTitle),
-				NULL);
-
-			return 1;
-		}
-
-		instance = hInstance; // Store instance handle in a global variable
-
-		// The parameters to CreateWindow explained:
-		// szWindowClass: the name of the application
-		// szTitle: the text that appears in the title bar
-		// WS_OVERLAPPEDWINDOW: the type of window to create
-		// CW_USEDEFAULT, CW_USEDEFAULT: initial position (x, y)
-		// 500, 100: initial size (width, length)
-		// NULL: the parent of this window
-		// NULL: this application dows not have a menu bar
-		// hInstance: the first parameter from WinMain
-		// NULL: not used in this application
-		HWND hWnd = CreateWindow(
-			szWindowClass,
-			szTitle,
-			WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, CW_USEDEFAULT,
-			width, height,
-			NULL,
-			NULL,
-			hInstance,
-			NULL
-		);
-
-		if (!hWnd)
-		{
-			MessageBox(NULL,
-				_T("Call to CreateWindow failed!"),
-				_T("Win32 Guided Tour"),
-				NULL);
-
-			return 1;
-		}
-
-		// The parameters to ShowWindow explained:
-		// hWnd: the value returned from CreateWindow
-		// nCmdShow: the fourth parameter from WinMain
-		::ShowWindow(hWnd, SW_SHOWDEFAULT );
-			//nCmdShow);
-		::UpdateWindow(hWnd);
-
-		// Main message loop:
-		MSG msg;
-		while (GetMessage(&msg, NULL, 0, 0))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
-		return (int) msg.wParam;
 	}
 
 	/**
-	 * WinProc callback for the window.
-	 * This funcion receives and responds to messages send by the window.
+	 * Listen to what windows tells our window
+	 * @param		HWND		The window handle to the window
+	 * @param		UINT		halp?
+	 * @param		WPARAM		halp?
+	 * @param		LPARAM		halp?
+	 * @return		LRESULT		halp?
 	 */
-	LRESULT CALLBACK Win32Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+	LRESULT WINAPI Win32Window::MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam)
 	{
-		PAINTSTRUCT ps;
-		HDC hdc;
-		TCHAR greeting[] = _T("Hello, World!");
-
-		switch (message)
+		switch(argMsg)
 		{
-		case WM_PAINT:
-			hdc = BeginPaint(hWnd, &ps);
-
-			// Here your application is laid out.
-			// For this introduction, we just print out "Hello, World!"
-			// in the top left corner.
-			TextOut(hdc,
-				5, 5,
-				greeting, _tcslen(greeting));
-			// End application specific layout section.
-
-			EndPaint(hWnd, &ps);
-			break;
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
-			break;
+			case WM_DESTROY:
+				PostQuitMessage(0);
+				return 0;
 		}
 
-		return 0;
+		return DefWindowProc(argHWin, argMsg, argWParam, argLParam);
 	}
+
+	void Win32Window::SetTitle(char* argTitle)
+	{
+		this->title = argTitle;
+	}
+
+	char* Win32Window::GetTitle()
+	{
+		return this->title;
+	}
+
+	void Win32Window::SetX(unsigned int argX)
+	{
+		this->x = argX;
+	}
+
+	unsigned int Win32Window::GetX()
+	{
+		return this->x;
+	}
+
+	void Win32Window::SetY(unsigned int argY)
+	{
+		this->y = argY;
+	}
+
+	unsigned int Win32Window::GetY()
+	{
+		return this->y;
+	}
+
+	void Win32Window::SetWidth(unsigned int argWidth)
+	{
+		this->width = argWidth;
+	}
+
+	unsigned int Win32Window::SetWidth()
+	{
+		return this->width;
+	}
+
+	void Win32Window::SetHeight(unsigned int argHeight)
+	{
+		this->height = argHeight;
+	}
+
+	unsigned int Win32Window::GetHeight()
+	{
+		return this->height;
+	}
+
+	//---Private methods---
 }

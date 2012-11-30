@@ -1,5 +1,7 @@
 #ifndef CONSOLELOG_H_
 #define CONSOLELOG_H_
+
+#include <iostream>
 #include "LogStrategy.h"
 
 namespace engine

@@ -1,6 +1,8 @@
+#ifndef TEXTLOG_H_
+#define TEXTLOG_H_
+
 #include "LogStrategy.h"
 #include <fstream>
-#include <iostream>
 
 namespace engine
 {
@@ -15,3 +17,5 @@ namespace engine
 		virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
 	};
 }
+
+#endif

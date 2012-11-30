@@ -1,3 +1,6 @@
+#ifndef ENTITY_H_
+#define ENTITY_H_
+
 namespace engine
 {
 	/**
@@ -13,3 +16,5 @@ namespace engine
 		void Update();
 	};
 }
+
+#endif

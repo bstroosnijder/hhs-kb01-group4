@@ -1,5 +1,6 @@
-#ifndef Sandbox_H_
-#define Sandbox_H_
+#ifndef SANDBOX_H_
+#define SANDBOX_H_
+
 #include "Kernel.h"
 #include "ConsoleLog.h"
 

@@ -1,3 +1,6 @@
+#ifndef WIN32WINDOW_H_
+#define WIN32WINDOW_H_
+
 #include <Windows.h>
 #include "Window.h"
 
@@ -8,14 +11,24 @@ namespace engine
 	 */
 	class Win32Window : public Window
 	{
-	public:
-		Win32Window(const unsigned int argWidth, const unsigned int argHeight);
-		~Win32Window();
-		virtual int Show();
-		static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 	private:
-		HINSTANCE instance;
-		unsigned int width;
-		unsigned int height;
+		HWND hWin;
+	public:
+		Win32Window();
+		~Win32Window();
+		void Cleanup();
+		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);
+		void SetTitle(char* argTitle);
+		char* GetTitle();
+		void SetX(unsigned int argX);
+		unsigned int GetX();
+		void SetY(unsigned int argY);
+		unsigned int GetY();
+		void SetWidth(unsigned int argWidth);
+		unsigned int SetWidth();
+		void SetHeight(unsigned int argHeight);
+		unsigned int GetHeight();
 	};
 }
+
+#endif

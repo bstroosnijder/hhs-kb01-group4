@@ -1,3 +1,8 @@
+#ifndef WINDOWMANAGER_H_
+#define WINDOWMANAGER_H_
+
+#include "Win32Window.h"
+
 namespace engine
 {
 	/**
@@ -11,3 +16,5 @@ namespace engine
 		void NewWindow(unsigned int argWidth, unsigned int argHeight);
 	};
 }
+
+#endif
