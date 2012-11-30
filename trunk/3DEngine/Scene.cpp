@@ -8,10 +8,12 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Construct the Scene object.
+	 * Construct the Scene object.\
+	 * @param	Window*		argWindow is the window in which the scene is displayed
 	 */
-	Scene::Scene()
+	Scene::Scene(Window* argPWindow)
 	{
+		this ->window = argPWindow;
 		entities = std::vector<Entity*>();
 	}
 
@@ -72,14 +74,16 @@ namespace engine
 
 	/**
 	 * Draw each entity in the entities collection.
+	 * @param	Renderer*	argRenderer is the current renderer to which the entity will draw
 	 * @return	void
 	 */
-	void Scene::Draw()
+	void Scene::Draw(Renderer* argPRenderer)
 	{
 		for each(Entity* entity in entities)
 		{
-			entity->Draw();
+			entity->Draw(argPRenderer);
 		}
+		
 	}
 
 	/**

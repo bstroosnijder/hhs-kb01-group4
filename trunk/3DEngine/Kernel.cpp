@@ -13,8 +13,8 @@ namespace engine
 	Kernel::Kernel()
 	{
 		renderers = std::vector<Renderer*>();
-		Renderer* dx9renderer = new DirectX9Renderer();
-		renderers.push_back(dx9renderer);
+		//Renderer* dx9renderer = new DirectX9Renderer();
+		//renderers.push_back(dx9renderer);
 		
 		windowManager = new WindowManager();
 		sceneManager = new SceneManager();
@@ -53,5 +53,19 @@ namespace engine
 	Logger Kernel::GetLogger()
 	{
 		return this->logger;
+	}
+	/**
+	 * The heartbeat makes sure that the windows will be rendered. 
+	 * It also check of there is a window created. If it does it renders. If it does not nothing happens.
+	 * Yeah this is dog. Sorry for the mess ;'(
+	 * @return	void
+	 */
+	void Kernel::Heartbeat(int argRendererIndex){
+		//an infenate loop to detemine if there is a window open. 
+		//windowManager.method
+		//ToDo
+		//Renderer* renderer = renderers.at(argRendererIndex);
+		//Renderer.
+		//.Render
 	}
 }

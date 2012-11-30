@@ -1,5 +1,6 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
+#include "Renderer.h"
 
 namespace engine
 {
@@ -12,7 +13,7 @@ namespace engine
 	public:
 		Entity();
 		~Entity();
-		void Draw();
+		void Draw(Renderer* argPRenderer);
 		void Update();
 	};
 }
