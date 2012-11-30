@@ -17,44 +17,34 @@ namespace engine
 
 	/**
 	 * Destruct the SceneManager object.
-	 * @return void
+	 * @return		void
 	 */
 	SceneManager::~SceneManager()
 	{
-		//Todo
+		this->CleanUp();
 	}
 
 	/**
-	 * Add a Scene pointer to the scenes collection.
-	 * @param	scene		The Scene pointer to add to the collection of scenes.
-	 * @return void
+	 * Lazy cleanup method for destructing
+	 * @return		void
 	 */
-	void SceneManager::AddScene(Scene* scene)
+	void SceneManager::CleanUp()
 	{
-		scenes.push_back(scene);
 	}
 
 	/**
-	 * Remove a Scene pointer from the scenes collection.
-	 * @param	scene		The Scene pointer to remove from the collection of scenes.
-	 * @return	void
+	 * Returns the number of scenes currently in the scenes vector
+	 * @return		int
 	 */
-	void SceneManager::RemoveScene(Scene* scene)
+	int SceneManager::GetWindowCount()
 	{
-		//Find the position of the given scene and store it in 'position'.
-		//Position is set equal to scenes.end() when the object can't be found.
-		std::vector<Scene*>::iterator position = std::find(scenes.begin(), scenes.end(), scene);
-
-		if(position != scenes.end()) 
-		{
-			scenes.erase(position);
-		}
+		return this->scenes.size();
 	}
 
 	/**
 	 * Obtain the Scene pointer using an index.
-	 * @param	index		The index in the collection by which to obtain the Scene pointer.
-	 * @return	scene		The Scene at the given index, NULL returned if no scene exists on the given index.
+	 * @param		index					The index in the collection by which to obtain the Scene pointer.
+	 * @return		scene					The Scene at the given index, NULL returned if no scene exists on the given index.
 	 */
 	Scene* SceneManager::GetScene(int index)
 	{
@@ -63,15 +53,36 @@ namespace engine
 
 	/**
 	 * Obtain all the Scene pointers in the scenes collection.
-	 * @return	scene		The entire scene collection.
+	 * @return		std::vector<Scene*>		The entire scene collection.
 	 */
 	std::vector<Scene*> SceneManager::GetScenes()
 	{
 		return scenes;
 	}
 	
-	void CreateScene(Window* argWindow)
+	/**
+	 */
+	Scene* SceneManager::NewScene()
 	{
-		Scene* newScene = new Scene(argWindow);
+		Scene* scene = new Scene();
+		this->scenes.push_back(scene);
+		return scene;
+	}
+
+	/**
+	 * Remove a Scene pointer from the scenes collection.
+	 * @param		Scene*					The Scene pointer to remove from the collection of scenes.
+	 * @return		void
+	 */
+	void SceneManager::RemoveScene(Scene* argPScene)
+	{
+		//Find the position of the given scene and store it in 'position'.
+		//Position is set equal to scenes.end() when the object can't be found.
+		std::vector<Scene*>::iterator position = std::find(this->scenes.begin(), this->scenes.end(), argPScene);
+
+		if(position != this->scenes.end()) 
+		{
+			this->scenes.erase(position);
+		}
 	}
 }

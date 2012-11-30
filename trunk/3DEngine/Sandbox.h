@@ -2,7 +2,6 @@
 #define SANDBOX_H_
 
 #include "Kernel.h"
-#include "ConsoleLog.h"
 
 namespace engine
 {
@@ -13,22 +12,24 @@ namespace engine
 	class Sandbox
 	{
 	private:
-		Logger* logger;
-		WindowManager* windowManager;
-		SceneManager* sceneManager;
 		Kernel* kernel;
 	public:
 		Sandbox();
 		~Sandbox();
-		void Start();
-		void NewWindow(int argWidth,int argHeight);
+		void CleanUp();
+		void HeartBeat();
+		
+		void AddLogStrategy(LogStrategy* argPLogStrat);
+		void RemoveLogStrategy(LogStrategy* argPLogStrat);
+
+		void NewWindow();
+
+
 		//not sure if neccesary
 		void CreateScene();
-		void AddScene(engine::Scene* argScene);
-		void RemoveScene(engine::Scene* argScene);
+		void AddScene(Scene* argPScene);
+		void RemoveScene(Scene* argPScene);
 
-		void AddLogStrategy(engine::LogStrategy*);
-		void RemoveLogStrategy(engine::LogStrategy*);
 	};
 }
 

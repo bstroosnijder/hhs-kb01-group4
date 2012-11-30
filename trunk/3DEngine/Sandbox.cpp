@@ -8,46 +8,75 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Creates a Sandbox. And ilitialize the managers
-	 * @return	Sandbox
+	 * Creates a Sandbox.
 	 */
 	Sandbox::Sandbox()
 	{
-		windowManager = new WindowManager();
-		logger = new Logger();
-		sceneManager = new SceneManager();
+		this->kernel = new Kernel();
 	}
 
 	/**
-	 * Creates a Sandbox. And ilitialize the managers
-	 * @return	Sandbox
+	 * Destructs the Sandbox
 	 */
 	Sandbox::~Sandbox()
 	{
-		//destructor
+		this->CleanUp();
 	}
 
 	/**
-	 * Creates a Kernel. 
-	 * @return	void
+	 * Lazy cleanup method for destructing
+	 * @return		void
 	 */
-	void Sandbox::Start()
+	void Sandbox::CleanUp()
 	{
-		//maybe handig to do this within the constructor
-		kernel = new Kernel();
+	}
+
+	/**
+	 * Pulses the kernel
+	 */
+	void Sandbox::HeartBeat()
+	{
+		this->kernel->HeartBeat();
+	}
+
+	/**
+	 * Adds a stratergy to the stratergy collection within the logger. 
+	 * A stratergy determines which output is given(text or console).
+	 * Multiple stratergies are possible.
+	 * @param		LogStrategy*		logStrat is the stratergy that is added to the collection
+	 * @return		void
+	 */
+	void Sandbox::AddLogStrategy(LogStrategy* argPLogStrat)
+	{
+		this->kernel->GetLogger()->AddStrategy(argPLogStrat);
+	}
+
+	/**
+	 * Deletes a stratergy to the stratergy collection within the logger.
+	 * @param		LogStrategy*		logStrat is the stratergy that is removed to the collection
+	 * @return		void
+	 */
+	void Sandbox::RemoveLogStrategy(LogStrategy* argPLogStrat)
+	{
+		//logger->RemoveStrategy(logStrat);
 	}
 
 	/**
 	 * Creates a Window (does nothing more than that now)
 	 * Window also needs a scene object. (not yet implemented)
-	 * @param	int			argWidth is the width of the new window
-	 * @param	int			argHeight is the height of the new window
-	 * @return	void
+	 * @param		int		argWidth is the width of the new window
+	 * @param		int		argHeight is the height of the new window
+	 * @return		void
 	 */
-	void Sandbox::NewWindow(int argWidth, int argHeight)
+	void Sandbox::NewWindow()
 	{
-		windowManager -> NewWindow(argWidth, argHeight);
+		this->kernel->GetWindowManager()->NewWindow();
 	}
+
+
+
+
+
 
 	void Sandbox::CreateScene()
 	{
@@ -57,43 +86,21 @@ namespace engine
 
 	/**
 	 * Adds a scene to the scene collection within the Scene manager
-	 * @param	Scene*		argScene is the scene that will be add in the collection
-	 * @return	void
+	 * @param		Scene*		argScene is the scene that will be add in the collection
+	 * @return		void
 	 */
-	void Sandbox::AddScene(engine::Scene* argScene)
+	void Sandbox::AddScene(Scene* argScene)
 	{
-		sceneManager -> AddScene(argScene);
+		//sceneManager -> AddScene(argScene);
 	}
 
 	/**
 	 * Removes a scene to the scene collection within the Scene manager
-	 * @param	Scene*		argScene is the scene that will be removed in the collection
-	 * @return	void
+	 * @param		Scene*		argScene is the scene that will be removed in the collection
+	 * @return		void
 	 */
-	void Sandbox::RemoveScene(engine::Scene* argScene)
+	void Sandbox::RemoveScene(Scene* argScene)
 	{
-		sceneManager -> RemoveScene(argScene);
-	}
-
-	/**
-	 * Adds a stratergy to the stratergy collection within the logger. 
-	 * A stratergy determines which output is given(text or console).
-	 * Multiple stratergies are possible.
-	 * @param	LogStrategy*		logStrat is the stratergy that is added to the collection
-	 * @return	void
-	 */
-	void Sandbox::AddLogStrategy(LogStrategy* logStrat)
-	{
-		logger->AddStrategy(logStrat);
-	}
-
-	/**
-	 * Deletes a stratergy to the stratergy collection within the logger.
-	 * @param	LogStrategy*		logStrat is the stratergy that is removed to the collection
-	 * @return	void
-	 */
-	void Sandbox::RemoveLogStrategy(LogStrategy* logStrat)
-	{
-		logger->RemoveStrategy(logStrat);
+		//sceneManager -> RemoveScene(argScene);
 	}
 }

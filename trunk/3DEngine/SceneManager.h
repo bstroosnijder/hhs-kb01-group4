@@ -17,12 +17,13 @@ namespace engine
 	public:
 		SceneManager();
 		~SceneManager();
-
-		void AddScene(Scene* scene);
-		void RemoveScene(Scene* scene);
+		void CleanUp();
+		
+		int GetWindowCount();
 		Scene* GetScene(int index);
 		std::vector<Scene*> GetScenes();
-		void CreateScene(Window* argWindow);
+		Scene* NewScene();
+		void RemoveScene(Scene* argPScene);
 	};
 }
 

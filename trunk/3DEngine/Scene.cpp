@@ -8,28 +8,77 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Construct the Scene object.\
-	 * @param	Window*		argWindow is the window in which the scene is displayed
+	 * Construct the Scene object.
 	 */
-	Scene::Scene(Window* argPWindow)
+	Scene::Scene()
 	{
-		this ->window = argPWindow;
-		entities = std::vector<Entity*>();
+		this->windows = std::vector<Window*>();
+		this->entities = std::vector<Entity*>();
 	}
 
 	/**
 	 * Destruct the Scene object.
-	 * @return	void
 	 */
 	Scene::~Scene()
 	{
-		//Todo
+		this->CleanUp();
+	}
+
+	/**
+	 */
+	void Scene::CleanUp()
+	{
+	}
+
+	/**
+	 * Update each entity in the entities collection.
+	 * @return		void
+	 */
+	void Scene::Update()
+	{
+		for each(Entity* entity in entities)
+		{
+			entity->Update();
+		}
+	}
+
+	/**
+	 * Draw each entity in the entities collection.
+	 * @param		Renderer*					argPRenderer is the current renderer to which the entity will draw
+	 * @return		void
+	 */
+	void Scene::Draw(Renderer* argPRenderer)
+	{
+		for each(Entity* entity in entities)
+		{
+			entity->Draw(argPRenderer);
+		}
+		
+	}
+
+	void Scene::AddWindow(Window* argPWindow)
+	{
+		this->windows.push_back(argPWindow);
+	}
+
+	void Scene::RemoveWindow(Window* argPWindow)
+	{
+	}
+
+	Window* Scene::GetWindow(int argIndex)
+	{
+		return this->windows.at(argIndex);
+	}
+
+	std::vector<Window*> Scene::GetWindows()
+	{
+		return this->windows;
 	}
 
 	/**
 	 * Add an entity pointer to the list of entities.
-	 * @param	entity		The Entity pointer to add to the collection of entities.
-	 * @return	void
+	 * @param		entity						The Entity pointer to add to the collection of entities.
+	 * @return		void
 	 */
 	void Scene::AddEntity(Entity* entity)
 	{
@@ -38,8 +87,8 @@ namespace engine
 
 	/**
 	 * Remove an entity pointer from the collection of entities.
-	 * @param	entity		The entity pointer to remove from the collection of entities.
-	 * @return	void
+	 * @param		entity						The entity pointer to remove from the collection of entities.
+	 * @return		void
 	 */
 	void Scene::RemoveEntity(Entity* entity)
 	{
@@ -55,8 +104,8 @@ namespace engine
 
 	/**
 	 * Obtain the Entity pointer using an index.
-	 * @param	index			The index in the collection by which to obtain the entity pointer.
-	 * @return	entity			The entity at the given index, NULL returned if no entity exists on the given index.
+	 * @param		index						The index in the collection by which to obtain the entity pointer.
+	 * @return		entity						The entity at the given index, NULL returned if no entity exists on the given index.
 	 */
 	Entity* Scene::GetEntity(int index)
 	{
@@ -65,36 +114,10 @@ namespace engine
 
 	/**
 	 * Obtain all the entity pointers in the entities collection.
-	 * @return	entities		The entire entity collection.
+	 * @return		std::vector<Entity*>		The entire entity collection.
 	 */
 	std::vector<Entity*> Scene::GetEntities()
 	{
 		return entities;
-	}
-
-	/**
-	 * Draw each entity in the entities collection.
-	 * @param	Renderer*	argRenderer is the current renderer to which the entity will draw
-	 * @return	void
-	 */
-	void Scene::Draw(Renderer* argPRenderer)
-	{
-		for each(Entity* entity in entities)
-		{
-			entity->Draw(argPRenderer);
-		}
-		
-	}
-
-	/**
-	 * Update each entity in the entities collection.
-	 * @return	void
-	 */
-	void Scene::Update()
-	{
-		for each(Entity* entity in entities)
-		{
-			entity->Update();
-		}
 	}
 }
