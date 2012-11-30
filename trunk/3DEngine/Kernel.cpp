@@ -12,6 +12,10 @@ namespace engine
 	 */
 	Kernel::Kernel()
 	{
+		renderers = std::vector<Renderer*>();
+		Renderer* dx9renderer = new DirectX9Renderer();
+		renderers.push_back(dx9renderer);
+		
 		windowManager = new WindowManager();
 		sceneManager = new SceneManager();
 		resourceManager = new ResourceManager();
