@@ -46,6 +46,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX9Renderer.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -93,6 +99,12 @@
     <ClInclude Include="Sandbox.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX9Renderer.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -133,6 +145,12 @@
     </Filter>
     <Filter Include="Source Files\engine\window">
       <UniqueIdentifier>{bea5175d-40c1-4213-a455-4c5422e213fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\renderer">
+      <UniqueIdentifier>{ebe6d034-e5f1-4996-8c3a-44b57f363207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\renderer">
+      <UniqueIdentifier>{1c486d0c-26eb-4b5c-a21e-706783a6bba9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

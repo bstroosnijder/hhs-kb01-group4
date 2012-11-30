@@ -1,8 +1,11 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
+#include <vector>
 #include "WindowManager.h"
+#include "DirectX9Renderer.h"
 #include "Logger.h"
+#include "Renderer.h"
 #include "TextLog.h"
 #include "ConsoleLog.h" 
 #include "SceneManager.h"
@@ -19,6 +22,7 @@ namespace engine {
 	{
 	private:
 		Logger logger;
+		std::vector<Renderer*> renderers;
 		WindowManager* windowManager;
 		SceneManager* sceneManager;
 		ResourceManager* resourceManager;
