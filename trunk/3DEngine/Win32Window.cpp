@@ -47,7 +47,7 @@ namespace engine
 	 */
 	Win32Window::~Win32Window()
 	{
-		this->Cleanup();
+		this->CleanUp();
 	}
 
 	/**
