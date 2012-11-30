@@ -31,7 +31,7 @@ namespace engine
 	 * @param	argHeight	Defines the height of the window.
 	 * @return	void
 	 */
-	void WindowManager::MakeWindow(const unsigned int argWidth, const unsigned int argHeight)
+	void WindowManager::NewWindow(const unsigned int argWidth, const unsigned int argHeight)
 	{
 		//Create a new Win32Window object and initialize it with a width and a height.
 		Win32Window* window = new Win32Window(argWidth, argHeight);

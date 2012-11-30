@@ -20,7 +20,7 @@ namespace engine
 		Sandbox();
 		~Sandbox();
 		void Start();
-		void CreateWindow(int argWidth,int argHeight);
+		void NewWindow(int argWidth,int argHeight);
 		//not sure if neccesary
 		void CreateScene();
 		void AddScene(engine::Scene* argScene);

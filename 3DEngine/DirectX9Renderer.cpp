@@ -3,6 +3,23 @@
 namespace engine
 {
 	/**
+	 * Construct the DirectX9Renderer object.
+	 */
+	DirectX9Renderer::DirectX9Renderer()
+	{
+
+	}
+
+	/**
+	 * Destruct the DirectX9Renderer object.
+	 * @return	void
+	 */
+	DirectX9Renderer::~DirectX9Renderer()
+	{
+		//Todo
+	}
+
+	/**
 	 * Clears the screen.
 	 * TODO more info
 	 */

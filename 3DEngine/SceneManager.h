@@ -1,4 +1,5 @@
 #include <vector>
+#include <algorithm>
 #include "Scene.h"
 
 namespace engine
