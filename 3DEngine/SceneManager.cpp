@@ -69,4 +69,9 @@ namespace engine
 	{
 		return scenes;
 	}
+	
+	void CreateScene(Window* argWindow)
+	{
+		Scene* newScene = new Scene(argWindow);
+	}
 }

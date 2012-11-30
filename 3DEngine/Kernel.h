@@ -32,6 +32,7 @@ namespace engine {
 		~Kernel();
 		void Run();
 		Logger GetLogger();
+		void Heartbeat(int argRendererIndex);
 	};
 }
 #endif

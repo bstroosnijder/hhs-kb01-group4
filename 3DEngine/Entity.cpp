@@ -26,11 +26,12 @@ namespace engine
 
 	/**
 	 * Draw this Entity.
+	 * @param	Renderer*	argRenderer is the current renderer to which the entity will draw
 	 * @return	void
 	 */
-	void Entity::Draw()
+	void Entity::Draw(Renderer* argPRenderer)
 	{
-		//Todo
+		argPRenderer; //Todo
 	}
 
 	/**

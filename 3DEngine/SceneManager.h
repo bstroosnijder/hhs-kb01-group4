@@ -22,6 +22,7 @@ namespace engine
 		void RemoveScene(Scene* scene);
 		Scene* GetScene(int index);
 		std::vector<Scene*> GetScenes();
+		void CreateScene(Window* argWindow);
 	};
 }
 

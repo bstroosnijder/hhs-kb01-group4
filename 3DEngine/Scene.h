@@ -4,7 +4,9 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <algorithm>
 #include "Entity.h"
+#include "Renderer.h"
 
 namespace engine
 {
@@ -17,14 +19,15 @@ namespace engine
 	{
 	private:
 		std::vector<Entity*> entities;
+		Window* window;
 	public:
-		Scene();
+		Scene(Window* argPWindow);
 		~Scene();
 		void AddEntity(Entity* entity);
 		void RemoveEntity(Entity* entity);
 		Entity* GetEntity(int index);
 		std::vector<Entity*> GetEntities();
-		void Draw();
+		void Draw(Renderer* argPRenderer);
 		void Update();
 	};
 }
