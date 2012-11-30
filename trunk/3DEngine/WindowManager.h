@@ -8,6 +8,6 @@ namespace engine
 	public:
 		WindowManager();
 		~WindowManager();
-		void MakeWindow(unsigned int argWidth, unsigned int argHeight);
+		void NewWindow(unsigned int argWidth, unsigned int argHeight);
 	};
 }

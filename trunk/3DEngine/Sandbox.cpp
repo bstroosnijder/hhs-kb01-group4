@@ -44,9 +44,9 @@ namespace engine
 	 * @param	int			argHeight is the height of the new window
 	 * @return	void
 	 */
-	void Sandbox::CreateWindow(int argWidth, int argHeight)
+	void Sandbox::NewWindow(int argWidth, int argHeight)
 	{
-		windowManager -> MakeWindow(argWidth, argHeight);
+		windowManager -> NewWindow(argWidth, argHeight);
 	}
 
 	void Sandbox::CreateScene()

@@ -8,8 +8,7 @@ namespace engine
 	 */
 	class DirectX9Renderer : public Renderer
 	{
-		LPDirect3D9
-
+	public:
 		DirectX9Renderer();
 		~DirectX9Renderer();
 
