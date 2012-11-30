@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ConsoleLog.h"
 
 namespace engine

@@ -37,9 +37,6 @@
     <ClCompile Include="Win32Window.cpp">
       <Filter>Source Files\engine\window</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files\engine\window</Filter>
-    </ClCompile>
     <ClCompile Include="Sandbox.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>

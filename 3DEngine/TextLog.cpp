@@ -1,5 +1,4 @@
 #include "TextLog.h"
-#include <stdlib.h>
 
 namespace engine
 {

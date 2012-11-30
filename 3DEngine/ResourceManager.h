@@ -1,3 +1,6 @@
+#ifndef RESOURCEMANAGER_H_
+#define RESOURCEMANAGER_H_
+
 namespace engine
 {
 	/**
@@ -10,3 +13,5 @@ namespace engine
 		~ResourceManager();
 	};
 }
+
+#endif
