@@ -17,3 +17,5 @@ namespace engine
 		virtual void Present(Window* argWindow)=0;
 	};
 }
+
+#endif
