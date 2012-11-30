@@ -1,15 +1,15 @@
 #ifndef KERNEL_H_
 #define KERNEL_H_
 
-#include <vector>
-#include "WindowManager.h"
-#include "DirectX9Renderer.h"
+#include <map>
 #include "Logger.h"
+#include "ConsoleLog.h"
 #include "TextLog.h"
-#include "ConsoleLog.h" 
+#include "WindowManager.h"
 #include "SceneManager.h"
-#include "InputManager.h"
 #include "ResourceManager.h"
+#include "InputManager.h"
+#include "DirectX9Renderer.h"
 
 namespace engine {
 	/**
@@ -20,18 +20,24 @@ namespace engine {
 	class Kernel
 	{
 	private:
-		Logger logger;
-		std::vector<Renderer*> renderers;
+		Logger* logger;
 		WindowManager* windowManager;
 		SceneManager* sceneManager;
 		ResourceManager* resourceManager;
 		InputManager* inputManager;
+		std::vector<Renderer*> renderers;
+		std::map<Window*, Renderer*> winRenderer;
 	public:
 		Kernel();
 		~Kernel();
-		void Run();
-		Logger GetLogger();
-		void Heartbeat(int argRendererIndex);
+		void CleanUp();
+		Logger* GetLogger();
+		WindowManager* GetWindowManager();
+		SceneManager* GetSceneManager();
+		ResourceManager* GetResourceManager();
+		InputManager* GetInputManager();
+		void Render();
+		void HeartBeat();
 	};
 }
 #endif

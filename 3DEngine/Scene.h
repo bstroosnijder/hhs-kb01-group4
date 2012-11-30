@@ -18,17 +18,24 @@ namespace engine
 	class Scene
 	{
 	private:
+		std::vector<Window*> windows;
 		std::vector<Entity*> entities;
-		Window* window;
 	public:
-		Scene(Window* argPWindow);
+		Scene();
 		~Scene();
+		void CleanUp();
+		
+		void Update();
+		void Draw(Renderer* argPRenderer);
+
+		void AddWindow(Window* argPWindow);
+		void RemoveWindow(Window* argPWindow);
+		Window* GetWindow(int argIndex);
+		std::vector<Window*> GetWindows();
 		void AddEntity(Entity* entity);
 		void RemoveEntity(Entity* entity);
 		Entity* GetEntity(int index);
 		std::vector<Entity*> GetEntities();
-		void Draw(Renderer* argPRenderer);
-		void Update();
 	};
 }
 

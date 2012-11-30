@@ -2,6 +2,7 @@
 #define DIRECTX9RENDERER_H_
 
 #include "Renderer.h"
+#include "Win32Window.h"
 #include <d3d9.h>
 
 namespace engine

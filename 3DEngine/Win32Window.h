@@ -28,6 +28,7 @@ namespace engine
 		unsigned int SetWidth();
 		void SetHeight(unsigned int argHeight);
 		unsigned int GetHeight();
+		HWND GetHWin();
 	};
 }
 

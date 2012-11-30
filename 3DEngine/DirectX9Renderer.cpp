@@ -65,7 +65,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::Clear()
 	{
-
+		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	}
 
 	/**
@@ -74,7 +74,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::BeginScene()
 	{
-
+		this->pDevice->BeginScene();
 	}
 
 	/**
@@ -83,7 +83,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::EndScene()
 	{
-
+		this->pDevice->EndScene();
 	}
 
 	/**
@@ -91,9 +91,10 @@ namespace engine
 	 * @param	window		The window to present the drawn data to.
 	 * TODO more info
 	 */
-	void DirectX9Renderer::Present(Window* argWindow)
+	void DirectX9Renderer::Present(Window* argPWindow)
 	{
-
+		Win32Window* window = (Win32Window*)argPWindow;
+		this->pDevice->Present(NULL, NULL, window->GetHWin(), NULL);
 	} 
 
 	/**

@@ -32,13 +32,6 @@ namespace engine
 
 		ShowWindow(this->hWin, SW_SHOWDEFAULT);
 		UpdateWindow(this->hWin);
-
-		MSG msg;
-		while(GetMessage(&msg, NULL, 0, 0))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
 	}
 
 	/**
@@ -126,6 +119,11 @@ namespace engine
 	unsigned int Win32Window::GetHeight()
 	{
 		return this->height;
+	}
+
+	HWND Win32Window::GetHWin()
+	{
+		return this->hWin;
 	}
 
 	//---Private methods---
