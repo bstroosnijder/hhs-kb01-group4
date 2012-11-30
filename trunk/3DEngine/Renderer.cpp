@@ -12,7 +12,7 @@ namespace engine
 	 */
 	Renderer::Renderer()
 	{
-
+		//TODO
 	}
 
 	/**
@@ -20,7 +20,7 @@ namespace engine
 	 */
 	Renderer::~Renderer()
 	{
-
+		//TODO
 	}
 
 	/**
@@ -29,7 +29,7 @@ namespace engine
 	 */
 	void Renderer::Clear()
 	{
-
+		//TODO
 	}
 
 	/**
@@ -38,7 +38,7 @@ namespace engine
 	 */
 	void Renderer::BeginScene()
 	{
-
+		//TODO
 	}
 
 	/**
@@ -47,7 +47,7 @@ namespace engine
 	 */
 	void Renderer::EndScene()
 	{
-
+		//TODO
 	}
 
 	/**
@@ -57,6 +57,6 @@ namespace engine
 	 */
 	void Renderer::Present(Window* window)
 	{
-
+		//TODO
 	}
 }
