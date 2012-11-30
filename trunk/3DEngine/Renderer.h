@@ -6,7 +6,7 @@
 namespace engine
 {
 	/**
-	 * Something about the renderer interface here.
+	 * The interface renderer serves as an abstraction for the different video driver API's.
 	 */
 	class Renderer
 	{
@@ -15,6 +15,9 @@ namespace engine
 		virtual void BeginScene()=0;
 		virtual void EndScene()=0;
 		virtual void Present(Window* argWindow)=0;
+		virtual void DrawPrimitive()=0;
+		virtual void SetFVF()=0;
+		virtual void SetStreamSource()=0;
 	};
 }
 
