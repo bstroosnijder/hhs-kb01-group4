@@ -5,7 +5,6 @@
 #include "WindowManager.h"
 #include "DirectX9Renderer.h"
 #include "Logger.h"
-#include "Renderer.h"
 #include "TextLog.h"
 #include "ConsoleLog.h" 
 #include "SceneManager.h"
