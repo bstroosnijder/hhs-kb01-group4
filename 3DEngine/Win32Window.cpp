@@ -44,26 +44,6 @@ namespace engine
 	{
 	}
 
-	/**
-	 * Listen to what windows tells our window
-	 * @param		HWND		The window handle to the window
-	 * @param		UINT		halp?
-	 * @param		WPARAM		halp?
-	 * @param		LPARAM		halp?
-	 * @return		LRESULT		halp?
-	 */
-	LRESULT WINAPI Win32Window::MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam)
-	{
-		switch(argMsg)
-		{
-			case WM_DESTROY:
-				PostQuitMessage(0);
-				return 0;
-		}
-
-		return DefWindowProc(argHWin, argMsg, argWParam, argLParam);
-	}
-
 	void Win32Window::SetTitle(char* argTitle)
 	{
 		this->title = argTitle;
@@ -131,7 +111,7 @@ namespace engine
 
 		WNDCLASSEX wc = 
 		{
-			sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
+			sizeof(WNDCLASSEX), CS_CLASSDC, WindowManager::MsgProc, 0L, 0L,
 			GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
 			"3DEngine", NULL
 		};
