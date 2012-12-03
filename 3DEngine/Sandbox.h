@@ -2,6 +2,7 @@
 #define SANDBOX_H_
 
 #include "Kernel.h"
+#include <sstream>
 
 namespace engine
 {
@@ -22,14 +23,13 @@ namespace engine
 		void AddLogStrategy(LogStrategy* argPLogStrat);
 		void RemoveLogStrategy(LogStrategy* argPLogStrat);
 
-		void NewWindow();
-
-
+		Window* NewWindow(int argRendererIndex);
+		Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, int argX, int argY, int argWidth, int argHeight);
+		Scene* NewScene(Window* argPWindow);
 		//not sure if neccesary
-		void CreateScene();
+		
 		void AddScene(Scene* argPScene);
 		void RemoveScene(Scene* argPScene);
-
 	};
 }
 

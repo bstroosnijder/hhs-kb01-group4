@@ -15,6 +15,7 @@ namespace engine
 		HWND hWin;
 	public:
 		Win32Window();
+		Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
 		~Win32Window();
 		void CleanUp();
 		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);

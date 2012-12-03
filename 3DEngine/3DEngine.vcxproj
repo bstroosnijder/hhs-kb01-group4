@@ -74,6 +74,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LogStrategy.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Sandbox.cpp" />
     <ClCompile Include="Scene.cpp" />

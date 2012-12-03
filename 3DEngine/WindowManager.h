@@ -20,9 +20,10 @@ namespace engine
 		void CleanUp();
 
 		int GetWindowCount();
-		Window* GetWindow(int index);
+		Window* GetWindow(int argIndex);
 		std::vector<Window*> GetWindows();
 		Window* NewWindow();
+		Window* NewWindow(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
 		void RemoveWindow(Window* argPWindow);
 	};
 }

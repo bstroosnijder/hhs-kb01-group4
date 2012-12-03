@@ -9,6 +9,7 @@ namespace engine
 	class Window
 	{
 	private:
+		
 	protected:
 		char* title;
 		unsigned int x;

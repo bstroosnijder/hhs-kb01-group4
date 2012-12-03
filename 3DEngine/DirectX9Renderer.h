@@ -18,6 +18,9 @@ namespace engine
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		D3DPRESENT_PARAMETERS presentParameters;
 	public:
+		static const int LOG_LEVEL_INFO;
+		static const int LOG_LEVEL_WARNING;
+
 		DirectX9Renderer(HWND argHWin);
 		~DirectX9Renderer();
 

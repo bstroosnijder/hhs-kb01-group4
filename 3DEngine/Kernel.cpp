@@ -21,17 +21,10 @@ namespace engine
 		this->inputManager = new InputManager();
 
 		this->renderers = std::vector<Renderer*>();
-		Renderer* dx9renderer = new DirectX9Renderer(GetConsoleWindow());
-		this->renderers.push_back(dx9renderer);
+		Renderer* pDx9renderer = new DirectX9Renderer(GetConsoleWindow());
+		this->renderers.push_back(pDx9renderer);
 
 		this->winRenderer = std::map<Window*, Renderer*>();
-
-
-		// UBER HACK!!!
-		Scene* scene = this->sceneManager->NewScene();
-		Window* window = this->windowManager->NewWindow();
-		scene->AddWindow(window);
-		this->winRenderer[window] = dx9renderer;
 	}
 
 	/**
@@ -58,6 +51,23 @@ namespace engine
 	Logger* Kernel::GetLogger()
 	{
 		return this->logger;
+	}
+
+	/**
+	 * Get the renderer on the specified index.
+	 * @param		argIndex		The index of the renderer to return.
+	 * @return		Renderer*
+	 */
+	Renderer* Kernel::GetRenderer(int argIndex)
+	{
+		if(argIndex >= 0 && argIndex < this->renderers.size()) 
+		{
+			return this->renderers[argIndex];
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	/**
@@ -96,24 +106,35 @@ namespace engine
 		return this->inputManager;
 	}
 
+	/**
+	 * Add a renderer to the winRenderer map, with window as the key.
+	 * @param	argPWindow		The Window pointer serving as key for the winRenderer map entry.
+	 * @param	argPRenderer	The Renderer pointer serving as value for the winRenderer map entry.
+	 * @return	void
+	 */
+	void Kernel::AddWindowRenderer(Window* argPWindow, Renderer* argPRenderer)
+	{
+		this->winRenderer[argPWindow] = argPRenderer;
+	}
+
 	void Kernel::Render()
 	{
 		// If there is at least one open window, we'll render that content
 		if(this->windowManager->GetWindowCount() > 0)
 		{
 			// Loop through the scenes
-			for each(Scene* scene in this->sceneManager->GetScenes())
+			for each(Scene* pScene in this->sceneManager->GetScenes())
 			{
 				// Loop through scene windows
-				for each(Window* window in scene->GetWindows())
+				for each(Window* pWindow in pScene->GetWindows())
 				{
 					// render stuff here
-					Renderer* renderer = this->winRenderer[window];
-					renderer->Clear();
-					renderer->BeginScene();
-					scene->Draw(renderer);
-					renderer->EndScene();
-					renderer->Present(window);
+					Renderer* pRenderer = this->winRenderer[pWindow];
+					pRenderer->Clear();
+					pRenderer->BeginScene();
+					pScene->Draw(pRenderer);
+					pRenderer->EndScene();
+					pRenderer->Present(pWindow);
 				}
 			}
 		}
