@@ -32,9 +32,9 @@ namespace engine
 		void RemoveWindow(Window* argPWindow);
 		Window* GetWindow(int argIndex);
 		std::vector<Window*> GetWindows();
-		void AddEntity(Entity* entity);
-		void RemoveEntity(Entity* entity);
-		Entity* GetEntity(int index);
+		void AddEntity(Entity* argPEntity);
+		void RemoveEntity(Entity* argPEntity);
+		Entity* GetEntity(int argIndex);
 		std::vector<Entity*> GetEntities();
 	};
 }

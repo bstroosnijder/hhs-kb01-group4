@@ -62,26 +62,65 @@ namespace engine
 	}
 
 	/**
-	 * Creates a Window (does nothing more than that now)
-	 * Window also needs a scene object. (not yet implemented)
-	 * @param		int		argWidth is the width of the new window
-	 * @param		int		argHeight is the height of the new window
-	 * @return		void
+	 * Creates a Window and creates the association with this Window and the Renderer object.
+	 * @param		int		argRendererIndex is the index of the renderer to be added to the window we're creating.
+	 * @return		Window*	returns the created window.
 	 */
-	void Sandbox::NewWindow()
+	Window* Sandbox::NewWindow(int argRendererIndex)
 	{
-		this->kernel->GetWindowManager()->NewWindow();
+		Renderer* pRenderer = this->kernel->GetRenderer(argRendererIndex);
+
+		if(pRenderer == 0) 
+		{
+			std::stringstream msg;
+			msg << "Renderer with index " << argRendererIndex << " could not be found!"; 
+			this->kernel->GetLogger()->Log((char*)msg.str().c_str(), Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+		}
+
+		Window* pWindow = this->kernel->GetWindowManager()->NewWindow();
+		this->kernel->AddWindowRenderer(pWindow, pRenderer);
+
+		return pWindow;
 	}
 
-
-
-
-
-
-	void Sandbox::CreateScene()
+	/**
+	 * Creates a Window and creates the association with this Window and the Renderer object.
+	 * @param		int		argRendererIndex is the index of the renderer to be added to the window we're creating.
+	 * @param		char*	argPTitle is the title for the new window
+	 * @param		int		argX is the x-axis position for the new window
+	 * @param		int		argY is the y-axis position for the new window
+	 * @param		int		argWidth is the width for the new window
+	 * @param		int		argHeight is the height for the new window
+	 * @return		Window*	returns the created window.
+	 */
+	Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, int argX, int argY, int argWidth, int argHeight)
 	{
-		//not sure if neccesary
-		//creates a scene needs to direct to scenemanager class.
+		Renderer* pRenderer = this->kernel->GetRenderer(argRendererIndex);
+
+		if(pRenderer == 0) 
+		{
+			std::stringstream msg;
+			msg << "Renderer with index " << argRendererIndex << " could not be found!"; 
+			this->kernel->GetLogger()->Log((char*)msg.str().c_str(), Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+		}
+
+		Window* pWindow = this->kernel->GetWindowManager()->NewWindow(argPTitle, argX, argY, argWidth, argHeight);
+		this->kernel->AddWindowRenderer(pWindow, pRenderer);
+
+		return pWindow;
+	}
+
+	/**
+	 * Creates a Scene and adds a window to the scene's collection.
+	 * @param		int		argWindow is the window that needs to be added to the scene.
+	 * @return		Scene*	returns the created scene.
+	 */
+	Scene* Sandbox::NewScene(Window* argWindow)
+	{
+		Scene* scene = this->kernel->GetSceneManager()->NewScene();
+		scene->AddWindow(argWindow);
+
+		return scene;
 	}
 
 	/**

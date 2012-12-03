@@ -11,7 +11,8 @@
 #include "InputManager.h"
 #include "DirectX9Renderer.h"
 
-namespace engine {
+namespace engine
+{
 	/**
 	 * This class is responsible for managing the entire engine.
 	 * It will check the status of, and communicate with all the sub-managers.
@@ -32,10 +33,12 @@ namespace engine {
 		~Kernel();
 		void CleanUp();
 		Logger* GetLogger();
+		Renderer* GetRenderer(int argIndex);
 		WindowManager* GetWindowManager();
 		SceneManager* GetSceneManager();
 		ResourceManager* GetResourceManager();
 		InputManager* GetInputManager();
+		void AddWindowRenderer(Window* argWindow, Renderer* argRenderer);
 		void Render();
 		void HeartBeat();
 	};

@@ -11,11 +11,24 @@ namespace engine
 	 */
 	Win32Window::Win32Window()
 	{
-		this->title = "My First Window";
-		this->x = 100;
-		this->y = 100;
-		this->width = 300;
-		this->height = 200;
+		Win32Window("My First Window", 100, 100, 300, 200);
+	}
+
+	/**
+	 * Constructor for Win32Window class.
+	 * @param		char*	argPTitle is the title for the new window
+	 * @param		int		argX is the x-axis position for the new window
+	 * @param		int		argY is the y-axis position for the new window
+	 * @param		int		argWidth is the width for the new window
+	 * @param		int		argHeight is the height for the new window
+	 */
+	Win32Window::Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
+	{
+		this->title = argPTitle;
+		this->x = argX;
+		this->y = argY;
+		this->width = argWidth;
+		this->height = argHeight;
 
 		WNDCLASSEX wc = 
 		{

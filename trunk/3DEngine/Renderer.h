@@ -11,6 +11,9 @@ namespace engine
 	class Renderer
 	{
 	public:
+		static const int DIRECTX_9_RENDERER;
+		static const int OPEN_GL_RENDERER;
+
 		virtual void Clear()=0;
 		virtual void BeginScene()=0;
 		virtual void EndScene()=0;
