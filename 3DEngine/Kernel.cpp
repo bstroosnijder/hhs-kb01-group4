@@ -98,8 +98,8 @@ namespace engine
 
 	void Kernel::Render()
 	{
-		// As long as there is an open window we continue to pulse
-		while(this->windowManager->GetWindowCount() > 0)
+		// If there is at least one open window, we'll render that content
+		if(this->windowManager->GetWindowCount() > 0)
 		{
 			// Loop through the scenes
 			for each(Scene* scene in this->sceneManager->GetScenes())
@@ -129,6 +129,7 @@ namespace engine
 	{
 		MSG msg;
         ZeroMemory(&msg, sizeof(msg));
+
         while(msg.message != WM_QUIT)
         {
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
