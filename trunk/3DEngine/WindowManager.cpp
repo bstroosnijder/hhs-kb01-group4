@@ -12,7 +12,7 @@ namespace engine
 	 */
 	WindowManager::WindowManager()
 	{
-		this->windows = std::vector<Window*>();
+		this->windows = std::map<HWND, Window*>();
 	}
 
 	/**
@@ -44,7 +44,7 @@ namespace engine
 	 * Obtain all the Window pointers in the windows collection.
 	 * @return		std::vector<Window*>		The entire scene collection.
 	 */
-	std::vector<Window*> WindowManager::GetWindows()
+	std::map<HWND, Window*> WindowManager::GetWindows()
 	{
 		return this->windows;
 	}
@@ -63,7 +63,7 @@ namespace engine
 		// Windows 64bit
 		pWindow = new Win32Window();
 #endif
-		this->windows.push_back(pWindow);
+		this->windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
 		return pWindow;
 	}
 
@@ -86,7 +86,7 @@ namespace engine
 		// Windows 64bit
 		pWindow = new Win32Window(argPTitle, argX, argY, argWidth, argHeight);
 #endif
-		this->windows.push_back(pWindow);
+		this->windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
 		return pWindow;
 	}
 
@@ -95,15 +95,28 @@ namespace engine
 	 * @param		Window*						The Window pointer to remove from the collection of scenes.
 	 * @return		void
 	 */
-	void WindowManager::RemoveWindow(Window* argPWindow)
+	void WindowManager::RemoveWindow(HWND argHWND)
 	{
-		//Find the position of the given window and store it in 'position'.
-		//Position is set equal to windows.end() when the object can't be found.
-		std::vector<Window*>::iterator position = std::find(this->windows.begin(), this->windows.end(), argPWindow);
-
-		if(position != this->windows.end()) 
+		windows.erase(argHWND);
+	}
+	
+	/**
+	 * Listen to what windows tells our window
+	 * @param		HWND		The window handle to the window
+	 * @param		UINT		halp?
+	 * @param		WPARAM		halp?
+	 * @param		LPARAM		halp?
+	 * @return		LRESULT		halp?
+	 */
+	LRESULT WINAPI WindowManager::MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam)
+	{
+		switch(argMsg)
 		{
-			this->windows.erase(position);
+			case WM_DESTROY:
+				PostQuitMessage(0);
+				return 0;
 		}
+
+		return DefWindowProc(argHWin, argMsg, argWParam, argLParam);
 	}
 }

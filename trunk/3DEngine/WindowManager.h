@@ -1,7 +1,7 @@
 #ifndef WINDOWMANAGER_H_
 #define WINDOWMANAGER_H_
 
-#include <vector>
+#include <map>
 #include <algorithm>
 #include "Win32Window.h"
 
@@ -13,18 +13,19 @@ namespace engine
 	class WindowManager
 	{
 	private:
-		std::vector<Window*> windows;
+		std::map<HWND, Window*> windows;
 	public:
 		WindowManager();
 		~WindowManager();
 		void CleanUp();
 
 		int GetWindowCount();
-		Window* GetWindow(int argIndex);
-		std::vector<Window*> GetWindows();
+		Window* GetWindow(HWND argHWND);
+		std::map<HWND, Window*> GetWindows();
 		Window* NewWindow();
 		Window* NewWindow(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
-		void RemoveWindow(Window* argPWindow);
+		void RemoveWindow(HWND argHWND);
+		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);
 	};
 }
 

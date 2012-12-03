@@ -119,23 +119,19 @@ namespace engine
 
 	void Kernel::Render()
 	{
-		// If there is at least one open window, we'll render that content
-		if(this->windowManager->GetWindowCount() > 0)
+		// Loop through the scenes
+		for each(Scene* pScene in this->sceneManager->GetScenes())
 		{
-			// Loop through the scenes
-			for each(Scene* pScene in this->sceneManager->GetScenes())
+			// Loop through scene windows
+			for each(Window* pWindow in pScene->GetWindows())
 			{
-				// Loop through scene windows
-				for each(Window* pWindow in pScene->GetWindows())
-				{
-					// render stuff here
-					Renderer* pRenderer = this->winRenderer[pWindow];
-					pRenderer->Clear();
-					pRenderer->BeginScene();
-					pScene->Draw(pRenderer);
-					pRenderer->EndScene();
-					pRenderer->Present(pWindow);
-				}
+				// render stuff here
+				Renderer* pRenderer = this->winRenderer[pWindow];
+				pRenderer->Clear();
+				pRenderer->BeginScene();
+				pScene->Draw(pRenderer);
+				pRenderer->EndScene();
+				pRenderer->Present(pWindow);
 			}
 		}
 	}
@@ -151,10 +147,10 @@ namespace engine
 		MSG msg;
         ZeroMemory(&msg, sizeof(msg));
 
-        while(msg.message != WM_QUIT)
+        while(this->windowManager->GetWindowCount() > 0)
         {
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-            {
+            {				
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }

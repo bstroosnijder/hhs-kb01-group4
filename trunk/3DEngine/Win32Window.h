@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include "Window.h"
+#include "WindowManager.h"
 
 namespace engine
 {
@@ -20,7 +21,6 @@ namespace engine
 		Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
 		~Win32Window();
 		void CleanUp();
-		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);
 		void SetTitle(char* argTitle);
 		char* GetTitle();
 		void SetX(unsigned int argX);
