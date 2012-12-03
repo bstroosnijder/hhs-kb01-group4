@@ -41,7 +41,7 @@ namespace engine
 
 	/**
 	 * Adds a stratergy to the stratergy collection within the logger. 
-	 * A stratergy determines which output is given(text or console).
+	 * A strategy determines which output is given(text or console).
 	 * Multiple stratergies are possible.
 	 * @param		LogStrategy*		logStrat is the stratergy that is added to the collection
 	 * @return		void
