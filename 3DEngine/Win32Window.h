@@ -13,6 +13,8 @@ namespace engine
 	{
 	private:
 		HWND hWin;
+
+		void Init(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
 	public:
 		Win32Window();
 		Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
