@@ -25,7 +25,7 @@ namespace engine
 
 		Window* NewWindow(int argRendererIndex);
 		Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, int argX, int argY, int argWidth, int argHeight);
-		Scene* NewScene(Window* argPWindow);
+		Scene* NewScene();
 		//not sure if neccesary
 		
 		void AddScene(Scene* argPScene);

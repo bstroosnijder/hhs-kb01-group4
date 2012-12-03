@@ -115,12 +115,9 @@ namespace engine
 	 * @param		int		argWindow is the window that needs to be added to the scene.
 	 * @return		Scene*	returns the created scene.
 	 */
-	Scene* Sandbox::NewScene(Window* argWindow)
+	Scene* Sandbox::NewScene()
 	{
-		Scene* scene = this->kernel->GetSceneManager()->NewScene();
-		scene->AddWindow(argWindow);
-
-		return scene;
+		return this->kernel->GetSceneManager()->NewScene();
 	}
 
 	/**
