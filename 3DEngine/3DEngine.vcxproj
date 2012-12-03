@@ -66,9 +66,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="DirectX9Renderer.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -84,6 +84,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="DirectX9Renderer.h" />
     <ClInclude Include="Entity.h" />
