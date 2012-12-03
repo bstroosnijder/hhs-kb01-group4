@@ -11,7 +11,7 @@ namespace engine
 	 */
 	Win32Window::Win32Window()
 	{
-		Win32Window("My First Window", 100, 100, 300, 200);
+		Init("My First Window", 100, 100, 300, 200);
 	}
 
 	/**
@@ -24,27 +24,7 @@ namespace engine
 	 */
 	Win32Window::Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
 	{
-		this->title = argPTitle;
-		this->x = argX;
-		this->y = argY;
-		this->width = argWidth;
-		this->height = argHeight;
-
-		WNDCLASSEX wc = 
-		{
-			sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
-			GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-			"3DEngine", NULL
-		};
-
-		RegisterClassEx(&wc);
-
-		this->hWin = CreateWindow(	"3DEngine", this->title, WS_OVERLAPPEDWINDOW,
-									this->x, this->y, this->width, this->height,
-									NULL, NULL, wc.hInstance, NULL);
-
-		ShowWindow(this->hWin, SW_SHOWDEFAULT);
-		UpdateWindow(this->hWin);
+		Init(argPTitle, argX, argY, argWidth, argHeight);
 	}
 
 	/**
@@ -140,4 +120,29 @@ namespace engine
 	}
 
 	//---Private methods---
+
+	void Win32Window::Init(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
+	{
+		this->title = argPTitle;
+		this->x = argX;
+		this->y = argY;
+		this->width = argWidth;
+		this->height = argHeight;
+
+		WNDCLASSEX wc = 
+		{
+			sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
+			GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+			"3DEngine", NULL
+		};
+
+		RegisterClassEx(&wc);
+
+		this->hWin = CreateWindow(	"3DEngine", this->title, WS_OVERLAPPEDWINDOW,
+									this->x, this->y, this->width, this->height,
+									NULL, NULL, wc.hInstance, NULL);
+
+		ShowWindow(this->hWin, SW_SHOWDEFAULT);
+		UpdateWindow(this->hWin);
+	}
 }
