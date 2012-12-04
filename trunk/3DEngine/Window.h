@@ -17,7 +17,7 @@ namespace engine
 		unsigned int width;
 		unsigned int height;
 	public:
-		virtual void SetTitle(char* argTitle)=0;
+		virtual void SetTitle(char* argPTitle)=0;
 		virtual char* GetTitle()=0;
 		virtual void SetX(unsigned int argX)=0;
 		virtual unsigned int GetX()=0;
