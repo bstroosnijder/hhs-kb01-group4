@@ -49,7 +49,7 @@ namespace engine
 	 */
 	void Sandbox::AddLogStrategy(LogStrategy* argPLogStrat)
 	{
-		this->kernel->GetLogger()->AddStrategy(argPLogStrat);
+		Kernel::GetLogger()->AddStrategy(argPLogStrat);
 	}
 
 	/**

@@ -22,7 +22,7 @@ namespace engine
 	class Kernel
 	{
 	private:
-		Logger* logger;
+		static Logger* logger;
 		WindowManager* windowManager;
 		SceneManager* sceneManager;
 		ResourceManager* resourceManager;
@@ -33,7 +33,7 @@ namespace engine
 		Kernel();
 		~Kernel();
 		void CleanUp();
-		Logger* GetLogger();
+		static Logger* GetLogger();
 		Renderer* GetRenderer(int argIndex);
 		WindowManager* GetWindowManager();
 		SceneManager* GetSceneManager();

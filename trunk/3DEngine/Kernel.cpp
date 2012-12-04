@@ -3,6 +3,7 @@
 namespace engine
 {
 	//---Private attributes---
+	Logger* Kernel::logger = new Logger();
 	//---Public attributes---
 	//---Private methods---
 	//---Public methods---
@@ -12,8 +13,6 @@ namespace engine
 	 */
 	Kernel::Kernel()
 	{
-		this->logger = new Logger();
-
 		// Initialize the managers
 		this->windowManager = new WindowManager();
 		this->sceneManager = new SceneManager();
@@ -50,7 +49,7 @@ namespace engine
 	 */
 	Logger* Kernel::GetLogger()
 	{
-		return this->logger;
+		return logger;
 	}
 
 	/**
