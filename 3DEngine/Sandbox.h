@@ -22,11 +22,9 @@ namespace engine
 		
 		void AddLogStrategy(LogStrategy* argPLogStrat);
 		void RemoveLogStrategy(LogStrategy* argPLogStrat);
-
-		Window* NewWindow(int argRendererIndex);
-		Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, int argX, int argY, int argWidth, int argHeight);
+		
+		Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
 		Scene* NewScene();
-		//not sure if neccesary
 		
 		void AddScene(Scene* argPScene);
 		void RemoveScene(Scene* argPScene);

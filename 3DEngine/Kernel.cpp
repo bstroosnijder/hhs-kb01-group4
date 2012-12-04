@@ -3,13 +3,17 @@
 namespace engine
 {
 	//---Private attributes---
+
 	Logger* Kernel::logger = new Logger();
+
 	//---Public attributes---
 	//---Private methods---
 	//---Public methods---
 
 	/**
-	 * Construct the Kernel object.
+	 * Constructs the Kernel object, initialising every included module's manager.
+	 * In addition, the renderer vector is initialised and filled with the default renderers the system has to offer.
+	 * Finally, the map that associates windows with renderers is initialised.
 	 */
 	Kernel::Kernel()
 	{
@@ -19,15 +23,17 @@ namespace engine
 		this->resourceManager = new ResourceManager();
 		this->inputManager = new InputManager();
 
+		//Initialise and fill the renderers vector with the default renderers.
 		this->renderers = std::vector<Renderer*>();
 		Renderer* pDx9renderer = new DirectX9Renderer(GetConsoleWindow());
 		this->renderers.push_back(pDx9renderer);
 
+		//Initialise the map that associates windows with renderers.
 		this->winRenderer = std::map<Window*, Renderer*>();
 	}
 
 	/**
-	 * Destruct the Kernel object.
+	 * Destructs the Kernel object.
 	 * @return		void
 	 */
 	Kernel::~Kernel()
@@ -36,7 +42,7 @@ namespace engine
 	}
 
 	/**
-	 * Lazy cleanup method for destructing
+	 * Lazy cleanup method for destructing this object.
 	 * @return		void
 	 */
 	void Kernel::CleanUp()
@@ -45,7 +51,7 @@ namespace engine
 
 	/**
 	 * Obtain the Logger object associated with the Kernel.
-	 * @return		logger		Returns the logger associated with the kernel.
+	 * @return		Logger*
 	 */
 	Logger* Kernel::GetLogger()
 	{
@@ -59,6 +65,7 @@ namespace engine
 	 */
 	Renderer* Kernel::GetRenderer(int argIndex)
 	{
+		//The array index can not be negative or larger than the size of the array.
 		if(argIndex >= 0 && argIndex < this->renderers.size()) 
 		{
 			return this->renderers[argIndex];
@@ -70,8 +77,8 @@ namespace engine
 	}
 
 	/**
-	 * Getter for the window manager
-	 * @return		WindowManager*
+	 * Obtain the WindowManager object.
+	 * @return		WindowManager*	
 	 */
 	WindowManager* Kernel::GetWindowManager()
 	{
@@ -79,7 +86,7 @@ namespace engine
 	}
 	
 	/**
-	 * Getter fpr the scene manager
+	 * Obtain the SceneManager object.
 	 * @return		SceneManager*
 	 */
 	SceneManager* Kernel::GetSceneManager()
@@ -88,7 +95,7 @@ namespace engine
 	}
 	
 	/**
-	 * Getter for the resource manager
+	 * Obtain the ResourceManager object.
 	 * @return		ResourceManager*
 	 */
 	ResourceManager* Kernel::GetResourceManager()
@@ -97,7 +104,7 @@ namespace engine
 	}
 	
 	/**
-	 * Getter for the input manager
+	 * Obtain the InputManager object.
 	 * @return		InputManager*
 	 */
 	InputManager* Kernel::GetInputManager()
@@ -106,7 +113,7 @@ namespace engine
 	}
 
 	/**
-	 * Add a renderer to the winRenderer map, with window as the key.
+	 * Add a renderer to the winRenderer map with window as the key.
 	 * @param		argPWindow		The Window pointer serving as key for the winRenderer map entry.
 	 * @param		argPRenderer	The Renderer pointer serving as value for the winRenderer map entry.
 	 * @return		void
@@ -117,7 +124,8 @@ namespace engine
 	}
 
 	/**
-	 * The render loops through all scenes and their windows to render them out
+	 * Loop through all scenes and their windows to render them.
+	 * 
 	 * @return		void
 	 */
 	void Kernel::Render()
@@ -126,10 +134,11 @@ namespace engine
 		for each(Scene* pScene in this->sceneManager->GetScenes())
 		{
 			pScene->Update();
+
 			// Loop through scene windows
 			for each(Window* pWindow in pScene->GetWindows())
 			{
-				// render stuff here
+				//Render the content of this window.
 				Renderer* pRenderer = this->winRenderer[pWindow];
 				pRenderer->Clear();
 				pRenderer->BeginScene();
@@ -145,8 +154,8 @@ namespace engine
 
 	/**
 	 * The heartbeat makes sure that the windows will be rendered.
-	 * it provides the application with a loop and an exit condition
-	 * which will pulse like a heartbeat to either render or manage what ever is needed
+	 * It provides the application with a loop and an exit condition...
+	 * ...which will pulse like a heartbeat to either render or manage what ever is needed.
 	 * @return		void
 	 */
 	void Kernel::HeartBeat()
@@ -166,7 +175,8 @@ namespace engine
 				this->Render();
 			}
         }
-		// no loop, no pulse
+
+		//There are no more windows, application closes.
 		this->CleanUp();
 	}
 }

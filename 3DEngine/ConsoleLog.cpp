@@ -12,10 +12,11 @@ namespace engine
 	 */
 	ConsoleLog::ConsoleLog()
 	{
+
 	}
 
 	/**
-	 * Destruct the ConsoleLog object.
+	 * Destructs the ConsoleLog object.
 	 * @return		void
 	 */
 	ConsoleLog::~ConsoleLog()
@@ -29,6 +30,7 @@ namespace engine
 	 */
 	void ConsoleLog::CleanUp()
 	{
+
 	}
 
 	/**

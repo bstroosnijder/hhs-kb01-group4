@@ -31,7 +31,7 @@ namespace engine
 	}
 
 	/**
-	 * Destruct the DirectX9Renderer object.
+	 * Destructs the DirectX9Renderer object.
 	 * @return		void
 	 */
 	DirectX9Renderer::~DirectX9Renderer()
@@ -70,8 +70,8 @@ namespace engine
 	}
 
 	/**
-	 * Begins a scene.
-	 * TODO more info
+	 * Calls upon the directx device to begin a scene.
+	 * This is necessary for the directx's API to help it do magic.
 	 * @return		void
 	 */
 	void DirectX9Renderer::BeginScene()
@@ -79,12 +79,22 @@ namespace engine
 		this->pDevice->BeginScene();
 	}
 
+	/**
+	 * Set up the world matrix.
+	 * TODO: More information.
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetupWorldMatrix()
 	{
 		D3DXMATRIXA16 matWorld;
 		this->pDevice->SetTransform( D3DTS_WORLD, &matWorld );
 	}
 	
+	/**
+	 * Set up the view matrix.
+	 * TODO: More information.
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetupViewMatrix()
 	{
 		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-5.0f );
@@ -95,6 +105,11 @@ namespace engine
 		this->pDevice->SetTransform( D3DTS_VIEW, &matView );
 	}
 
+	/**
+	 * Set up the projection matrix.
+	 * TODO: More information.
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetupProjectionMatrix()
 	{
 		D3DXMATRIXA16 matProj;
@@ -104,8 +119,8 @@ namespace engine
 
 	/**
 	 * Ends a scene.
-	 * TODO more info
-	 * @return		void
+	 * Calls upon the directx device to end a scene.
+	 * This is necessary for the directx's API to help it do magic.
 	 */
 	void DirectX9Renderer::EndScene()
 	{
@@ -113,9 +128,8 @@ namespace engine
 	}
 
 	/**
-	 * Presents stuff to the window.
+	 * Presents the handled entities to the window.
 	 * @param		window		The window to present the drawn data to.
-	 * TODO more info
 	 * @return		void
 	 */
 	void DirectX9Renderer::Present(Window* argPWindow)
@@ -126,15 +140,15 @@ namespace engine
 
 	/**
 	 * Draws a primitive figure.
-	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::DrawPrimitive()
 	{
 	}
 
 	/**
-	 * Sets the FVF.
-	 * TODO more info
+	 * Sets the Flexible Vertex Format.
+	 * TODO: More information.
 	 * @return		void
 	 */
 	void DirectX9Renderer::SetFVF()
@@ -143,7 +157,7 @@ namespace engine
 
 	/**
 	 * Sets the stream source.
-	 * TODO more info
+	 * TODO: More information.
 	 * @return		void
 	 */
 	void DirectX9Renderer::SetStreamSource()

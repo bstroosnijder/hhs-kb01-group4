@@ -8,7 +8,7 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Construct the Scene object.
+	 * Constructs the Scene object, initialising the Window and Entity collection.
 	 */
 	Scene::Scene()
 	{
@@ -17,7 +17,7 @@ namespace engine
 	}
 
 	/**
-	 * Destruct the Scene object.
+	 * Destructs the Scene object.
 	 */
 	Scene::~Scene()
 	{
@@ -25,7 +25,7 @@ namespace engine
 	}
 
 	/**
-	 * Lazy cleanup method for destructing
+	 * Lazy cleanup method for destructing this object.
 	 * @return		void
 	 */
 	void Scene::CleanUp()
@@ -38,9 +38,9 @@ namespace engine
 	 */
 	void Scene::Update()
 	{
-		for each(Entity* entity in entities)
+		for each(Entity* pEntity in this->entities)
 		{
-			entity->Update();
+			pEntity->Update();
 		}
 	}
 
@@ -51,9 +51,9 @@ namespace engine
 	 */
 	void Scene::Draw(Renderer* argPRenderer)
 	{
-		for each(Entity* entity in entities)
+		for each(Entity* pEntity in this->entities)
 		{
-			entity->Draw(argPRenderer);
+			pEntity->Draw(argPRenderer);
 		}
 		
 	}
@@ -75,6 +75,7 @@ namespace engine
 	 */
 	void Scene::RemoveWindow(Window* argPWindow)
 	{
+
 	}
 
 	/**
@@ -103,8 +104,11 @@ namespace engine
 	 */
 	void Scene::AddEntity(Entity* entity)
 	{
-		// TODO: zorgen dat cameras niet toegevoegd kunnen worden
-		entities.push_back(entity);
+		//A Camera object may not be added to a Scene.
+		if(!dynamic_cast<Camera*>(entity))
+		{
+			entities.push_back(entity);
+		}
 	}
 
 	/**
@@ -143,11 +147,20 @@ namespace engine
 		return entities;
 	}
 
+	/**
+	 * Set the Camera object associated with this scene.
+	 * @param		Camera*						The Camera pointer to be associated with this Scene.
+	 * @return		void
+	 */
 	void Scene::SetCamera(Camera* argPCamera)
 	{
 		this->camera = argPCamera;
 	}
 
+	/**
+	 * Obtain the Camera object associated with this scene.
+	 * @return		Camera*						The Camera pointer associated with this Scene.
+	 */
 	Camera* Scene::GetCamera()
 	{
 		return this->camera;

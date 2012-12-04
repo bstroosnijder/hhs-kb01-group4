@@ -54,24 +54,6 @@ namespace engine
 
 	/**
 	 * MakeWindow creates a window for the application and shows it.
-	 * @return		Window*		The created window.
-	 */
-	Window* WindowManager::NewWindow()
-	{
-		Window* pWindow;
-#ifdef _WIN32
-		// Windows 32bit
-		pWindow = new Win32Window();
-#elif _WIN64
-		// Windows 64bit
-		pWindow = new Win32Window();
-#endif
-		WindowManager::windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
-		return pWindow;
-	}
-
-	/**
-	 * MakeWindow creates a window for the application and shows it.
 	 * @param		char*	argPTitle is the title for the new window
 	 * @param		int		argX is the x-axis position for the new window
 	 * @param		int		argY is the y-axis position for the new window
@@ -79,7 +61,7 @@ namespace engine
 	 * @param		int		argHeight is the height for the new window
 	 * @return		Window*		The created window.
 	 */
-	Window* WindowManager::NewWindow(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
+	Window* WindowManager::NewWindow(char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight)
 	{
 		Window* pWindow;
 		#ifdef _WIN32
