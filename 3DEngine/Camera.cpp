@@ -17,29 +17,15 @@ namespace engine
 
 	/**
 	 * Construct Camera
-	 * @param		int		argX		The X location for the camera
-	 * @param		int		argY		The Y location for the camera
-	 * @param		int		argZ		The Z location for the cemara
-	 * @param		int		argLookAtX	The X location where to look at
-	 * @param		int		argLookAtY	The Y location where to look at
-	 * @param		int		argLookAtZ	The Z location where to look at
-	 * @param		int		argUpVecX	The X location how to tilt and go bezerk
-	 * @param		int		argUpVecY	The Y location how to tilt and go bezerk
-	 * @param		int		argUpVecZ	The Z location how to tilt and go bezerk
+	 * @param		Vector3		The location Vector3
+	 * @param		Vector3		The Vector3 that determints where to look at
+	 * @param		Vector3		The Vector3 that goes bezerk
 	 */
-	Camera::Camera( int argX, int argY, int argZ ,
-					int argLookAtX, int argLookAtY, int argLookAtZ, 
-					int argUpVecX, int argUpVecY, int argUpVecZ )
+	Camera::Camera(Vector3 argPosition, Vector3 argLookAt, Vector3 argUpVec)
 	{
-		x = argX;
-		y = argY; 
-		z = argZ;
-		lookAtX = argLookAtX;
-		lookAtY = argLookAtY;
-		lookAtZ = argLookAtZ;
-		upVecX = argUpVecX;
-		upVecY = argUpVecY;
-		upVecZ = argUpVecZ;
+		this->position = argPosition;
+		this->lookAt = argLookAt;
+		this->upVec = argUpVec;
 	}
 
 	/**
@@ -59,6 +45,14 @@ namespace engine
 	}
 
 	/**
+	 * Update does nothing yet
+	 * @return		void
+	 */
+	void Camera::Update()
+	{
+	}
+
+	/**
 	 * Draw does nothing yet
 	 * @param		Renderer*		The renderer used to draw
 	 * @return		void
@@ -67,11 +61,34 @@ namespace engine
 	{
 	}
 
-	/**
-	 * Update does nothing yet
-	 * @return		void
-	 */
-	void Camera::Update()
+	//TODO: COMMENTS!
+	void Camera::SetPosition(Vector3 argPosition)
 	{
+		this->position = argPosition;
+	}
+
+	Vector3 Camera::GetPosition()
+	{
+		return this->position;
+	}
+
+	void Camera::SetLookAt(Vector3 argLookAt)
+	{
+		this->lookAt = argLookAt;
+	}
+
+	Vector3 Camera::GetLookAt()
+	{
+		return this->lookAt;
+	}
+
+	void Camera::SetUpVec(Vector3 argUpVec)
+	{
+		this->upVec = argUpVec;
+	}
+
+	Vector3 Camera::GetUpVec()
+	{
+		return this->upVec;
 	}
 }

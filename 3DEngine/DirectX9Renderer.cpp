@@ -79,6 +79,29 @@ namespace engine
 		this->pDevice->BeginScene();
 	}
 
+	void DirectX9Renderer::SetupWorldMatrix()
+	{
+		D3DXMATRIXA16 matWorld;
+		this->pDevice->SetTransform( D3DTS_WORLD, &matWorld );
+	}
+	
+	void DirectX9Renderer::SetupViewMatrix()
+	{
+		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-5.0f );
+		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
+		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
+		D3DXMATRIXA16 matView;
+		D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
+		this->pDevice->SetTransform( D3DTS_VIEW, &matView );
+	}
+
+	void DirectX9Renderer::SetupProjectionMatrix()
+	{
+		D3DXMATRIXA16 matProj;
+		D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f );
+		this->pDevice->SetTransform( D3DTS_PROJECTION, &matProj );
+	}
+
 	/**
 	 * Ends a scene.
 	 * TODO more info

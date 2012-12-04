@@ -1,6 +1,7 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
+#include "Vector3.h"
 #include "Window.h"
 
 namespace engine
@@ -16,6 +17,9 @@ namespace engine
 
 		virtual void Clear()=0;
 		virtual void BeginScene()=0;
+		virtual void SetupWorldMatrix()=0;
+		virtual void SetupViewMatrix()=0;
+		virtual void SetupProjectionMatrix()=0;
 		virtual void EndScene()=0;
 		virtual void Present(Window* argWindow)=0;
 		virtual void DrawPrimitive()=0;

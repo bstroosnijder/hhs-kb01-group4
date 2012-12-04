@@ -1,6 +1,7 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#include "Vector3.h"
 #include "Renderer.h"
 
 namespace engine
@@ -14,14 +15,12 @@ namespace engine
 	class Entity
 	{
 	private:
-		int x;
-		int y;
-		int z; 
-		//maybe a position matrix might be nessacery
+	protected:
+		Vector3 position;
 	public:
-		virtual void Draw(Renderer* argPRenderer) =0;
-		//this method is not in the class diagram.
 		virtual void Update()=0;
+		virtual void Draw(Renderer* argPRenderer)=0;
+		virtual void SetPosition(Vector3 argPosition)=0;
 	};
 }
 

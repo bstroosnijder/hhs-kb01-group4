@@ -125,6 +125,7 @@ namespace engine
 		// Loop through the scenes
 		for each(Scene* pScene in this->sceneManager->GetScenes())
 		{
+			pScene->Update();
 			// Loop through scene windows
 			for each(Window* pWindow in pScene->GetWindows())
 			{
@@ -132,6 +133,9 @@ namespace engine
 				Renderer* pRenderer = this->winRenderer[pWindow];
 				pRenderer->Clear();
 				pRenderer->BeginScene();
+				pRenderer->SetupWorldMatrix();
+				pRenderer->SetupViewMatrix();
+				pRenderer->SetupProjectionMatrix();
 				pScene->Draw(pRenderer);
 				pRenderer->EndScene();
 				pRenderer->Present(pWindow);
