@@ -1,5 +1,5 @@
 #include "Kernel.h"
-
+#include <sstream>
 namespace engine
 {
 	//---Private attributes---

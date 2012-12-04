@@ -3,6 +3,9 @@
 namespace engine
 {
 	//---Private attributes---
+
+	std::map<HWND, Window*> WindowManager::windows = std::map<HWND, Window*>();
+
 	//---Public attributes---
 	//---Private methods---
 	//---Public methods---
@@ -12,7 +15,7 @@ namespace engine
 	 */
 	WindowManager::WindowManager()
 	{
-		this->windows = std::map<HWND, Window*>();
+		
 	}
 
 	/**
@@ -37,7 +40,7 @@ namespace engine
 	 */
 	int WindowManager::GetWindowCount()
 	{
-		return this->windows.size();
+		return WindowManager::windows.size();
 	}
 
 	/**
@@ -46,7 +49,7 @@ namespace engine
 	 */
 	std::map<HWND, Window*> WindowManager::GetWindows()
 	{
-		return this->windows;
+		return WindowManager::windows;
 	}
 
 	/**
@@ -63,7 +66,7 @@ namespace engine
 		// Windows 64bit
 		pWindow = new Win32Window();
 #endif
-		this->windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
+		WindowManager::windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
 		return pWindow;
 	}
 
@@ -79,14 +82,14 @@ namespace engine
 	Window* WindowManager::NewWindow(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
 	{
 		Window* pWindow;
-#ifdef _WIN32
+		#ifdef _WIN32
 		// Windows 32bit
 		pWindow = new Win32Window(argPTitle, argX, argY, argWidth, argHeight);
-#elif _WIN64
+		#elif _WIN64
 		// Windows 64bit
 		pWindow = new Win32Window(argPTitle, argX, argY, argWidth, argHeight);
-#endif
-		this->windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
+		#endif
+		WindowManager::windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
 		return pWindow;
 	}
 
@@ -97,7 +100,7 @@ namespace engine
 	 */
 	void WindowManager::RemoveWindow(HWND argHWND)
 	{
-		windows.erase(argHWND);
+		WindowManager::windows.erase(argHWND);
 	}
 	
 	/**
@@ -114,6 +117,7 @@ namespace engine
 		{
 			case WM_DESTROY:
 				PostQuitMessage(0);
+				WindowManager::RemoveWindow(argHWin);
 				return 0;
 		}
 
