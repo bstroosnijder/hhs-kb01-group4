@@ -22,8 +22,7 @@ namespace engine
 		int GetWindowCount();
 		Window* GetWindow(HWND argHWND);
 		std::map<HWND, Window*> GetWindows();
-		Window* NewWindow();
-		Window* NewWindow(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
+		Window* NewWindow(char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
 		static void RemoveWindow(HWND argHWND);
 		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);
 	};

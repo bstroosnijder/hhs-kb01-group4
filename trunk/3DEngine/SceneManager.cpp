@@ -16,7 +16,7 @@ namespace engine
 	}
 
 	/**
-	 * Destruct the SceneManager object.
+	 * Destructs the SceneManager object.
 	 * @return		void
 	 */
 	SceneManager::~SceneManager()

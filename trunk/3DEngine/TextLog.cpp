@@ -16,7 +16,7 @@ namespace engine
 	}
 
 	/**
-	 * Destroys the TextLog object.
+	 * Destructs the TextLog object.
 	 * @return		void
 	 */
 	TextLog::~TextLog()
@@ -30,6 +30,7 @@ namespace engine
 	 */
 	void TextLog::CleanUp()
 	{
+
 	}
 
 	/**

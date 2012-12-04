@@ -5,17 +5,17 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
+	//---Public methods---
 
 	/**
-	 * stuff
-	 * @param		char*				The title of the window
-	 * @param		int					The x position of the window
-	 * @param		int					The y position of the window
-	 * @param		int					The width of the window
-	 * @param		int					The height of the window
-	 * @return		void
+	 * Constructs the Win32Window object.
+	 * @param		char*				argPTitle is the title for the new window
+	 * @param		unsigned int		argX is the x-axis position for the new window
+	 * @param		unsigned int		argY is the y-axis position for the new window
+	 * @param		unsigned int		argWidth is the width for the new window
+	 * @param		unsigned int		argHeight is the height for the new window
 	 */
-	void Win32Window::Init(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
+	Win32Window::Win32Window(char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight)
 	{
 		this->title = argPTitle;
 		this->x = argX;
@@ -40,31 +40,8 @@ namespace engine
 		UpdateWindow(this->hWin);
 	}
 
-	//---Public methods---
-
 	/**
-	 * Constructor for Win32Window class.
-	 */
-	Win32Window::Win32Window()
-	{
-		Init("My First Window", 100, 100, 300, 200);
-	}
-
-	/**
-	 * Constructor for Win32Window class.
-	 * @param		char*	argPTitle is the title for the new window
-	 * @param		int		argX is the x-axis position for the new window
-	 * @param		int		argY is the y-axis position for the new window
-	 * @param		int		argWidth is the width for the new window
-	 * @param		int		argHeight is the height for the new window
-	 */
-	Win32Window::Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight)
-	{
-		Init(argPTitle, argX, argY, argWidth, argHeight);
-	}
-
-	/**
-	 * Destructor for Win32Window class.
+	 * Destructs the Win32Window object.
 	 * @return		void
 	 */
 	Win32Window::~Win32Window()
@@ -73,25 +50,26 @@ namespace engine
 	}
 
 	/**
-	 * Lazy cleanup method for destructing
+	 * Lazy cleanup method for destructing this object.
 	 * @return		void
 	 */
 	void Win32Window::CleanUp()
 	{
+
 	}
 
 	/**
-	 * Setter for the title
-	 * @param		char*				The new title
+	 * Set the title of this window.
+	 * @param		char*				The new title for this window.
 	 * @return		void
 	 */
-	void Win32Window::SetTitle(char* argTitle)
+	void Win32Window::SetTitle(char* argPTitle)
 	{
-		this->title = argTitle;
+		this->title = argPTitle;
 	}
 
 	/**
-	 * Getter for the title
+	 * Obtain the title of this Window.
 	 * @return		char*
 	 */
 	char* Win32Window::GetTitle()
@@ -100,8 +78,8 @@ namespace engine
 	}
 
 	/**
-	 * Setter for the x position
-	 * @param		unsigned int		The new x position
+	 * Set the X position (relative to the screen) of this Window.
+	 * @param		unsigned int		The new x position.
 	 * @return		void
 	 */
 	void Win32Window::SetX(unsigned int argX)
@@ -110,7 +88,7 @@ namespace engine
 	}
 
 	/**
-	 * Getter for the x position
+	 * Get the X position (relative to the screen) of this Window.
 	 * @return		unsigned int
 	 */
 	unsigned int Win32Window::GetX()
@@ -119,8 +97,8 @@ namespace engine
 	}
 
 	/**
-	 * Setter for the y position
-	 * @param		unsigned int		The new y position
+	 * Set the Y position (relative to the screen) of this Window.
+	 * @param		unsigned int		The new Y position.
 	 * @return		void
 	 */
 	void Win32Window::SetY(unsigned int argY)
@@ -129,7 +107,7 @@ namespace engine
 	}
 
 	/**
-	 * Getter for the y position
+	 * Get the Y position (relative to the screen) of this Window.
 	 * @return		unsigned int
 	 */
 	unsigned int Win32Window::GetY()
@@ -138,8 +116,8 @@ namespace engine
 	}
 
 	/**
-	 * Setter for the width of the window
-	 * @param		unsigned int		The new width of the window
+	 * Set the width of this Window.
+	 * @param		unsigned int		The new width of the window.
 	 * @return		void
 	 */
 	void Win32Window::SetWidth(unsigned int argWidth)
@@ -148,7 +126,7 @@ namespace engine
 	}
 
 	/**
-	 * Getter for the width of the window
+	 * Get the width of this Window.
 	 * @return		unsigned int
 	 */
 	unsigned int Win32Window::GetWidth()
@@ -157,7 +135,7 @@ namespace engine
 	}
 
 	/**
-	 * Setter for the height of the window
+	 * Set the height of this Window.
 	 * @param		unsigned int		The new height of the window
 	 * @return		void
 	 */
@@ -167,7 +145,7 @@ namespace engine
 	}
 
 	/**
-	 * Getter for the height of the window
+	 * Get the height of this Window.
 	 * @return		unsigned int
 	 */
 	unsigned int Win32Window::GetHeight()
@@ -176,7 +154,7 @@ namespace engine
 	}
 
 	/**
-	 * Getter for the window handle of the window
+	 * Get the physical WindowHandler of this Window.
 	 * @return		HWND
 	 */
 	HWND Win32Window::GetHWin()

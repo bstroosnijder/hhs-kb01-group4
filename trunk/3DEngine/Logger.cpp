@@ -49,11 +49,11 @@ namespace engine
 	 */
 	Logger::Logger()
 	{
-		//Nothing here?
+
 	}
 
 	/**
-	 * Destruct the Logger object.
+	 * Destructs the Logger object.
 	 * @return		void
 	 */
 	Logger::~Logger()

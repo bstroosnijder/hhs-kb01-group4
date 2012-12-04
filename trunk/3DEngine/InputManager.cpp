@@ -12,11 +12,11 @@ namespace engine
 	 */
 	InputManager::InputManager()
 	{
-		//Nothing here?
+
 	}
 
 	/**
-	 * Destroys the InputManager object.
+	 * Destructs the InputManager object.
 	 * @return		void
 	 */
 	InputManager::~InputManager()
@@ -30,5 +30,6 @@ namespace engine
 	 */
 	void InputManager::CleanUp()
 	{
+
 	}
 }

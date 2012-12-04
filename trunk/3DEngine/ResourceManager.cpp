@@ -12,11 +12,11 @@ namespace engine
 	 */
 	ResourceManager::ResourceManager()
 	{
-		//Nothing here?
+
 	}
 
 	/**
-	 * Destroys the ResourceManager object.
+	 * Destructs the ResourceManager object.
 	 * @return		void
 	 */
 	ResourceManager::~ResourceManager()
