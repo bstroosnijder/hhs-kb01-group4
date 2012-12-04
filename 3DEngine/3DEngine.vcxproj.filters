@@ -7,9 +7,6 @@
     <ClCompile Include="TextLog.cpp">
       <Filter>Source Files\engine\logger</Filter>
     </ClCompile>
-    <ClCompile Include="LogStrategy.cpp">
-      <Filter>Source Files\engine\logger</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files\engine\logger</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\engine\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\engine\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

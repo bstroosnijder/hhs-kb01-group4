@@ -12,6 +12,7 @@ namespace engine
 	public:
 		InputManager();
 		~InputManager();
+		void CleanUp();
 	};
 }
 

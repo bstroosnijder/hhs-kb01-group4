@@ -61,6 +61,8 @@ namespace engine
 	}
 	
 	/**
+	 * Creates a new scene
+	 * @return		Scene*
 	 */
 	Scene* SceneManager::NewScene()
 	{

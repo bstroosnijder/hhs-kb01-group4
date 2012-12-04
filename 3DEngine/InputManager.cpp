@@ -17,10 +17,18 @@ namespace engine
 
 	/**
 	 * Destroys the InputManager object.
-	 * @return	void
+	 * @return		void
 	 */
 	InputManager::~InputManager()
 	{
-		//Todo
+		this->CleanUp();
+	}
+
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
+	void InputManager::CleanUp()
+	{
 	}
 }

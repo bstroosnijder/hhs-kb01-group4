@@ -24,6 +24,7 @@ namespace engine
 
 		Logger();
 		~Logger();
+		void CleanUp();
 		void AddStrategy(LogStrategy* argPStrat);
 		void RemoveStrategy(LogStrategy* argPStrat);
 		std::list<LogStrategy*> GetStrategies();

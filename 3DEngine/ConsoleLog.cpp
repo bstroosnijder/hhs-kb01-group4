@@ -3,11 +3,8 @@
 namespace engine
 {
 	//---Private attributes---
-
 	//---Public attributes---
-
 	//---Private methods---
-
 	//---Public methods---
 
 	/**
@@ -15,27 +12,34 @@ namespace engine
 	 */
 	ConsoleLog::ConsoleLog()
 	{
-
 	}
 
 	/**
 	 * Destruct the ConsoleLog object.
-	 * @return	void
+	 * @return		void
 	 */
 	ConsoleLog::~ConsoleLog()
 	{
+		this->CleanUp();
+	}
 
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
+	void ConsoleLog::CleanUp()
+	{
 	}
 
 	/**
 	 * Write a message to the console.
-	 * @param	argPMessage		Char pointer that contains the message to be printed to the console.
-	 * @param	argPSeverity	Char pointer that contains the textual representation of the severity of the log item.
-	 * @param	argPDate		Char pointer that contains the date on which this message was emitted.
-	 * @param	argPTime		Char pointer that contains the time on which this message was emitted.
-	 * @param	argPFileName	Char pointer that contains the file name in which this message was emitted.
-	 * @param	argLineNumber	Integer that indicates the line number on which this message was emitted.
-	 * @return	void
+	 * @param		char*		Char pointer that contains the message to be printed to the console.
+	 * @param		char*		Char pointer that contains the textual representation of the severity of the log item.
+	 * @param		char*		Char pointer that contains the date on which this message was emitted.
+	 * @param		char*		Char pointer that contains the time on which this message was emitted.
+	 * @param		char*		Char pointer that contains the file name in which this message was emitted.
+	 * @param		int			Integer that indicates the line number on which this message was emitted.
+	 * @return		void
 	 */
 	void ConsoleLog::Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
 	{

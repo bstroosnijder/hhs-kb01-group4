@@ -33,6 +33,7 @@ namespace engine
 
 	/**
 	 * Pulses the kernel
+	 * @return		void
 	 */
 	void Sandbox::HeartBeat()
 	{

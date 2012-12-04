@@ -25,6 +25,8 @@ namespace engine
 	}
 
 	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
 	 */
 	void Scene::CleanUp()
 	{
@@ -56,20 +58,39 @@ namespace engine
 		
 	}
 
+	/**
+	 * Adds a window to the window list of the scene. the scene will render in these windows
+	 * @param		Window*						The window to add to the scene
+	 * @return		void
+	 */
 	void Scene::AddWindow(Window* argPWindow)
 	{
 		this->windows.push_back(argPWindow);
 	}
 
+	/**
+	 * Removes a window from the window list of the scene
+	 * @param		Window*						The window to remove
+	 * @return		void
+	 */
 	void Scene::RemoveWindow(Window* argPWindow)
 	{
 	}
 
+	/**
+	 * Gets a window by index from the scene's window list
+	 * @param		int							The index to get the window of
+	 * @return		Window*
+	 */
 	Window* Scene::GetWindow(int argIndex)
 	{
 		return this->windows.at(argIndex);
 	}
 
+	/**
+	 * Getter for the window list
+	 * @return		std::vector<Window*>		The list of windows
+	 */
 	std::vector<Window*> Scene::GetWindows()
 	{
 		return this->windows;

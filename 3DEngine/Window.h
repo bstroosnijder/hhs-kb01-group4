@@ -24,7 +24,7 @@ namespace engine
 		virtual void SetY(unsigned int argY)=0;
 		virtual unsigned int GetY()=0;
 		virtual void SetWidth(unsigned int argWidth)=0;
-		virtual unsigned int SetWidth()=0;
+		virtual unsigned int GetWidth()=0;
 		virtual void SetHeight(unsigned int argHeight)=0;
 		virtual unsigned int GetHeight()=0;
 	};
