@@ -46,6 +46,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\engine\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Driehoek.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -100,6 +103,12 @@
       <Filter>Header Files\engine\renderer</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Driehoek.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
   </ItemGroup>

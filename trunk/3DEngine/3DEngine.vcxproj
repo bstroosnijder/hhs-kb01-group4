@@ -49,7 +49,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,6 +69,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="DirectX9Renderer.cpp" />
+    <ClCompile Include="Driehoek.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="DirectX9Renderer.h" />
+    <ClInclude Include="Driehoek.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kernel.h" />
@@ -98,6 +100,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TextLog.h" />
+    <ClInclude Include="Vector3.h" />
     <ClInclude Include="Win32Window.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowManager.h" />

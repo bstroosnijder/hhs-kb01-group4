@@ -3,7 +3,7 @@
 
 #include "Renderer.h"
 #include "Win32Window.h"
-#include <d3d9.h>
+#include <d3dx9.h>
 
 namespace engine
 {
@@ -27,6 +27,9 @@ namespace engine
 		void CleanUp();
 		void Clear();
 		void BeginScene();
+		void SetupWorldMatrix();
+		void SetupViewMatrix();
+		void SetupProjectionMatrix();
 		void EndScene();
 		void Present(Window* argWindow);
 		void DrawPrimitive();

@@ -103,6 +103,7 @@ namespace engine
 	 */
 	void Scene::AddEntity(Entity* entity)
 	{
+		// TODO: zorgen dat cameras niet toegevoegd kunnen worden
 		entities.push_back(entity);
 	}
 
@@ -140,5 +141,15 @@ namespace engine
 	std::vector<Entity*> Scene::GetEntities()
 	{
 		return entities;
+	}
+
+	void Scene::SetCamera(Camera* argPCamera)
+	{
+		this->camera = argPCamera;
+	}
+
+	Camera* Scene::GetCamera()
+	{
+		return this->camera;
 	}
 }
