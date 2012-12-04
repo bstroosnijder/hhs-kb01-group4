@@ -15,10 +15,10 @@ namespace engine
 	private:
 		HWND hWin;
 
-		void Init(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
+		void Init(char* argPTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight);
 	public:
 		Win32Window();
-		Win32Window(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
+		Win32Window(char* argPTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight);
 		~Win32Window();
 		void CleanUp();
 		void SetTitle(char* argTitle);
