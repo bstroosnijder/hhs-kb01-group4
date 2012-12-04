@@ -11,6 +11,7 @@ namespace engine
 	public:
 		ResourceManager();
 		~ResourceManager();
+		void CleanUp();
 	};
 }
 

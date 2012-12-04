@@ -14,8 +14,8 @@ namespace engine
 
 	/**
 	 * Obtain a string representation of the severity of the log item.
-	 * @param	argSeverity		The integer representing the severity of the log item which should countain either 1, 2 or 3.
-	 * @return					The string (char pointer) representing the severity of the log item.
+	 * @param		argSeverity					The integer representing the severity of the log item which should countain either 1, 2 or 3.
+	 * @return		char*						The string (char pointer) representing the severity of the log item.
 	 */
 	char* Logger::GetSeverity(int argSeverity)
 	{
@@ -54,17 +54,25 @@ namespace engine
 
 	/**
 	 * Destruct the Logger object.
-	 * @return	void
+	 * @return		void
 	 */
 	Logger::~Logger()
 	{
-		//Todo
+		this->CleanUp();
+	}
+
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
+	void Logger::CleanUp()
+	{
 	}
 
 	/**
 	 * Add a strategy to which the logger will log. 
-	 * @param	argPStrategy	The LogStrategy to add to the logger.
-	 * @return	void
+	 * @param		LogStrategy*				The LogStrategy to add to the logger.
+	 * @return		void
 	 */
 	void Logger::AddStrategy(LogStrategy* argPStrategy) 
 	{
@@ -73,8 +81,8 @@ namespace engine
 
 	/**
 	 * Remove a strategy from the logger to prevent the logger from logging to this strategy. 
-	 * @param	argPStrategy	The LogStrategy to be removed from the logger.
-	 * @return	void
+	 * @param		LogStrategy*				The LogStrategy to be removed from the logger.
+	 * @return		void
 	 */
 	void Logger::RemoveStrategy(LogStrategy* argPStrategy)
 	{
@@ -83,7 +91,7 @@ namespace engine
 
 	/**
 	 * Obtain all the strategies the logger is currently logging to.
-	 * @return					A list containing LogStrategy items which the logger is currently logging to.
+	 * @return		std::list<LogStrategy*>		A list containing LogStrategy items which the logger is currently logging to.
 	 */
 	std::list<LogStrategy*> Logger::GetStrategies()
 	{
@@ -92,11 +100,11 @@ namespace engine
 
 	/**
 	 * Log to all the strategies the logger contains.
-	 * @param	argPMessage		The message that's going to be logged.
-	 * @param	argSeverity		The severity of the strategy which should countain either 1, 2 or 3.
-	 * @param	argPFile		The file from which the log action was called.
-	 * @param	argLineNumber	The line number from which the log action was called.
-	 * @return	void
+	 * @param		char*						The message that's going to be logged.
+	 * @param		int							The severity of the strategy which should countain either 1, 2 or 3.
+	 * @param		char*						The file from which the log action was called.
+	 * @param		int							The line number from which the log action was called.
+	 * @return		void
 	 */
 	void Logger::Log(char* argPMessage, int argSeverity, char* argPFile, int argLineNumber)
 	{	

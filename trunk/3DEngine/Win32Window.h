@@ -28,7 +28,7 @@ namespace engine
 		void SetY(unsigned int argY);
 		unsigned int GetY();
 		void SetWidth(unsigned int argWidth);
-		unsigned int SetWidth();
+		unsigned int GetWidth();
 		void SetHeight(unsigned int argHeight);
 		unsigned int GetHeight();
 		HWND GetHWin();

@@ -71,7 +71,7 @@ namespace engine
 	}
 
 	/**
-	 * Getter
+	 * Getter for the window manager
 	 * @return		WindowManager*
 	 */
 	WindowManager* Kernel::GetWindowManager()
@@ -80,7 +80,7 @@ namespace engine
 	}
 	
 	/**
-	 * Getter
+	 * Getter fpr the scene manager
 	 * @return		SceneManager*
 	 */
 	SceneManager* Kernel::GetSceneManager()
@@ -89,7 +89,7 @@ namespace engine
 	}
 	
 	/**
-	 * Getter
+	 * Getter for the resource manager
 	 * @return		ResourceManager*
 	 */
 	ResourceManager* Kernel::GetResourceManager()
@@ -98,7 +98,7 @@ namespace engine
 	}
 	
 	/**
-	 * Getter
+	 * Getter for the input manager
 	 * @return		InputManager*
 	 */
 	InputManager* Kernel::GetInputManager()
@@ -108,15 +108,19 @@ namespace engine
 
 	/**
 	 * Add a renderer to the winRenderer map, with window as the key.
-	 * @param	argPWindow		The Window pointer serving as key for the winRenderer map entry.
-	 * @param	argPRenderer	The Renderer pointer serving as value for the winRenderer map entry.
-	 * @return	void
+	 * @param		argPWindow		The Window pointer serving as key for the winRenderer map entry.
+	 * @param		argPRenderer	The Renderer pointer serving as value for the winRenderer map entry.
+	 * @return		void
 	 */
 	void Kernel::AddWindowRenderer(Window* argPWindow, Renderer* argPRenderer)
 	{
 		this->winRenderer[argPWindow] = argPRenderer;
 	}
 
+	/**
+	 * The render loops through all scenes and their windows to render them out
+	 * @return		void
+	 */
 	void Kernel::Render()
 	{
 		// Loop through the scenes
@@ -137,10 +141,10 @@ namespace engine
 	}
 
 	/**
-	 * The heartbeat makes sure that the windows will be rendered. 
-	 * It also check of there is a window created. If it does it renders. If it does not nothing happens.
-	 * Yeah this is dog. Sorry for the mess ;'(
-	 * @return	void
+	 * The heartbeat makes sure that the windows will be rendered.
+	 * it provides the application with a loop and an exit condition
+	 * which will pulse like a heartbeat to either render or manage what ever is needed
+	 * @return		void
 	 */
 	void Kernel::HeartBeat()
 	{

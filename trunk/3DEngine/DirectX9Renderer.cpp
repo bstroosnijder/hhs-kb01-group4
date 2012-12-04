@@ -32,16 +32,16 @@ namespace engine
 
 	/**
 	 * Destruct the DirectX9Renderer object.
-	 * @return	void
+	 * @return		void
 	 */
 	DirectX9Renderer::~DirectX9Renderer()
 	{
-		CleanUp();
+		this->CleanUp();
 	}
 
 	/**
-	 * Clean the DirectX9Renderer object, releasing every Direct3D9 object associated with it.
-	 * @return	void
+	 * Lazy cleanup method for destructing
+	 * @return		void
 	 */
 	void DirectX9Renderer::CleanUp()
 	{
@@ -62,6 +62,7 @@ namespace engine
 	/**
 	 * Clears the screen.
 	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::Clear()
 	{
@@ -71,6 +72,7 @@ namespace engine
 	/**
 	 * Begins a scene.
 	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::BeginScene()
 	{
@@ -80,6 +82,7 @@ namespace engine
 	/**
 	 * Ends a scene.
 	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::EndScene()
 	{
@@ -88,8 +91,9 @@ namespace engine
 
 	/**
 	 * Presents stuff to the window.
-	 * @param	window		The window to present the drawn data to.
+	 * @param		window		The window to present the drawn data to.
 	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::Present(Window* argPWindow)
 	{
@@ -103,24 +107,23 @@ namespace engine
 	 */
 	void DirectX9Renderer::DrawPrimitive()
 	{
-
 	}
 
 	/**
 	 * Sets the FVF.
 	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::SetFVF()
 	{
-
 	}
 
 	/**
 	 * Sets the stream source.
 	 * TODO more info
+	 * @return		void
 	 */
 	void DirectX9Renderer::SetStreamSource()
 	{
-
 	}
 }

@@ -14,6 +14,7 @@ namespace engine
 	public:
 		ConsoleLog();
 		~ConsoleLog();
+		void CleanUp();
 		virtual void Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber);
 	};
 }

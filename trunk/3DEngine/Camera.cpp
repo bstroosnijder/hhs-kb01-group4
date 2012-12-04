@@ -1,12 +1,12 @@
 #include "Camera.h"
 
-//---Private attributes---
-//---Public attributes---
-//---Private methods---
-//---Public methods---
-
 namespace engine
 {
+	//---Private attributes---
+	//---Public attributes---
+	//---Private methods---
+	//---Public methods---
+
 	/**
 	 * Empty constructor Camera
 	 * No idea why we have this
@@ -14,6 +14,7 @@ namespace engine
 	Camera::Camera()
 	{
 	}
+
 	/**
 	 * Construct Camera
 	 * @param		int		argX		The X location for the camera
@@ -46,18 +47,29 @@ namespace engine
 	 */
 	Camera::~Camera()
 	{
+		this->CleanUp();
+	}
+
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
+	void Camera::CleanUp()
+	{
 	}
 
 	/**
 	 * Draw does nothing yet
+	 * @param		Renderer*		The renderer used to draw
+	 * @return		void
 	 */
 	void Camera::Draw(Renderer* argPRenderer)
 	{
-
 	}
 
 	/**
 	 * Update does nothing yet
+	 * @return		void
 	 */
 	void Camera::Update()
 	{
