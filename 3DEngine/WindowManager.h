@@ -13,7 +13,7 @@ namespace engine
 	class WindowManager
 	{
 	private:
-		std::map<HWND, Window*> windows;
+		static std::map<HWND, Window*> windows;
 	public:
 		WindowManager();
 		~WindowManager();
@@ -24,7 +24,7 @@ namespace engine
 		std::map<HWND, Window*> GetWindows();
 		Window* NewWindow();
 		Window* NewWindow(char* argPTitle, int argX, int argY, int argWidth, int argHeight);
-		void RemoveWindow(HWND argHWND);
+		static void RemoveWindow(HWND argHWND);
 		static LRESULT WINAPI MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam);
 	};
 }
