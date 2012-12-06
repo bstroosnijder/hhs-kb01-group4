@@ -146,23 +146,4 @@ namespace engine
 	{
 		return entities;
 	}
-
-	/**
-	 * Set the Camera object associated with this scene.
-	 * @param		Camera*						The Camera pointer to be associated with this Scene.
-	 * @return		void
-	 */
-	void Scene::SetCamera(Camera* argPCamera)
-	{
-		this->camera = argPCamera;
-	}
-
-	/**
-	 * Obtain the Camera object associated with this scene.
-	 * @return		Camera*						The Camera pointer associated with this Scene.
-	 */
-	Camera* Scene::GetCamera()
-	{
-		return this->camera;
-	}
 }

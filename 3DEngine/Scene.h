@@ -21,7 +21,6 @@ namespace engine
 	private:
 		std::vector<Window*> windows;
 		std::vector<Entity*> entities;
-		Camera* camera;
 	public:
 		Scene();
 		~Scene();
@@ -38,8 +37,6 @@ namespace engine
 		void RemoveEntity(Entity* argPEntity);
 		Entity* GetEntity(int argIndex);
 		std::vector<Entity*> GetEntities();
-		void SetCamera(Camera* argPCamera);
-		Camera* GetCamera();
 	};
 }
 

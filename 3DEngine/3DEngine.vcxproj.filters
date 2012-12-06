@@ -105,11 +105,11 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="Driehoek.h">
       <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +163,9 @@
     </Filter>
     <Filter Include="Source Files\engine\scene\entities">
       <UniqueIdentifier>{422ee034-d4bc-4220-99b5-c95060d5941a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\utils">
+      <UniqueIdentifier>{ddfc1ad5-f700-4e8f-8c0b-d626735abd59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
