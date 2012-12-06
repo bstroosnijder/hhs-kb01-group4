@@ -2,7 +2,6 @@
 #define SANDBOX_H_
 
 #include "Kernel.h"
-#include <sstream>
 
 namespace engine
 {

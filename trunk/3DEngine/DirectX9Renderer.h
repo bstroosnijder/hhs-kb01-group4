@@ -1,9 +1,10 @@
 #ifndef DIRECTX9RENDERER_H_
 #define DIRECTX9RENDERER_H_
 
+#include <d3dx9.h>
+#include <Windows.h>
 #include "Renderer.h"
 #include "Win32Window.h"
-#include <d3dx9.h>
 
 namespace engine
 {
@@ -32,9 +33,9 @@ namespace engine
 		void SetupProjectionMatrix();
 		void EndScene();
 		void Present(Window* argWindow);
-		void DrawPrimitive();
-		void SetFVF();
 		void SetStreamSource();
+		void SetFVF();
+		void DrawPrimitive();
 	};
 }
 

@@ -1,5 +1,5 @@
 #include "Kernel.h"
-#include <sstream>
+
 namespace engine
 {
 	//---Private attributes---
@@ -66,7 +66,7 @@ namespace engine
 	Renderer* Kernel::GetRenderer(int argIndex)
 	{
 		//The array index can not be negative or larger than the size of the array.
-		if(argIndex >= 0 && argIndex < this->renderers.size()) 
+		if(argIndex >= 0 && argIndex < (int)this->renderers.size()) 
 		{
 			return this->renderers[argIndex];
 		}
@@ -145,7 +145,10 @@ namespace engine
 				pRenderer->SetupWorldMatrix();
 				pRenderer->SetupViewMatrix();
 				pRenderer->SetupProjectionMatrix();
-				pScene->Draw(pRenderer);
+				pRenderer->SetStreamSource();
+				pRenderer->SetFVF();
+				pRenderer->DrawPrimitive();
+				//pScene->Draw(pRenderer);
 				pRenderer->EndScene();
 				pRenderer->Present(pWindow);
 			}

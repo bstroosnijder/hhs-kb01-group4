@@ -1,5 +1,13 @@
 #include "DirectX9Renderer.h"
 
+struct CUSTOMVERTEX
+{
+    float x, y, z;
+    unsigned long color;
+};
+
+#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_DIFFUSE)
+
 namespace engine
 {
 	//---Private attributes---
@@ -23,11 +31,32 @@ namespace engine
 								D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 								&presentParameters, &pDevice);
 
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 		pDevice->SetRenderState(D3DRS_LIGHTING, false);
 
 		pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+		// testing
+		
+    // Initialize three vertices for rendering a triangle
+    CUSTOMVERTEX g_Vertices[] =
+    {
+		{  0.0f, 1.0f, 0.0f, 0xFFFF0000 },
+		{ -1.0f,-1.0f, 0.0f, 0xFFFF0000 },
+		{  1.0f,-1.0f, 0.0f, 0xFFFF0000 },
+    };
+
+    // Create the vertex buffer.
+	this->pDevice->CreateVertexBuffer( 3 * sizeof( CUSTOMVERTEX ),
+        0, D3DFVF_CUSTOMVERTEX,
+		D3DPOOL_DEFAULT, &this->pVertexBuffer, NULL );
+
+    // Fill the vertex buffer.
+    VOID* pVertices;
+	this->pVertexBuffer->Lock( 0, sizeof( g_Vertices ), ( void** )&pVertices, 0 );
+    memcpy( pVertices, g_Vertices, sizeof( g_Vertices ) );
+	this->pVertexBuffer->Unlock();
 	}
 
 	/**
@@ -87,6 +116,9 @@ namespace engine
 	void DirectX9Renderer::SetupWorldMatrix()
 	{
 		D3DXMATRIXA16 matWorld;
+		unsigned long iTime = timeGetTime() % 1000;
+		float fAngle = iTime * ( 2.0f * D3DX_PI ) / 1000.0f;
+		D3DXMatrixRotationY( &matWorld, fAngle );
 		this->pDevice->SetTransform( D3DTS_WORLD, &matWorld );
 	}
 	
@@ -136,23 +168,6 @@ namespace engine
 	{
 		Win32Window* window = (Win32Window*)argPWindow;
 		this->pDevice->Present(NULL, NULL, window->GetHWin(), NULL);
-	} 
-
-	/**
-	 * Draws a primitive figure.
-	 * @return		void
-	 */
-	void DirectX9Renderer::DrawPrimitive()
-	{
-	}
-
-	/**
-	 * Sets the Flexible Vertex Format.
-	 * TODO: More information.
-	 * @return		void
-	 */
-	void DirectX9Renderer::SetFVF()
-	{
 	}
 
 	/**
@@ -162,5 +177,25 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetStreamSource()
 	{
+		this->pDevice->SetStreamSource( 0, this->pVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+	}
+
+	/**
+	 * Sets the Flexible Vertex Format.
+	 * TODO: More information.
+	 * @return		void
+	 */
+	void DirectX9Renderer::SetFVF()
+	{
+		this->pDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+	}
+
+	/**
+	 * Draws a primitive figure.
+	 * @return		void
+	 */
+	void DirectX9Renderer::DrawPrimitive()
+	{
+		this->pDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, 1 );
 	}
 }

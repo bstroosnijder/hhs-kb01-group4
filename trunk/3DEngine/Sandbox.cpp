@@ -79,9 +79,9 @@ namespace engine
 
 		if(pRenderer == 0) 
 		{
-			std::stringstream msg;
-			msg << "Renderer with index " << argRendererIndex << " could not be found!"; 
-			this->kernel->GetLogger()->Log((char*)msg.str().c_str(), Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			char* msg = "Renderer with 888 could not be found";
+			sprintf_s(msg, sizeof(msg), "Renderer with index %d could not be found", argRendererIndex);
+			this->kernel->GetLogger()->Log(msg, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
 		}
 
 		Window* pWindow = this->kernel->GetWindowManager()->NewWindow(argPTitle, argX, argY, argWidth, argHeight);

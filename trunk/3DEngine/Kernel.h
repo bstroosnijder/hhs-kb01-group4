@@ -2,7 +2,6 @@
 #define KERNEL_H_
 
 #include <map>
-#include <sstream>
 #include "Logger.h"
 #include "ConsoleLog.h"
 #include "TextLog.h"
