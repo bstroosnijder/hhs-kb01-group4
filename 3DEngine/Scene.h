@@ -4,7 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
-#include <algorithm>
 #include "Entity.h"
 #include "Camera.h"
 #include "Renderer.h"
@@ -25,6 +24,7 @@ namespace engine
 		Scene();
 		~Scene();
 		void CleanUp();
+		void Load();
 		
 		void Update();
 		void Draw(Renderer* argPRenderer);
