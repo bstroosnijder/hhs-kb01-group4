@@ -23,10 +23,10 @@ namespace engine
 		void RemoveLogStrategy(LogStrategy* argPLogStrat);
 		
 		Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
-		Scene* NewScene();
+		Scene* NewScene(char* argPName);
 		
 		void AddScene(Scene* argPScene);
-		void RemoveScene(Scene* argPScene);
+		void RemoveScene(char* argPName);
 	};
 }
 

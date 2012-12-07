@@ -12,7 +12,7 @@ namespace engine
 	 */
 	SceneManager::SceneManager()
 	{
-		scenes = std::vector<Scene*>();
+		scenes = std::map<char*, Scene*>();
 	}
 
 	/**
@@ -43,48 +43,42 @@ namespace engine
 
 	/**
 	 * Obtain the Scene pointer using an index.
-	 * @param		index					The index in the collection by which to obtain the Scene pointer.
+	 * @param		char*		argPName	The index name in the collection by which to obtain the Scene pointer.
 	 * @return		scene					The Scene at the given index, NULL returned if no scene exists on the given index.
 	 */
-	Scene* SceneManager::GetScene(int index)
+	Scene* SceneManager::GetScene(char* argPName)
 	{
-		return scenes.at(index);
+		return scenes.at(argPName);
 	}
 
 	/**
 	 * Obtain all the Scene pointers in the scenes collection.
-	 * @return		std::vector<Scene*>		The entire scene collection.
+	 * @return		std:mapo<char,Scene*>		The entire scene collection.
 	 */
-	std::vector<Scene*> SceneManager::GetScenes()
+	std::map<char*, Scene*> SceneManager::GetScenes()
 	{
-		return scenes;
+		return this -> scenes;
 	}
 	
 	/**
 	 * Creates a new scene
+	 * @param		char* argPName is a custom index name within the scenes collection. 
 	 * @return		Scene*
 	 */
-	Scene* SceneManager::NewScene()
+	Scene* SceneManager::NewScene(char* argPName)
 	{
 		Scene* scene = new Scene();
-		this->scenes.push_back(scene);
+		scenes[argPName] = scene;
 		return scene;
 	}
 
 	/**
 	 * Remove a Scene pointer from the scenes collection.
-	 * @param		Scene*					The Scene pointer to remove from the collection of scenes.
+	 * @param		Scene*		argPName	The index name to remove from the collection of scenes.
 	 * @return		void
 	 */
-	void SceneManager::RemoveScene(Scene* argPScene)
+	void SceneManager::RemoveScene(char* argPName)
 	{
-		//Find the position of the given scene and store it in 'position'.
-		//Position is set equal to scenes.end() when the object can't be found.
-		std::vector<Scene*>::iterator position = std::find(this->scenes.begin(), this->scenes.end(), argPScene);
-
-		if(position != this->scenes.end()) 
-		{
-			this->scenes.erase(position);
-		}
+		this -> scenes.erase(argPName);
 	}
 }
