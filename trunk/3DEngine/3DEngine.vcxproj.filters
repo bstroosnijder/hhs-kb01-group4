@@ -49,6 +49,7 @@
     <ClCompile Include="Driehoek.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
+    <ClCompile Include="resource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -111,6 +112,7 @@
     <ClInclude Include="Vector3.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -166,6 +168,12 @@
     </Filter>
     <Filter Include="Header Files\engine\utils">
       <UniqueIdentifier>{ddfc1ad5-f700-4e8f-8c0b-d626735abd59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\resource">
+      <UniqueIdentifier>{ee870158-f886-418d-836b-67ee034814b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\resource">
+      <UniqueIdentifier>{ede20f68-a0c9-4225-b0da-1b91fcf14e1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

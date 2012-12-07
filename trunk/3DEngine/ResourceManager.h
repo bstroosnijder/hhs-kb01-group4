@@ -16,6 +16,7 @@ namespace engine
 		ResourceManager();
 		~ResourceManager();
 		void CleanUp();
+		void LoadResource(char* argPResourceName);
 
 		//Resource* GetResource(char* argPSceneName);
 		//std::map<char*, Resource*> GetResources();

@@ -32,6 +32,16 @@ namespace engine
 	{
 	}
 
+	/**
+	 * Loads a resource using it's file name and converting it into a Resource object.
+	 * @param	argPResourceName	The file name of the resource.
+	 * @return	void
+	 */
+	void LoadResource(char* argPResourceName)
+	{
+
+	}
+
 	
 	/*
 	Resource* ResourceManager::GetResource(char* argPResourceName)
