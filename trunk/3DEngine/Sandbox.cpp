@@ -36,9 +36,9 @@ namespace engine
 	 * Animate the Kernel, starting it's heartbeat.
 	 * @return		void
 	 */
-	void Sandbox::HeartBeat()
+	void Sandbox::Start()
 	{
-		this->kernel->HeartBeat();
+		this->kernel->Start();
 	}
 
 	/**

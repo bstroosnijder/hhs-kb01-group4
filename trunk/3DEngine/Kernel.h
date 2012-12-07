@@ -39,8 +39,8 @@ namespace engine
 		ResourceManager* GetResourceManager();
 		InputManager* GetInputManager();
 		void AddWindowRenderer(Window* argWindow, Renderer* argRenderer);
-		void Render();
 		void HeartBeat();
+		void Start();
 	};
 }
 #endif

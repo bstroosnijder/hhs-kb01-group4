@@ -17,7 +17,7 @@ namespace engine
 		Sandbox();
 		~Sandbox();
 		void CleanUp();
-		void HeartBeat();
+		void Start();
 		
 		void AddLogStrategy(LogStrategy* argPLogStrat);
 		void RemoveLogStrategy(LogStrategy* argPLogStrat);
