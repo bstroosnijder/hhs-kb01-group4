@@ -33,7 +33,7 @@ namespace engine
 		~Kernel();
 		void CleanUp();
 		static Logger* GetLogger();
-		Renderer* GetRenderer(int argIndex);
+		Renderer* GetRenderer(unsigned int argIndex);
 		WindowManager* GetWindowManager();
 		SceneManager* GetSceneManager();
 		ResourceManager* GetResourceManager();
