@@ -60,13 +60,12 @@ namespace engine
 
 	/**
 	 * Get the renderer on the specified index.
-	 * @param		argIndex		The index of the renderer to return.
+	 * @param		unsigned int		The index of the renderer to return.
 	 * @return		Renderer*
 	 */
-	Renderer* Kernel::GetRenderer(int argIndex)
+	Renderer* Kernel::GetRenderer(unsigned int argIndex)
 	{
-		//The array index can not be negative or larger than the size of the array.
-		if(argIndex >= 0 && argIndex < (int)this->renderers.size()) 
+		if(argIndex < (int)this->renderers.size()) 
 		{
 			return this->renderers[argIndex];
 		}
@@ -114,8 +113,8 @@ namespace engine
 
 	/**
 	 * Add a renderer to the winRenderer map with window as the key.
-	 * @param		argPWindow		The Window pointer serving as key for the winRenderer map entry.
-	 * @param		argPRenderer	The Renderer pointer serving as value for the winRenderer map entry.
+	 * @param		argPWindow			The Window pointer serving as key for the winRenderer map entry.
+	 * @param		argPRenderer		The Renderer pointer serving as value for the winRenderer map entry.
 	 * @return		void
 	 */
 	void Kernel::AddWindowRenderer(Window* argPWindow, Renderer* argPRenderer)
@@ -125,7 +124,6 @@ namespace engine
 
 	/**
 	 * Loop through all scenes and their windows to render them.
-	 * 
 	 * @return		void
 	 */
 	void Kernel::HeartBeat()
