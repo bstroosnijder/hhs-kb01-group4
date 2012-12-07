@@ -64,6 +64,26 @@ namespace engine
 	}
 
 	/**
+	 * Creates a Scene and adds a window to the scene's collection.
+	 * @param		int		argWindow is the window that needs to be added to the scene.
+	 * @return		Scene*	returns the created scene.
+	 */
+	Scene* Sandbox::NewScene(char* argPName)
+	{
+		return this->kernel->GetSceneManager()->NewScene(argPName);
+	}
+
+	/**
+	 * Removes a scene to the scene collection within the Scene manager
+	 * @param		Scene*		argScene is the scene that will be removed in the collection
+	 * @return		void
+	 */
+	void Sandbox::RemoveScene(char* argPName)
+	{
+		this->kernel->GetSceneManager()->RemoveScene(argPName);
+	}
+
+	/**
 	 * Creates a Window and creates the association with this Window and the Renderer object.
 	 * @param		int		argRendererIndex is the index of the renderer to be added to the window we're creating.
 	 * @param		char*	argPTitle is the title for the new window
@@ -88,25 +108,5 @@ namespace engine
 		this->kernel->AddWindowRenderer(pWindow, pRenderer);
 
 		return pWindow;
-	}
-
-	/**
-	 * Creates a Scene and adds a window to the scene's collection.
-	 * @param		int		argWindow is the window that needs to be added to the scene.
-	 * @return		Scene*	returns the created scene.
-	 */
-	Scene* Sandbox::NewScene(char* argPName)
-	{
-		return this->kernel->GetSceneManager()->NewScene(argPName);
-	}
-
-	/**
-	 * Removes a scene to the scene collection within the Scene manager
-	 * @param		Scene*		argScene is the scene that will be removed in the collection
-	 * @return		void
-	 */
-	void Sandbox::RemoveScene(char* argPName)
-	{
-		this->kernel->GetSceneManager()->RemoveScene(argPName);
 	}
 }

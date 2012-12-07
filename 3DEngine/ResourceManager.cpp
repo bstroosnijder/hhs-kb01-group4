@@ -12,7 +12,7 @@ namespace engine
 	 */
 	ResourceManager::ResourceManager()
 	{
-
+		//this->resources = std::map<char*, Resource*>();
 	}
 
 	/**
@@ -31,4 +31,27 @@ namespace engine
 	void ResourceManager::CleanUp()
 	{
 	}
+
+	
+	/*
+	Resource* ResourceManager::GetResource(char* argPResourceName)
+	{
+		return this->resources[argPSceneName];
+	}
+
+	std::map<char*, Resource*> ResourceManager::GetResources()
+	{
+		return this->resources;
+	}
+
+	Resource* ResourceManager::NewResource(char* argPResourceName)
+	{
+		this->resources[argPSceneName] = new Resource();
+	}
+
+	void ResourceManager::RemoveResource(char* argPResourceName)
+	{
+		this->resources.erase(argPSceneName);
+	}
+	*/
 }

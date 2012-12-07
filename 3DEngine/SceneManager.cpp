@@ -43,17 +43,17 @@ namespace engine
 
 	/**
 	 * Obtain the Scene pointer using an index.
-	 * @param		char*		argPName	The index name in the collection by which to obtain the Scene pointer.
-	 * @return		scene					The Scene at the given index, NULL returned if no scene exists on the given index.
+	 * @param		char*		argPName		The index name in the collection by which to obtain the Scene pointer.
+	 * @return		scene						The Scene at the given index, NULL returned if no scene exists on the given index.
 	 */
-	Scene* SceneManager::GetScene(char* argPName)
+	Scene* SceneManager::GetScene(char* argPSceneName)
 	{
 		return scenes.at(argPName);
 	}
 
 	/**
 	 * Obtain all the Scene pointers in the scenes collection.
-	 * @return		std:mapo<char,Scene*>		The entire scene collection.
+	 * @return		std:mapo<char*, Scene*>		The entire scene collection.
 	 */
 	std::map<char*, Scene*> SceneManager::GetScenes()
 	{
@@ -62,10 +62,10 @@ namespace engine
 	
 	/**
 	 * Creates a new scene
-	 * @param		char* argPName is a custom index name within the scenes collection. 
+	 * @param		char*						argPName is a custom index name within the scenes collection. 
 	 * @return		Scene*
 	 */
-	Scene* SceneManager::NewScene(char* argPName)
+	Scene* SceneManager::NewScene(char* argPSceneName)
 	{
 		Scene* scene = new Scene();
 		scenes[argPName] = scene;
@@ -74,10 +74,10 @@ namespace engine
 
 	/**
 	 * Remove a Scene pointer from the scenes collection.
-	 * @param		Scene*		argPName	The index name to remove from the collection of scenes.
+	 * @param		Scene*						The index name to remove from the collection of scenes.
 	 * @return		void
 	 */
-	void SceneManager::RemoveScene(char* argPName)
+	void SceneManager::RemoveScene(char* argPSceneName)
 	{
 		this -> scenes.erase(argPName);
 	}
