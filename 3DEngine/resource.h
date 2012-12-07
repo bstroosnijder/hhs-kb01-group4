@@ -10,8 +10,8 @@ class resource
 public:
 	resource(void);
 	~resource(void);
-	Texture texture;
-	Model model;
+	//Texture texture;
+	//Model model;
 	
 };
 #endif
