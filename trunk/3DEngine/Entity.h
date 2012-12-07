@@ -17,10 +17,12 @@ namespace engine
 	private:
 	protected:
 		Vector3 position;
+		//Resource* resource;
 	public:
 		virtual void Update()=0;
 		virtual void Draw(Renderer* argPRenderer)=0;
 		virtual void SetPosition(Vector3 argPosition)=0;
+		//virtual void SetResource(Resource* argPResource)=0;
 	};
 }
 

@@ -33,6 +33,18 @@ namespace engine
 	}
 
 	/**
+	 * Loads the scene and all of it's entities
+	 * @return		void
+	 */
+	void Scene::Load()
+	{
+		for each(Entity* pEntity in this->entities)
+		{
+			//argPResourceManager->LoadResource(pEntity->);
+		}
+	}
+
+	/**
 	 * Update each entity in the entities collection.
 	 * @return		void
 	 */
