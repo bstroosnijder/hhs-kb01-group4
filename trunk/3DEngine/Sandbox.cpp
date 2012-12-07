@@ -95,9 +95,9 @@ namespace engine
 	 * @param		int		argWindow is the window that needs to be added to the scene.
 	 * @return		Scene*	returns the created scene.
 	 */
-	Scene* Sandbox::NewScene()
+	Scene* Sandbox::NewScene(char* argPName)
 	{
-		return this->kernel->GetSceneManager()->NewScene();
+		return this->kernel->GetSceneManager()->NewScene(argPName);
 	}
 
 	/**
@@ -105,8 +105,8 @@ namespace engine
 	 * @param		Scene*		argScene is the scene that will be removed in the collection
 	 * @return		void
 	 */
-	void Sandbox::RemoveScene(Scene* argPScene)
+	void Sandbox::RemoveScene(char* argPName)
 	{
-		this->kernel->GetSceneManager()->RemoveScene(argPScene);
+		this->kernel->GetSceneManager()->RemoveScene(argPName);
 	}
 }

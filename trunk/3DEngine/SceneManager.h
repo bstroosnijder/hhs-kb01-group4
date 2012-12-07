@@ -1,7 +1,7 @@
 #ifndef SCENEMANAGER_H_
 #define SCENEMANAGER_H_
 
-#include <vector>
+#include <map>
 #include <algorithm>
 #include "Scene.h"
 
@@ -13,17 +13,17 @@ namespace engine
 	class SceneManager
 	{
 	private:
-		std::vector<Scene*> scenes;
+		std::map<char*, Scene*> scenes;
 	public:
 		SceneManager();
 		~SceneManager();
 		void CleanUp();
 		
 		int GetWindowCount();
-		Scene* GetScene(int argIndex);
-		std::vector<Scene*> GetScenes();
-		Scene* NewScene();
-		void RemoveScene(Scene* argPScene);
+		Scene* GetScene(char* argPName);
+		std::map<char*, Scene*> GetScenes();
+		Scene* NewScene(char* argPName);
+		void RemoveScene(char* argPName);
 	};
 }
 

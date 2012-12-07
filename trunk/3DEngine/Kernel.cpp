@@ -128,9 +128,14 @@ namespace engine
 	 */
 	void Kernel::HeartBeat()
 	{
+		
 		// Loop through the scenes
-		for each(Scene* pScene in this->sceneManager->GetScenes())
+		std::map<char*, Scene*>::iterator it;
+		//this->sceneManager->GetScenes().size();
+		//this->sceneManager->GetScenes().at("Bas");
+		for(it = this->sceneManager->GetScenes().begin(); it != this->sceneManager->GetScenes().end(); it++)
 		{
+			Scene* pScene = it -> second;
 			pScene->Update();
 
 			// Loop through scene windows
