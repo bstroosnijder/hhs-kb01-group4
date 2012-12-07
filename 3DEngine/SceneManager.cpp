@@ -48,7 +48,7 @@ namespace engine
 	 */
 	Scene* SceneManager::GetScene(char* argPSceneName)
 	{
-		return scenes.at(argPName);
+		return scenes.at(argPSceneName);
 	}
 
 	/**
@@ -68,7 +68,7 @@ namespace engine
 	Scene* SceneManager::NewScene(char* argPSceneName)
 	{
 		Scene* scene = new Scene();
-		scenes[argPName] = scene;
+		scenes[argPSceneName] = scene;
 		return scene;
 	}
 
@@ -79,6 +79,6 @@ namespace engine
 	 */
 	void SceneManager::RemoveScene(char* argPSceneName)
 	{
-		this -> scenes.erase(argPName);
+		this -> scenes.erase(argPSceneName);
 	}
 }
