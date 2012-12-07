@@ -32,6 +32,10 @@ namespace engine
 		Kernel();
 		~Kernel();
 		void CleanUp();
+
+		void Start();
+		void HeartBeat();
+
 		static Logger* GetLogger();
 		Renderer* GetRenderer(unsigned int argIndex);
 		WindowManager* GetWindowManager();
@@ -39,8 +43,6 @@ namespace engine
 		ResourceManager* GetResourceManager();
 		InputManager* GetInputManager();
 		void AddWindowRenderer(Window* argWindow, Renderer* argRenderer);
-		void HeartBeat();
-		void Start();
 	};
 }
 #endif

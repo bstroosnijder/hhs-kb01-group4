@@ -25,8 +25,7 @@ namespace engine
 
 		//Initialise and fill the renderers vector with the default renderers.
 		this->renderers = std::vector<Renderer*>();
-		Renderer* pDx9renderer = new DirectX9Renderer(GetConsoleWindow());
-		this->renderers.push_back(pDx9renderer);
+		this->renderers.push_back(new DirectX9Renderer(GetConsoleWindow()));
 
 		//Initialise the map that associates windows with renderers.
 		this->winRenderer = std::map<Window*, Renderer*>();
@@ -47,6 +46,71 @@ namespace engine
 	 */
 	void Kernel::CleanUp()
 	{
+	}
+
+	/**
+	 * The heartbeat makes sure that the windows will be rendered.
+	 * It provides the application with a loop and an exit condition...
+	 * ...which will pulse like a heartbeat to either render or manage what ever is needed.
+	 * @return		void
+	 */
+	void Kernel::Start()
+	{
+		MSG msg;
+        ZeroMemory(&msg, sizeof(msg));
+
+        while(this->windowManager->GetWindowCount() > 0)
+        {
+            if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+            {				
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+			else
+			{
+				this->HeartBeat();
+			}
+        }
+
+		//There are no more windows, application closes.
+		this->CleanUp();
+	}
+
+	/**
+	 * Loop through all scenes and their windows to render them.
+	 * @return		void
+	 */
+	void Kernel::HeartBeat()
+	{
+		std::map<char*, Scene*> scenes = this->sceneManager->GetScenes();
+		std::map<char*, Scene*>::iterator it;
+		for(it = scenes.begin(); it != scenes.end(); it++)
+		{
+			Scene* pScene = it->second;
+			pScene->Update();
+
+			// Loop through scene windows
+			for each(Window* pWindow in pScene->GetWindows())
+			{
+				//Render the content of this window.
+				Renderer* pRenderer = this->winRenderer[pWindow];
+				pRenderer->Clear();
+				pRenderer->BeginScene();
+
+				pRenderer->SetupWorldMatrix();
+				pRenderer->SetupViewMatrix();
+				pRenderer->SetupProjectionMatrix();
+
+				pRenderer->SetStreamSource();
+				pRenderer->SetFVF();
+				pRenderer->DrawPrimitive();
+
+				pScene->Draw(pRenderer);
+
+				pRenderer->EndScene();
+				pRenderer->Present(pWindow);
+			}
+		}
 	}
 
 	/**
@@ -120,73 +184,5 @@ namespace engine
 	void Kernel::AddWindowRenderer(Window* argPWindow, Renderer* argPRenderer)
 	{
 		this->winRenderer[argPWindow] = argPRenderer;
-	}
-
-	/**
-	 * Loop through all scenes and their windows to render them.
-	 * @return		void
-	 */
-	void Kernel::HeartBeat()
-	{
-		
-		// Loop through the scenes
-		std::map<char*, Scene*>::iterator it;
-		//this->sceneManager->GetScenes().size();
-		//this->sceneManager->GetScenes().at("Bas");
-		for(it = this->sceneManager->GetScenes().begin(); it != this->sceneManager->GetScenes().end(); it++)
-		{
-			Scene* pScene = it -> second;
-			pScene->Update();
-
-			// Loop through scene windows
-			for each(Window* pWindow in pScene->GetWindows())
-			{
-				//Render the content of this window.
-				Renderer* pRenderer = this->winRenderer[pWindow];
-				pRenderer->Clear();
-				pRenderer->BeginScene();
-
-				pRenderer->SetupWorldMatrix();
-				pRenderer->SetupViewMatrix();
-				pRenderer->SetupProjectionMatrix();
-
-				pRenderer->SetStreamSource();
-				pRenderer->SetFVF();
-				pRenderer->DrawPrimitive();
-
-				pScene->Draw(pRenderer);
-
-				pRenderer->EndScene();
-				pRenderer->Present(pWindow);
-			}
-		}
-	}
-
-	/**
-	 * The heartbeat makes sure that the windows will be rendered.
-	 * It provides the application with a loop and an exit condition...
-	 * ...which will pulse like a heartbeat to either render or manage what ever is needed.
-	 * @return		void
-	 */
-	void Kernel::Start()
-	{
-		MSG msg;
-        ZeroMemory(&msg, sizeof(msg));
-
-        while(this->windowManager->GetWindowCount() > 0)
-        {
-            if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-            {				
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
-			else
-			{
-				this->HeartBeat();
-			}
-        }
-
-		//There are no more windows, application closes.
-		this->CleanUp();
 	}
 }

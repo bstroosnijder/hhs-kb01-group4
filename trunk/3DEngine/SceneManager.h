@@ -20,10 +20,10 @@ namespace engine
 		void CleanUp();
 		
 		int GetWindowCount();
-		Scene* GetScene(char* argPName);
+		Scene* GetScene(char* argPSceneName);
 		std::map<char*, Scene*> GetScenes();
-		Scene* NewScene(char* argPName);
-		void RemoveScene(char* argPName);
+		Scene* NewScene(char* argPSceneName);
+		void RemoveScene(char* argPSceneName);
 	};
 }
 
