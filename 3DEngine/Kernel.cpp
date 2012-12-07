@@ -128,7 +128,7 @@ namespace engine
 	 * 
 	 * @return		void
 	 */
-	void Kernel::Render()
+	void Kernel::HeartBeat()
 	{
 		// Loop through the scenes
 		for each(Scene* pScene in this->sceneManager->GetScenes())
@@ -142,13 +142,17 @@ namespace engine
 				Renderer* pRenderer = this->winRenderer[pWindow];
 				pRenderer->Clear();
 				pRenderer->BeginScene();
+
 				pRenderer->SetupWorldMatrix();
 				pRenderer->SetupViewMatrix();
 				pRenderer->SetupProjectionMatrix();
+
 				pRenderer->SetStreamSource();
 				pRenderer->SetFVF();
 				pRenderer->DrawPrimitive();
-				//pScene->Draw(pRenderer);
+
+				pScene->Draw(pRenderer);
+
 				pRenderer->EndScene();
 				pRenderer->Present(pWindow);
 			}
@@ -161,7 +165,7 @@ namespace engine
 	 * ...which will pulse like a heartbeat to either render or manage what ever is needed.
 	 * @return		void
 	 */
-	void Kernel::HeartBeat()
+	void Kernel::Start()
 	{
 		MSG msg;
         ZeroMemory(&msg, sizeof(msg));
@@ -175,7 +179,7 @@ namespace engine
             }
 			else
 			{
-				this->Render();
+				this->HeartBeat();
 			}
         }
 
