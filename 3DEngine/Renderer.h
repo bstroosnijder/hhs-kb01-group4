@@ -21,6 +21,7 @@ namespace engine
 		virtual void SetupProjectionMatrix()=0;
 		virtual void EndScene()=0;
 		virtual void Present(Window* argWindow)=0;
+
 		virtual void SetStreamSource()=0;
 		virtual void SetFVF()=0;
 		virtual void DrawPrimitive()=0;

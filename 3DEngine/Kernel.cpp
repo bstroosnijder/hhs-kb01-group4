@@ -76,6 +76,21 @@ namespace engine
 		this->CleanUp();
 	}
 
+	void Kernel::LoadBeat()
+	{
+		std::map<char*, Scene*> scenes = this->sceneManager->GetScenes();
+		std::map<char*, Scene*>::iterator it;
+		for(it = scenes.begin(); it != scenes.end(); it++)
+		{
+			Scene* pScene = it->second;
+			for each(Window* pWindow in pScene->GetWindows())
+			{
+				Renderer* pRenderer = this->winRenderer[pWindow];
+				pScene->Load(this->resourceManager, pRenderer);
+			}
+		}
+	}
+
 	/**
 	 * Loop through all scenes and their windows to render them.
 	 * @return		void
@@ -101,10 +116,6 @@ namespace engine
 				pRenderer->SetupViewMatrix();
 				pRenderer->SetupProjectionMatrix();
 
-				pRenderer->SetStreamSource();
-				pRenderer->SetFVF();
-				pRenderer->DrawPrimitive();
-
 				pScene->Draw(pRenderer);
 
 				pRenderer->EndScene();
@@ -129,7 +140,7 @@ namespace engine
 	 */
 	Renderer* Kernel::GetRenderer(unsigned int argIndex)
 	{
-		if(argIndex < (int)this->renderers.size()) 
+		if(argIndex < this->renderers.size()) 
 		{
 			return this->renderers[argIndex];
 		}

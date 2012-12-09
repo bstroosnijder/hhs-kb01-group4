@@ -16,8 +16,6 @@ namespace engine
 	private:
 		LPDIRECT3D9 pDirect3d;
 		LPDIRECT3DDEVICE9 pDevice;
-		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
-		D3DPRESENT_PARAMETERS presentParameters;
 	public:
 		static const int LOG_LEVEL_INFO;
 		static const int LOG_LEVEL_WARNING;
@@ -36,6 +34,8 @@ namespace engine
 		void SetStreamSource();
 		void SetFVF();
 		void DrawPrimitive();
+
+		LPDIRECT3DDEVICE9 GetDevice();
 	};
 }
 

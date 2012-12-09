@@ -38,6 +38,7 @@ namespace engine
 	 */
 	void Sandbox::Start()
 	{
+		this->kernel->LoadBeat();
 		this->kernel->Start();
 	}
 

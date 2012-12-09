@@ -20,43 +20,29 @@ namespace engine
 	 */
 	DirectX9Renderer::DirectX9Renderer(HWND argHWin)
 	{
+		D3DPRESENT_PARAMETERS presentParameters;
 		pDirect3d = Direct3DCreate9(D3D_SDK_VERSION);
 		ZeroMemory(&presentParameters, sizeof(presentParameters));
 
 		presentParameters.Windowed = true;
 		presentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
 		presentParameters.BackBufferFormat = D3DFMT_UNKNOWN;
+		presentParameters.EnableAutoDepthStencil = true;
+		presentParameters.AutoDepthStencilFormat = D3DFMT_D16;
 
-		pDirect3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, argHWin,
+		this->pDirect3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, argHWin,
 								D3DCREATE_SOFTWARE_VERTEXPROCESSING,
 								&presentParameters, &pDevice);
 
-		pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		// Set render states
+		//this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		//this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
+		//this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-		pDevice->SetRenderState(D3DRS_LIGHTING, false);
-
-		pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		// testing
-		
-    // Initialize three vertices for rendering a triangle
-    CUSTOMVERTEX g_Vertices[] =
-    {
-		{  0.0f, 1.0f, 0.0f, 0xFFFF0000 },
-		{ -1.0f,-1.0f, 0.0f, 0xFFFF0000 },
-		{  1.0f,-1.0f, 0.0f, 0xFFFF0000 },
-    };
-
-    // Create the vertex buffer.
-	this->pDevice->CreateVertexBuffer( 3 * sizeof( CUSTOMVERTEX ),
-        0, D3DFVF_CUSTOMVERTEX,
-		D3DPOOL_DEFAULT, &this->pVertexBuffer, NULL );
-
-    // Fill the vertex buffer.
-    VOID* pVertices;
-	this->pVertexBuffer->Lock( 0, sizeof( g_Vertices ), ( void** )&pVertices, 0 );
-    memcpy( pVertices, g_Vertices, sizeof( g_Vertices ) );
-	this->pVertexBuffer->Unlock();
+		// Turn on the zbuffer
+		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
+		// Turn on ambient lighting 
+		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
 	}
 
 	/**
@@ -74,10 +60,6 @@ namespace engine
 	 */
 	void DirectX9Renderer::CleanUp()
 	{
-		if(pVertexBuffer != NULL)
-		{
-			pVertexBuffer->Release();
-		}
 		if(pDevice != NULL)
 		{
 			pDevice->Release();
@@ -95,7 +77,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::Clear()
 	{
-		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	}
 
 	/**
@@ -115,11 +97,39 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetupWorldMatrix()
 	{
-		D3DXMATRIXA16 matWorld;
-		unsigned long iTime = timeGetTime() % 1000;
-		float fAngle = iTime * ( 2.0f * D3DX_PI ) / 1000.0f;
-		D3DXMatrixRotationY( &matWorld, fAngle );
-		this->pDevice->SetTransform( D3DTS_WORLD, &matWorld );
+		// rotation speed in ms
+		int rotSpeed = 1000;
+
+		// set the orbit matrix
+		D3DXMATRIXA16 matOrbit;
+		unsigned long iTime = timeGetTime() % rotSpeed;
+		float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
+		D3DXMatrixRotationY( &matOrbit, fOrbit );
+		
+		// set the translation matrix
+		D3DXMATRIXA16 matTranslation;
+		D3DXMatrixTranslation(&matTranslation, 0.0f, 0.0f, 2.0f);
+
+		D3DXMATRIXA16 step1;
+		D3DXMatrixMultiply(&step1, &matOrbit, &matTranslation);
+
+		// set the angle matrix
+		D3DXMATRIXA16 matAngle;
+		unsigned long iTime2 = timeGetTime() % (rotSpeed*2);
+		float fAngle = iTime2 * ( 2.0f * D3DX_PI ) / (rotSpeed*2);
+		D3DXMatrixRotationY( &matAngle, fAngle );
+
+		D3DXMATRIXA16 step2;
+		D3DXMatrixMultiply(&step2, &step1, &matAngle);
+
+		// set the scale matrix
+		//D3DXMATRIXA16 matScale;
+		//D3DXMatrixScaling(&matScale, .005f, .005f, .005f);
+
+		//D3DXMATRIXA16 step3;
+		//D3DXMatrixMultiply(&step3, &step2, &matScale);
+
+		this->pDevice->SetTransform( D3DTS_WORLD, &step2 );
 	}
 	
 	/**
@@ -177,7 +187,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetStreamSource()
 	{
-		this->pDevice->SetStreamSource( 0, this->pVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
+		//this->pDevice->SetStreamSource( 0, this->pVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
 	}
 
 	/**
@@ -187,7 +197,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetFVF()
 	{
-		this->pDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
+		//this->pDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
 	}
 
 	/**
@@ -196,6 +206,11 @@ namespace engine
 	 */
 	void DirectX9Renderer::DrawPrimitive()
 	{
-		this->pDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, 1 );
+		//this->pDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, 1 );
+	}
+
+	LPDIRECT3DDEVICE9 DirectX9Renderer::GetDevice()
+	{
+		return this->pDevice;
 	}
 }
