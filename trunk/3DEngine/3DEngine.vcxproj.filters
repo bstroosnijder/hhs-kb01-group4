@@ -46,10 +46,18 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\engine\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Driehoek.cpp">
+    <ClCompile Include="Resource.cpp">
+      <Filter>Source Files\engine\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiger.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
-    <ClCompile Include="resource.cpp" />
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiny.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -106,13 +114,18 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
-    <ClInclude Include="Driehoek.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files\engine\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiger.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiny.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -175,5 +188,25 @@
     <Filter Include="Header Files\engine\resource">
       <UniqueIdentifier>{ede20f68-a0c9-4225-b0da-1b91fcf14e1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{9a57c892-8e4c-4caf-a1ce-fa8c19829805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\models">
+      <UniqueIdentifier>{458b3e36-8817-40d6-af16-639719a71e61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tiger.bmp">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="tiger.x">
+      <Filter>Resource Files\models</Filter>
+    </None>
+    <None Include="tiny.x">
+      <Filter>Resource Files\models</Filter>
+    </None>
+    <None Include="Tiny_skin.dds">
+      <Filter>Resource Files\textures</Filter>
+    </None>
   </ItemGroup>
 </Project>

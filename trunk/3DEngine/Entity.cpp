@@ -8,38 +8,22 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Construct the Entity object.
+	 * Setter for the position
+	 * @param		Vector3		The new position for the entity
+	 * @return		void
 	 */
-	Entity::Entity()
+	void Entity::SetPosition(Vector3 argPosition)
 	{
-		//Todo
+		this->position = argPosition;
 	}
 
 	/**
-	 * Destruct the Entity object.
-	 * @return	void
+	 * Setter for the resource
+	 * @param		Resource*	The new resource for theentity
+	 * @return		void
 	 */
-	Entity::~Entity()
+	void Entity::SetResource(Resource* argPResource)
 	{
-		//Todo
-	}
-
-	/**
-	 * Draw this Entity.
-	 * @param	Renderer*	argRenderer is the current renderer to which the entity will draw
-	 * @return	void
-	 */
-	void Entity::Draw(Renderer* argPRenderer)
-	{
-		argPRenderer; //Todo
-	}
-
-	/**
-	 * Update this Entity.
-	 * @return	void
-	 */
-	void Entity::Update()
-	{
-		//Todo
+		this->resource = argPResource;
 	}
 }

@@ -1,8 +1,9 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#include "ResourceManager.h"
 #include "Vector3.h"
-#include "Renderer.h"
+#include "DirectX9Renderer.h"
 
 namespace engine
 {
@@ -17,12 +18,14 @@ namespace engine
 	private:
 	protected:
 		Vector3 position;
-		//Resource* resource;
+		Resource* resource;
 	public:
+		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)=0;
 		virtual void Update()=0;
 		virtual void Draw(Renderer* argPRenderer)=0;
-		virtual void SetPosition(Vector3 argPosition)=0;
-		//virtual void SetResource(Resource* argPResource)=0;
+
+		void SetPosition(Vector3 argPosition);
+		void SetResource(Resource* argPResource);
 	};
 }
 

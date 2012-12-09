@@ -34,6 +34,7 @@ namespace engine
 		void CleanUp();
 
 		void Start();
+		void LoadBeat();
 		void HeartBeat();
 
 		static Logger* GetLogger();

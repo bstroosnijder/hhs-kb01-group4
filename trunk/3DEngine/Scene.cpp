@@ -36,11 +36,11 @@ namespace engine
 	 * Loads the scene and all of it's entities
 	 * @return		void
 	 */
-	void Scene::Load()
+	void Scene::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
 	{
 		for each(Entity* pEntity in this->entities)
 		{
-			//argPResourceManager->LoadResource(pEntity->);
+			pEntity->Load(argPResourceManager, argPRenderer);
 		}
 	}
 

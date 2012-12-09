@@ -69,18 +69,20 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="DirectX9Renderer.cpp" />
-    <ClCompile Include="Driehoek.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="resource.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Sandbox.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TextLog.cpp" />
+    <ClCompile Include="Tiger.cpp" />
+    <ClCompile Include="Tiny.cpp" />
     <ClCompile Include="Win32Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -88,7 +90,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="DirectX9Renderer.h" />
-    <ClInclude Include="Driehoek.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kernel.h" />
@@ -96,16 +97,24 @@
     <ClInclude Include="LogStrategy.h" />
     <ClInclude Include="N00b.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Sandbox.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="TextLog.h" />
+    <ClInclude Include="Tiger.h" />
+    <ClInclude Include="Tiny.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Win32Window.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tiger.bmp" />
+    <None Include="tiger.x" />
+    <None Include="tiny.x" />
+    <None Include="Tiny_skin.dds" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
