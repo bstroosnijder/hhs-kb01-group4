@@ -112,10 +112,6 @@ namespace engine
 				pRenderer->Clear();
 				pRenderer->BeginScene();
 
-				pRenderer->SetupWorldMatrix();
-				pRenderer->SetupViewMatrix();
-				pRenderer->SetupProjectionMatrix();
-
 				pScene->Draw(pRenderer);
 
 				pRenderer->EndScene();

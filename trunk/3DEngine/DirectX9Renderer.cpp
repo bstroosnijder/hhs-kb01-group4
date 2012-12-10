@@ -43,6 +43,11 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		// Turn on ambient lighting 
 		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+
+		// uber hack again! :D
+		D3DXMatrixIdentity(&this->matWorld);
+		D3DXMatrixIdentity(&this->matView);
+		D3DXMatrixIdentity(&this->matProjection);
 	}
 
 	/**
@@ -97,39 +102,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetupWorldMatrix()
 	{
-		// rotation speed in ms
-		int rotSpeed = 1000;
-
-		// set the orbit matrix
-		D3DXMATRIXA16 matOrbit;
-		unsigned long iTime = timeGetTime() % rotSpeed;
-		float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
-		D3DXMatrixRotationY( &matOrbit, fOrbit );
-		
-		// set the translation matrix
-		D3DXMATRIXA16 matTranslation;
-		D3DXMatrixTranslation(&matTranslation, 0.0f, 0.0f, 2.0f);
-
-		D3DXMATRIXA16 step1;
-		D3DXMatrixMultiply(&step1, &matOrbit, &matTranslation);
-
-		// set the angle matrix
-		D3DXMATRIXA16 matAngle;
-		unsigned long iTime2 = timeGetTime() % (rotSpeed*2);
-		float fAngle = iTime2 * ( 2.0f * D3DX_PI ) / (rotSpeed*2);
-		D3DXMatrixRotationY( &matAngle, fAngle );
-
-		D3DXMATRIXA16 step2;
-		D3DXMatrixMultiply(&step2, &step1, &matAngle);
-
-		// set the scale matrix
-		D3DXMATRIXA16 matScale;
-		D3DXMatrixScaling(&matScale, .005f, .005f, .005f);
-
-		//D3DXMATRIXA16 step3;
-		//D3DXMatrixMultiply(&step3, &step2, &matScale);
-
-		this->pDevice->SetTransform( D3DTS_WORLD, &step2 );
+		D3DXMatrixIdentity(&this->matWorld);
 	}
 	
 	/**
@@ -139,12 +112,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetupViewMatrix()
 	{
-		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-5.0f );
-		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
-		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
-		D3DXMATRIXA16 matView;
-		D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
-		this->pDevice->SetTransform( D3DTS_VIEW, &matView );
+		D3DXMatrixIdentity(&this->matView);
 	}
 
 	/**
@@ -154,9 +122,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetupProjectionMatrix()
 	{
-		D3DXMATRIXA16 matProj;
-		D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f );
-		this->pDevice->SetTransform( D3DTS_PROJECTION, &matProj );
+		D3DXMatrixIdentity(&this->matProjection);
 	}
 
 	/**
@@ -213,36 +179,55 @@ namespace engine
 	{
 		return this->pDevice;
 	}
+
 	/**
 	 * todo
 	 * @return		void
 	 */
-	void DirectX9Renderer::AddToWorldMatix(D3DXMATRIXA16* argPMat)
+	void DirectX9Renderer::AddToWorldMatrix(D3DXMATRIXA16* argPMatrix)
 	{
-		//todo
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, argPMatrix);
 	}
-	/**
-	 * todo
-	 * @return		void
-	 */
-	void DirectX9Renderer::TransformViewMatix()	
-	{
-		//todo
-	}
-	/**
-	 * todo
-	 * @return		void
-	 */
-	void DirectX9Renderer::TransformProjectionMatix()
-	{
-		//todo
-	}
+
 	/**
 	 * todo
 	 * @return		void
 	 */
 	void DirectX9Renderer::TransformWorldMatrix()
 	{
-		//todo
+
+		// rotation speed in ms
+		int rotSpeed = 10000;
+
+		// set the orbit matrix
+		D3DXMATRIXA16 matOrbit;
+		unsigned long iTime = timeGetTime() % rotSpeed;
+		float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
+		D3DXMatrixRotationY( &matOrbit, fOrbit );
+		this->AddToWorldMatrix(&matOrbit);
+		this->pDevice->SetTransform(D3DTS_WORLD, &this->matWorld);
+	}
+
+	/**
+	 * todo
+	 * @return		void
+	 */
+	void DirectX9Renderer::TransformViewMatrix()	
+	{
+		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-10.0f );
+		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
+		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
+		D3DXMatrixLookAtLH(&this->matView, &vEyePt, &vLookatPt, &vUpVec);
+		this->pDevice->SetTransform(D3DTS_VIEW, &this->matView);
+	}
+
+	/**
+	 * todo
+	 * @return		void
+	 */
+	void DirectX9Renderer::TransformProjectionMatrix()
+	{
+		D3DXMatrixPerspectiveFovLH(&this->matProjection, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
+		this->pDevice->SetTransform(D3DTS_PROJECTION, &this->matProjection);
 	}
 }

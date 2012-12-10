@@ -22,7 +22,7 @@ namespace engine
 	public:
 		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)=0;
 		virtual void Update()=0;
-		virtual void Draw(Renderer* argPRenderer)=0;
+		virtual void Draw(Renderer* argPRenderer);
 
 		void SetPosition(Vector3 argPosition);
 		void SetResource(Resource* argPResource);

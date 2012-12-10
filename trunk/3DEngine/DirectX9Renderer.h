@@ -16,6 +16,7 @@ namespace engine
 	private:
 		LPDIRECT3D9 pDirect3d;
 		LPDIRECT3DDEVICE9 pDevice;
+
 		D3DXMATRIXA16 matWorld;
 		D3DXMATRIXA16 matView;
 		D3DXMATRIXA16 matProjection;
@@ -38,10 +39,10 @@ namespace engine
 		void SetFVF();
 		void DrawPrimitive();
 
-		void AddToWorldMatix(D3DXMATRIXA16* argPMat);
-		void TransformViewMatix();
-		void TransformProjectionMatix();
+		void AddToWorldMatrix(D3DXMATRIXA16* argPMatrix);
 		void TransformWorldMatrix();
+		void TransformViewMatrix();
+		void TransformProjectionMatrix();
 
 		LPDIRECT3DDEVICE9 GetDevice();
 	};
