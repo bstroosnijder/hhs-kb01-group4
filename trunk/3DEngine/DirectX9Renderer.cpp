@@ -213,4 +213,36 @@ namespace engine
 	{
 		return this->pDevice;
 	}
+	/**
+	 * todo
+	 * @return		void
+	 */
+	void DirectX9Renderer::AddToWorldMatix(D3DXMATRIXA16* argPMat)
+	{
+		//todo
+	}
+	/**
+	 * todo
+	 * @return		void
+	 */
+	void DirectX9Renderer::TransformViewMatix()	
+	{
+		//todo
+	}
+	/**
+	 * todo
+	 * @return		void
+	 */
+	void DirectX9Renderer::TransformProjectionMatix()
+	{
+		//todo
+	}
+	/**
+	 * todo
+	 * @return		void
+	 */
+	void DirectX9Renderer::TransformWorldMatrix()
+	{
+		//todo
+	}
 }
