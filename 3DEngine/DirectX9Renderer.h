@@ -16,6 +16,9 @@ namespace engine
 	private:
 		LPDIRECT3D9 pDirect3d;
 		LPDIRECT3DDEVICE9 pDevice;
+		D3DXMATRIXA16 matWorld;
+		D3DXMATRIXA16 matView;
+		D3DXMATRIXA16 matProjection;
 	public:
 		static const int LOG_LEVEL_INFO;
 		static const int LOG_LEVEL_WARNING;
@@ -31,9 +34,14 @@ namespace engine
 		void SetupProjectionMatrix();
 		void EndScene();
 		void Present(Window* argWindow);
-		void SetStreamSource();
+		void SetStreamSource(); // TODO ?
 		void SetFVF();
 		void DrawPrimitive();
+
+		void AddToWorldMatix(D3DXMATRIXA16* argPMat);
+		void TransformViewMatix();
+		void TransformProjectionMatix();
+		void TransformWorldMatrix();
 
 		LPDIRECT3DDEVICE9 GetDevice();
 	};
