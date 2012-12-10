@@ -7,6 +7,8 @@ namespace engine
 {
 	class Tiger : public Entity
 	{
+	private:
+		float speed;
 	public:
 		Tiger();
 		~Tiger();
