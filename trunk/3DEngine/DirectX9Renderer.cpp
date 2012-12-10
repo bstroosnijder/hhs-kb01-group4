@@ -42,7 +42,7 @@ namespace engine
 		// Turn on the zbuffer
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		// Turn on ambient lighting 
-		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
+		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
 	}
 
 	/**
@@ -77,7 +77,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::Clear()
 	{
-		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(std::rand() %255, std::rand() %255, std::rand() %255), 1.0f, 0);
+		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	}
 
 	/**
@@ -123,8 +123,8 @@ namespace engine
 		D3DXMatrixMultiply(&step2, &step1, &matAngle);
 
 		// set the scale matrix
-		//D3DXMATRIXA16 matScale;
-		//D3DXMatrixScaling(&matScale, .005f, .005f, .005f);
+		D3DXMATRIXA16 matScale;
+		D3DXMatrixScaling(&matScale, .005f, .005f, .005f);
 
 		//D3DXMATRIXA16 step3;
 		//D3DXMatrixMultiply(&step3, &step2, &matScale);
