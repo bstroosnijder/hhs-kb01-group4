@@ -77,7 +77,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::Clear()
 	{
-		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(std::rand() %255, std::rand() %255, std::rand() %255), 1.0f, 0);
 	}
 
 	/**

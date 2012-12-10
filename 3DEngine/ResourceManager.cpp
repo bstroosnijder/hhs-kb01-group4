@@ -12,7 +12,7 @@ namespace engine
 	 */
 	ResourceManager::ResourceManager()
 	{
-		//this->resources = std::map<char*, Resource*>();
+		this->resources = std::map<char*, Resource*>();
 	}
 
 	/**
@@ -40,42 +40,52 @@ namespace engine
 	 */
 	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, char* argPModelName)
 	{
-		LPD3DXMESH mesh;
-		D3DMATERIAL9* pMeshMaterials;
-		LPDIRECT3DTEXTURE9* pMeshTextures;
-		unsigned long numMaterials;
-
-		LPD3DXBUFFER pD3DMaterialsBuffer;
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
-
-		// Load model from .x file
-		D3DXLoadMeshFromX(	argPModelName, D3DXMESH_SYSTEMMEM, pRenderer->GetDevice(),
-							NULL, &pD3DMaterialsBuffer, NULL, &numMaterials,
-							&mesh);
-
-		D3DXMATERIAL* pD3DXMaterials = (D3DXMATERIAL*)pD3DMaterialsBuffer->GetBufferPointer();
-
-		pMeshMaterials = new D3DMATERIAL9[numMaterials];
-		pMeshTextures = new LPDIRECT3DTEXTURE9[numMaterials];
-
-		// Loop through materials and create textures
-		for(unsigned long i = 0; i < numMaterials; i++)
+		//check of hij al bestaat
+		if (resources.at(argPModelName) == false)
 		{
-			pMeshMaterials[i] = pD3DXMaterials[i].MatD3D;
-			pMeshMaterials[i].Ambient = pMeshMaterials[i].Diffuse;
+			LPD3DXMESH mesh;
+			D3DMATERIAL9* pMeshMaterials;
+			LPDIRECT3DTEXTURE9* pMeshTextures;
+			unsigned long numMaterials;
 
-			// Create texture from file
-			D3DXCreateTextureFromFileA(	pRenderer->GetDevice(), pD3DXMaterials[i].pTextureFilename,
-										&pMeshTextures[i]);
+			LPD3DXBUFFER pD3DMaterialsBuffer;
+			DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
+
+			
+			// Load model from .x file
+			D3DXLoadMeshFromX(	argPModelName, D3DXMESH_SYSTEMMEM, pRenderer->GetDevice(),
+								NULL, &pD3DMaterialsBuffer, NULL, &numMaterials,
+								&mesh);
+
+			D3DXMATERIAL* pD3DXMaterials = (D3DXMATERIAL*)pD3DMaterialsBuffer->GetBufferPointer();
+
+			pMeshMaterials = new D3DMATERIAL9[numMaterials];
+			pMeshTextures = new LPDIRECT3DTEXTURE9[numMaterials];
+
+			// Loop through materials and create textures
+			for(unsigned long i = 0; i < numMaterials; i++)
+			{
+				pMeshMaterials[i] = pD3DXMaterials[i].MatD3D;
+				pMeshMaterials[i].Ambient = pMeshMaterials[i].Diffuse;
+
+				// Create texture from file
+				D3DXCreateTextureFromFileA(	pRenderer->GetDevice(), pD3DXMaterials[i].pTextureFilename,
+											&pMeshTextures[i]);
+			}
+			// hier wil ik de check
+		
+			Resource* pResource = new Resource();
+			pResource->SetMesh(mesh);
+			pResource->SetMaterials(pMeshMaterials);
+			pResource->SetTextures(pMeshTextures);
+			pResource->SetNumMaterials(numMaterials);
+			this -> resources[argPModelName]= pResource;
+		
+		
+			pD3DMaterialsBuffer->Release();
+			return pResource;
 		}
-
-		Resource* pResource = new Resource();
-		pResource->SetMesh(mesh);
-		pResource->SetMaterials(pMeshMaterials);
-		pResource->SetTextures(pMeshTextures);
-		pResource->SetNumMaterials(numMaterials);
-
-		pD3DMaterialsBuffer->Release();
+		Resource* pResource = GetResource(argPModelName);
 		return pResource;
 	}
 
@@ -92,12 +102,12 @@ namespace engine
 	}
 
 	
-	/*
+	
 	Resource* ResourceManager::GetResource(char* argPResourceName)
 	{
-		return this->resources[argPSceneName];
+		return this->resources[argPResourceName];
 	}
-
+	/*
 	std::map<char*, Resource*> ResourceManager::GetResources()
 	{
 		return this->resources;

@@ -24,7 +24,7 @@ namespace engine
 		Resource* LoadResource(Renderer* argPRenderer, char* argPModelName);
 		Resource* LoadResource(Renderer* argPRenderer, char* argPModelName, char* argPTextureName);
 
-		//Resource* GetResource(char* argPSceneName);
+		Resource* GetResource(char* argPSceneName);
 		//std::map<char*, Resource*> GetResources();
 		//Resource* NewResource(char* argPSceneName);
 		//void RemoveResource(char* argPSceneName);
