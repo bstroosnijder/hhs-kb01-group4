@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Barrel.cpp" />
     <ClCompile Include="Bench.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
@@ -88,6 +89,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="barrel.h" />
     <ClInclude Include="Bench.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsoleLog.h" />
