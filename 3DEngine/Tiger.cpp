@@ -23,15 +23,19 @@ namespace engine
 
 	void Tiger::Update()
 	{
-		this->rotation.z += (D3DX_PI / 180) * 5;
+		
 		//this->position.y += this->speed;
 
-		/*this->position.x += this->speed;
+		this->position.x += this->speed;
+		this->rotation.z += D3DX_PI * -this->speed;
+		//this->scaling.x += this->speed;
+		//this->scaling.y += this->speed;
+		//this->scaling.z += this->speed;
 
 		if(this->position.x > 3 || this->position.x < -3)
 		{
 			this->speed *= -1;
-		}*/
+		}
 	}
 
 	void Tiger::Draw(Renderer* argPRenderer)
@@ -47,6 +51,9 @@ namespace engine
 		//unsigned long iTime = timeGetTime() % rotSpeed;
 		//float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
 		//D3DXMatrixRotationY( &matOrbit, 0);//fOrbit );
+
+		D3DXMatrixScaling(&matOrbit, this->scaling.x, this->scaling.y, this->scaling.z);
+		pRenderer->AddToWorldMatrix(&matOrbit);
 
 		D3DXMatrixRotationX(&matOrbit, this->rotation.x);
 		pRenderer->AddToWorldMatrix(&matOrbit);

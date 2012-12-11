@@ -19,6 +19,7 @@ namespace engine
 	protected:
 		Vector3 position;
 		Vector3 rotation;
+		Vector3 scaling;
 		Resource* resource;
 	public:
 		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)=0;
@@ -26,6 +27,8 @@ namespace engine
 		virtual void Draw(Renderer* argPRenderer);
 
 		void SetPosition(Vector3 argPosition);
+		void SetRotation(Vector3 argRotation);
+		void SetScaling(Vector3 argScaling);
 		void SetResource(Resource* argPResource);
 	};
 }
