@@ -4,6 +4,7 @@
 #include <map>
 #include <d3dx9.h>
 #include "DirectX9Renderer.h"
+#include <sys/stat.h>
 #include "Resource.h"
 
 namespace engine
@@ -15,8 +16,9 @@ namespace engine
 	{
 	private:
 		//std::map<char*, Model*> models;
-		//std::map<char*, char*> textures;
+		std::map<char*, char*> textures;
 		std::map<char*, Resource*> resources;
+		bool FileExists(const std::string& filename);
 	public:
 		ResourceManager();
 		~ResourceManager();
