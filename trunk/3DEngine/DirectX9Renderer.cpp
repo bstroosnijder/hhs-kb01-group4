@@ -29,6 +29,8 @@ namespace engine
 		presentParameters.BackBufferFormat = D3DFMT_UNKNOWN;
 		presentParameters.EnableAutoDepthStencil = true;
 		presentParameters.AutoDepthStencilFormat = D3DFMT_D16;
+		presentParameters.BackBufferWidth = 800;
+		presentParameters.BackBufferHeight = 600;
 
 		this->pDirect3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, argHWin,
 								D3DCREATE_SOFTWARE_VERTEXPROCESSING,
