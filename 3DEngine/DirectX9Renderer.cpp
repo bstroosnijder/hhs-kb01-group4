@@ -179,16 +179,6 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformWorldMatrix()
 	{
-
-		// rotation speed in ms
-		int rotSpeed = 10000;
-
-		// set the orbit matrix
-		D3DXMATRIXA16 matOrbit;
-		unsigned long iTime = timeGetTime() % rotSpeed;
-		float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
-		D3DXMatrixRotationY( &matOrbit, fOrbit );
-		this->AddToWorldMatrix(&matOrbit);
 		this->pDevice->SetTransform(D3DTS_WORLD, &this->matWorld);
 	}
 
