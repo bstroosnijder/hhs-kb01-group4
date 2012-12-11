@@ -8,6 +8,7 @@ namespace engine
 		float x;
 		float y;
 		float z;
+		Vector3() : x(0), y(0), z(0){}
 	};
 }
 
