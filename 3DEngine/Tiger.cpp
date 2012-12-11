@@ -23,13 +23,15 @@ namespace engine
 
 	void Tiger::Update()
 	{
-		this->position.x += this->speed;
-		this->position.y += this->speed;
+		this->rotation.z += (D3DX_PI / 180) * 5;
+		//this->position.y += this->speed;
+
+		/*this->position.x += this->speed;
 
 		if(this->position.x > 3 || this->position.x < -3)
 		{
 			this->speed *= -1;
-		}
+		}*/
 	}
 
 	void Tiger::Draw(Renderer* argPRenderer)
@@ -42,14 +44,22 @@ namespace engine
 
 		// set the orbit matrix
 		D3DXMATRIXA16 matOrbit;
-		unsigned long iTime = timeGetTime() % rotSpeed;
-		float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
-		D3DXMatrixRotationY( &matOrbit, fOrbit );
+		//unsigned long iTime = timeGetTime() % rotSpeed;
+		//float fOrbit = iTime * ( 2.0f * D3DX_PI ) / rotSpeed;
+		//D3DXMatrixRotationY( &matOrbit, 0);//fOrbit );
+
+		D3DXMatrixRotationX(&matOrbit, this->rotation.x);
+		pRenderer->AddToWorldMatrix(&matOrbit);
+		D3DXMatrixRotationY(&matOrbit, this->rotation.y);
+		pRenderer->AddToWorldMatrix(&matOrbit);
+		D3DXMatrixRotationZ(&matOrbit, this->rotation.z);
 		pRenderer->AddToWorldMatrix(&matOrbit);
 
 		D3DXMATRIXA16 matTranslation;
 		D3DXMatrixTranslation(&matTranslation, this->position.x, this->position.y, this->position.z);
 		pRenderer->AddToWorldMatrix(&matTranslation);
+
+		
 
 		// Call the parent draw to make sure the image is actually drawed
 		Entity::Draw(argPRenderer);

@@ -18,6 +18,7 @@ namespace engine
 	private:
 	protected:
 		Vector3 position;
+		Vector3 rotation;
 		Resource* resource;
 	public:
 		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)=0;
