@@ -26,25 +26,28 @@ namespace engine
 
 		DirectX9Renderer(HWND argHWin);
 		~DirectX9Renderer();
-
 		void CleanUp();
+
+		void SetupMatricis();
+
 		void Clear();
 		void BeginScene();
-		void SetupWorldMatrix();
-		void SetupViewMatrix();
-		void SetupProjectionMatrix();
 		void EndScene();
 		void Present(Window* argWindow);
-		void SetStreamSource(); // TODO ?
+
+		// todo: Are these still needed?
+		void SetStreamSource();
 		void SetFVF();
 		void DrawPrimitive();
+		// i think not!
+
+		// todo: can we make this nicer?
+		LPDIRECT3DDEVICE9 GetDevice();
 
 		void AddToWorldMatrix(D3DXMATRIXA16* argPMatrix);
 		void TransformWorldMatrix();
 		void TransformViewMatrix();
 		void TransformProjectionMatrix();
-
-		LPDIRECT3DDEVICE9 GetDevice();
 	};
 }
 
