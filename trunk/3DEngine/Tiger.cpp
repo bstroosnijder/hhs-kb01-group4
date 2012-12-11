@@ -24,6 +24,7 @@ namespace engine
 	void Tiger::Update()
 	{
 		this->position.x += this->speed;
+		this->position.y += this->speed;
 
 		if(this->position.x > 3 || this->position.x < -3)
 		{
