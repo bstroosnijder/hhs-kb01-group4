@@ -40,7 +40,7 @@ namespace engine
 	 */
 	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, char* argPModelName)
 	{
-		// Check of hij al bestaat
+		// this checks if the resource exists
 		if(this->resources.find(argPModelName) != this->resources.end())
 		{
 			return this->resources[argPModelName];
@@ -72,10 +72,18 @@ namespace engine
 			pMeshMaterials[i].Ambient = pMeshMaterials[i].Diffuse;
 
 			// Create texture from file
-			D3DXCreateTextureFromFileA(	pRenderer->GetDevice(), pD3DXMaterials[i].pTextureFilename,
+			if (FileExists(pD3DXMaterials[i].pTextureFilename))
+			{
+				D3DXCreateTextureFromFileA(	pRenderer->GetDevice(), pD3DXMaterials[i].pTextureFilename,
 										&pMeshTextures[i]);
+			}
+			else
+			{
+				pMeshTextures[i] = NULL;
+				// moet nog een logger aan gesproken worden
+				
+			}
 		}
-		// hier wil ik de check
 		
 		Resource* pResource = new Resource();
 		pResource->SetMesh(mesh);
@@ -123,4 +131,19 @@ namespace engine
 		this->resources.erase(argPSceneName);
 	}
 	*/
+
+	/**
+	 * Checks if the parameter filename exists
+	 * @param		const string&		ArgFilename The filename to check
+	 * @return		bool
+	 */
+	bool ResourceManager::FileExists(const std::string& argFilename)
+	{
+    struct stat buf;
+    if (stat(argFilename.c_str(), &buf) != -1)
+		{
+			return true;
+		}
+    return false;
+	}
 }
