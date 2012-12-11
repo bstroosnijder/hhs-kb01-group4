@@ -29,15 +29,10 @@ namespace engine
 		argPRenderer->SetupMatricis();
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
-		LPD3DXMESH mesh = this->resource->GetMesh();
-		D3DMATERIAL9* pMeshMaterials = this->resource->GetMaterials();
-		LPDIRECT3DTEXTURE9* pMeshTextures = this->resource->GetTextures();
+		D3DXMATRIXA16 matTranslation;
+		D3DXMatrixTranslation(&matTranslation, this->position.x, this->position.y, this->position.z);
+		pRenderer->AddToWorldMatrix(&matTranslation);
 
-		for(unsigned long i = 0; i < this->resource->GetNumMaterials(); i++)
-		{
-			pRenderer->GetDevice()->SetMaterial(&pMeshMaterials[i]);
-			pRenderer->GetDevice()->SetTexture(0, pMeshTextures[i]);
-			mesh->DrawSubset(i);
-		}
+		Entity::Draw(argPRenderer);
 	}
 }
