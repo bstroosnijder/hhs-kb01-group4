@@ -45,6 +45,26 @@ namespace engine
 	}
 
 	/**
+	 * Setter for the rotation
+	 * @param		Vector3		The new rotation for the entity
+	 * @return		void
+	 */
+	void Entity::SetRotation(Vector3 argRotation)
+	{
+		this->rotation = argRotation;
+	}
+
+	/**
+	 * Setter for the scaling
+	 * @param		Vector3		The new scaling for the entity
+	 * @return		void
+	 */
+	void Entity::SetScaling(Vector3 argScaling)
+	{
+		this->scaling = argScaling;
+	}
+
+	/**
 	 * Setter for the resource
 	 * @param		Resource*	The new resource for theentity
 	 * @return		void
