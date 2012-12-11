@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bench.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="DirectX9Renderer.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bench.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="DirectX9Renderer.h" />

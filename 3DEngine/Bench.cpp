@@ -1,27 +1,27 @@
-#include "Tiger.h"
+#include "Bench.h"
 
 namespace engine
 {
-	Tiger::Tiger()
+	Bench::Bench()
 	{
 		this->speed = .1;
 	}
 
-	Tiger::~Tiger()
+	Bench::~Bench()
 	{
 		this->CleanUp();
 	}
 
-	void Tiger::CleanUp()
+	void Bench::CleanUp()
 	{
 	}
 	
-	void Tiger::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
+	void Bench::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
 	{
-		this->SetResource(argPResourceManager->LoadResource(argPRenderer, "tiger.x"));
+		this->SetResource(argPResourceManager->LoadResource(argPRenderer, "table_lowpoly.x"));
 	}
 
-	void Tiger::Update()
+	void Bench::Update()
 	{
 		
 		//this->position.y += this->speed;
@@ -41,7 +41,7 @@ namespace engine
 		}
 	}
 
-	void Tiger::Draw(Renderer* argPRenderer)
+	void Bench::Draw(Renderer* argPRenderer)
 	{
 		argPRenderer->SetupMatricis();
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
