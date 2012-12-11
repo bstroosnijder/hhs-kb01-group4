@@ -33,9 +33,7 @@ namespace engine
 
 	void Tiger::Draw(Renderer* argPRenderer)
 	{
-		argPRenderer->SetupWorldMatrix();
-		argPRenderer->SetupViewMatrix();
-		argPRenderer->SetupProjectionMatrix();
+		argPRenderer->SetupMatricis();
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 		// rotation speed in ms

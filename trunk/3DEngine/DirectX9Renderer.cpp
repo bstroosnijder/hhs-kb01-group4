@@ -44,10 +44,8 @@ namespace engine
 		// Turn on ambient lighting 
 		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
 
-		// uber hack again! :D
-		D3DXMatrixIdentity(&this->matWorld);
-		D3DXMatrixIdentity(&this->matView);
-		D3DXMatrixIdentity(&this->matProjection);
+		// Set matrices to the identity
+		this->SetupMatricis();
 	}
 
 	/**
@@ -76,6 +74,18 @@ namespace engine
 	}
 
 	/**
+	 * Set up the world matrix.
+	 * TODO: More information.
+	 * @return		void
+	 */
+	void DirectX9Renderer::SetupMatricis()
+	{
+		D3DXMatrixIdentity(&this->matWorld);
+		D3DXMatrixIdentity(&this->matView);
+		D3DXMatrixIdentity(&this->matProjection);
+	}
+
+	/**
 	 * Clears the screen.
 	 * TODO more info
 	 * @return		void
@@ -93,36 +103,6 @@ namespace engine
 	void DirectX9Renderer::BeginScene()
 	{
 		this->pDevice->BeginScene();
-	}
-
-	/**
-	 * Set up the world matrix.
-	 * TODO: More information.
-	 * @return		void
-	 */
-	void DirectX9Renderer::SetupWorldMatrix()
-	{
-		D3DXMatrixIdentity(&this->matWorld);
-	}
-	
-	/**
-	 * Set up the view matrix.
-	 * TODO: More information.
-	 * @return		void
-	 */
-	void DirectX9Renderer::SetupViewMatrix()
-	{
-		D3DXMatrixIdentity(&this->matView);
-	}
-
-	/**
-	 * Set up the projection matrix.
-	 * TODO: More information.
-	 * @return		void
-	 */
-	void DirectX9Renderer::SetupProjectionMatrix()
-	{
-		D3DXMatrixIdentity(&this->matProjection);
 	}
 
 	/**
@@ -175,13 +155,17 @@ namespace engine
 		//this->pDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, 1 );
 	}
 
+	/**
+	 * Getter for the grapics device
+	 * @return		LPDIRECT3DDEVICE9
+	 */
 	LPDIRECT3DDEVICE9 DirectX9Renderer::GetDevice()
 	{
 		return this->pDevice;
 	}
 
 	/**
-	 * todo
+	 * Adds a new matrix to the world matrix via multiplication
 	 * @return		void
 	 */
 	void DirectX9Renderer::AddToWorldMatrix(D3DXMATRIXA16* argPMatrix)
@@ -190,7 +174,7 @@ namespace engine
 	}
 
 	/**
-	 * todo
+	 * Transforms the world matrix
 	 * @return		void
 	 */
 	void DirectX9Renderer::TransformWorldMatrix()
@@ -209,7 +193,7 @@ namespace engine
 	}
 
 	/**
-	 * todo
+	 * Transforms the view matrix
 	 * @return		void
 	 */
 	void DirectX9Renderer::TransformViewMatrix()	
@@ -222,7 +206,7 @@ namespace engine
 	}
 
 	/**
-	 * todo
+	 * Transforms the projection matrix
 	 * @return		void
 	 */
 	void DirectX9Renderer::TransformProjectionMatrix()
