@@ -58,6 +58,9 @@
     <ClCompile Include="Tiny.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
+    <ClCompile Include="Bench.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -124,6 +127,9 @@
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
     <ClInclude Include="Tiny.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Bench.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
   </ItemGroup>
