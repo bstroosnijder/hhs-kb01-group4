@@ -37,14 +37,9 @@ namespace engine
 								&presentParameters, &pDevice);
 
 		// Set render states
-		//this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-		//this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
-		//this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		// Turn on the zbuffer
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
-		// Turn on ambient lighting 
 		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 		// Set matrices to the identity
 		this->SetupMatricis();
@@ -65,14 +60,32 @@ namespace engine
 	 */
 	void DirectX9Renderer::CleanUp()
 	{
-		if(pDevice != NULL)
+		// Cleans the device
+		if(this->pDevice != NULL)
 		{
-			pDevice->Release();
+			this->pDevice->Release();
 		}
-		if(pDirect3d != NULL)
+		// Cleans the direct3d
+		if(this->pDirect3d != NULL)
 		{
-			pDirect3d->Release();
+			this->pDirect3d->Release();
 		}
+
+		// Cleans the world matrix stack
+		if(this->matWorld != NULL)
+		{
+			this->matWorld->Release();
+		}
+		// Cleans the view matrix stack
+		if(this->matView != NULL)
+		{
+			this->matView->Release();
+		}
+		// Cleans the projection matrix stack
+		/*if(this->matProjection != NULL)
+		{
+			this->matProjection->Release();
+		}*/
 	}
 
 	/**
@@ -82,9 +95,14 @@ namespace engine
 	 */
 	void DirectX9Renderer::SetupMatricis()
 	{
-		D3DXMatrixIdentity(&this->matWorld);
-		D3DXMatrixIdentity(&this->matView);
-		D3DXMatrixIdentity(&this->matProjection);
+		D3DXCreateMatrixStack(0, &this->matWorld);
+		this->matWorld->LoadIdentity();
+
+		D3DXCreateMatrixStack(0, &this->matView);
+		this->matView->LoadIdentity();
+
+		D3DXCreateMatrixStack(0, &this->matProjection);
+		this->matProjection->LoadIdentity();
 	}
 
 	/**
@@ -105,6 +123,28 @@ namespace engine
 	void DirectX9Renderer::BeginScene()
 	{
 		this->pDevice->BeginScene();
+	}
+
+	/**
+	 * Pushes a new matrix on the stack
+	 * @return		void
+	 */
+	void DirectX9Renderer::Push()
+	{
+		this->matWorld->Push();
+		//this->matView->Push();
+		//this->matProjection->Push();
+	}
+	
+	/**
+	 * Pops the last matrix off the stack
+	 * @return		void
+	 */
+	void DirectX9Renderer::Pop()
+	{
+		this->matWorld->Pop();
+		//this->matView->Pop();
+		//this->matProjection->Pop();
 	}
 
 	/**
@@ -129,35 +169,6 @@ namespace engine
 	}
 
 	/**
-	 * Sets the stream source.
-	 * TODO: More information.
-	 * @return		void
-	 */
-	void DirectX9Renderer::SetStreamSource()
-	{
-		//this->pDevice->SetStreamSource( 0, this->pVertexBuffer, 0, sizeof( CUSTOMVERTEX ) );
-	}
-
-	/**
-	 * Sets the Flexible Vertex Format.
-	 * TODO: More information.
-	 * @return		void
-	 */
-	void DirectX9Renderer::SetFVF()
-	{
-		//this->pDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
-	}
-
-	/**
-	 * Draws a primitive figure.
-	 * @return		void
-	 */
-	void DirectX9Renderer::DrawPrimitive()
-	{
-		//this->pDevice->DrawPrimitive( D3DPT_TRIANGLELIST, 0, 1 );
-	}
-
-	/**
 	 * Getter for the grapics device
 	 * @return		LPDIRECT3DDEVICE9
 	 */
@@ -172,7 +183,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::AddToWorldMatrix(D3DXMATRIXA16* argPMatrix)
 	{
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, argPMatrix);
+		this->matWorld->MultMatrix(argPMatrix);
 	}
 
 	/**
@@ -181,7 +192,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformWorldMatrix()
 	{
-		this->pDevice->SetTransform(D3DTS_WORLD, &this->matWorld);
+		this->pDevice->SetTransform(D3DTS_WORLD, this->matWorld->GetTop());
 	}
 
 	/**
@@ -193,8 +204,8 @@ namespace engine
 		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-10.0f );
 		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
 		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
-		D3DXMatrixLookAtLH(&this->matView, &vEyePt, &vLookatPt, &vUpVec);
-		this->pDevice->SetTransform(D3DTS_VIEW, &this->matView);
+		D3DXMatrixLookAtLH(this->matView->GetTop(), &vEyePt, &vLookatPt, &vUpVec);
+		this->pDevice->SetTransform(D3DTS_VIEW, this->matView->GetTop());
 	}
 
 	/**
@@ -203,7 +214,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformProjectionMatrix()
 	{
-		D3DXMatrixPerspectiveFovLH(&this->matProjection, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
-		this->pDevice->SetTransform(D3DTS_PROJECTION, &this->matProjection);
+		D3DXMatrixPerspectiveFovLH(this->matProjection->GetTop(), D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
+		this->pDevice->SetTransform(D3DTS_PROJECTION, this->matProjection->GetTop());
 	}
 }

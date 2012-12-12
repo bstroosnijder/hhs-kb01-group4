@@ -16,10 +16,10 @@ namespace engine
 	private:
 		LPDIRECT3D9 pDirect3d;
 		LPDIRECT3DDEVICE9 pDevice;
-
-		D3DXMATRIXA16 matWorld;
-		D3DXMATRIXA16 matView;
-		D3DXMATRIXA16 matProjection;
+		
+		LPD3DXMATRIXSTACK matWorld;
+		LPD3DXMATRIXSTACK matView;
+		LPD3DXMATRIXSTACK matProjection;
 	public:
 		static const int LOG_LEVEL_INFO;
 		static const int LOG_LEVEL_WARNING;
@@ -32,14 +32,10 @@ namespace engine
 
 		void Clear();
 		void BeginScene();
+		void Push();
+		void Pop();
 		void EndScene();
 		void Present(Window* argWindow);
-
-		// todo: Are these still needed?
-		void SetStreamSource();
-		void SetFVF();
-		void DrawPrimitive();
-		// i think not!
 
 		// todo: can we make this nicer?
 		LPDIRECT3DDEVICE9 GetDevice();

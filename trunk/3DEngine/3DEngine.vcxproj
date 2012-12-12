@@ -75,7 +75,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -115,6 +115,11 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="barrel.jpg" />
+    <None Include="barrel.X" />
+    <None Include="planks01.jpg" />
+    <None Include="planks02.jpg" />
+    <None Include="table_lowpoly.x" />
     <None Include="tiger.bmp" />
     <None Include="tiger.x" />
     <None Include="tiny.x" />
