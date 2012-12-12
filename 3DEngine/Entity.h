@@ -1,6 +1,7 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#include <list>
 #include "ResourceManager.h"
 #include "Vector3.h"
 #include "DirectX9Renderer.h"
@@ -21,15 +22,17 @@ namespace engine
 		Vector3 rotation;
 		Vector3 scaling;
 		Resource* resource;
+		std::list<Entity*> entities;
 	public:
-		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)=0;
-		virtual void Update()=0;
+		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
+		virtual void Update();
 		virtual void Draw(Renderer* argPRenderer);
 
 		void SetPosition(Vector3 argPosition);
 		void SetRotation(Vector3 argRotation);
 		void SetScaling(Vector3 argScaling);
 		void SetResource(Resource* argPResource);
+		void AddEntity(Entity* argPEntity);
 	};
 }
 

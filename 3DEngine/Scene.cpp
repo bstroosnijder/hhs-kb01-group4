@@ -65,9 +65,10 @@ namespace engine
 	{
 		for each(Entity* pEntity in this->entities)
 		{
+			argPRenderer->Push();
 			pEntity->Draw(argPRenderer);
+			argPRenderer->Pop();
 		}
-		
 	}
 
 	/**

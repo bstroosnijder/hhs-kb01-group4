@@ -18,12 +18,10 @@ namespace engine
 
 		virtual void Clear()=0;
 		virtual void BeginScene()=0;
+		virtual void Push()=0;
+		virtual void Pop()=0;
 		virtual void EndScene()=0;
 		virtual void Present(Window* argWindow)=0;
-
-		virtual void SetStreamSource()=0;
-		virtual void SetFVF()=0;
-		virtual void DrawPrimitive()=0;
 	};
 }
 
