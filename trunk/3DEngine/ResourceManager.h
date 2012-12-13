@@ -6,6 +6,7 @@
 #include "DirectX9Renderer.h"
 #include <sys/stat.h>
 #include "Resource.h"
+#include "Logger.h"
 
 namespace engine
 {

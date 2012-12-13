@@ -3,8 +3,9 @@
 namespace engine
 {
 	//---Private attributes---
+	
 	//---Public attributes---
-
+	std::list<LogStrategy*> Logger::strategies = std::list<LogStrategy*>();
 	//One-time initialisation of the logger's constant variables.
 	const int Logger::LOG_LEVEL_INFO = 1;
 	const int Logger::LOG_LEVEL_WARNING = 2;
@@ -45,38 +46,13 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Construct the Logger object.
-	 */
-	Logger::Logger()
-	{
-
-	}
-
-	/**
-	 * Destructs the Logger object.
-	 * @return		void
-	 */
-	Logger::~Logger()
-	{
-		this->CleanUp();
-	}
-
-	/**
-	 * Lazy cleanup method for destructing
-	 * @return		void
-	 */
-	void Logger::CleanUp()
-	{
-	}
-
-	/**
 	 * Add a strategy to which the logger will log. 
 	 * @param		LogStrategy*				The LogStrategy to add to the logger.
 	 * @return		void
 	 */
 	void Logger::AddStrategy(LogStrategy* argPStrategy) 
 	{
-		strategies.push_back(argPStrategy);
+		Logger::strategies.push_back(argPStrategy);
 	}
 
 	/**
@@ -86,7 +62,7 @@ namespace engine
 	 */
 	void Logger::RemoveStrategy(LogStrategy* argPStrategy)
 	{
-		strategies.remove(argPStrategy);
+		Logger::strategies.remove(argPStrategy);
 	}
 
 	/**

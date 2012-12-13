@@ -14,21 +14,19 @@ namespace engine
 	class Logger
 	{
 	private:
-		std::list<LogStrategy*> strategies;
+		
 
-		char* Logger::GetSeverity(int argSeverity);
+		static char* Logger::GetSeverity(int argSeverity);
 	public:
+		static std::list<LogStrategy*> strategies;
 		static const int LOG_LEVEL_INFO;
 		static const int LOG_LEVEL_WARNING;
 		static const int LOG_LEVEL_ERROR;
 
-		Logger();
-		~Logger();
-		void CleanUp();
-		void AddStrategy(LogStrategy* argPStrat);
-		void RemoveStrategy(LogStrategy* argPStrat);
-		std::list<LogStrategy*> GetStrategies();
-		void Log(char* argPMessage, int argSeverity, char* argPFileName, int argLineNumber);
+		static void AddStrategy(LogStrategy* argPStrat);
+		static void RemoveStrategy(LogStrategy* argPStrat);
+		static std::list<LogStrategy*> GetStrategies();
+		static void Log(char* argPMessage, int argSeverity, char* argPFileName, int argLineNumber);
 	};
 }
 

@@ -45,6 +45,6 @@ namespace engine
 	 */
 	void ConsoleLog::Write(char* argPMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
 	{
-		printf("[%s] [%s] %sd\n", argPTime, argPSeverity, argPMessage);
+		printf("[%s] [%s] %s\n", argPTime, argPSeverity, argPMessage);
 	}
 }

@@ -12,6 +12,7 @@ namespace engine
 	 */
 	SceneManager::SceneManager()
 	{
+		engine::Logger::Log("Creating SceneManager", 1, __FILE__,__LINE__);
 		scenes = std::map<char*, Scene*>();
 	}
 
@@ -67,8 +68,10 @@ namespace engine
 	 */
 	Scene* SceneManager::NewScene(char* argPSceneName)
 	{
+		engine::Logger::Log("Creating Scene", 1, __FILE__,__LINE__);
 		Scene* scene = new Scene();
 		scenes[argPSceneName] = scene;
+		engine::Logger::Log("Scene Created", 1, __FILE__,__LINE__);
 		return scene;
 	}
 
@@ -84,6 +87,7 @@ namespace engine
 	 */
 	void SceneManager::RemoveScene(char* argPSceneName)
 	{
+		engine::Logger::Log("Removing Scene", 1, __FILE__,__LINE__);
 		this -> scenes.erase(argPSceneName);
 	}
 }
