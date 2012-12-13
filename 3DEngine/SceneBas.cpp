@@ -5,27 +5,27 @@ SceneBas::SceneBas()
 	Scene::Scene();
 	
 	// Create an entity
-	engine::Entity* entity1 = new engine::Entity("tiger.x");
-	entity1->SetScaling(engine::Vector3(1.0f, 1.0f, 1.0f));
-	entity1->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
-	entity1->SetPosition(engine::Vector3(0.0f, 0.0f, 0.0f));
+	tiger1 = new engine::Entity("tiger.x");
+	tiger1->SetScaling(engine::Vector3(2.0f, 2.0f, 2.0f));
+	tiger1->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
+	tiger1->SetPosition(engine::Vector3(0.0f, 0.0f, 0.0f));
 
 	// Create an entity
-	engine::Entity* entity2 = new engine::Entity("tiger.x");
-	entity2->SetScaling(engine::Vector3(1.0f, 1.0f, 1.0f));
-	entity2->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
-	entity2->SetPosition(engine::Vector3(-1.0f, 0.0f, 0.0f));
+	tiger2 = new engine::Entity("table_lowpoly.x");
+	tiger2->SetScaling(engine::Vector3(0.5f, 0.5f, 0.5f));
+	tiger2->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
+	tiger2->SetPosition(engine::Vector3(-1.0f, 0.0f, 0.0f));
 
 	// Create an entity
-	engine::Entity* entity3 = new engine::Entity("tiger.x");
-	entity3->SetScaling(engine::Vector3(.5f, .5f, .5f));
-	entity3->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
-	entity3->SetPosition(engine::Vector3(-1.0f, 0.0f, 0.0f));
+	tiger3 = new engine::Entity("tiger.x");
+	tiger3->SetScaling(engine::Vector3(0.5f, 0.5f, 0.5f));
+	tiger3->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
+	tiger3->SetPosition(engine::Vector3(-1.0f, 0.0f, 0.0f));
 	
 	// Add entities to the scene
-	this->AddEntity(entity1);
-	entity1->AddEntity(entity2);
-	entity2->AddEntity(entity3);
+	this->AddEntity(tiger1);
+	tiger1->AddEntity(tiger2);
+	tiger2->AddEntity(tiger3);
 }
 
 

@@ -40,11 +40,11 @@ namespace engine
 	 */
 	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, char* argPModelName)
 	{
-		engine::Logger::Log("Loading Resource", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Loading Resource", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		// this checks if the resource exists
 		if(this->resources.find(argPModelName) != this->resources.end())
 		{
-			engine::Logger::Log("Resource Already in Memory", 1, __FILE__,__LINE__);
+			engine::Logger::Log("Resource Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 			return this->resources[argPModelName];
 		}
 
@@ -82,7 +82,7 @@ namespace engine
 			else
 			{
 				pMeshTextures[i] = NULL;
-				Logger::Log("Texture not found " , Logger::LOG_LEVEL_WARNING , __FILE__, __LINE__);
+				Logger::Log("Texture not found " , Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 				// moet nog een logger aan gesproken worden
 				
 			}
@@ -97,7 +97,7 @@ namespace engine
 		
 		
 		pD3DMaterialsBuffer->Release();
-		engine::Logger::Log("Resource Loaded", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Resource Loaded", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return pResource;
 	}
 
@@ -112,29 +112,11 @@ namespace engine
 	{
 		return new Resource();
 	}
-
-	
 	
 	Resource* ResourceManager::GetResource(char* argPResourceName)
 	{
 		return this->resources[argPResourceName];
 	}
-	/*
-	std::map<char*, Resource*> ResourceManager::GetResources()
-	{
-		return this->resources;
-	}
-
-	Resource* ResourceManager::NewResource(char* argPResourceName)
-	{
-		this->resources[argPSceneName] = new Resource();
-	}
-
-	void ResourceManager::RemoveResource(char* argPResourceName)
-	{
-		this->resources.erase(argPSceneName);
-	}
-	*/
 
 	/**
 	 * Checks if the parameter filename exists

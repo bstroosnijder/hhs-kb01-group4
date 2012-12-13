@@ -63,7 +63,7 @@ namespace engine
 	 */
 	Window* WindowManager::NewWindow(char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight)
 	{
-		Logger::Log("Creating Window" , 1, __FILE__,__LINE__);
+		Logger::Log("Creating Window" , Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		Window* pWindow;
 		#ifdef _WIN32
 		// Windows 32bit
@@ -73,7 +73,7 @@ namespace engine
 		pWindow = new Win32Window(argPTitle, argX, argY, argWidth, argHeight);
 		#endif
 		WindowManager::windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
-		Logger::Log("Window Created" , 1, __FILE__,__LINE__);
+		Logger::Log("Window Created" , Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return pWindow;
 		
 	}
@@ -85,7 +85,7 @@ namespace engine
 	 */
 	void WindowManager::RemoveWindow(HWND argHWND)
 	{
-		Logger::Log("Removed Window" , 1, __FILE__,__LINE__);
+		Logger::Log("Removed Window" , Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		WindowManager::windows.erase(argHWND);
 	}
 	

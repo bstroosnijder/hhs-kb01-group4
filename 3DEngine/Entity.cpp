@@ -42,6 +42,7 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
+		this->rotation.y += (float)D3DX_PI/360;
 		for each(Entity* pEntity in this->entities)
 		{
 			pEntity->Update();

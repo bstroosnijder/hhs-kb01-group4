@@ -3,9 +3,6 @@
 namespace engine
 {
 	//---Private attributes---
-
-	Logger* Kernel::logger = new Logger();
-
 	//---Public attributes---
 	//---Private methods---
 	//---Public methods---
@@ -18,7 +15,7 @@ namespace engine
 	Kernel::Kernel()
 	{
 		// Initialize the managers
-		engine::Logger::Log("Creating Kernel", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Creating Kernel", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		this->windowManager = new WindowManager();
 		this->sceneManager = new SceneManager();
 		this->resourceManager = new ResourceManager();
@@ -30,7 +27,7 @@ namespace engine
 
 		//Initialise the map that associates windows with renderers.
 		this->winRenderer = std::map<Window*, Renderer*>();
-		engine::Logger::Log("Kernel Created", Logger::LOG_LEVEL_INFO, __FILE__,__LINE__);
+		engine::Logger::Log("Kernel Created", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**
