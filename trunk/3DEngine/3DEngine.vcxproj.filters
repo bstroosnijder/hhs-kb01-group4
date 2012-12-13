@@ -49,9 +49,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneA.cpp">
-      <Filter>Source Files\engine\scene</Filter>
-    </ClCompile>
+    <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -111,9 +109,7 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files\engine\resource</Filter>
     </ClInclude>
-    <ClInclude Include="SceneA.h">
-      <Filter>Header Files\engine\scene</Filter>
-    </ClInclude>
+    <ClInclude Include="MainScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
