@@ -40,6 +40,7 @@ namespace engine
 	{
 		this->kernel->LoadBeat();
 		this->kernel->Start();
+		engine::Logger::Log("Kernel Started", 1, __FILE__,__LINE__);
 	}
 
 	/**

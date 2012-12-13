@@ -4,6 +4,7 @@
 #include <map>
 #include <algorithm>
 #include "Win32Window.h"
+#include "Logger.h"
 
 namespace engine
 {

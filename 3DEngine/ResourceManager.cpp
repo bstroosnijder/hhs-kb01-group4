@@ -40,9 +40,11 @@ namespace engine
 	 */
 	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, char* argPModelName)
 	{
+		engine::Logger::Log("Loading Resource", 1, __FILE__,__LINE__);
 		// this checks if the resource exists
 		if(this->resources.find(argPModelName) != this->resources.end())
 		{
+			engine::Logger::Log("Resource Already in Memory", 1, __FILE__,__LINE__);
 			return this->resources[argPModelName];
 		}
 
@@ -80,6 +82,7 @@ namespace engine
 			else
 			{
 				pMeshTextures[i] = NULL;
+				Logger::Log("Texture not found " , Logger::LOG_LEVEL_WARNING , __FILE__, __LINE__);
 				// moet nog een logger aan gesproken worden
 				
 			}
@@ -94,6 +97,7 @@ namespace engine
 		
 		
 		pD3DMaterialsBuffer->Release();
+		engine::Logger::Log("Resource Loaded", 1, __FILE__,__LINE__);
 		return pResource;
 	}
 
