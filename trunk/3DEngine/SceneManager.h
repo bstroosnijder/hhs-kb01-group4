@@ -23,6 +23,7 @@ namespace engine
 		Scene* GetScene(char* argPSceneName);
 		std::map<char*, Scene*> GetScenes();
 		Scene* NewScene(char* argPSceneName);
+		void AddScene(char* argPSceneName, Scene* argPScene);
 		void RemoveScene(char* argPSceneName);
 	};
 }

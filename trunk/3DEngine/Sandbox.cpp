@@ -84,6 +84,15 @@ namespace engine
 		this->kernel->GetSceneManager()->RemoveScene(argPSceneName);
 	}
 
+	void Sandbox::AddScene(char* argPSceneName, Scene* argPScene)
+	{
+		this->kernel->GetSceneManager()->AddScene(argPSceneName, argPScene);
+	}
+	Scene* Sandbox::GetScene(char* argPSceneName)
+	{
+		return this->kernel->GetSceneManager()->GetScene(argPSceneName);
+	}
+
 	/**
 	 * Creates a Window and creates the association with this Window and the Renderer object.
 	 * @param		int					argRendererIndex is the index of the renderer to be added to the window we're creating.

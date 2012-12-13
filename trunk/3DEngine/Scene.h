@@ -6,7 +6,6 @@
 #include <iostream>
 #include "ResourceManager.h"
 #include "Entity.h"
-#include "Camera.h"
 #include "Renderer.h"
 
 namespace engine
@@ -27,8 +26,8 @@ namespace engine
 		void CleanUp();
 
 		void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
-		void Update();
-		void Draw(Renderer* argPRenderer);
+		virtual void Update();
+		virtual void Draw(Renderer* argPRenderer);
 
 		void AddWindow(Window* argPWindow);
 		void RemoveWindow(Window* argPWindow);

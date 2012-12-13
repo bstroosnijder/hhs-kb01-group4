@@ -72,6 +72,11 @@ namespace engine
 		return scene;
 	}
 
+	void SceneManager::AddScene(char* argPSceneName, Scene* argPScene)
+	{
+		scenes[argPSceneName] = argPScene;
+	}
+
 	/**
 	 * Remove a Scene pointer from the scenes collection.
 	 * @param		Scene*						The index name to remove from the collection of scenes.
