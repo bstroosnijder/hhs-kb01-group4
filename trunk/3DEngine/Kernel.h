@@ -21,7 +21,6 @@ namespace engine
 	class Kernel
 	{
 	private:
-		static Logger* logger;
 		WindowManager* windowManager;
 		SceneManager* sceneManager;
 		ResourceManager* resourceManager;

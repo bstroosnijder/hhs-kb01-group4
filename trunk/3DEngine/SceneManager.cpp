@@ -12,7 +12,7 @@ namespace engine
 	 */
 	SceneManager::SceneManager()
 	{
-		engine::Logger::Log("Creating SceneManager", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Creating SceneManager", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		scenes = std::map<char*, Scene*>();
 	}
 
@@ -68,10 +68,10 @@ namespace engine
 	 */
 	Scene* SceneManager::NewScene(char* argPSceneName)
 	{
-		engine::Logger::Log("Creating Scene", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Creating Scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		Scene* scene = new Scene();
 		scenes[argPSceneName] = scene;
-		engine::Logger::Log("Scene Created", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Scene Created", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return scene;
 	}
 
@@ -82,7 +82,9 @@ namespace engine
 	*/
 	void SceneManager::AddScene(char* argPSceneName, Scene* argPScene)
 	{
+		Logger::Log("Adding a custom scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		scenes[argPSceneName] = argPScene;
+		Logger::Log("Custom scene added", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -92,7 +94,7 @@ namespace engine
 	 */
 	void SceneManager::RemoveScene(char* argPSceneName)
 	{
-		engine::Logger::Log("Removing Scene", 1, __FILE__,__LINE__);
+		engine::Logger::Log("Removing Scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		this -> scenes.erase(argPSceneName);
 	}
 }
