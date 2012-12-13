@@ -23,23 +23,19 @@ namespace engine
 
 	void Tiger::Update()
 	{
+		this->rotation.y += (float)D3DX_PI/360;
 		Entity::Update();
 	}
 
 	void Tiger::Draw(Renderer* argPRenderer)
 	{
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
-		
 
+		
 		// Scaling
 		D3DXMATRIXA16 matScaling;
 		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
 		pRenderer->AddToWorldMatrix(&matScaling);
-
-		// Position
-		D3DXMATRIXA16 matPosition;
-		D3DXMatrixTranslation(&matPosition, this->position.x, this->position.y, this->position.z);
-		pRenderer->AddToWorldMatrix(&matPosition);
 		
 		// Rotation X
 		D3DXMATRIXA16 matRotationX;
@@ -53,6 +49,11 @@ namespace engine
 		D3DXMATRIXA16 matRotationZ;
 		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
 		pRenderer->AddToWorldMatrix(&matRotationZ);
+
+		// Position
+		D3DXMATRIXA16 matPosition;
+		D3DXMatrixTranslation(&matPosition, this->position.x, this->position.y, this->position.z);
+		pRenderer->AddToWorldMatrix(&matPosition);
 
 
 		// Call the parent draw to make sure the image is actually drawed
