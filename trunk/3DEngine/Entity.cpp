@@ -7,6 +7,21 @@ namespace engine
 	//---Private methods---
 	//---Public methods---
 
+	Entity::Entity(char* argPModelName)
+	{
+		this->modelName = argPModelName;
+		D3DXMatrixIdentity(&this->matWorld);
+	}
+
+	Entity::~Entity()
+	{
+		this->CleanUp();
+	}
+
+	void Entity::CleanUp()
+	{
+	}
+
 	/**
 	 * Default implementation of the Load method for all entities
 	 * @param		ResourceManager*		The resource manager to use.
@@ -15,6 +30,7 @@ namespace engine
 	 */
 	void Entity::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
 	{
+		this->SetResource(argPResourceManager->LoadResource(argPRenderer, this->modelName));
 		for each(Entity* pEntity in this->entities)
 		{
 			pEntity->Load(argPResourceManager, argPRenderer);
@@ -27,6 +43,7 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
+		this->rotation.y += D3DX_PI/360;
 		for each(Entity* pEntity in this->entities)
 		{
 			pEntity->Update();
@@ -42,12 +59,40 @@ namespace engine
 	{
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
+		
+		// Scaling
+		D3DXMATRIXA16 matScaling;
+		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matScaling);
+		
+		// Rotation X
+		D3DXMATRIXA16 matRotationX;
+		D3DXMatrixRotationX(&matRotationX, this->rotation.x);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationX);
+		// Rotation Y
+		D3DXMATRIXA16 matRotationY;
+		D3DXMatrixRotationY(&matRotationY, this->rotation.y);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationY);
+		// Rotation Z
+		D3DXMATRIXA16 matRotationZ;
+		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationZ);
+
+		// Position
+		D3DXMATRIXA16 matPosition;
+		D3DXMatrixTranslation(&matPosition, this->position.x, this->position.y, this->position.z);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matPosition);
+
+		// Multiplies the entity world matrix with the renderer's world matrix (this->matWorld * renderer->matWorld)
+		pRenderer->AddToWorldMatrix(&this->matWorld);
+
+
 		// Apply the matrix transformations
 		pRenderer->TransformWorldMatrix();
 		pRenderer->TransformViewMatrix();
 		pRenderer->TransformProjectionMatrix();
 
-		// Get the mesh and
+		// Get the mesh
 		LPD3DXMESH mesh = this->resource->GetMesh();
 		D3DMATERIAL9* pMeshMaterials = this->resource->GetMaterials();
 		LPDIRECT3DTEXTURE9* pMeshTextures = this->resource->GetTextures();

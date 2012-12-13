@@ -46,20 +46,8 @@
     <ClCompile Include="Resource.cpp">
       <Filter>Source Files\engine\resource</Filter>
     </ClCompile>
-    <ClCompile Include="Tiger.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files\engine\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Tiny.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Bench.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Barrel.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>

@@ -17,16 +17,21 @@ namespace engine
 	class Entity
 	{
 	private:
+		char* modelName;
+		D3DXMATRIXA16 matWorld;
+		Resource* resource;
+		std::list<Entity*> entities;
 	protected:
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scaling;
-		Resource* resource;
-		std::list<Entity*> entities;
 	public:
-		virtual void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
-		virtual void Update();
-		virtual void Draw(Renderer* argPRenderer);
+		Entity(char* argPModelName);
+		~Entity();
+		virtual void CleanUp();
+		void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
+		void Update();
+		void Draw(Renderer* argPRenderer);
 
 		void SetPosition(Vector3 argPosition);
 		void SetRotation(Vector3 argRotation);
