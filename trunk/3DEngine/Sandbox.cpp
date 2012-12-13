@@ -67,7 +67,7 @@ namespace engine
 
 	/**
 	 * Creates a Scene and adds a window to the scene's collection.
-	 * @param		int					argWindow is the window that needs to be added to the scene.
+	 * @param		char*				argPSceneName is the name of the new scene.
 	 * @return		Scene*				returns the created scene.
 	 */
 	Scene* Sandbox::NewScene(char* argPSceneName)
@@ -77,7 +77,7 @@ namespace engine
 
 	/**
 	 * Removes a scene to the scene collection within the Scene manager
-	 * @param		Scene*		argScene is the scene that will be removed in the collection
+	 * @param		Scene*			argScene is the scene that will be removed in the collection
 	 * @return		void
 	 */
 	void Sandbox::RemoveScene(char* argPSceneName)
@@ -85,10 +85,20 @@ namespace engine
 		this->kernel->GetSceneManager()->RemoveScene(argPSceneName);
 	}
 
+	/**
+	 * Add a scene to the scene collection within the Scene manager
+	 * @param		char*			argPSceneName is the identifier for the scene in the collection
+	 * @param		Scene*			Scene is the scene that will be added to the scene collection
+	*/
 	void Sandbox::AddScene(char* argPSceneName, Scene* argPScene)
 	{
 		this->kernel->GetSceneManager()->AddScene(argPSceneName, argPScene);
 	}
+
+	/**
+	 * Gets a scene from the collection by it's name.
+	 * @param		char*		argPSceneName is the identifier for the scene in the collection
+	*/
 	Scene* Sandbox::GetScene(char* argPSceneName)
 	{
 		return this->kernel->GetSceneManager()->GetScene(argPSceneName);
