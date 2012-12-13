@@ -15,12 +15,9 @@ namespace engine
 	 */
 	void Entity::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
 	{
-		if(this->entities.size() > 0)
+		for each(Entity* pEntity in this->entities)
 		{
-			for each(Entity* pEntity in this->entities)
-			{
-				pEntity->Load(argPResourceManager, argPRenderer);
-			}
+			pEntity->Load(argPResourceManager, argPRenderer);
 		}
 	}
 
@@ -30,12 +27,9 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
-		if(this->entities.size() > 0)
+		for each(Entity* pEntity in this->entities)
 		{
-			for each(Entity* pEntity in this->entities)
-			{
-				pEntity->Update();
-			}
+			pEntity->Update();
 		}
 	}
 
@@ -64,15 +58,12 @@ namespace engine
 			pRenderer->GetDevice()->SetTexture(0, pMeshTextures[i]);
 			mesh->DrawSubset(i);
 		}
-
-		if(this->entities.size() > 0)
+		
+		for each(Entity* pEntity in this->entities)
 		{
-			for each(Entity* pEntity in this->entities)
-			{
-				argPRenderer->Push();
-				pEntity->Draw(argPRenderer);
-				argPRenderer->Pop();
-			}
+			argPRenderer->Push();
+			pEntity->Draw(argPRenderer);
+			argPRenderer->Pop();
 		}
 	}
 
