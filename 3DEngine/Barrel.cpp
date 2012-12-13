@@ -29,7 +29,6 @@ namespace engine
 
 	void Barrel::Draw(Renderer* argPRenderer)
 	{
-		argPRenderer->SetupMatricis();
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 

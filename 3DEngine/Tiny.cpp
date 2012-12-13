@@ -28,7 +28,6 @@ namespace engine
 
 	void Tiny::Draw(Renderer* argPRenderer)
 	{
-		argPRenderer->SetupMatricis();
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 
