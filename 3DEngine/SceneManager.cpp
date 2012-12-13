@@ -75,6 +75,11 @@ namespace engine
 		return scene;
 	}
 
+	/**
+	 * Add a scene to the scene collection within the Scene manager
+	 * @param		char*			argPSceneName is the identifier for the scene in the collection
+	 * @param		Scene*			Scene is the scene that will be added to the scene collection
+	*/
 	void SceneManager::AddScene(char* argPSceneName, Scene* argPScene)
 	{
 		scenes[argPSceneName] = argPScene;
