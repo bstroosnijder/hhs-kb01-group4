@@ -1,8 +1,17 @@
-#pragma once
-class SceneSteffen
+#ifndef SCENESTEFFEN_H_
+#define SCENESTEFFEN_H_
+
+#include "Scene.h"
+
+class SceneSteffen : public engine::Scene
 {
 public:
-	SceneSteffen(void);
-	~SceneSteffen(void);
+	SceneSteffen();
+	~SceneSteffen();
+	void CleanUp();
+
+	void Update();
+	void Draw(engine::Renderer* argPRenderer);
 };
 
+#endif
