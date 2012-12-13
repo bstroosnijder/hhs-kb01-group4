@@ -21,9 +21,6 @@ namespace engine
 		LPD3DXMATRIXSTACK matView;
 		LPD3DXMATRIXSTACK matProjection;
 	public:
-		static const int LOG_LEVEL_INFO;
-		static const int LOG_LEVEL_WARNING;
-
 		DirectX9Renderer(HWND argHWin);
 		~DirectX9Renderer();
 		void CleanUp();
