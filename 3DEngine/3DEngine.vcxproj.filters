@@ -49,7 +49,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="SceneBas.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneAlex.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLeon.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSteffen.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -109,7 +120,18 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files\engine\resource</Filter>
     </ClInclude>
-    <ClInclude Include="MainScene.h" />
+    <ClInclude Include="SceneBas.h">
+      <Filter>Header Files\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneAlex.h">
+      <Filter>Header Files\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLeon.h">
+      <Filter>Header Files\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSteffen.h">
+      <Filter>Header Files\game\scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -177,6 +199,18 @@
     </Filter>
     <Filter Include="Resource Files\models">
       <UniqueIdentifier>{458b3e36-8817-40d6-af16-639719a71e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{dfae05fe-1b83-4da5-80d7-0bd95a62fe37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{d5997641-e69a-4581-8bfe-f410229db8a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\scenes">
+      <UniqueIdentifier>{d407b8ac-bf69-4bcc-9ceb-360f1d315c74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\scenes">
+      <UniqueIdentifier>{b5bdeac4-ef0a-4ccb-8c99-71e428ba6bf9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
