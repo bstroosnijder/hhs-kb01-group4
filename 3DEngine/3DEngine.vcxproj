@@ -66,8 +66,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Barrel.cpp" />
-    <ClCompile Include="Bench.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="DirectX9Renderer.cpp" />
@@ -83,8 +81,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TextLog.cpp" />
-    <ClCompile Include="Tiger.cpp" />
-    <ClCompile Include="Tiny.cpp" />
     <ClCompile Include="Win32Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>

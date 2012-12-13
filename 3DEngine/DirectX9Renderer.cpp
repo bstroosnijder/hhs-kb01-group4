@@ -183,7 +183,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::AddToWorldMatrix(D3DXMATRIXA16* argPMatrix)
 	{
-		this->matWorld->MultMatrix(argPMatrix);
+		this->matWorld->MultMatrixLocal(argPMatrix);
 	}
 
 	/**

@@ -117,11 +117,7 @@ namespace engine
 	 */
 	void Scene::AddEntity(Entity* entity)
 	{
-		//A Camera object may not be added to a Scene.
-		if(!dynamic_cast<Camera*>(entity))
-		{
-			entities.push_back(entity);
-		}
+		entities.push_back(entity);
 	}
 
 	/**
