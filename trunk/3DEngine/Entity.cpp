@@ -10,7 +10,6 @@ namespace engine
 	Entity::Entity(char* argPModelName)
 	{
 		this->modelName = argPModelName;
-		D3DXMatrixIdentity(&this->matWorld);
 	}
 
 	Entity::~Entity()
@@ -43,7 +42,6 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
-		this->rotation.y += D3DX_PI/360;
 		for each(Entity* pEntity in this->entities)
 		{
 			pEntity->Update();
@@ -58,6 +56,7 @@ namespace engine
 	void Entity::Draw(Renderer* argPRenderer)
 	{
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
+		D3DXMatrixIdentity(&this->matWorld);
 
 		
 		// Scaling
