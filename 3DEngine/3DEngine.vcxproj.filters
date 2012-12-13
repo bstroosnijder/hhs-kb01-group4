@@ -37,9 +37,6 @@
     <ClCompile Include="DirectX9Renderer.cpp">
       <Filter>Source Files\engine\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\engine\renderer</Filter>
     </ClCompile>
@@ -51,6 +48,9 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneA.cpp">
+      <Filter>Source Files\engine\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,26 +105,14 @@
     <ClInclude Include="DirectX9Renderer.h">
       <Filter>Header Files\engine\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Header Files\engine\resource</Filter>
     </ClInclude>
-    <ClInclude Include="Tiger.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Tiny.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Bench.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="barrel.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
+    <ClInclude Include="SceneA.h">
+      <Filter>Header Files\engine\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
