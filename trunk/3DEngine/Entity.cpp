@@ -10,6 +10,7 @@ namespace engine
 	Entity::Entity(char* argPModelName)
 	{
 		this->modelName = argPModelName;
+		this->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
 	}
 
 	Entity::~Entity()
@@ -42,7 +43,6 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
-		this->rotation.y += (float)D3DX_PI/360;
 		for each(Entity* pEntity in this->entities)
 		{
 			pEntity->Update();
