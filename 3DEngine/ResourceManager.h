@@ -17,15 +17,16 @@ namespace engine
 	{
 	private:
 		//std::map<char*, Model*> models;
-		std::map<char*, char*> textures;
+		std::map<char*, LPDIRECT3DTEXTURE9> textures;
 		std::map<char*, Resource*> resources;
 		bool FileExists(const std::string& filename);
 	public:
 		ResourceManager();
 		~ResourceManager();
 		void CleanUp();
+
+		LPDIRECT3DTEXTURE9 LoadTexture(Renderer* argPRenderer, char* argPTextureName);
 		Resource* LoadResource(Renderer* argPRenderer, char* argPModelName);
-		Resource* LoadResource(Renderer* argPRenderer, char* argPModelName, char* argPTextureName);
 
 		Resource* GetResource(char* argPSceneName);
 		//std::map<char*, Resource*> GetResources();

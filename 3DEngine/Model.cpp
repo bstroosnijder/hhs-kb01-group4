@@ -41,6 +41,11 @@ namespace engine
 	void Model::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
 	{
 		this->SetResource(argPResourceManager->LoadResource(argPRenderer, this->pModelName));
+
+		//LPDIRECT3DTEXTURE9* textures = this->pResource->GetTextures();
+		//textures[0] = argPResourceManager->LoadTexture(argPRenderer, "tiger.bmp");
+		//this->pResource->SetTextures(textures);
+
 		for each(Model* pModel in this->models)
 		{
 			pModel->Load(argPResourceManager, argPRenderer);
@@ -67,11 +72,11 @@ namespace engine
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 		// Get the mesh
-		LPD3DXMESH mesh = this->resource->GetMesh();
-		D3DMATERIAL9* pMeshMaterials = this->resource->GetMaterials();
-		LPDIRECT3DTEXTURE9* pMeshTextures = this->resource->GetTextures();
+		LPD3DXMESH mesh = this->pResource->GetMesh();
+		D3DMATERIAL9* pMeshMaterials = this->pResource->GetMaterials();
+		LPDIRECT3DTEXTURE9* pMeshTextures = this->pResource->GetTextures();
 
-		for(unsigned long i = 0; i < this->resource->GetNumMaterials(); i++)
+		for(unsigned long i = 0; i < this->pResource->GetNumMaterials(); i++)
 		{
 			pRenderer->GetDevice()->SetMaterial(&pMeshMaterials[i]);
 			pRenderer->GetDevice()->SetTexture(0, pMeshTextures[i]);
@@ -93,7 +98,7 @@ namespace engine
 	 */
 	void Model::SetResource(Resource* argPResource)
 	{
-		this->resource = argPResource;
+		this->pResource = argPResource;
 	}
 
 	/**

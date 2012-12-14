@@ -4,6 +4,7 @@
 #include <list>
 #include "Entity.h"
 #include "ResourceManager.h"
+#include <d3dx9.h>
 
 namespace engine
 {
@@ -11,7 +12,7 @@ namespace engine
 	{
 	private:
 		char* pModelName;
-		Resource* resource;
+		Resource* pResource;
 		std::list<Model*> models;
 	public:
 		Model(char* argPModelName);

@@ -5,10 +5,10 @@
 class SceneLeon : public engine::Scene
 {
 private:
-	engine::Entity* barrel;
+	engine::Model* barrel;
 public:
-	SceneLeon(void);
-	~SceneLeon(void);
+	SceneLeon();
+	~SceneLeon();
 	void Update();
 	void Draw(engine::Renderer* argPRenderer);
 };
