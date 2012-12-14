@@ -36,7 +36,6 @@ namespace engine
 		void LoadBeat();
 		void HeartBeat();
 
-		static Logger* GetLogger();
 		Renderer* GetRenderer(unsigned int argIndex);
 		WindowManager* GetWindowManager();
 		SceneManager* GetSceneManager();

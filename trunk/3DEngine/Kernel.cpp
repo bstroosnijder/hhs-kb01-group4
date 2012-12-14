@@ -120,15 +120,6 @@ namespace engine
 	}
 
 	/**
-	 * Obtain the Logger object associated with the Kernel.
-	 * @return		Logger*
-	 */
-	Logger* Kernel::GetLogger()
-	{
-		return logger;
-	}
-
-	/**
 	 * Get the renderer on the specified index.
 	 * @param		unsigned int		The index of the renderer to return.
 	 * @return		Renderer*
