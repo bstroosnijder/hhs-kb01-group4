@@ -6,7 +6,6 @@ SceneBas::SceneBas()
 	
 	// Create an entity
 	tiger1 = new engine::Entity("tiger.x");
-	tiger1->SetScaling(engine::Vector3(2.0f, 2.0f, 2.0f));
 	tiger1->SetRotation(engine::Vector3(0.0f, 0.0f, 0.0f));
 	tiger1->SetPosition(engine::Vector3(0.0f, 0.0f, 0.0f));
 
@@ -40,6 +39,8 @@ void SceneBas::CleanUp()
 
 void SceneBas::Update()
 {
+
+
 	Scene::Update();
 }
 
