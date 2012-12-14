@@ -32,6 +32,31 @@ namespace engine
 	{
 	}
 
+	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(Renderer* argPRenderer, char* argPTextureName)
+	{
+		engine::Logger::Log("Loading Texture:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		engine::Logger::Log(argPTextureName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+
+		if(this->textures.find(argPTextureName) != this->textures.end())
+		{
+			engine::Logger::Log("Texture Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+			return this->textures[argPTextureName];
+		}
+		
+		if (!FileExists(argPTextureName))
+		{
+			Logger::Log("Texture not found:", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+			Logger::Log(argPTextureName, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);			
+		}
+		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
+
+		LPDIRECT3DTEXTURE9 texture;
+		D3DXCreateTextureFromFileA(pRenderer->GetDevice(), argPTextureName, &texture);
+		this->textures[argPTextureName] = texture;
+
+		return texture;
+	}
+
 	/**
 	 * Loads a resource using it's file name and converting it into a Resource object.
 	 * @param		Renderer*	The renderer to use
@@ -87,6 +112,7 @@ namespace engine
 				// moet nog een logger aan gesproken worden
 				
 			}
+			this->textures[pD3DXMaterials[i].pTextureFilename] = pMeshTextures[i];
 		}
 		
 		Resource* pResource = new Resource();
@@ -100,18 +126,6 @@ namespace engine
 		pD3DMaterialsBuffer->Release();
 		engine::Logger::Log("Resource Loaded", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return pResource;
-	}
-
-	/**
-	 * Loads a resource using the model and texture provided.
-	 * @param		Renderer*	The renderer to use
-	 * @param		char*		The model name
-	 * @param		char*		The texture name
-	 * @return		Resource*
-	 */
-	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, char* argPModelName, char* argPTextureName)
-	{
-		return new Resource();
 	}
 	
 	Resource* ResourceManager::GetResource(char* argPResourceName)
