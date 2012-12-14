@@ -36,6 +36,11 @@ namespace engine
 		void SetPosition(Vector3 argPosition);
 		void SetRotation(Vector3 argRotation);
 		void SetScaling(Vector3 argScaling);
+
+		Vector3 GetPosition();
+		Vector3 GetRotation();
+		Vector3 GetScaling();
+
 		void SetResource(Resource* argPResource);
 		void AddEntity(Entity* argPEntity);
 	};

@@ -143,6 +143,33 @@ namespace engine
 	}
 
 	/**
+	 * Getter for the position
+	 * @return		Vector3					The position of the entity
+	 */
+	Vector3 Entity::GetPosition()
+	{
+		return this->position;
+	}
+	
+	/**
+	 * Getter for the rotation
+	 * @return		Vector3					The rotation of the entity
+	 */
+	Vector3 Entity::GetRotation()
+	{
+		return this->rotation;
+	}
+	
+	/**
+	 * Getter for the rotation
+	 * @return		Vector3					The scaling of the entity
+	 */
+	Vector3 Entity::GetScaling()
+	{
+		return this->scaling;
+	}
+
+	/**
 	 * Setter for the resource
 	 * @param		Resource*				The new resource for theentity
 	 * @return		void

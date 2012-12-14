@@ -7,6 +7,7 @@ SceneLeon::SceneLeon()
 
 	barrel = new engine::Entity("barrel.X");
 	barrel->SetPosition( engine::Vector3(0.0f, 0.0f, 0.0f) );
+	barrel->SetRotation( engine::Vector3( -(M_PI/2), 0.0f, 0.0f) );
 	barrel->SetScaling( engine::Vector3(0.05f, 0.05f, 0.05f) );
 	this->AddEntity(barrel);
 }
@@ -14,11 +15,24 @@ SceneLeon::SceneLeon()
 
 SceneLeon::~SceneLeon()
 {
-
+	
 }
+
+float angle = 0.0f;
 
 void SceneLeon::Update()
 {
+	angle += 1.0f;
+
+	engine::Vector3 position = barrel->GetPosition();
+	position.x += cos(angle / 180 * M_PI) * 0.08f;
+	position.z += sin(angle / 180 * M_PI) * 0.08f;
+	barrel->SetPosition(position);
+
+	engine::Vector3 rotation = barrel->GetRotation();
+	rotation.y -= 0.0175f;
+	barrel->SetRotation(rotation);
+
 
 }
 
