@@ -82,7 +82,8 @@ namespace engine
 			else
 			{
 				pMeshTextures[i] = NULL;
-				Logger::Log("Texture not found " , Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+				Logger::Log("Texture not found:", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+				Logger::Log(pD3DXMaterials[i].pTextureFilename, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 				// moet nog een logger aan gesproken worden
 				
 			}
