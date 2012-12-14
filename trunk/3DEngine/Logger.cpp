@@ -90,7 +90,7 @@ namespace engine
 		//Log the message, severity (info/warning/error), current date, current time, file location and line number to each strategy.
 		for each(LogStrategy* strat in strategies)
 		{
-			strat->Write(argPMessage, severity, __DATE__, __TIME__, argPFile, argLineNumber);
+			strat->Write(argPMessage, severity, (char*)__DATE__, (char*)__TIME__, argPFile, argLineNumber);
 		}
 	}
 }
