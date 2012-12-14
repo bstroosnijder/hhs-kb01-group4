@@ -44,28 +44,6 @@ namespace engine
 	}
 
 	/**
-	 * Adds a strategy to the strategy collection within the logger. 
-	 * A strategy determines which output is given(text or console).
-	 * Multiple strategies are possible.
-	 * @param		LogStrategy*		logStrat is the strategy that is added to the collection
-	 * @return		void
-	 */
-	void Sandbox::AddLogStrategy(LogStrategy* argPLogStrat)
-	{
-		Kernel::GetLogger()->AddStrategy(argPLogStrat);
-	}
-
-	/**
-	 * Deletes a strategy from the strategy collection within the logger.
-	 * @param		LogStrategy*		logStrat is the strategy that will be removed to the collection
-	 * @return		void
-	 */
-	void Sandbox::RemoveLogStrategy(LogStrategy* argPLogStrat)
-	{
-		Kernel::GetLogger()->RemoveStrategy(argPLogStrat);
-	}
-
-	/**
 	 * Creates a Scene and adds a window to the scene's collection.
 	 * @param		char*				argPSceneName is the name of the new scene.
 	 * @return		Scene*				returns the created scene.
@@ -122,7 +100,7 @@ namespace engine
 		{
 			char* msg = "Renderer with 888 could not be found";
 			sprintf_s(msg, sizeof(msg), "Renderer with index %d could not be found", argRendererIndex);
-			this->kernel->GetLogger()->Log(msg, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			Logger::Log(msg, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
 		}
 
 		Window* pWindow = this->kernel->GetWindowManager()->NewWindow(argPTitle, argX, argY, argWidth, argHeight);

@@ -20,9 +20,6 @@ namespace engine
 		void CleanUp();
 		void Start();
 		
-		void AddLogStrategy(LogStrategy* argPLogStrat);
-		void RemoveLogStrategy(LogStrategy* argPLogStrat);
-		
 		Scene* NewScene(char* argPSceneName);
 		void RemoveScene(char* argPSceneName);
 		void AddScene(char* argPSceneName, Scene* argPScene);
