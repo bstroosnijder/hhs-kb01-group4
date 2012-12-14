@@ -71,7 +71,7 @@ namespace engine
 		// Position
 		D3DXMATRIXA16 matPosition;
 		D3DXMatrixTranslation(&matPosition, this->position.x, this->position.y, this->position.z);
-		D3DXMatrixMultiply(&matWorld, &matWorld, &matPosition);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matPosition);
 
 		// Multiplies the entity world matrix with the renderer's world matrix (this->matWorld * renderer->matWorld)
 		pRenderer->AddToWorldMatrix(&this->matWorld);

@@ -13,6 +13,8 @@ namespace engine
 	Scene::Scene()
 	{
 		this->windows = std::list<Window*>();
+
+		this->pCamera = new Camera();
 		this->models = std::list<Model*>();
 	}
 
@@ -50,6 +52,7 @@ namespace engine
 	 */
 	void Scene::Update()
 	{
+		this->pCamera->Update();
 		for each(Model* pModel in this->models)
 		{
 			pModel->Update();
@@ -63,12 +66,15 @@ namespace engine
 	 */
 	void Scene::Draw(Renderer* argPRenderer)
 	{
+		argPRenderer->Push();
+		this->pCamera->Draw(argPRenderer);
 		for each(Model* pModel in this->models)
 		{
 			argPRenderer->Push();
 			pModel->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}
+		argPRenderer->Pop();
 	}
 
 	/**
@@ -98,6 +104,11 @@ namespace engine
 	std::list<Window*> Scene::GetWindows()
 	{
 		return this->windows;
+	}
+
+	Camera* Scene::GetCamera()
+	{
+		return this->pCamera;
 	}
 
 	/**

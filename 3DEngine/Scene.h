@@ -4,6 +4,7 @@
 #include <list>
 #include <iostream>
 #include "ResourceManager.h"
+#include "Camera.h"
 #include "Model.h"
 #include "Renderer.h"
 
@@ -18,6 +19,8 @@ namespace engine
 	{
 	private:
 		std::list<Window*> windows;
+
+		Camera* pCamera;
 		std::list<Model*> models;
 	public:
 		Scene();
@@ -31,6 +34,8 @@ namespace engine
 		void AddWindow(Window* argPWindow);
 		void RemoveWindow(Window* argPWindow);
 		std::list<Window*> GetWindows();
+
+		Camera* GetCamera();
 
 		void AddModel(Model* argPModel);
 		void RemoveModel(Model* argPModel);

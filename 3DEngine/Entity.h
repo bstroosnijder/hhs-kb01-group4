@@ -15,8 +15,8 @@ namespace engine
 	class Entity
 	{
 	private:
-		D3DXMATRIXA16 matWorld;
 	protected:
+		D3DXMATRIXA16 matWorld;
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scaling;
@@ -24,6 +24,7 @@ namespace engine
 		Entity();
 		virtual ~Entity();
 		virtual void CleanUp();
+
 		virtual void Update();
 		virtual void Draw(Renderer* argPRenderer);
 
