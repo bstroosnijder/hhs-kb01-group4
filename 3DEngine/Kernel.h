@@ -2,9 +2,8 @@
 #define KERNEL_H_
 
 #include <map>
+#include <vector>
 #include "Logger.h"
-#include "ConsoleLog.h"
-#include "TextLog.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
