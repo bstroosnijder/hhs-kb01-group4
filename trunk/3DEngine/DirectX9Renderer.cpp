@@ -201,9 +201,9 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformViewMatrix()	
 	{
-		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-10.0f );
-		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
-		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
+		D3DXVECTOR3 vEyePt(0.0f, 0.0f, 0.0f);
+		D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 1.0f);
+		D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 		D3DXMatrixLookAtLH(this->matView->GetTop(), &vEyePt, &vLookatPt, &vUpVec);
 		this->pDevice->SetTransform(D3DTS_VIEW, this->matView->GetTop());
 	}

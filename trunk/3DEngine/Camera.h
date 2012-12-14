@@ -11,6 +11,9 @@ namespace engine
 		Camera();
 		~Camera();
 		void CleanUp();
+
+		void Update();
+		void Draw(Renderer* argPRenderer);
 	};
 }
 
