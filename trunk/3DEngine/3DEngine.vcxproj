@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="DirectX9Renderer.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -73,6 +74,7 @@
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -88,6 +90,7 @@
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="DirectX9Renderer.h" />
     <ClInclude Include="Entity.h" />
@@ -95,6 +98,7 @@
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LogStrategy.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="N00b.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />

@@ -12,8 +12,8 @@ namespace engine
 	 */
 	Scene::Scene()
 	{
-		this->windows = std::vector<Window*>();
-		this->entities = std::vector<Entity*>();
+		this->windows = std::list<Window*>();
+		this->models = std::list<Model*>();
 	}
 
 	/**
@@ -33,26 +33,26 @@ namespace engine
 	}
 
 	/**
-	 * Loads the scene and all of it's entities
+	 * Loads the scene and all of it's models
 	 * @return		void
 	 */
 	void Scene::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
 	{
-		for each(Entity* pEntity in this->entities)
+		for each(Model* pModel in this->models)
 		{
-			pEntity->Load(argPResourceManager, argPRenderer);
+			pModel->Load(argPResourceManager, argPRenderer);
 		}
 	}
 
 	/**
-	 * Update each entity in the entities collection.
+	 * Update each entity in the models collection.
 	 * @return		void
 	 */
 	void Scene::Update()
 	{
-		for each(Entity* pEntity in this->entities)
+		for each(Model* pModel in this->models)
 		{
-			pEntity->Update();
+			pModel->Update();
 		}
 	}
 
@@ -63,10 +63,10 @@ namespace engine
 	 */
 	void Scene::Draw(Renderer* argPRenderer)
 	{
-		for each(Entity* pEntity in this->entities)
+		for each(Model* pModel in this->models)
 		{
 			argPRenderer->Push();
-			pEntity->Draw(argPRenderer);
+			pModel->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}
 	}
@@ -88,71 +88,44 @@ namespace engine
 	 */
 	void Scene::RemoveWindow(Window* argPWindow)
 	{
-
-	}
-
-	/**
-	 * Gets a window by index from the scene's window list
-	 * @param		int							The index to get the window of
-	 * @return		Window*
-	 */
-	Window* Scene::GetWindow(int argIndex)
-	{
-		return this->windows.at(argIndex);
+		this->windows.remove(argPWindow);
 	}
 
 	/**
 	 * Getter for the window list
-	 * @return		std::vector<Window*>		The list of windows
+	 * @return		std::list<Window*>			The list of windows
 	 */
-	std::vector<Window*> Scene::GetWindows()
+	std::list<Window*> Scene::GetWindows()
 	{
 		return this->windows;
 	}
 
 	/**
-	 * Add an entity pointer to the list of entities.
-	 * @param		entity						The Entity pointer to add to the collection of entities.
+	 * Add an model pointer to the list of models.
+	 * @param		model						The model pointer to add to the collection of models.
 	 * @return		void
 	 */
-	void Scene::AddEntity(Entity* entity)
+	void Scene::AddModel(Model* argPModel)
 	{
-		entities.push_back(entity);
+		this->models.push_back(argPModel);
 	}
 
 	/**
-	 * Remove an entity pointer from the collection of entities.
-	 * @param		entity						The entity pointer to remove from the collection of entities.
+	 * Remove an model pointer from the collection of models.
+	 * @param		Model*						The model pointer to remove from the collection of models.
 	 * @return		void
 	 */
-	void Scene::RemoveEntity(Entity* entity)
+	void Scene::RemoveModel(Model* argPModel)
 	{
-		//Find the position of the given entity and store it in 'position'.
-		//Position is set equal to entities.end() when the object can't be found.
-		std::vector<Entity*>::iterator position = std::find(entities.begin(), entities.end(), entity);
-
-		if(position != entities.end()) 
-		{
-			entities.erase(position);
-		}
+		this->models.remove(argPModel);
 	}
 
 	/**
-	 * Obtain the Entity pointer using an index.
-	 * @param		index						The index in the collection by which to obtain the entity pointer.
-	 * @return		entity						The entity at the given index, NULL returned if no entity exists on the given index.
+	 * Obtain all the model pointers in the models collection.
+	 * @return		std::list<Model*>			The entire model collection.
 	 */
-	Entity* Scene::GetEntity(int index)
+	std::list<Model*> Scene::GetModels()
 	{
-		return entities.at(index);
-	}
-
-	/**
-	 * Obtain all the entity pointers in the entities collection.
-	 * @return		std::vector<Entity*>		The entire entity collection.
-	 */
-	std::vector<Entity*> Scene::GetEntities()
-	{
-		return entities;
+		return this->models;
 	}
 }

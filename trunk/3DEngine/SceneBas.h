@@ -2,13 +2,14 @@
 #define SCENEBAS_H_
 
 #include "Scene.h"
+#include "Model.h"
 
 class SceneBas : public engine::Scene
 {
 private:
-	engine::Entity* tiger1;
-	engine::Entity* tiger2;
-	engine::Entity* tiger3;
+	engine::Model* tiger1;
+	engine::Model* tiger2;
+	engine::Model* tiger3;
 public:
 	SceneBas();
 	~SceneBas();

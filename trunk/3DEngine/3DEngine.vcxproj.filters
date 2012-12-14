@@ -61,6 +61,12 @@
     <ClCompile Include="SceneSteffen.cpp">
       <Filter>Source Files\game\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -131,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="SceneSteffen.h">
       <Filter>Header Files\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

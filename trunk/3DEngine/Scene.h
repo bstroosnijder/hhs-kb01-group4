@@ -1,11 +1,10 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
-#include <vector>
-#include <algorithm>
+#include <list>
 #include <iostream>
 #include "ResourceManager.h"
-#include "Entity.h"
+#include "Model.h"
 #include "Renderer.h"
 
 namespace engine
@@ -18,8 +17,8 @@ namespace engine
 	class Scene
 	{
 	private:
-		std::vector<Window*> windows;
-		std::vector<Entity*> entities;
+		std::list<Window*> windows;
+		std::list<Model*> models;
 	public:
 		Scene();
 		~Scene();
@@ -31,12 +30,11 @@ namespace engine
 
 		void AddWindow(Window* argPWindow);
 		void RemoveWindow(Window* argPWindow);
-		Window* GetWindow(int argIndex);
-		std::vector<Window*> GetWindows();
-		void AddEntity(Entity* argPEntity);
-		void RemoveEntity(Entity* argPEntity);
-		Entity* GetEntity(int argIndex);
-		std::vector<Entity*> GetEntities();
+		std::list<Window*> GetWindows();
+
+		void AddModel(Model* argPModel);
+		void RemoveModel(Model* argPModel);
+		std::list<Model*> GetModels();
 	};
 }
 

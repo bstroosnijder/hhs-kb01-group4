@@ -7,34 +7,28 @@ namespace engine
 	//---Private methods---
 	//---Public methods---
 
-	Entity::Entity(char* argPModelName)
+	/**
+	 * Constructs the Scene object, initialising the Window and Entity collection.
+	 */
+	Entity::Entity()
 	{
-		this->modelName = argPModelName;
 		this->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
 	}
 
+	/**
+	 * Destructs the Scene object.
+	 */
 	Entity::~Entity()
 	{
 		this->CleanUp();
 	}
 
-	void Entity::CleanUp()
-	{
-	}
-
 	/**
-	 * Default implementation of the Load method for all entities
-	 * @param		ResourceManager*		The resource manager to use.
-	 * @param		Renderer*				The renderer to use.
+	 * Lazy cleanup method for destructing this object.
 	 * @return		void
 	 */
-	void Entity::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
+	void Entity::CleanUp()
 	{
-		this->SetResource(argPResourceManager->LoadResource(argPRenderer, this->modelName));
-		for each(Entity* pEntity in this->entities)
-		{
-			pEntity->Load(argPResourceManager, argPRenderer);
-		}
 	}
 
 	/**
@@ -43,10 +37,6 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
-		for each(Entity* pEntity in this->entities)
-		{
-			pEntity->Update();
-		}
 	}
 
 	/**
@@ -91,25 +81,6 @@ namespace engine
 		pRenderer->TransformWorldMatrix();
 		pRenderer->TransformViewMatrix();
 		pRenderer->TransformProjectionMatrix();
-
-		// Get the mesh
-		LPD3DXMESH mesh = this->resource->GetMesh();
-		D3DMATERIAL9* pMeshMaterials = this->resource->GetMaterials();
-		LPDIRECT3DTEXTURE9* pMeshTextures = this->resource->GetTextures();
-
-		for(unsigned long i = 0; i < this->resource->GetNumMaterials(); i++)
-		{
-			pRenderer->GetDevice()->SetMaterial(&pMeshMaterials[i]);
-			pRenderer->GetDevice()->SetTexture(0, pMeshTextures[i]);
-			mesh->DrawSubset(i);
-		}
-		
-		for each(Entity* pEntity in this->entities)
-		{
-			argPRenderer->Push();
-			pEntity->Draw(argPRenderer);
-			argPRenderer->Pop();
-		}
 	}
 
 	/**
@@ -167,25 +138,5 @@ namespace engine
 	Vector3 Entity::GetScaling()
 	{
 		return this->scaling;
-	}
-
-	/**
-	 * Setter for the resource
-	 * @param		Resource*				The new resource for theentity
-	 * @return		void
-	 */
-	void Entity::SetResource(Resource* argPResource)
-	{
-		this->resource = argPResource;
-	}
-
-	/**
-	 * Adds an entity
-	 * @param		Entity*					The entity to add
-	 * @return		void
-	 */
-	void Entity::AddEntity(Entity* argPEntity)
-	{
-		this->entities.push_back(argPEntity);
 	}
 }

@@ -1,8 +1,6 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
-#include <list>
-#include "ResourceManager.h"
 #include "Vector3.h"
 #include "DirectX9Renderer.h"
 
@@ -17,21 +15,17 @@ namespace engine
 	class Entity
 	{
 	private:
-		char* modelName;
 		D3DXMATRIXA16 matWorld;
-		Resource* resource;
-		std::list<Entity*> entities;
 	protected:
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scaling;
 	public:
-		Entity(char* argPModelName);
-		~Entity();
+		Entity();
+		virtual ~Entity();
 		virtual void CleanUp();
-		void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
-		void Update();
-		void Draw(Renderer* argPRenderer);
+		virtual void Update();
+		virtual void Draw(Renderer* argPRenderer);
 
 		void SetPosition(Vector3 argPosition);
 		void SetRotation(Vector3 argRotation);
@@ -40,9 +34,6 @@ namespace engine
 		Vector3 GetPosition();
 		Vector3 GetRotation();
 		Vector3 GetScaling();
-
-		void SetResource(Resource* argPResource);
-		void AddEntity(Entity* argPEntity);
 	};
 }
 
