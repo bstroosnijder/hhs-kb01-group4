@@ -12,7 +12,7 @@ namespace engine
 	 */
 	ResourceManager::ResourceManager()
 	{
-		this->resources = std::map<char*, Resource*>();
+		this->resources = std::map<char, Resource*>();
 	}
 
 	/**
@@ -34,16 +34,16 @@ namespace engine
 
 	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(Renderer* argPRenderer, char* argPTextureName)
 	{
-		engine::Logger::Log("Loading Texture:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-		engine::Logger::Log(argPTextureName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("Loading Texture:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log(argPTextureName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 
-		if(this->textures.find(argPTextureName) != this->textures.end())
+		if(this->textures.count(*argPTextureName) > 0)
 		{
-			engine::Logger::Log("Texture Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-			return this->textures[argPTextureName];
+			Logger::Log("Texture Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+			return this->textures[*argPTextureName];
 		}
 		
-		if (!FileExists(argPTextureName))
+		if (!this->FileExists(argPTextureName))
 		{
 			Logger::Log("Texture not found:", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 			Logger::Log(argPTextureName, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);			
@@ -52,7 +52,7 @@ namespace engine
 
 		LPDIRECT3DTEXTURE9 texture;
 		D3DXCreateTextureFromFileA(pRenderer->GetDevice(), argPTextureName, &texture);
-		this->textures[argPTextureName] = texture;
+		this->textures[*argPTextureName] = texture;
 
 		return texture;
 	}
@@ -65,12 +65,14 @@ namespace engine
 	 */
 	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, char* argPModelName)
 	{
-		engine::Logger::Log("Loading Resource", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		engine::Logger::Log("Loading Resource:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		engine::Logger::Log(argPModelName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		// this checks if the resource exists
-		if(this->resources.find(argPModelName) != this->resources.end())
+		//Resource* r = this->resources[argPModelName];
+		if(this->resources.count(*argPModelName) > 0) // TODO: hij slaat nu alleen eerste letter op.
 		{
 			engine::Logger::Log("Resource Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-			return this->resources[argPModelName];
+			return this->resources[*argPModelName];
 		}
 
 		LPD3DXMESH mesh;
@@ -99,7 +101,7 @@ namespace engine
 			pMeshMaterials[i].Ambient = pMeshMaterials[i].Diffuse;
 
 			// Create texture from file
-			if (FileExists(pD3DXMaterials[i].pTextureFilename))
+			if (this->FileExists(pD3DXMaterials[i].pTextureFilename))
 			{
 				D3DXCreateTextureFromFileA(	pRenderer->GetDevice(), pD3DXMaterials[i].pTextureFilename,
 										&pMeshTextures[i]);
@@ -109,10 +111,9 @@ namespace engine
 				pMeshTextures[i] = NULL;
 				Logger::Log("Texture not found:", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 				Logger::Log(pD3DXMaterials[i].pTextureFilename, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
-				// moet nog een logger aan gesproken worden
 				
 			}
-			this->textures[pD3DXMaterials[i].pTextureFilename] = pMeshTextures[i];
+			this->textures[*pD3DXMaterials[i].pTextureFilename] = pMeshTextures[i];
 		}
 		
 		Resource* pResource = new Resource();
@@ -120,7 +121,7 @@ namespace engine
 		pResource->SetMaterials(pMeshMaterials);
 		pResource->SetTextures(pMeshTextures);
 		pResource->SetNumMaterials(numMaterials);
-		this -> resources[argPModelName]= pResource;
+		this->resources[*argPModelName]= pResource;
 		
 		
 		pD3DMaterialsBuffer->Release();
@@ -130,7 +131,7 @@ namespace engine
 	
 	Resource* ResourceManager::GetResource(char* argPResourceName)
 	{
-		return this->resources[argPResourceName];
+		return this->resources[*argPResourceName];
 	}
 
 	/**

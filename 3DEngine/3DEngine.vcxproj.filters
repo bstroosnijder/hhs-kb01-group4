@@ -49,18 +49,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneBas.cpp">
-      <Filter>Source Files\game\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneAlex.cpp">
-      <Filter>Source Files\game\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneLeon.cpp">
-      <Filter>Source Files\game\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneSteffen.cpp">
-      <Filter>Source Files\game\scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
@@ -128,18 +116,6 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Header Files\engine\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneBas.h">
-      <Filter>Header Files\game\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneAlex.h">
-      <Filter>Header Files\game\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneLeon.h">
-      <Filter>Header Files\game\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneSteffen.h">
-      <Filter>Header Files\game\scenes</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Header Files\engine\scene\entities</Filter>
@@ -223,12 +199,6 @@
     </Filter>
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{d5997641-e69a-4581-8bfe-f410229db8a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game\scenes">
-      <UniqueIdentifier>{d407b8ac-bf69-4bcc-9ceb-360f1d315c74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\scenes">
-      <UniqueIdentifier>{b5bdeac4-ef0a-4ccb-8c99-71e428ba6bf9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\engine\utils">
       <UniqueIdentifier>{7c2f3d1c-21f4-4b39-91d0-2eb730225940}</UniqueIdentifier>

@@ -81,11 +81,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Sandbox.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneAlex.cpp" />
-    <ClCompile Include="SceneBas.cpp" />
-    <ClCompile Include="SceneLeon.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SceneSteffen.cpp" />
     <ClCompile Include="TextLog.cpp" />
     <ClCompile Include="Win32Window.cpp" />
     <ClCompile Include="WindowManager.cpp" />
@@ -107,11 +103,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Sandbox.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneAlex.h" />
-    <ClInclude Include="SceneBas.h" />
-    <ClInclude Include="SceneLeon.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SceneSteffen.h" />
     <ClInclude Include="TextLog.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Win32Window.h" />
