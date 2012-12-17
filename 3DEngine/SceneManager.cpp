@@ -49,6 +49,7 @@ namespace engine
 	 */
 	Scene* SceneManager::GetScene(char* argPSceneName)
 	{
+		Logger::Log("Geting scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return scenes.at(argPSceneName);
 	}
 
@@ -85,6 +86,76 @@ namespace engine
 		Logger::Log("Adding a custom scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		scenes[argPSceneName] = argPScene;
 		Logger::Log("Custom scene added", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+	}
+	
+	Scene* SceneManager::LoadScene(char* argPFileName)
+	{
+		char line[256];
+		Scene* pScene = new Scene();
+		std::ifstream inStream (argPFileName);
+
+		if(!inStream.is_open())
+		{
+			Logger::Log("Scenefile failed to open", Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+		}
+		else
+		{
+			Logger::Log("Scenefile opened", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		}
+
+		// Scene name
+		Logger::Log("Getting Scenename", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		inStream.getline(line, sizeof(line));
+		std::vector<char*> values1 = explode(';', line);
+		this->scenes[values1.at(0)] = pScene;
+
+		// Camera settings
+		Logger::Log("Getting Camera settings", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		inStream.getline(line, sizeof(line));
+		std::vector<char*> values = explode(';', line);
+		Camera* pCamera = pScene->GetCamera();
+		pCamera->SetPosition(	Vector3((float)std::atof(values.at(0)),
+										(float)std::atof(values.at(1)),
+										(float)std::atof(values.at(2))));
+		pCamera->SetRotation(	Vector3((float)std::atof(values.at(3)),
+										(float)std::atof(values.at(4)),
+										(float)std::atof(values.at(5))));
+		pCamera->SetScaling(	Vector3((float)std::atof(values.at(6)),
+										(float)std::atof(values.at(7)),
+										(float)std::atof(values.at(8))));
+
+		// Models
+		Logger::Log("Getting Models", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		while(inStream.getline(line, sizeof(line)) != NULL)
+		{
+			std::vector<char*> values = explode(';', line);
+
+			Model* pModel = new Model(values.at(10));
+			pScene->AddModel(pModel);
+
+			pModel->SetPosition(Vector3((float)std::atof(values.at(1)),
+										(float)std::atof(values.at(2)),
+										(float)std::atof(values.at(3))));
+			pModel->SetRotation(Vector3((float)std::atof(values.at(4)),
+										(float)std::atof(values.at(5)),
+										(float)std::atof(values.at(6))));
+			pModel->SetScaling(	Vector3((float)std::atof(values.at(7)),
+										(float)std::atof(values.at(8)),
+										(float)std::atof(values.at(9))));
+
+			for(unsigned long i = 11; i < values.size(); i++)
+			{
+				// pModel->SetTexture();
+			}
+		}
+
+
+
+
+		inStream.close();
+		Logger::Log("Scenefile loaded:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log(argPFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		return pScene;
 	}
 
 	/**

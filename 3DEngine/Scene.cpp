@@ -84,6 +84,7 @@ namespace engine
 	 */
 	void Scene::AddWindow(Window* argPWindow)
 	{
+		Logger::Log("Adding window to scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		this->windows.push_back(argPWindow);
 	}
 

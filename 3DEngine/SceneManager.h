@@ -3,6 +3,9 @@
 
 #include <map>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
+#include "explode.h"
 #include "Scene.h"
 
 namespace engine
@@ -24,6 +27,7 @@ namespace engine
 		std::map<char*, Scene*> GetScenes();
 		Scene* NewScene(char* argPSceneName);
 		void AddScene(char* argPSceneName, Scene* argPScene);
+		Scene* LoadScene(char* argPFileName);
 		void RemoveScene(char* argPSceneName);
 	};
 }

@@ -43,7 +43,7 @@ namespace engine
 		this->SetResource(argPResourceManager->LoadResource(argPRenderer, this->pModelName));
 
 		//LPDIRECT3DTEXTURE9* textures = this->pResource->GetTextures();
-		//textures[0] = argPResourceManager->LoadTexture(argPRenderer, "tiger.bmp");
+		//textures[0] = argPResourceManager->LoadTexture(argPRenderer, "banana.jpg");
 		//this->pResource->SetTextures(textures);
 
 		for each(Model* pModel in this->models)

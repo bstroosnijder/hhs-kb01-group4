@@ -10,6 +10,7 @@ private:
 	engine::Model* tiger1;
 	engine::Model* tiger2;
 	engine::Model* tiger3;
+	engine::Model* tiger4;
 	float speed;
 public:
 	SceneBas();

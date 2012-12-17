@@ -72,6 +72,11 @@ namespace engine
 	{
 		this->kernel->GetSceneManager()->AddScene(argPSceneName, argPScene);
 	}
+	
+	Scene* Sandbox::LoadScene(char* argPFileName)
+	{
+		return this->kernel->GetSceneManager()->LoadScene(argPFileName);
+	}
 
 	/**
 	 * Gets a scene from the collection by it's name.
