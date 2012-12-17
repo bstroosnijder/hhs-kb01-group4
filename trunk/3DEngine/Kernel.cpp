@@ -45,6 +45,7 @@ namespace engine
 	 */
 	void Kernel::CleanUp()
 	{
+		Logger::Log("Disposing Kernel", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**

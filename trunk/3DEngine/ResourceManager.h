@@ -17,8 +17,8 @@ namespace engine
 	{
 	private:
 		//std::map<char*, Model*> models;
-		std::map<char*, LPDIRECT3DTEXTURE9> textures;
-		std::map<char*, Resource*> resources;
+		std::map<char, LPDIRECT3DTEXTURE9> textures;
+		std::map<char, Resource*> resources;
 		bool FileExists(const std::string& filename);
 	public:
 		ResourceManager();

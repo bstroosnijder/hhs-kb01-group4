@@ -14,6 +14,12 @@ namespace engine
 	 */
 	Resource::~Resource()
 	{
+		this->CleanUp();
+	}
+
+	void Resource::CleanUp()
+	{
+		Logger::Log("Disposing Resource", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 	
 	void Resource::SetMesh(LPD3DXMESH argMesh)

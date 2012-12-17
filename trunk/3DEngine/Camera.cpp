@@ -10,7 +10,8 @@ namespace engine
 	/**
 	 * Constructs the Camera object.
 	 */
-	Camera::Camera()
+	Camera::Camera() 
+		: Entity()
 	{
 	}
 
@@ -28,6 +29,7 @@ namespace engine
 	 */
 	void Camera::CleanUp()
 	{
+		Logger::Log("Disposing Camera", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	void Camera::Update()

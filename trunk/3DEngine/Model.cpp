@@ -10,9 +10,10 @@ namespace engine
 	/**
 	 * Constructs the Scene object, initialising the Window and Entity collection.
 	 */
-	Model::Model(char* argPModelName)
+	Model::Model(char* argPModelName) 
+		: Entity()
 	{
-		Entity::Entity();
+		//Entity::Entity();
 		this->pModelName = argPModelName;
 	}
 
@@ -30,6 +31,8 @@ namespace engine
 	 */
 	void Model::CleanUp()
 	{
+		Logger::Log("Disposing Model:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log(this->pModelName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**

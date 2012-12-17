@@ -2,6 +2,7 @@
 #define RESOURCE_H_
 
 #include <d3dx9.h>
+#include "Logger.h"
 
 namespace engine
 {

@@ -29,6 +29,7 @@ namespace engine
 	 */
 	void Entity::CleanUp()
 	{
+		Logger::Log("Disposing Entityy", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**
