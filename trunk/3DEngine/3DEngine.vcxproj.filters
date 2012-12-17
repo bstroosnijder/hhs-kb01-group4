@@ -67,6 +67,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
+    <ClCompile Include="explode.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleLog.h">
@@ -143,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="explode.h">
+      <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,9 @@
     </Filter>
     <Filter Include="Header Files\game\scenes">
       <UniqueIdentifier>{b5bdeac4-ef0a-4ccb-8c99-71e428ba6bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\utils">
+      <UniqueIdentifier>{7c2f3d1c-21f4-4b39-91d0-2eb730225940}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

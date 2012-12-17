@@ -23,6 +23,7 @@ namespace engine
 		Scene* NewScene(char* argPSceneName);
 		void RemoveScene(char* argPSceneName);
 		void AddScene(char* argPSceneName, Scene* argPScene);
+		Scene* LoadScene(char* argPFileName);
 		Scene* GetScene(char* argPSceneName);
 		
 		Window* Sandbox::NewWindow(int argRendererIndex, char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
