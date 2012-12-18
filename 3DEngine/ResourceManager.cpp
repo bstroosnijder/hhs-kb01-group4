@@ -12,7 +12,7 @@ namespace engine
 	 */
 	ResourceManager::ResourceManager()
 	{
-		this->resources = std::map<char, Resource*>();
+		this->resources = std::map<std::string, Resource*>();
 	}
 
 	/**
@@ -37,10 +37,10 @@ namespace engine
 		Logger::Log("Loading Texture:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		Logger::Log(argPTextureName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 
-		if(this->textures.count(*argPTextureName) > 0)
+		if(this->textures.count(std::string(argPTextureName)) > 0)
 		{
 			Logger::Log("Texture Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-			return this->textures[*argPTextureName];
+			return this->textures[std::string(argPTextureName)];
 		}
 		
 		if (!this->FileExists(argPTextureName))
@@ -52,7 +52,7 @@ namespace engine
 
 		LPDIRECT3DTEXTURE9 texture;
 		D3DXCreateTextureFromFileA(pRenderer->GetDevice(), argPTextureName, &texture);
-		this->textures[*argPTextureName] = texture;
+		this->textures[std::string(argPTextureName)] = texture;
 
 		return texture;
 	}
@@ -69,10 +69,10 @@ namespace engine
 		engine::Logger::Log(argPModelName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		// this checks if the resource exists
 		//Resource* r = this->resources[argPModelName];
-		if(this->resources.count(*argPModelName) > 0) // TODO: hij slaat nu alleen eerste letter op.
+		if(this->resources.count(std::string(argPModelName)) > 0)
 		{
 			engine::Logger::Log("Resource Already in Memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-			return this->resources[*argPModelName];
+			return this->resources[std::string(argPModelName)];
 		}
 
 		LPD3DXMESH mesh;
@@ -113,7 +113,7 @@ namespace engine
 				Logger::Log(pD3DXMaterials[i].pTextureFilename, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 				
 			}
-			this->textures[*pD3DXMaterials[i].pTextureFilename] = pMeshTextures[i];
+			this->textures[std::string(pD3DXMaterials[i].pTextureFilename)] = pMeshTextures[i];
 		}
 		
 		Resource* pResource = new Resource();
@@ -121,7 +121,7 @@ namespace engine
 		pResource->SetMaterials(pMeshMaterials);
 		pResource->SetTextures(pMeshTextures);
 		pResource->SetNumMaterials(numMaterials);
-		this->resources[*argPModelName]= pResource;
+		this->resources[std::string(argPModelName)]= pResource;
 		
 		
 		pD3DMaterialsBuffer->Release();
@@ -131,7 +131,7 @@ namespace engine
 	
 	Resource* ResourceManager::GetResource(char* argPResourceName)
 	{
-		return this->resources[*argPResourceName];
+		return this->resources[std::string(argPResourceName)];
 	}
 
 	/**

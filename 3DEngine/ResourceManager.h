@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include "Resource.h"
 #include "Logger.h"
+#include <string>
 
 namespace engine
 {
@@ -17,8 +18,8 @@ namespace engine
 	{
 	private:
 		//std::map<char*, Model*> models;
-		std::map<char, LPDIRECT3DTEXTURE9> textures;
-		std::map<char, Resource*> resources;
+		std::map<std::string, LPDIRECT3DTEXTURE9> textures;
+		std::map<std::string, Resource*> resources;
 		bool FileExists(const std::string& filename);
 	public:
 		ResourceManager();
