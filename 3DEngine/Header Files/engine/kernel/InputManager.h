@@ -1,6 +1,10 @@
 #ifndef INPUTMANAGER_H_
 #define INPUTMANAGER_H_
 
+#include <d3d9.h>
+#include <dinput.h>//include kan foutief zijn. Wij hebben niet de juiste includes opgeschreven
+#include <DXGI.h>  //''
+
 namespace engine
 {
 	/**

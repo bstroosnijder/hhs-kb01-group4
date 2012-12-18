@@ -71,6 +71,7 @@ namespace engine
 		if (!this->FileExists(fileName))
 		{
 			Logger::Log("Texture not found: " + argTextureFileName, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+			return NULL;
 		}
 
 
