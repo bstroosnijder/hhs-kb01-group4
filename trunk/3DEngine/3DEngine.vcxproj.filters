@@ -73,6 +73,12 @@
     <Filter Include="Resource Files\scenes">
       <UniqueIdentifier>{5c2ec98c-2984-4e7b-a7e4-20b4e87c55f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine\input">
+      <UniqueIdentifier>{79512ece-08f4-47a0-a3ab-d166e5c2fd1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\input">
+      <UniqueIdentifier>{722c9327-3a48-493a-904d-886f93decd2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\engine\N00b.h">
@@ -141,6 +147,12 @@
     <ClInclude Include="Header Files\engine\scene\entities\Camera.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\input\Keyboard.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\Mouse.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp">
@@ -199,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="Source Files\engine\scene\entities\Model.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\Keyboard.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\Mouse.cpp">
+      <Filter>Source Files\engine\input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
