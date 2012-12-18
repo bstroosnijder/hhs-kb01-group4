@@ -36,8 +36,10 @@
     <ClInclude Include="Header Files\engine\utils\Vector3.h" />
     <ClInclude Include="Header Files\engine\window\Win32Window.h" />
     <ClInclude Include="Header Files\engine\window\Window.h" />
+    <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\engine\scene\Heightmap.cpp" />
     <ClCompile Include="Source Files\engine\input\Keyboard.cpp" />
     <ClCompile Include="Source Files\engine\input\Mouse.cpp" />
     <ClCompile Include="Source Files\engine\kernel\InputManager.cpp" />
@@ -62,7 +64,37 @@
     <ClCompile Include="Source Files\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resource Files\Models\barrel.X" />
+    <None Include="Resource Files\Models\m16.x" />
+    <None Include="Resource Files\Models\mg42.x" />
+    <None Include="Resource Files\Models\ppsh41.x" />
+    <None Include="Resource Files\Models\Shuriken.X" />
+    <None Include="Resource Files\Models\table_lowpoly.x" />
+    <None Include="Resource Files\Models\tiger.x" />
+    <None Include="Resource Files\Models\tiny.x" />
+    <None Include="Resource Files\Models\woodenkitchenchair.x" />
+    <None Include="Resource Files\Scenes\mainScene.scene" />
+    <None Include="Resource Files\Scenes\mainScene2.scene" />
+    <None Include="Resource Files\Scenes\pirateScene.scene" />
+    <None Include="Resource Files\Scenes\shootScene.scene" />
+    <None Include="Resource Files\Textures\banana.jpg" />
+    <None Include="Resource Files\Textures\barrel.jpg" />
     <None Include="Resource Files\Textures\heightmap.bmp" />
+    <None Include="Resource Files\Textures\m16.bmp" />
+    <None Include="Resource Files\Textures\mg42.bmp" />
+    <None Include="Resource Files\Textures\mg42_normal.bmp" />
+    <None Include="Resource Files\Textures\planks01.jpg" />
+    <None Include="Resource Files\Textures\planks02.jpg" />
+    <None Include="Resource Files\Textures\ppsh41.bmp" />
+    <None Include="Resource Files\Textures\ppsh41_n.bmp" />
+    <None Include="Resource Files\Textures\seat.jpg" />
+    <None Include="Resource Files\Textures\tiger - Copy.bmp" />
+    <None Include="Resource Files\Textures\tiger.bmp" />
+    <None Include="Resource Files\Textures\Tiny_skin.dds" />
+    <None Include="scenes\mainScene.scene" />
+    <None Include="scenes\mainScene2.scene" />
+    <None Include="scenes\pirateScene.scene" />
+    <None Include="scenes\shootScene.scene" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0771E178-34CE-4F57-B617-85D6D7B75094}</ProjectGuid>
