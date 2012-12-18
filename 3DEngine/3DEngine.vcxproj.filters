@@ -1,133 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ConsoleLog.cpp">
-      <Filter>Source Files\engine\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="TextLog.cpp">
-      <Filter>Source Files\engine\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files\engine\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowManager.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="Kernel.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files\engine\kernel</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\engine\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Win32Window.cpp">
-      <Filter>Source Files\engine\window</Filter>
-    </ClCompile>
-    <ClCompile Include="Sandbox.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX9Renderer.cpp">
-      <Filter>Source Files\engine\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\engine\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource.cpp">
-      <Filter>Source Files\engine\resource</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\engine\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\engine\scene\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="explode.cpp">
-      <Filter>Source Files\engine\utils</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ConsoleLog.h">
-      <Filter>Header Files\engine\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="LogStrategy.h">
-      <Filter>Header Files\engine\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files\engine\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="TextLog.h">
-      <Filter>Header Files\engine\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="Kernel.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowManager.h">
-      <Filter>Header Files\engine\kernel</Filter>
-    </ClInclude>
-    <ClInclude Include="Win32Window.h">
-      <Filter>Header Files\engine\window</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files\engine\window</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\engine\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header Files\engine\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="N00b.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Sandbox.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Header Files\engine\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectX9Renderer.h">
-      <Filter>Header Files\engine\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files\engine\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files\engine\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\engine\scene\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="explode.h">
-      <Filter>Header Files\engine\utils</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{3a4f6caa-2d11-4d3a-acd0-bf2151b304a9}</UniqueIdentifier>
     </Filter>
@@ -194,43 +67,138 @@
     <Filter Include="Resource Files\models">
       <UniqueIdentifier>{458b3e36-8817-40d6-af16-639719a71e61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\game">
-      <UniqueIdentifier>{dfae05fe-1b83-4da5-80d7-0bd95a62fe37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game">
-      <UniqueIdentifier>{d5997641-e69a-4581-8bfe-f410229db8a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\engine\utils">
       <UniqueIdentifier>{7c2f3d1c-21f4-4b39-91d0-2eb730225940}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\scenes">
+      <UniqueIdentifier>{5c2ec98c-2984-4e7b-a7e4-20b4e87c55f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tiger.bmp">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="tiger.x">
-      <Filter>Resource Files\models</Filter>
-    </None>
-    <None Include="tiny.x">
-      <Filter>Resource Files\models</Filter>
-    </None>
-    <None Include="Tiny_skin.dds">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="barrel.jpg">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="planks01.jpg">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="planks02.jpg">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="barrel.X">
-      <Filter>Resource Files\models</Filter>
-    </None>
-    <None Include="table_lowpoly.x">
-      <Filter>Resource Files\models</Filter>
-    </None>
+    <ClInclude Include="Header Files\engine\N00b.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\Sandbox.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\InputManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\ResourceManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\SceneManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\WindowManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\Kernel.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\ConsoleLog.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\Logger.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\LogStrategy.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\TextLog.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\renderer\DirectX9Renderer.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\renderer\Renderer.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\resource\Resource.h">
+      <Filter>Header Files\engine\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Entity.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Scene.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\Vector3.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\explode.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\window\Win32Window.h">
+      <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\window\Window.h">
+      <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\entities\Model.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\entities\Camera.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source Files\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\Sandbox.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Entity.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Scene.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\WindowManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\SceneManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\ResourceManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\InputManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\Kernel.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\logger\ConsoleLog.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\logger\Logger.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\logger\TextLog.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\renderer\DirectX9Renderer.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\renderer\Renderer.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\resource\Resource.cpp">
+      <Filter>Source Files\engine\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\utils\explode.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\window\Win32Window.cpp">
+      <Filter>Source Files\engine\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\Camera.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\Model.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
