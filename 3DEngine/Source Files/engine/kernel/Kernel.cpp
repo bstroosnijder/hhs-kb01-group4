@@ -16,10 +16,10 @@ namespace engine
 	{
 		// Initialize the managers
 		Logger::Log("Creating Kernel", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-		this->windowManager = new WindowManager();
-		this->sceneManager = new SceneManager();
-		this->resourceManager = new ResourceManager();
-		this->inputManager = new InputManager();
+		this->pWindowManager = new WindowManager();
+		this->pResourceManager = new ResourceManager();
+		this->pInputManager = new InputManager();
+		this->pSceneManager = new SceneManager(this->pResourceManager);
 
 		//Initialise and fill the renderers vector with the default renderers.
 		this->renderers = std::vector<Renderer*>();
@@ -59,7 +59,7 @@ namespace engine
 		MSG msg;
         ZeroMemory(&msg, sizeof(msg));
 
-        while(this->windowManager->GetWindowCount() > 0)
+        while(this->pWindowManager->GetWindowCount() > 0)
         {
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
             {				
@@ -76,28 +76,13 @@ namespace engine
 		this->CleanUp();
 	}
 
-	void Kernel::LoadBeat()
-	{
-		std::map<std::string, Scene*> scenes = this->sceneManager->GetScenes();
-		std::map<std::string, Scene*>::iterator it;
-		for(it = scenes.begin(); it != scenes.end(); it++)
-		{
-			Scene* pScene = it->second;
-			for each(Window* pWindow in pScene->GetWindows())
-			{
-				Renderer* pRenderer = this->winRenderer[pWindow];
-				pScene->Load(this->resourceManager, pRenderer);
-			}
-		}
-	}
-
 	/**
 	 * Loop through all scenes and their windows to render them.
 	 * @return		void
 	 */
 	void Kernel::HeartBeat()
 	{
-		std::map<std::string, Scene*> scenes = this->sceneManager->GetScenes();
+		std::map<std::string, Scene*> scenes = this->pSceneManager->GetScenes();
 		std::map<std::string, Scene*>::iterator it;
 		for(it = scenes.begin(); it != scenes.end(); it++)
 		{
@@ -143,16 +128,7 @@ namespace engine
 	 */
 	WindowManager* Kernel::GetWindowManager()
 	{
-		return this->windowManager;
-	}
-	
-	/**
-	 * Obtain the SceneManager object.
-	 * @return		SceneManager*
-	 */
-	SceneManager* Kernel::GetSceneManager()
-	{
-		return this->sceneManager;
+		return this->pWindowManager;
 	}
 	
 	/**
@@ -161,7 +137,7 @@ namespace engine
 	 */
 	ResourceManager* Kernel::GetResourceManager()
 	{
-		return this->resourceManager;
+		return this->pResourceManager;
 	}
 	
 	/**
@@ -170,7 +146,27 @@ namespace engine
 	 */
 	InputManager* Kernel::GetInputManager()
 	{
-		return this->inputManager;
+		return this->pInputManager;
+	}
+	
+	/**
+	 * Obtain the SceneManager object.
+	 * @return		SceneManager*
+	 */
+	SceneManager* Kernel::GetSceneManager()
+	{
+		return this->pSceneManager;
+	}
+
+	/**
+	 * This function passes the load command throu to the scene manager for each of the renderer
+	 * @param		std::string		The name of the scene
+	 * @param		std::string		The filename of the scene
+	 * @return		Scene*
+	 */
+	Scene* Kernel::LoadScene(std::string argSceneName, std::string argSceneFileName)
+	{
+		return this->pSceneManager->LoadScene(this->renderers[0], argSceneName, argSceneFileName);
 	}
 
 	/**

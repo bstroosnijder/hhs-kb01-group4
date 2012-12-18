@@ -10,11 +10,9 @@ namespace engine
 	/**
 	 * Constructs the Scene object, initialising the Window and Entity collection.
 	 */
-	Model::Model(char* argPModelName) 
-		: Entity()
+	Model::Model(Resource* argPResource) : Entity()
 	{
-		//Entity::Entity();
-		this->pModelName = argPModelName;
+		this->pResource = argPResource;
 	}
 
 	/**
@@ -31,28 +29,7 @@ namespace engine
 	 */
 	void Model::CleanUp()
 	{
-		Logger::Log("Disposing Model:", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-		Logger::Log(this->pModelName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-	}
-
-	/**
-	 * Default implementation of the Load method for all entities
-	 * @param		ResourceManager*		The resource manager to use.
-	 * @param		Renderer*				The renderer to use.
-	 * @return		void
-	 */
-	void Model::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
-	{
-		this->SetResource(argPResourceManager->LoadResource(argPRenderer, this->pModelName));
-
-		//LPDIRECT3DTEXTURE9* textures = this->pResource->GetTextures();
-		//textures[0] = argPResourceManager->LoadTexture(argPRenderer, "banana.jpg");
-		//this->pResource->SetTextures(textures);
-
-		for each(Model* pModel in this->models)
-		{
-			pModel->Load(argPResourceManager, argPRenderer);
-		}
+		Logger::Log("Disposing Model", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -102,6 +79,19 @@ namespace engine
 	void Model::SetResource(Resource* argPResource)
 	{
 		this->pResource = argPResource;
+	}
+	
+	/**
+	 * Sets a custom texture at the givin index in the resource
+	 * @param		unsigned long		The index to put the texture at
+	 * @param		LPDIRECT3DTEXTURE9	The texture to add at the index
+	 * @return		void
+	 */
+	void Model::SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTextureFileName)
+	{
+		LPDIRECT3DTEXTURE9* pMeshTextures = this->pResource->GetTextures();
+		pMeshTextures[argIndex] = argTextureFileName;
+		this->pResource->SetTextures(pMeshTextures);
 	}
 
 	/**
