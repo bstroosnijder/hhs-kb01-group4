@@ -191,7 +191,7 @@ namespace engine
 				}
 				else
 				{
-					Logger::Log("Segment unsupported", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+					Logger::Log("Segment unsupported", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 				}
 			}
 		}
