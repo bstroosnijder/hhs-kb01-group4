@@ -31,14 +31,11 @@ namespace engine
 		}
 
 		// TODO - Gaat hier nog iets fout met de bfOffBits.....
-
-		// Set the reading position to the beginning of the color data
 		fseek(pFile, this->bitmapFileHeader.bfOffBits, SEEK_SET);
 
-		int size = 3 * this->bitmapInfoHeader.biWidth * this->bitmapInfoHeader.biHeight;
-		this->pBitmap = new unsigned char[size];
+		this->pBitmap = new unsigned char[this->bitmapInfoHeader.biSizeImage];
 
-		fread(this->pBitmap, sizeof(unsigned char), size, pFile);
+		fread(this->pBitmap, this->bitmapInfoHeader.biSizeImage, 1, pFile);
 
 		fclose(pFile);
 
