@@ -156,6 +156,9 @@
     <ClInclude Include="Header Files\engine\utils\Bitmap.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Heightmap.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp">
@@ -224,10 +227,51 @@
     <ClCompile Include="Source Files\engine\utils\Bitmap.cpp">
       <Filter>Source Files\engine\utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Heightmap.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource Files\Textures\heightmap.bmp">
       <Filter>Resource Files\textures</Filter>
     </None>
+    <None Include="Resource Files\Scenes\mainScene.scene" />
+    <None Include="Resource Files\Scenes\shootScene.scene" />
+    <None Include="Resource Files\Scenes\mainScene2.scene" />
+    <None Include="Resource Files\Scenes\pirateScene.scene" />
+    <None Include="scenes\mainScene.scene">
+      <Filter>Resource Files\scenes</Filter>
+    </None>
+    <None Include="scenes\mainScene2.scene">
+      <Filter>Resource Files\scenes</Filter>
+    </None>
+    <None Include="scenes\pirateScene.scene">
+      <Filter>Resource Files\scenes</Filter>
+    </None>
+    <None Include="scenes\shootScene.scene">
+      <Filter>Resource Files\scenes</Filter>
+    </None>
+    <None Include="Resource Files\Models\barrel.X" />
+    <None Include="Resource Files\Models\woodenkitchenchair.x" />
+    <None Include="Resource Files\Models\m16.x" />
+    <None Include="Resource Files\Models\mg42.x" />
+    <None Include="Resource Files\Models\ppsh41.x" />
+    <None Include="Resource Files\Models\Shuriken.X" />
+    <None Include="Resource Files\Models\table_lowpoly.x" />
+    <None Include="Resource Files\Models\tiger.x" />
+    <None Include="Resource Files\Models\tiny.x" />
+    <None Include="Resource Files\Textures\barrel.jpg" />
+    <None Include="Resource Files\Textures\banana.jpg" />
+    <None Include="Resource Files\Textures\m16.bmp" />
+    <None Include="Resource Files\Textures\Tiny_skin.dds" />
+    <None Include="Resource Files\Textures\mg42.bmp" />
+    <None Include="Resource Files\Textures\mg42_normal.bmp" />
+    <None Include="Resource Files\Textures\planks01.jpg" />
+    <None Include="Resource Files\Textures\planks02.jpg" />
+    <None Include="Resource Files\Textures\ppsh41.bmp" />
+    <None Include="Resource Files\Textures\ppsh41_n.bmp" />
+    <None Include="Resource Files\Textures\seat.jpg" />
+    <None Include="Resource Files\Textures\tiger - Copy.bmp" />
+    <None Include="Resource Files\Textures\tiger.bmp" />
   </ItemGroup>
 </Project>
