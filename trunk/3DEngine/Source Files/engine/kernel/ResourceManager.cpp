@@ -5,22 +5,6 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
-
-	/**
-	 * Checks if the parameter filename exists
-	 * @param		const std::string&		The filename to check
-	 * @return		bool
-	 */
-	bool ResourceManager::FileExists(const std::string& argFilename)
-	{
-		struct stat buf;
-		if (stat(argFilename.c_str(), &buf) != -1)
-		{
-			return true;
-		}
-		return false;
-	}
-
 	//---Public methods---
 
 	/**
@@ -50,6 +34,16 @@ namespace engine
 	}
 
 	/**
+	 * Gets a texture by name
+	 * @param		std::string				The name of the texture to get
+	 * @return		LPDIRECT3DTEXTURE9
+	 */
+	LPDIRECT3DTEXTURE9 ResourceManager::GetTexture(std::string argTextureFileName)
+	{
+		return this->textures[argTextureFileName];
+	}
+
+	/**
 	 * Loads a texture to be used later on meshes
 	 * @param		Renderer*				The renderer to use for loading the texture on
 	 * @param		std::string				The filename of the texture
@@ -67,10 +61,11 @@ namespace engine
 
 		// Parse the correct file name
 		std::string fileName = std::string("Resource Files\\Textures\\" + argTextureFileName);
-		
-		if (!this->FileExists(fileName))
+		// Check if the texture exists
+		if (!fileExists(fileName))
 		{
-			Logger::Log("Texture not found: " + argTextureFileName, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+			Logger::Log("Cannot find texture: " + fileName, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+			return NULL;
 			return NULL;
 		}
 
@@ -85,20 +80,30 @@ namespace engine
 	}
 
 	/**
+	 * Gets a texture by name
+	 * @param		std::string				The name of the texture to get
+	 * @return		LPDIRECT3DTEXTURE9
+	 */
+	Resource* ResourceManager::GetResource(std::string argResourceFileName)
+	{
+		return this->resources[argResourceFileName];
+	}
+
+	/**
 	 * Loads a resource using it's file name and converting it into a Resource object.
 	 * @param		Renderer*				The renderer to use
 	 * @param		std::string				The model name
 	 * @return		Resource*
 	 */
-	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, std::string argModelFileName)
+	Resource* ResourceManager::LoadResource(Renderer* argPRenderer, std::string argResourceFileName)
 	{
-		engine::Logger::Log("Loading resource: " + argModelFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		engine::Logger::Log("Loading resource: " + argResourceFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 
 		// this checks if the resource exists
-		if(this->resources.count(argModelFileName) > 0)
+		if(this->resources.count(argResourceFileName) > 0)
 		{
 			Logger::Log("Resource already in memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-			return this->resources[argModelFileName];
+			return this->resources[argResourceFileName];
 		}
 
 		LPD3DXMESH mesh;
@@ -111,12 +116,11 @@ namespace engine
 
 		
 		// Parse the correct file name
-		std::string fileName = std::string("Resource Files\\Models\\" + argModelFileName);
-
+		std::string fileName = std::string("Resource Files\\Models\\" + argResourceFileName);
 		// Check if the resource exists
-		if(!this->FileExists(fileName))
+		if(!fileExists(fileName))
 		{
-			Logger::Log("Model not found: " + argModelFileName, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			Logger::Log("Cannot find resource: " + fileName, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
 			return NULL;
 		}
 
@@ -145,21 +149,11 @@ namespace engine
 		pResource->SetMaterials(pMeshMaterials);
 		pResource->SetTextures(pMeshTextures);
 		pResource->SetNumMaterials(numMaterials);
-		this->resources[argModelFileName]= pResource;
+		this->resources[argResourceFileName]= pResource;
 		
 		
 		pD3DMaterialsBuffer->Release();
 		Logger::Log("Resource loaded", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return pResource;
-	}
-	
-	/**
-	 * Getter for resources
-	 * @param		std::string				The resource to fetch
-	 * @return		Resource*
-	 */
-	Resource* ResourceManager::GetResource(std::string argResourceName)
-	{
-		return this->resources[argResourceName];
 	}
 }

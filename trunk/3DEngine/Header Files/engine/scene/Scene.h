@@ -1,7 +1,9 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
+#include <map>
 #include <list>
+#include <string>
 #include <iostream>
 #include "..\kernel\ResourceManager.h"
 #include "..\renderer\Renderer.h"
@@ -21,13 +23,12 @@ namespace engine
 		std::list<Window*> windows;
 
 		Camera* pCamera;
-		std::list<Model*> models;
+		std::map<std::string, Model*> models;
 	public:
 		Scene();
 		~Scene();
 		void CleanUp();
 
-		void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
 		virtual void Update();
 		virtual void Draw(Renderer* argPRenderer);
 
@@ -37,9 +38,9 @@ namespace engine
 
 		Camera* GetCamera();
 
-		void AddModel(Model* argPModel);
-		void RemoveModel(Model* argPModel);
-		std::list<Model*> GetModels();
+		void AddModel(std::string argModelName, Model* argPModel);
+		void RemoveModel(std::string argModelName);
+		std::map<std::string, Model*> GetModels();
 	};
 }
 

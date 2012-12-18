@@ -11,19 +11,18 @@ namespace engine
 	class Model : public Entity
 	{
 	private:
-		char* pModelName;
 		Resource* pResource;
 		std::list<Model*> models;
 	public:
-		Model(char* argPModelName);
+		Model(Resource* argPResource);
 		~Model();
 		void CleanUp();
 
-		void Load(ResourceManager* argPResourceManager, Renderer* argPRenderer);
 		void Update();
 		void Draw(Renderer* argPRenderer);
 
 		void SetResource(Resource* argPResource);
+		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTextureFileName);
 		void AddModel(Model* argPModel);
 	};
 }

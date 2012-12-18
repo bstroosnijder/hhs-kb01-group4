@@ -21,10 +21,10 @@ namespace engine
 	class Kernel
 	{
 	private:
-		WindowManager* windowManager;
-		SceneManager* sceneManager;
-		ResourceManager* resourceManager;
-		InputManager* inputManager;
+		WindowManager* pWindowManager;
+		ResourceManager* pResourceManager;
+		InputManager* pInputManager;
+		SceneManager* pSceneManager;
 		std::vector<Renderer*> renderers;
 		std::map<Window*, Renderer*> winRenderer;
 	public:
@@ -33,14 +33,15 @@ namespace engine
 		void CleanUp();
 
 		void Start();
-		void LoadBeat();
 		void HeartBeat();
 
 		Renderer* GetRenderer(unsigned int argIndex);
 		WindowManager* GetWindowManager();
-		SceneManager* GetSceneManager();
 		ResourceManager* GetResourceManager();
 		InputManager* GetInputManager();
+		SceneManager* GetSceneManager();
+		Scene* LoadScene(std::string argSceneName, std::string argSceneFileName);
+
 		void AddWindowRenderer(Window* argWindow, Renderer* argRenderer);
 	};
 }

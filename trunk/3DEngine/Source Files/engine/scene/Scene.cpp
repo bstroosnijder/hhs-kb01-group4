@@ -15,7 +15,7 @@ namespace engine
 		this->windows = std::list<Window*>();
 
 		this->pCamera = new Camera();
-		this->models = std::list<Model*>();
+		this->models = std::map<std::string, Model*>();
 	}
 
 	/**
@@ -35,27 +35,17 @@ namespace engine
 	}
 
 	/**
-	 * Loads the scene and all of it's models
-	 * @return		void
-	 */
-	void Scene::Load(ResourceManager* argPResourceManager, Renderer* argPRenderer)
-	{
-		for each(Model* pModel in this->models)
-		{
-			pModel->Load(argPResourceManager, argPRenderer);
-		}
-	}
-
-	/**
 	 * Update each entity in the models collection.
 	 * @return		void
 	 */
 	void Scene::Update()
 	{
 		this->pCamera->Update();
-		for each(Model* pModel in this->models)
+
+		std::map<std::string, Model*>::iterator it;
+		for(it = this->models.begin(); it != this->models.end(); it++)
 		{
-			pModel->Update();
+			it->second->Update();
 		}
 	}
 
@@ -68,10 +58,12 @@ namespace engine
 	{
 		argPRenderer->Push();
 		this->pCamera->Draw(argPRenderer);
-		for each(Model* pModel in this->models)
+
+		std::map<std::string, Model*>::iterator it;
+		for(it = this->models.begin(); it != this->models.end(); it++)
 		{
 			argPRenderer->Push();
-			pModel->Draw(argPRenderer);
+			it->second->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}
 		argPRenderer->Pop();
@@ -114,29 +106,30 @@ namespace engine
 
 	/**
 	 * Add an model pointer to the list of models.
-	 * @param		model						The model pointer to add to the collection of models.
+	 * @param		std::string							The key index for the model
+	 * @param		model								The model pointer to add to the collection of models.
 	 * @return		void
 	 */
-	void Scene::AddModel(Model* argPModel)
+	void Scene::AddModel(std::string argModelName, Model* argPModel)
 	{
-		this->models.push_back(argPModel);
+		this->models[argModelName] = argPModel;
 	}
 
 	/**
 	 * Remove an model pointer from the collection of models.
-	 * @param		Model*						The model pointer to remove from the collection of models.
+	 * @param		std::string							The model name to remove from the collection of models.
 	 * @return		void
 	 */
-	void Scene::RemoveModel(Model* argPModel)
+	void Scene::RemoveModel(std::string argModelName)
 	{
-		this->models.remove(argPModel);
+		this->models.erase(argModelName);
 	}
 
 	/**
 	 * Obtain all the model pointers in the models collection.
-	 * @return		std::list<Model*>			The entire model collection.
+	 * @return		std::map<std::string, Model*>		The entire model collection.
 	 */
-	std::list<Model*> Scene::GetModels()
+	std::map<std::string, Model*> Scene::GetModels()
 	{
 		return this->models;
 	}

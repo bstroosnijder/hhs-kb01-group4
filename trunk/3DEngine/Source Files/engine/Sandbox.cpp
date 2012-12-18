@@ -38,7 +38,6 @@ namespace engine
 	 */
 	void Sandbox::Start()
 	{
-		this->kernel->LoadBeat();
 		this->kernel->Start();
 		Logger::Log("End of Sandbox", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
@@ -64,7 +63,7 @@ namespace engine
 	
 	Scene* Sandbox::LoadScene(std::string argSceneName, std::string argSceneFileName)
 	{
-		return this->kernel->GetSceneManager()->LoadScene(argSceneName, argSceneFileName);
+		return this->kernel->LoadScene(argSceneName, argSceneFileName);
 	}
 
 	/**

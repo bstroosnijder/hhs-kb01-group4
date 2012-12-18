@@ -7,7 +7,9 @@
 #include <fstream>
 #include <string>
 #include "..\utils\explode.h"
+#include "..\utils\fileExists.h"
 #include "..\scene\Scene.h"
+#include "..\renderer\DirectX9Renderer.h"
 
 namespace engine
 {
@@ -17,9 +19,10 @@ namespace engine
 	class SceneManager
 	{
 	private:
+		ResourceManager* pResourceManager;
 		std::map<std::string, Scene*> scenes;
 	public:
-		SceneManager();
+		SceneManager(ResourceManager* argPResourceManager);
 		~SceneManager();
 		void CleanUp();
 		
@@ -28,7 +31,7 @@ namespace engine
 		std::map<std::string, Scene*> GetScenes();
 
 		void AddScene(std::string argSceneName, Scene* argPScene);
-		Scene* LoadScene(std::string argSceneName, std::string argSceneFileName);
+		Scene* LoadScene(Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName);
 		void RemoveScene(std::string argSceneName);
 	};
 }

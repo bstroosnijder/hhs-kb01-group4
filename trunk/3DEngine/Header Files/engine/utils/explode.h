@@ -6,7 +6,7 @@
 
 namespace engine
 {
-	std::vector<char*> explode(char argDelim, char* argContext);
+	std::vector<std::string> explode(char argDelim, std::string argContext);
 }
 
 #endif
