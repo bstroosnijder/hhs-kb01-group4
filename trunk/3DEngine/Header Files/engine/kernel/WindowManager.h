@@ -22,7 +22,7 @@ namespace engine
 		void CleanUp();
 
 		int GetWindowCount();
-		Window* GetWindow(HWND argHWND);
+		Window* GetWindow(int argIndex);
 		std::map<HWND, Window*> GetWindows();
 		Window* NewWindow(std::string argTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
 		static void RemoveWindow(HWND argHWND);
