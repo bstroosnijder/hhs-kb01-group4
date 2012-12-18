@@ -153,6 +153,9 @@
     <ClInclude Include="Header Files\engine\input\Mouse.h">
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\Bitmap.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp">
@@ -218,5 +221,13 @@
     <ClCompile Include="Source Files\engine\input\Mouse.cpp">
       <Filter>Source Files\engine\input</Filter>
     </ClCompile>
+    <ClCompile Include="Source Files\engine\utils\Bitmap.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource Files\Textures\heightmap.bmp">
+      <Filter>Resource Files\textures</Filter>
+    </None>
   </ItemGroup>
 </Project>
