@@ -159,7 +159,9 @@
     <ClInclude Include="Header Files\engine\scene\Heightmap.h">
       <Filter>Header Files\engine\scene</Filter>
     </ClInclude>
-    <ClInclude Include="header files\engine\utils\fileexists.h" />
+    <ClInclude Include="header files\engine\utils\fileexists.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp">
@@ -231,7 +233,9 @@
     <ClCompile Include="Source Files\engine\scene\Heightmap.cpp">
       <Filter>Source Files\engine\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\engine\utils\fileExists.cpp" />
+    <ClCompile Include="Source Files\engine\utils\fileExists.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource Files\Textures\heightmap.bmp">
