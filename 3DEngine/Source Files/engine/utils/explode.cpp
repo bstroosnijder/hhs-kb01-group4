@@ -10,16 +10,13 @@ namespace engine
 	 */
 	std::vector<std::string> explode(char argDelim, std::string argContext)
 	{
+		std::stringstream sStream (argContext);
 		std::vector<std::string> exploded;
-		int pos = 0;
 
-		while(pos < argContext.size())
+		std::string item;
+		while(std::getline(sStream, item, argDelim))
 		{
-			int nPos = argContext.find(argDelim, pos);
-			std::string value = argContext.substr(pos, (nPos - pos));
-
-			exploded.push_back(value);
-			pos = (nPos + 1);
+			exploded.push_back(item);
 		}
 
 		return exploded;

@@ -2,6 +2,7 @@
 #define EXPLODE_H_
 
 #include <string>
+#include <sstream>
 #include <vector>
 
 namespace engine
