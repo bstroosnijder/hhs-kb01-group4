@@ -14,7 +14,7 @@ namespace engine
 	{
 		this->pResource = argPResource;
 	}
-
+	
 	/**
 	 * Destructs the Scene object.
 	 */
@@ -52,11 +52,11 @@ namespace engine
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 		// Get the mesh
-		LPD3DXMESH mesh = this->pResource->GetMesh();
-		D3DMATERIAL9* pMeshMaterials = this->pResource->GetMaterials();
-		LPDIRECT3DTEXTURE9* pMeshTextures = this->pResource->GetTextures();
+		LPD3DXMESH mesh = this->pResource->pMesh->mesh;
+		D3DMATERIAL9* pMeshMaterials = this->pResource->pMesh->materials;
+		LPDIRECT3DTEXTURE9* pMeshTextures = this->pResource->textures;
 
-		for(unsigned long i = 0; i < this->pResource->GetNumMaterials(); i++)
+		for(unsigned long i = 0; i < this->pResource->pMesh->numMaterials; i++)
 		{
 			pRenderer->GetDevice()->SetMaterial(&pMeshMaterials[i]);
 			pRenderer->GetDevice()->SetTexture(0, pMeshTextures[i]);
@@ -87,11 +87,9 @@ namespace engine
 	 * @param		LPDIRECT3DTEXTURE9	The texture to add at the index
 	 * @return		void
 	 */
-	void Model::SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTextureFileName)
+	void Model::SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture)
 	{
-		LPDIRECT3DTEXTURE9* pMeshTextures = this->pResource->GetTextures();
-		pMeshTextures[argIndex] = argTextureFileName;
-		this->pResource->SetTextures(pMeshTextures);
+		this->pResource->textures[argIndex] = argTexture;
 	}
 
 	/**
