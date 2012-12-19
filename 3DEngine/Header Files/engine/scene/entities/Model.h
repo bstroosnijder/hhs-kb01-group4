@@ -22,7 +22,7 @@ namespace engine
 		void Draw(Renderer* argPRenderer);
 
 		void SetResource(Resource* argPResource);
-		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTextureFileName);
+		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);
 		void AddModel(Model* argPModel);
 	};
 }

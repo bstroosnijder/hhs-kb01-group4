@@ -25,6 +25,7 @@
     <ClInclude Include="Header Files\engine\N00b.h" />
     <ClInclude Include="Header Files\engine\renderer\DirectX9Renderer.h" />
     <ClInclude Include="Header Files\engine\renderer\Renderer.h" />
+    <ClInclude Include="header files\engine\resource\mesh.h" />
     <ClInclude Include="Header Files\engine\resource\Resource.h" />
     <ClInclude Include="Header Files\engine\Sandbox.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Camera.h" />
@@ -53,7 +54,6 @@
     <ClCompile Include="Source Files\engine\logger\TextLog.cpp" />
     <ClCompile Include="Source Files\engine\renderer\DirectX9Renderer.cpp" />
     <ClCompile Include="Source Files\engine\renderer\Renderer.cpp" />
-    <ClCompile Include="Source Files\engine\resource\Resource.cpp" />
     <ClCompile Include="Source Files\engine\Sandbox.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\Camera.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\Model.cpp" />

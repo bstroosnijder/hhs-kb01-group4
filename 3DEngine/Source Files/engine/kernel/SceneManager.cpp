@@ -152,7 +152,7 @@ namespace engine
 
 					if(resourceType == "model")
 					{
-						this->pResourceManager->LoadResource(argPRenderer,resourceFileName);
+						this->pResourceManager->LoadMesh(argPRenderer, resourceFileName);
 					}
 					else if(resourceType == "texture")
 					{
@@ -177,7 +177,7 @@ namespace engine
 															(float)std::atof(data.at(8).c_str()),
 															(float)std::atof(data.at(9).c_str()));
 
-					Model* pModel = new Model(this->pResourceManager->GetResource(modelResource));
+					Model* pModel = new Model(this->pResourceManager->NewResource(modelResource));
 					pScene->AddModel(modelName, pModel);
 					pModel->SetPosition(position);
 					pModel->SetRotation(rotation);

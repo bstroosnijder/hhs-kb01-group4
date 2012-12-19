@@ -8,6 +8,7 @@
 #include "..\logger\Logger.h"
 #include "..\renderer\DirectX9Renderer.h"
 #include "..\resource\Resource.h"
+#include "..\resource\\Mesh.h"
 
 namespace engine
 {
@@ -17,18 +18,20 @@ namespace engine
 	class ResourceManager
 	{
 	private:
+		std::map<std::string, Mesh*> meshes;
 		std::map<std::string, LPDIRECT3DTEXTURE9> textures;
-		std::map<std::string, Resource*> resources;
 	public:
 		ResourceManager();
 		~ResourceManager();
 		void CleanUp();
 
-		LPDIRECT3DTEXTURE9 GetTexture(std::string argTextureFileName);
-		LPDIRECT3DTEXTURE9 LoadTexture(Renderer* argPRenderer, std::string argTextureFileName);
+		Mesh* GetMesh(std::string argMeshFileName);
+		bool LoadMesh(Renderer* argPRenderer, std::string argMeshFileName);
 
-		Resource* GetResource(std::string argResourceFileName);
-		Resource* LoadResource(Renderer* argPRenderer, std::string argResourceFileName);
+		LPDIRECT3DTEXTURE9 GetTexture(std::string argTextureFileName);
+		bool LoadTexture(Renderer* argPRenderer, std::string argTextureFileName);
+
+		Resource* NewResource(std::string argMeshFileName);
 	};
 }
 

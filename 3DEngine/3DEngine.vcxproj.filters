@@ -55,9 +55,6 @@
     <Filter Include="Header Files\engine\utils">
       <UniqueIdentifier>{ddfc1ad5-f700-4e8f-8c0b-d626735abd59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\engine\resource">
-      <UniqueIdentifier>{ee870158-f886-418d-836b-67ee034814b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\engine\resource">
       <UniqueIdentifier>{ede20f68-a0c9-4225-b0da-1b91fcf14e1b}</UniqueIdentifier>
     </Filter>
@@ -162,6 +159,9 @@
     <ClInclude Include="header files\engine\utils\fileexists.h">
       <Filter>Header Files\engine\utils</Filter>
     </ClInclude>
+    <ClInclude Include="header files\engine\resource\mesh.h">
+      <Filter>Header Files\engine\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp">
@@ -205,9 +205,6 @@
     </ClCompile>
     <ClCompile Include="Source Files\engine\renderer\Renderer.cpp">
       <Filter>Source Files\engine\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\engine\resource\Resource.cpp">
-      <Filter>Source Files\engine\resource</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\engine\utils\explode.cpp">
       <Filter>Source Files\engine\utils</Filter>

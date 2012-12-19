@@ -13,4 +13,4 @@ namespace engine
 	};
 }
 
-#endif VECTOR3_H_
+#endif
