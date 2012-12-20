@@ -35,10 +35,10 @@ namespace engine
 	private:
 		BITMAPFILEHEADER bitmapFileHeader;
 		BITMAPINFOHEADER bitmapInfoHeader;
-		unsigned char* pBitmap;
+		unsigned char* pPixelData;
 	public:
 		bool Load(std::string argPFilename);
-		unsigned char* GetBitmap();
+		unsigned char* GetPixelData();
 	};
 }
 

@@ -64,14 +64,28 @@ namespace engine
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 		memcpy(&this->bitmapInfoHeader.biClrImportant, &buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 
+		// Create an unsigned char array using the image width times images height as the size of the array which stores the pixel data.		
+		unsigned int pixelCount = this->bitmapInfoHeader.biWidth * this->bitmapInfoHeader.biHeight;
+		this->pPixelData = new unsigned char[pixelCount];
 
+		inStream.seekg(this->bitmapFileHeader.bfOffBits);
 
+		for (unsigned long i = 0; i < pixelCount; i++)
+		{
+			// We are using a grayscale image, the red, blue and green color channels have the same value.
+			unsigned char blue;
+			char colorBuffer;
+			inStream.read(&colorBuffer, 1);
+			memcpy(&blue, &colorBuffer, 1);
+
+			this->pPixelData[i] = blue;
+		}
 
 		return true;
 	}
 
-	unsigned char* Bitmap::GetBitmap()
+	unsigned char* Bitmap::GetPixelData()
 	{
-		return this->pBitmap;
+		return this->pPixelData;
 	}
 }
