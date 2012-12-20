@@ -12,7 +12,7 @@ namespace engine
 	 */
 	InputManager::InputManager()
 	{
-		
+		CreateSomething();
 	}
 
 	/**
@@ -31,7 +31,10 @@ namespace engine
 	 */
 	InputManager::InputManager(WindowManager*  argPWindowManager)
 	{
-		//argPWindowManager -> 
+		//Window window* = argPWindowManager -> GetWindow(0);
+		CreateSomething();
+		Keyboard kb = Keyboard();
+		
 	}
 
 	/**
@@ -41,5 +44,16 @@ namespace engine
 	void InputManager::CleanUp()
 	{
 
+	}
+
+	bool InputManager::CreateSomething()
+	{
+		dInput	= NULL; 
+		HRESULT hr = DirectInput8Create( GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dInput, NULL ); 
+		if FAILED( hr ) 
+		{
+			return false;
+		}
+		return true;
 	}
 }

@@ -46,6 +46,36 @@ namespace engine
 			this->pCamera->SetRotation(rotCamera);
 			this->pCamera->SetPosition(posCamera);
 		}
+		else if(funcName == "basHump")
+		{
+			Model* pModelTarget	= this->models[parts.at(1)];
+
+			Vector3 posTarget = pModelTarget->GetPosition();
+
+			posTarget.x += 0.01;
+
+			if ( posTarget.x >= 0.3)
+			{
+				posTarget.x = 0.1;
+			}
+			
+			pModelTarget->SetPosition(posTarget);
+		}
+		else if(funcName == "trample")
+		{
+			Model* pModelTarget	= this->models[parts.at(1)];
+
+			Vector3 posTarget = pModelTarget->GetPosition();
+
+			posTarget.z -= 0.10;
+
+			if ( posTarget.z <= -5.0)
+			{
+				posTarget.z = 20.0;
+			}
+			
+			pModelTarget->SetPosition(posTarget);
+		}
 	}
 
 	//---Public methods---
