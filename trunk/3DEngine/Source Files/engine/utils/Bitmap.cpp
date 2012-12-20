@@ -36,9 +36,11 @@ namespace engine
 		
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biWidth));
 		memcpy(&this->bitmapInfoHeader.biWidth, &buffer, sizeof(this->bitmapInfoHeader.biWidth));
+		this->imageWidth = this->bitmapInfoHeader.biWidth;
 		
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biHeight));
 		memcpy(&this->bitmapInfoHeader.biHeight, &buffer, sizeof(this->bitmapInfoHeader.biHeight));
+		this->imageHeight = this->bitmapInfoHeader.biHeight;
 		
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biPlanes));
 		memcpy(&this->bitmapInfoHeader.biPlanes, &buffer, sizeof(this->bitmapInfoHeader.biPlanes));
@@ -65,7 +67,7 @@ namespace engine
 		memcpy(&this->bitmapInfoHeader.biClrImportant, &buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 
 		// Create an unsigned char array using the image width times images height as the size of the array which stores the pixel data.		
-		unsigned int pixelCount = this->bitmapInfoHeader.biWidth * this->bitmapInfoHeader.biHeight;
+		pixelCount = this->bitmapInfoHeader.biWidth * this->bitmapInfoHeader.biHeight;
 		this->pPixelData = new unsigned char[pixelCount];
 
 		inStream.seekg(this->bitmapFileHeader.bfOffBits);
@@ -87,5 +89,20 @@ namespace engine
 	unsigned char* Bitmap::GetPixelData()
 	{
 		return this->pPixelData;
+	}
+
+	unsigned long Bitmap::GetImageWidth()
+	{
+		return this->imageWidth;
+	}
+
+	unsigned long Bitmap::GetImageHeight()
+	{
+		return this->imageHeight;
+	}
+
+	unsigned long Bitmap::GetPixelCount()
+	{
+		return this->pixelCount;
 	}
 }

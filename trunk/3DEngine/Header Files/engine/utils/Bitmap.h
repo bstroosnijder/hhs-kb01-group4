@@ -36,9 +36,15 @@ namespace engine
 		BITMAPFILEHEADER bitmapFileHeader;
 		BITMAPINFOHEADER bitmapInfoHeader;
 		unsigned char* pPixelData;
+		unsigned long imageWidth;
+		unsigned long imageHeight;
+		unsigned long pixelCount;
 	public:
 		bool Load(std::string argPFilename);
 		unsigned char* GetPixelData();
+		unsigned long GetImageWidth();
+		unsigned long GetImageHeight();
+		unsigned long GetPixelCount();
 	};
 }
 
