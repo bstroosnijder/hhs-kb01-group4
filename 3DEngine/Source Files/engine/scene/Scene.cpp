@@ -27,6 +27,8 @@ namespace engine
 		else if(funcName == "followPosRot")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
+			if(pModelTarget == NULL)
+				return;
 			
 			Vector3 rotTarget = pModelTarget->GetRotation();
 			Vector3 posTarget = pModelTarget->GetPosition();

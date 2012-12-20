@@ -4,40 +4,68 @@ namespace engine
 {
 	bool Bitmap::Load(std::string argFilename)
 	{
-		FILE* pFile;
+		std::string fileName ("Resource Files\\Textures\\" + argFilename);
+		std::ifstream inStream (fileName);
+		char buffer[sizeof(unsigned long)];
 
-		std::string fileName = "Resource Files\\Textures\\" + argFilename;
+		// --- READ FILE HEADER ---
+		// Read the BMP type bytes
+		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfType));
+		memcpy(&this->bitmapFileHeader.bfType, &buffer, sizeof(this->bitmapFileHeader.bfType));
 
-		pFile = fopen((char*)fileName.c_str(), "rb");
-		if (pFile == NULL)
-		{
-			Logger::Log("Failed loading bitmap file: " + fileName, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
-			Logger::Log(argFilename, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
-			return false;
-		}
+		// Read the file size bytes
+		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfSize));
+		memcpy(&this->bitmapFileHeader.bfSize, &buffer, sizeof(this->bitmapFileHeader.bfSize));
 
-		// Read the fileheader from the bitmap file.
-		// The actual size of the info header is 14 bytes. We however cannot use sizeof(BITMAPFILEHEADER) because a struct is completed to a multiple of 4 bytes.
-		// If we were to use sizeof(BITMAPFILEHEADER), the fread() function would read 16 bytes instead of 14 and we would get a padding by 2 bytes.
-		fread(&this->bitmapFileHeader, 14, 1, pFile);
+		// Read the first reserved bytes
+		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfReserved1));
+		memcpy(&this->bitmapFileHeader.bfReserved1, &buffer, sizeof(this->bitmapFileHeader.bfReserved1));
+		
+		// Read the second reserved bytes
+		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfReserved2));
+		memcpy(&this->bitmapFileHeader.bfReserved2, &buffer, sizeof(this->bitmapFileHeader.bfReserved2));
+		
+		// Read the offset where the pixel data starts
+		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfOffBits));
+		memcpy(&this->bitmapFileHeader.bfOffBits, &buffer, sizeof(this->bitmapFileHeader.bfOffBits));
 
-		// Read the infoheader from the bitmap file.
-		fread(&this->bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, pFile);
 
-		if (this->bitmapFileHeader.bfType !=0x4d42)
-		{
-			Logger::Log("Wrong file type.", Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
-			return false;
-		}
+		// --- READ INFO HEADER ---
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biSize));
+		memcpy(&this->bitmapInfoHeader.biSize, &buffer, sizeof(this->bitmapInfoHeader.biSize));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biWidth));
+		memcpy(&this->bitmapInfoHeader.biWidth, &buffer, sizeof(this->bitmapInfoHeader.biWidth));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biHeight));
+		memcpy(&this->bitmapInfoHeader.biHeight, &buffer, sizeof(this->bitmapInfoHeader.biHeight));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biPlanes));
+		memcpy(&this->bitmapInfoHeader.biPlanes, &buffer, sizeof(this->bitmapInfoHeader.biPlanes));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biBitCount));
+		memcpy(&this->bitmapInfoHeader.biBitCount, &buffer, sizeof(this->bitmapInfoHeader.biBitCount));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biCompression));
+		memcpy(&this->bitmapInfoHeader.biCompression, &buffer, sizeof(this->bitmapInfoHeader.biCompression));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biSizeImage));
+		memcpy(&this->bitmapInfoHeader.biSizeImage, &buffer, sizeof(this->bitmapInfoHeader.biSizeImage));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biXPelsPerMeter));
+		memcpy(&this->bitmapInfoHeader.biXPelsPerMeter, &buffer, sizeof(this->bitmapInfoHeader.biXPelsPerMeter));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biYPelsPerMeter));
+		memcpy(&this->bitmapInfoHeader.biYPelsPerMeter, &buffer, sizeof(this->bitmapInfoHeader.biYPelsPerMeter));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biClrUsed));
+		memcpy(&this->bitmapInfoHeader.biClrUsed, &buffer, sizeof(this->bitmapInfoHeader.biClrUsed));
+		
+		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
+		memcpy(&this->bitmapInfoHeader.biClrImportant, &buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 
-		// TODO - Gaat hier nog iets fout met de bfOffBits.....
-		fseek(pFile, this->bitmapFileHeader.bfOffBits, SEEK_SET);
 
-		this->pBitmap = new unsigned char[this->bitmapInfoHeader.biSizeImage];
 
-		fread(this->pBitmap, this->bitmapInfoHeader.biSizeImage, 1, pFile);
-
-		fclose(pFile);
 
 		return true;
 	}
