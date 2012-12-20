@@ -26,6 +26,7 @@ namespace engine
 		void AddScene(std::string argSceneName, Scene* argScene);
 		Scene* LoadScene(std::string argSceneName, std::string argSceneFileName);
 		void RemoveScene(std::string argSceneName);
+		void Keyboard(Window* argPWindow);
 		
 		Window* Sandbox::NewWindow(int argRendererIndex, std::string argTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
 	};
