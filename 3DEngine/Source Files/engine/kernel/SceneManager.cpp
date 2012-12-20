@@ -116,16 +116,17 @@ namespace engine
 			{
 				curSegment = line.substr(1);
 				Logger::Log("Found segment: " + curSegment, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+
 				// auto set the next line as the line so that we can handle it
+				peek = inStream.peek();
 				inStream.getline(cLine, sizeof(cLine));
 				line = std::string(cLine);
 			}
 
-			// Skip empty lines (without continue ..)
-			if(line.size() > 0)
+			// Skip empty lines and comment lines (without continue ..)
+			if(line.size() > 0 && peek != '!')
 			{
 				std::vector<std::string> data = explode(';', line);
-				//Logger::Log(line, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 
 				// Because switch case isn't supported with string :(
 				if(curSegment == "camera")
@@ -189,18 +190,31 @@ namespace engine
 						pModel->SetTexture((i - 11), this->pResourceManager->GetTexture(data.at(i)));
 					}
 				}
+				else if(curSegment == "scripts")
+				{
+					std::string modelName = data.at(0);
+					for(unsigned long i = 1; i < data.size(); i++)
+					{
+						if(modelName.empty())
+						{
+							pScene->AddScript(data.at(i));
+						}
+						else if(modelName == "camera")
+						{
+							pScene->GetCamera()->AddScript(data.at(i));
+						}
+						else
+						{
+							pScene->GetModel(modelName)->AddScript(data.at(i));
+						}
+					}
+				}
 				else
 				{
 					Logger::Log("Segment unsupported", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
 				}
 			}
 		}
-
-
-
-
-
-
 
 		// Porperly close the scene file
 		inStream.close();

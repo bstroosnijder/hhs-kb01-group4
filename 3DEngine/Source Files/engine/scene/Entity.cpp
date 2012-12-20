@@ -5,6 +5,59 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
+	
+	void Entity::ParseAndExecuteScript(std::string argScript)
+	{
+		std::vector<std::string> parts = explode(' ', argScript);
+		std::string funcName = parts.at(0);
+
+		if(funcName == "doOrbitAtPlace")
+		{
+			float speed		= 1;
+			if(parts.at(1) == "CCW")
+				speed		= -1;
+			float rotSpeed	= (float)std::atof(parts.at(2).c_str());
+			float radius	= (float)std::atof(parts.at(3).c_str());
+
+			this->rotation.y += (rotSpeed * speed);
+			this->position.x -= ((sin(this->rotation.y) * radius) * speed);
+			this->position.z -= ((cos(this->rotation.y) * radius) * speed);
+		}
+		else
+		{
+			unsigned long posDot		= argScript.find(".");
+			std::string vectorName		= argScript.substr(0, posDot);
+			std::string vectorDirection	= argScript.substr((posDot + 1), 1);
+			std::string amount			= argScript.substr((posDot + 2), 2);
+			std::string value			= argScript.substr((posDot + 4));
+
+			Vector3* vector;
+			if(vectorName == "position")
+				vector = &this->position;
+			else if(vectorName == "rotation")
+				vector = &this->rotation;
+			else if(vectorName == "scaling")
+				vector = &this->scaling;
+
+			float* direction;
+			if(vectorDirection == "x")
+				direction = &vector->x;
+			else if(vectorDirection == "y")
+				direction = &vector->y;
+			else if(vectorDirection == "z")
+				direction = &vector->z;
+
+			if(amount == "++")
+				(*direction)++;
+			else if(amount == "--")
+				(*direction)--;
+			else if(amount == "+=")
+				(*direction) += (float)std::atof(value.c_str());
+			else if(amount == "-=")
+				(*direction) -= (float)std::atof(value.c_str());
+		}
+	}
+
 	//---Public methods---
 
 	/**
@@ -13,6 +66,7 @@ namespace engine
 	Entity::Entity()
 	{
 		this->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
+		this->scripts = std::list<std::string>();
 	}
 
 	/**
@@ -38,6 +92,10 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
+		for each(std::string script in this->scripts)
+		{
+			this->ParseAndExecuteScript(script);
+		}
 	}
 
 	/**
@@ -139,5 +197,15 @@ namespace engine
 	Vector3 Entity::GetScaling()
 	{
 		return this->scaling;
+	}
+	
+	/**
+	 * Adds a script to the entity to be executed during the update
+	 * @param		std::string				The script to add
+	 * @return		void
+	 */
+	void Entity::AddScript(std::string argScript)
+	{
+		this->scripts.push_back(argScript);
 	}
 }

@@ -24,6 +24,9 @@ namespace engine
 
 		Camera* pCamera;
 		std::map<std::string, Model*> models;
+
+		std::list<std::string> scripts;
+		void ParseAndExecuteScript(std::string argScript);
 	public:
 		Scene();
 		~Scene();
@@ -37,10 +40,13 @@ namespace engine
 		std::list<Window*> GetWindows();
 
 		Camera* GetCamera();
-
+		
+		Model* GetModel(std::string argModelName);
+		std::map<std::string, Model*> GetModels();
 		void AddModel(std::string argModelName, Model* argPModel);
 		void RemoveModel(std::string argModelName);
-		std::map<std::string, Model*> GetModels();
+		
+		void AddScript(std::string argScript);
 	};
 }
 

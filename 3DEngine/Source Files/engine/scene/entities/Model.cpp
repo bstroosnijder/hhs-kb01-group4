@@ -13,6 +13,7 @@ namespace engine
 	Model::Model(Resource* argPResource) : Entity()
 	{
 		this->pResource = argPResource;
+		this->models = std::map<std::string, Model*>();
 	}
 	
 	/**
@@ -39,6 +40,12 @@ namespace engine
 	void Model::Update()
 	{
 		Entity::Update();
+		
+		std::map<std::string, Model*>::iterator it;
+		for(it = this->models.begin(); it != this->models.end(); it++)
+		{
+			it->second->Update();
+		}
 	}
 
 	/**
@@ -63,10 +70,11 @@ namespace engine
 			mesh->DrawSubset(i);
 		}
 		
-		for each(Model* pModel in this->models)
+		std::map<std::string, Model*>::iterator it;
+		for(it = this->models.begin(); it != this->models.end(); it++)
 		{
 			argPRenderer->Push();
-			pModel->Draw(argPRenderer);
+			it->second->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}
 	}
@@ -95,10 +103,11 @@ namespace engine
 	/**
 	 * Adds an model
 	 * @param		Model*					The model to add
+	 * @param		std::string				The name of the model
 	 * @return		void
 	 */
-	void Model::AddModel(Model* argPModel)
+	void Model::AddModel(std::string argModelName, Model* argPModel)
 	{
-		this->models.push_back(argPModel);
+		this->models[argModelName] = argPModel;
 	}
 }

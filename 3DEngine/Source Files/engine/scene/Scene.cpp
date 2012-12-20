@@ -5,6 +5,47 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
+	
+	void Scene::ParseAndExecuteScript(std::string argScript)
+	{
+		std::vector<std::string> parts = explode(' ', argScript);
+		std::string funcName = parts.at(0);
+
+		if(funcName == "followPos")
+		{
+			Model* pModelTarget	= this->models[parts.at(1)];
+
+			Vector3 posTarget = pModelTarget->GetPosition();
+			Vector3 posCamera = this->pCamera->GetPosition();
+
+			posCamera.x = posTarget.x;
+			posCamera.y = posTarget.y + 2.0f;
+			posCamera.z = posTarget.z - 10.0f;
+
+			this->pCamera->SetPosition(posCamera);
+		}
+		else if(funcName == "followPosRot")
+		{
+			Model* pModelTarget	= this->models[parts.at(1)];
+			
+			Vector3 rotTarget = pModelTarget->GetRotation();
+			Vector3 posTarget = pModelTarget->GetPosition();
+			Vector3 rotCamera = this->pCamera->GetRotation();
+			Vector3 posCamera = this->pCamera->GetPosition();
+
+			rotCamera.x = rotTarget.x;
+			rotCamera.y = rotTarget.y + D3DX_PI;
+			rotCamera.z = rotTarget.z;
+
+			posCamera.x = posTarget.x - (sin(rotCamera.y) * 10);
+			posCamera.y = posTarget.y + 2;
+			posCamera.z = posTarget.z - (cos(rotCamera.y) * 10);
+			
+			this->pCamera->SetRotation(rotCamera);
+			this->pCamera->SetPosition(posCamera);
+		}
+	}
+
 	//---Public methods---
 
 	/**
@@ -16,6 +57,7 @@ namespace engine
 
 		this->pCamera = new Camera();
 		this->models = std::map<std::string, Model*>();
+		this->scripts = std::list<std::string>();
 	}
 
 	/**
@@ -46,6 +88,11 @@ namespace engine
 		for(it = this->models.begin(); it != this->models.end(); it++)
 		{
 			it->second->Update();
+		}
+
+		for each(std::string script in this->scripts)
+		{
+			this->ParseAndExecuteScript(script);
 		}
 	}
 
@@ -99,9 +146,32 @@ namespace engine
 		return this->windows;
 	}
 
+	/**
+	 * Gets the camera object
+	 * @return		Camera*
+	 */
 	Camera* Scene::GetCamera()
 	{
 		return this->pCamera;
+	}
+
+	/**
+	 * Gets a model by name
+	 * @param		std::string							The name of the model to return
+	 * @return		Model*
+	 */
+	Model* Scene::GetModel(std::string argModelName)
+	{
+		return this->models[argModelName];
+	}
+
+	/**
+	 * Obtain all the model pointers in the models collection.
+	 * @return		std::map<std::string, Model*>		The entire model collection.
+	 */
+	std::map<std::string, Model*> Scene::GetModels()
+	{
+		return this->models;
 	}
 
 	/**
@@ -124,13 +194,14 @@ namespace engine
 	{
 		this->models.erase(argModelName);
 	}
-
+	
 	/**
-	 * Obtain all the model pointers in the models collection.
-	 * @return		std::map<std::string, Model*>		The entire model collection.
+	 * Adds a script to the scene to be executed during the update
+	 * @param		std::string				The script to add
+	 * @return		void
 	 */
-	std::map<std::string, Model*> Scene::GetModels()
+	void Scene::AddScript(std::string argScript)
 	{
-		return this->models;
+		this->scripts.push_back(argScript);
 	}
 }
