@@ -1,7 +1,11 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#include <list>
+#include <vector>
+#include <string>
 #include "..\utils\Vector3.h"
+#include "..\utils\explode.h"
 #include "..\renderer\DirectX9Renderer.h"
 
 namespace engine
@@ -20,6 +24,9 @@ namespace engine
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scaling;
+
+		std::list<std::string> scripts;
+		void ParseAndExecuteScript(std::string argScript);
 	public:
 		Entity();
 		virtual ~Entity();
@@ -35,6 +42,8 @@ namespace engine
 		Vector3 GetPosition();
 		Vector3 GetRotation();
 		Vector3 GetScaling();
+		
+		void AddScript(std::string argScript);
 	};
 }
 

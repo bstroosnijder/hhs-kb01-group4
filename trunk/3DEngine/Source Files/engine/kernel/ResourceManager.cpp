@@ -144,7 +144,7 @@ namespace engine
 	Resource* ResourceManager::NewResource(std::string argMeshFileName)
 	{
 		Resource* pResource = new Resource();
-		pResource->pMesh = this->GetMesh(argMeshFileName);
+		pResource->pMesh = this->meshes[argMeshFileName];
 
 		// To make sure that each resource can have unique textures we have to make a new texture array
 		// to separatly store the textures from the original

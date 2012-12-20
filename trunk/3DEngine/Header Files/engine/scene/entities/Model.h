@@ -1,7 +1,7 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
-#include <list>
+#include <map>
 #include <d3dx9.h>
 #include "..\..\kernel\ResourceManager.h"
 #include "..\Entity.h"
@@ -12,7 +12,7 @@ namespace engine
 	{
 	private:
 		Resource* pResource;
-		std::list<Model*> models;
+		std::map<std::string, Model*> models;
 	public:
 		Model(Resource* argPResource);
 		~Model();
@@ -23,7 +23,7 @@ namespace engine
 
 		void SetResource(Resource* argPResource);
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);
-		void AddModel(Model* argPModel);
+		void AddModel(std::string argModelName, Model* argPModel);
 	};
 }
 
