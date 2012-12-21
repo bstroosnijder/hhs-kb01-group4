@@ -37,10 +37,12 @@ namespace engine
 		
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biWidth));
 		memcpy(&this->bitmapInfoHeader.biWidth, &buffer, sizeof(this->bitmapInfoHeader.biWidth));
+		// Save the image width for easy access later
 		this->imageWidth = this->bitmapInfoHeader.biWidth;
 		
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biHeight));
 		memcpy(&this->bitmapInfoHeader.biHeight, &buffer, sizeof(this->bitmapInfoHeader.biHeight));
+		// Save the image height for easy access later
 		this->imageHeight = this->bitmapInfoHeader.biHeight;
 		
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biPlanes));
@@ -67,28 +69,21 @@ namespace engine
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 		memcpy(&this->bitmapInfoHeader.biClrImportant, &buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 
-		// Create an unsigned char array using the image width times images height as the size of the array which stores the pixel data.		
-		pixelCount = this->bitmapInfoHeader.biWidth * this->bitmapInfoHeader.biHeight;
-		this->pPixelData = new unsigned char[pixelCount];
+		// Calculate the total number for pixels (width * height
+		this->pixelCount = this->imageWidth * this->imageHeight;
 
+		// Create an unsigned char array using the total number of pixels
+		// as the size of the array which stores the pixel data.
+		this->pPixelData = new unsigned char[this->pixelCount];
+
+		// Set the cursor at the beginnning of the offset
 		inStream.seekg(this->bitmapFileHeader.bfOffBits, std::ifstream::beg);
 
-		//for (unsigned long i = 0; i < pixelCount; i++)
-		//{
-		//	// We are using a grayscale image, the red, blue and green color channels have the same value.
-		//	unsigned char blue;
-		//	char colorBuffer;
-		//	inStream.read(&colorBuffer, 1);
-		//	inStream.seekg(3, std::ifstream::cur);
-		//	memcpy(&blue, &colorBuffer, 1);
-
-		//	this->pPixelData[i] = blue;
-		//}
-
-		int padding = (4 - (this->bitmapInfoHeader.biWidth * 3) % 4) % 4;
-		for(unsigned long z = 0; z < this->bitmapInfoHeader.biHeight; z++)
+		// calculate the padding for each pixel data row.
+		int padding = (4 - (this->imageWidth * 3) % 4) % 4;
+		for(long z = 0; z < this->imageHeight; z++)
 		{
-			for(unsigned long x = 0; x < this->bitmapInfoHeader.biWidth; x++)
+			for(long x = 0; x < this->imageWidth; x++)
 			{
 				unsigned char blue;
 				char colorBuffer;
@@ -97,6 +92,7 @@ namespace engine
 
 				this->pPixelData[(z * this->bitmapInfoHeader.biWidth) + x] = blue;
 			}
+			// Set the cursor after the padding so we can continue reading
 			inStream.seekg(padding, std::ifstream::cur);
 		}
 
@@ -108,12 +104,12 @@ namespace engine
 		return this->pPixelData;
 	}
 
-	unsigned long Bitmap::GetImageWidth()
+	long Bitmap::GetImageWidth()
 	{
 		return this->imageWidth;
 	}
 
-	unsigned long Bitmap::GetImageHeight()
+	long Bitmap::GetImageHeight()
 	{
 		return this->imageHeight;
 	}

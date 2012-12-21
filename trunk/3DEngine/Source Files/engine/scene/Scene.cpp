@@ -52,11 +52,11 @@ namespace engine
 
 			Vector3 posTarget = pModelTarget->GetPosition();
 
-			posTarget.x += 0.01;
+			posTarget.x += 0.01f;
 
-			if ( posTarget.x >= 0.3)
+			if ( posTarget.x >= 0.3f)
 			{
-				posTarget.x = 0.1;
+				posTarget.x = 0.1f;
 			}
 			
 			pModelTarget->SetPosition(posTarget);
@@ -67,11 +67,11 @@ namespace engine
 
 			Vector3 posTarget = pModelTarget->GetPosition();
 
-			posTarget.z -= 0.10;
+			posTarget.z -= 0.10f;
 
-			if ( posTarget.z <= -5.0)
+			if ( posTarget.z <= -5.0f)
 			{
-				posTarget.z = 20.0;
+				posTarget.z = 20.0f;
 			}
 			
 			pModelTarget->SetPosition(posTarget);

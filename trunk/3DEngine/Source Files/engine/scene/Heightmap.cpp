@@ -2,6 +2,106 @@
 
 namespace engine
 {
+	void Heightmap::SmoothMap(CUSTOMVERTEX* argVertices, unsigned long argNumIterations)
+	{
+		// check if the iteration count has reached 0
+		if(argNumIterations == 0)
+		{
+			return;
+		}
+		unsigned long numIterationsLeft	= argNumIterations - 1;
+
+		long imageWidth					= this->pBitmap->GetImageWidth();
+		long imageHeight				= this->pBitmap->GetImageHeight();
+
+		CUSTOMVERTEX* newVertices		= new CUSTOMVERTEX[this->numVertices];
+		
+		// Calculate new Y value, but don't set it yet or we corrupt the data
+		for(long z = 0; z < imageHeight; z++)
+		{
+			for(long x = 0; x < imageWidth; x++)
+			{
+				long vIndex	= (z * imageWidth) + x;
+
+				int numSections			= 0;
+				float sectionsTotal		= 0.0f;
+
+				// Check: left
+				if((x - 1) >= 0)
+				{
+					numSections++;
+					sectionsTotal += argVertices[vIndex - 1].y;
+
+					// Check: left top
+					if((z - 1) >= 0)
+					{
+						numSections++;
+						sectionsTotal += argVertices[(vIndex - 1) - imageWidth].y;
+					}
+
+					// Check: left bottom
+					if((z + 1) < imageHeight)
+					{
+						numSections++;
+						sectionsTotal += argVertices[(vIndex - 1) + imageWidth].y;
+					}
+				}
+
+				// Check: right
+				if((x + 1) < imageWidth)
+				{
+					numSections++;
+					sectionsTotal += argVertices[vIndex + 1].y;
+
+					// Check: right top
+					if((z - 1) >= 0)
+					{
+						numSections++;
+						sectionsTotal += argVertices[(vIndex + 1) - imageWidth].y;
+					}
+
+					// Check: right bottom
+					if((z + 1) < imageHeight)
+					{
+						numSections++;
+						sectionsTotal += argVertices[(vIndex + 1) + imageWidth].y;
+					}
+				}
+
+				// Check: top
+				if((z - 1) >= 0)
+				{
+					numSections++;
+					sectionsTotal += argVertices[vIndex - imageWidth].y;
+				}
+
+				// Check: bottom
+				if((z + 1) < imageHeight)
+				{
+					numSections++;
+					sectionsTotal += argVertices[vIndex + imageWidth].y;
+				}
+
+				// Set the new value
+				newVertices[vIndex].y = (argVertices[vIndex].y + (sectionsTotal / numSections)) * 0.5f;
+			}
+		}
+
+		// Actually set the new values
+		for(long z = 0; z < imageHeight; z++)
+		{
+			for(long x = 0; x < imageWidth; x++)
+			{
+				long vIndex	= (z * imageWidth) + x;
+				argVertices[vIndex].y	= newVertices[vIndex].y;
+			}
+		}
+
+
+		// Rerun the algorithm
+		this->SmoothMap(argVertices, numIterationsLeft);
+	}
+
 	Heightmap::Heightmap()
 	{
 		this->pBitmap = new Bitmap();
@@ -12,10 +112,20 @@ namespace engine
 
 	Heightmap::~Heightmap()
 	{
+		this->CleanUp();
 	}
 
 	void Heightmap::CleanUp()
 	{
+		if(this->pVertexBuffer != NULL)
+		{
+			this->pVertexBuffer->Release();
+		}
+
+		if(this->pIndexBuffer != NULL)
+		{
+			this->pIndexBuffer->Release();
+		}
 	}
 
 	void Heightmap::LoadMap(std::string argMapFileName)
@@ -23,19 +133,20 @@ namespace engine
 		this->pBitmap->Load(argMapFileName);
 	}
 
-	void Heightmap::SetupVertices(Renderer* argPRenderer)
+	void Heightmap::SetupVertices(Renderer* argPRenderer, unsigned long argSmoothing)
 	{
 		DirectX9Renderer* pRenderer		= (DirectX9Renderer*)argPRenderer;
 		
 		float pixelDistance				= 1;
-		unsigned long pixelColor		= 0xFF00FF00;
+		unsigned long pixelColor1		= 0xFFFF0000;
+		unsigned long pixelColor2		= 0xFF0000FF;
 		unsigned char* pixelData		= this->pBitmap->GetPixelData();
-		unsigned long imageWidth		= this->pBitmap->GetImageWidth();
-		unsigned long imageHeight		= this->pBitmap->GetImageHeight();
+		long imageWidth					= this->pBitmap->GetImageWidth();
+		long imageHeight				= this->pBitmap->GetImageHeight();
 
-		float offsetX					= 0;
+		float offsetX					= -(((float)imageWidth) / 2);
 		float offsetY					= 0;
-		float offsetZ					= 0;
+		float offsetZ					= -(((float)imageHeight) / 2);
 		
 		// --- Create the vertex array ---
 		this->numPrimitives				= (imageWidth * imageHeight) * 2;
@@ -44,21 +155,46 @@ namespace engine
 
 		CUSTOMVERTEX* vertices			= new CUSTOMVERTEX[this->numVertices];
 
-		for(unsigned long z = 0; z < imageHeight; z++)
+		for(long z = 0; z < imageHeight; z++)
 		{
-			for(unsigned long x = 0; x < imageWidth; x++)
+			for(long x = 0; x < imageWidth; x++)
 			{
-				unsigned long vIndex	= (z * imageWidth) + x;
+				long vIndex	= (z * imageWidth) + x;
 				float pixelX			= offsetX + (x * pixelDistance);
-				float pixelY			= offsetY + pixelData[vIndex] / 50;
+				float pixelY			= offsetY + pixelData[vIndex] / 15.0f;
 				float pixelZ			= offsetZ + (z * pixelDistance);
 
 				vertices[vIndex].x		= pixelX;
 				vertices[vIndex].y		= pixelY;
 				vertices[vIndex].z		= pixelZ;
-				vertices[vIndex].color	= pixelColor;
+
+				if(pixelY >= 0.5f)
+				{
+					vertices[vIndex].color	= pixelColor1;
+				}
+				else
+				{
+					vertices[vIndex].color	= pixelColor2;
+				}
+
+				if(vIndex % 2 == 0)
+				{
+					// TODO: figure out how to make this dynamic
+					// it has to do with how the texture is multiplied over the primitives
+					// with the current numbers it puts 1 image on 1 primitive
+					vertices[vIndex].u		= ((float)vIndex) / (128 - 1);
+					vertices[vIndex].v		= 1.0f;
+				}
+				else
+				{
+					vertices[vIndex].u		= ((float)vIndex) / (128 - 1);
+					vertices[vIndex].v		= 0.0f;
+				}
 			}
 		}
+
+		// Smooth the map
+		this->SmoothMap(vertices, argSmoothing);
 		
 		// --- Create the index array ---
 		unsigned long numIndices		= this->numPrimitives * 3;
@@ -66,30 +202,29 @@ namespace engine
 
 		short* indices					= new short[numIndices];
 		
-		unsigned long index				= 0;
-		for(unsigned long z = 0; z < (imageHeight - 1); z++)
+		int index						= 0;
+		for(long z = 0; z < (imageHeight - 1); z++)
 		{
-			for(unsigned long x = 0; x < (imageWidth - 1); x++)
+			for(long x = 0; x < (imageWidth - 1); x++)
 			{
-				CUSTOMVERTEX vertex;
 				// Top Left
-				indices[index]			= (z * imageWidth) + x;
+				indices[index]			= (short)((z * imageWidth) + x);
 				index++;
 				// Bottom Left
-				indices[index]			= ((z + 1) * imageWidth) + x;
+				indices[index]			= (short)(((z + 1) * imageWidth) + x);
 				index++;
 				// Top Right
-				indices[index]			= (z * imageWidth) + (x + 1);
+				indices[index]			= (short)((z * imageWidth) + (x + 1));
 				index++;
 				
 				// Bottom Right
-				indices[index]			= ((z + 1) * imageWidth) + (x + 1);
+				indices[index]			= (short)(((z + 1) * imageWidth) + (x + 1));
 				index++;
 				// Top Right
-				indices[index]			= (z * imageWidth) + (x + 1);
+				indices[index]			= (short)((z * imageWidth) + (x + 1));
 				index++;
 				// Bottom Left
-				indices[index]			= ((z + 1) * imageWidth) + x;
+				indices[index]			= (short)(((z + 1) * imageWidth) + x);
 				index++;
 			}
 		}
@@ -126,18 +261,20 @@ namespace engine
 	{
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
-		D3DXMATRIXA16 matWorld;
-		D3DXMatrixIdentity(&matWorld);
-		pRenderer->AddToWorldMatrix(&matWorld);
-
 		pRenderer->TransformWorldMatrix();
 		pRenderer->TransformViewMatrix();
 		pRenderer->TransformProjectionMatrix();
-
+		
 		pRenderer->GetDevice()->SetStreamSource(0, this->pVertexBuffer, 0, sizeof(CUSTOMVERTEX));
 		pRenderer->GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 		pRenderer->GetDevice()->SetIndices(this->pIndexBuffer);
+
 		pRenderer->GetDevice()->SetTexture(0, this->textures[0]);
+        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+
 		pRenderer->GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, this->numVertices, 0, this->numPrimitives);
 	}
 	

@@ -11,13 +11,15 @@ struct CUSTOMVERTEX
 	float x;
 	float y;
 	float z;
-    unsigned long color;
-	//CUSTOMVERTEX(){}
-	//CUSTOMVERTEX(float x, float y, float z, unsigned long color) : x(x),y(y),z(z),color(color) {}
+
+	unsigned long color;
+
+	float u;
+	float v;
 };
 
 // Our custom FVF, which describes our custom vertex structure
-#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_DIFFUSE)
+#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 
 namespace engine
 {
@@ -32,13 +34,15 @@ namespace engine
 
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;
+		
+		void SmoothMap(CUSTOMVERTEX* argVertices, unsigned long argNumIterations);
 	public:
 		Heightmap();
 		~Heightmap();
 		void CleanUp();
 		
 		void LoadMap(std::string argMapFileName);
-		void SetupVertices(Renderer* argPRenderer);
+		void SetupVertices(Renderer* argPRenderer, unsigned long argSmoothing);
 		void Draw(Renderer* argPRenderer);
 
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);
