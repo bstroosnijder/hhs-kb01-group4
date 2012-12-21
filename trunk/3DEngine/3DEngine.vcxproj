@@ -41,7 +41,6 @@
     <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Source Files\engine\scene\Heightmap.cpp" />
     <ClCompile Include="Source Files\engine\input\Keyboard.cpp" />
     <ClCompile Include="Source Files\engine\input\Mouse.cpp" />
@@ -64,6 +63,7 @@
     <ClCompile Include="Source Files\engine\utils\explode.cpp" />
     <ClCompile Include="Source Files\engine\utils\fileExists.cpp" />
     <ClCompile Include="Source Files\engine\window\Win32Window.cpp" />
+    <ClCompile Include="Source Files\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource Files\Textures\heightmap.bmp" />

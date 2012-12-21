@@ -230,9 +230,7 @@
     <ClCompile Include="Source Files\engine\utils\fileExists.cpp">
       <Filter>Source Files\engine\utils</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
+    <ClCompile Include="Source Files\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource Files\Textures\heightmap.bmp">

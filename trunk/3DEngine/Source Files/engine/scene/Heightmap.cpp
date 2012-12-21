@@ -2,81 +2,147 @@
 
 namespace engine
 {
-	void Heightmap::Init(Renderer* argPRenderer)
+	Heightmap::Heightmap()
 	{
-		DirectX9Renderer* renderer = (DirectX9Renderer*)argPRenderer;
+		this->pBitmap = new Bitmap();
 
-		// Initialize three vertices for rendering a triangle
-		CUSTOMVERTEX g_Vertices[] =
+		this->numPrimitives = 0;
+		this->numVertices = 0;
+	}
+
+	Heightmap::~Heightmap()
+	{
+	}
+
+	void Heightmap::CleanUp()
+	{
+	}
+
+	void Heightmap::LoadMap(std::string argMapFileName)
+	{
+		this->pBitmap->Load(argMapFileName);
+	}
+
+	void Heightmap::SetupVertices(Renderer* argPRenderer)
+	{
+		DirectX9Renderer* pRenderer		= (DirectX9Renderer*)argPRenderer;
+		
+		float pixelDistance				= 1;
+		unsigned long pixelColor		= 0xFF00FF00;
+		unsigned char* pixelData		= this->pBitmap->GetPixelData();
+		unsigned long imageWidth		= this->pBitmap->GetImageWidth();
+		unsigned long imageHeight		= this->pBitmap->GetImageHeight();
+
+		float offsetX					= 0;
+		float offsetY					= 0;
+		float offsetZ					= 0;
+		
+		// --- Create the vertex array ---
+		this->numPrimitives				= (imageWidth * imageHeight) * 2;
+		this->numVertices				= imageWidth * imageHeight;
+		unsigned long vertexArraySize	= this->numVertices * sizeof(CUSTOMVERTEX);
+
+		CUSTOMVERTEX* vertices			= new CUSTOMVERTEX[this->numVertices];
+
+		for(unsigned long z = 0; z < imageHeight; z++)
 		{
+			for(unsigned long x = 0; x < imageWidth; x++)
+			{
+				unsigned long vIndex	= (z * imageWidth) + x;
+				float pixelX			= offsetX + (x * pixelDistance);
+				float pixelY			= offsetY + pixelData[vIndex] / 50;
+				float pixelZ			= offsetZ + (z * pixelDistance);
 
-			// Top Face (5-6-1-2)
-			{ -1.0f, 0.0f, 1.0f, 0xFF0000FF },
-			{ 1.0f, 0.0f, 1.0f, 0xFFAFAFFF },
-			{ -1.0f, 0.0f, -1.0f, 0xFFAFAFFF },
-			{ 1.0f, 0.0f, -1.0f, 0xFF0000FF },
+				vertices[vIndex].x		= pixelX;
+				vertices[vIndex].y		= pixelY;
+				vertices[vIndex].z		= pixelZ;
+				vertices[vIndex].color	= pixelColor;
+			}
+		}
+		
+		// --- Create the index array ---
+		unsigned long numIndices		= this->numPrimitives * 3;
+		unsigned long indiceArraySize	= numIndices * sizeof(short);
 
-			
-		};
-
-		if( FAILED( renderer->GetDevice()->CreateVertexBuffer( 32 * sizeof( CUSTOMVERTEX ),
-                                                  0, D3DFVF_CUSTOMVERTEX,
-                                                  D3DPOOL_DEFAULT, &g_pVB, NULL ) ) )
+		short* indices					= new short[numIndices];
+		
+		unsigned long index				= 0;
+		for(unsigned long z = 0; z < (imageHeight - 1); z++)
 		{
-			return;
+			for(unsigned long x = 0; x < (imageWidth - 1); x++)
+			{
+				CUSTOMVERTEX vertex;
+				// Top Left
+				indices[index]			= (z * imageWidth) + x;
+				index++;
+				// Bottom Left
+				indices[index]			= ((z + 1) * imageWidth) + x;
+				index++;
+				// Top Right
+				indices[index]			= (z * imageWidth) + (x + 1);
+				index++;
+				
+				// Bottom Right
+				indices[index]			= ((z + 1) * imageWidth) + (x + 1);
+				index++;
+				// Top Right
+				indices[index]			= (z * imageWidth) + (x + 1);
+				index++;
+				// Bottom Left
+				indices[index]			= ((z + 1) * imageWidth) + x;
+				index++;
+			}
 		}
 
-		// Fill the vertex buffer.
-		VOID* pVertices;
-		if( FAILED( g_pVB->Lock( 0, sizeof( g_Vertices ), ( void** )&pVertices, 0 ) ) )
-			return;
 
-		memcpy( pVertices, g_Vertices, sizeof( g_Vertices ) );
-		g_pVB->Unlock();
+		// Create the vertex buffer.
+		pRenderer->GetDevice()->CreateVertexBuffer(	vertexArraySize,
+													0, D3DFVF_CUSTOMVERTEX,
+													D3DPOOL_DEFAULT, &this->pVertexBuffer, NULL );
+
+		// Create the index buffer.
+		pRenderer->GetDevice()->CreateIndexBuffer(	indiceArraySize,
+													0, D3DFMT_INDEX16,
+													D3DPOOL_DEFAULT, &this->pIndexBuffer, NULL);
+
+		void* pVertices;
+		// Fill the vertex buffer.
+		this->pVertexBuffer->Lock(0, vertexArraySize, (void**)&pVertices, 0);
+		memcpy(pVertices, vertices, vertexArraySize);
+		this->pVertexBuffer->Unlock();
+		// Remove the vertex array
+		delete vertices;
+		
+		void* pIndices;
+		// Fill the index buffer.
+		this->pIndexBuffer->Lock(0, indiceArraySize, (void**)&pIndices, 0);
+		memcpy(pIndices, indices, indiceArraySize);
+		this->pIndexBuffer->Unlock();
+		// Remove the indice array
+		delete indices;
 	}
 
 	void Heightmap::Draw(Renderer* argPRenderer)
 	{
-		DirectX9Renderer* renderer = (DirectX9Renderer*)argPRenderer;
+		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
+		pRenderer->AddToWorldMatrix(&matWorld);
 
-    // Set up the rotation matrix to generate 1 full rotation (2*PI radians) 
-    // every 1000 ms. To avoid the loss of precision inherent in very high 
-    // floating point numbers, the system time is modulated by the rotation 
-    // period before conversion to a radian angle.
-    UINT iTime = timeGetTime() % 1000;
-    FLOAT fAngle = iTime * ( 2.0f * D3DX_PI ) / 1000.0f;
-    D3DXMatrixRotationY( &matWorld, 0 );
-    renderer->GetDevice()->SetTransform( D3DTS_WORLD, &matWorld );
+		pRenderer->TransformWorldMatrix();
+		pRenderer->TransformViewMatrix();
+		pRenderer->TransformProjectionMatrix();
 
-    // Set up our view matrix. A view matrix can be defined given an eye point,
-    // a point to lookat, and a direction for which way is up. Here, we set the
-    // eye five units back along the z-axis and up three units, look at the
-    // origin, and define "up" to be in the y-direction.
+		pRenderer->GetDevice()->SetStreamSource(0, this->pVertexBuffer, 0, sizeof(CUSTOMVERTEX));
+		pRenderer->GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
+		pRenderer->GetDevice()->SetIndices(this->pIndexBuffer);
+		pRenderer->GetDevice()->SetTexture(0, this->textures[0]);
+		pRenderer->GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, this->numVertices, 0, this->numPrimitives);
+	}
 	
-
-    D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-5.0f );
-    D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f);
-    D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
-    D3DXMATRIXA16 matView;
-    D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
-    renderer->GetDevice()->SetTransform( D3DTS_VIEW, &matView );
-
-    // For the projection matrix, we set up a perspective transform (which
-    // transforms geometry from 3D view space to 2D viewport space, with
-    // a perspective divide making objects smaller in the distance). To build
-    // a perpsective transform, we need the field of view (1/4 pi is common),
-    // the aspect ratio, and the near and far clipping planes (which define at
-    // what distances geometry should be no longer be rendered).
-    D3DXMATRIXA16 matProj;
-    D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f );
-    renderer->GetDevice()->SetTransform( D3DTS_PROJECTION, &matProj );
-
-		renderer->GetDevice()->SetStreamSource( 0, g_pVB, 0, sizeof( CUSTOMVERTEX ) );
-        renderer->GetDevice()->SetFVF( D3DFVF_CUSTOMVERTEX );
-
-		for (int i = 0; i < 6; i++)
-			renderer->GetDevice()->DrawPrimitive(D3DPT_TRIANGLESTRIP, i * 4, 2);
+	void Heightmap::SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture)
+	{
+		this->textures[argIndex] = argTexture;
 	}
 }

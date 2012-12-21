@@ -4,6 +4,7 @@ namespace engine
 {
 	bool Bitmap::Load(std::string argFilename)
 	{
+		Logger::Log("Loading bitmap: " + argFilename, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		std::string fileName ("Resource Files\\Textures\\" + argFilename);
 		std::ifstream inStream (fileName);
 		char buffer[sizeof(unsigned long)];
@@ -70,17 +71,35 @@ namespace engine
 		pixelCount = this->bitmapInfoHeader.biWidth * this->bitmapInfoHeader.biHeight;
 		this->pPixelData = new unsigned char[pixelCount];
 
-		inStream.seekg(this->bitmapFileHeader.bfOffBits);
+		inStream.seekg(this->bitmapFileHeader.bfOffBits, std::ifstream::beg);
 
-		for (unsigned long i = 0; i < pixelCount; i++)
+		//for (unsigned long i = 0; i < pixelCount; i++)
+		//{
+		//	// We are using a grayscale image, the red, blue and green color channels have the same value.
+		//	unsigned char blue;
+		//	char colorBuffer;
+		//	inStream.read(&colorBuffer, 1);
+		//	inStream.seekg(3, std::ifstream::cur);
+		//	memcpy(&blue, &colorBuffer, 1);
+
+		//	this->pPixelData[i] = blue;
+		//}
+
+		int patch = (4 - (this->bitmapInfoHeader.biWidth * 3) % 4) % 4;
+		for(unsigned long z = 0; z < this->bitmapInfoHeader.biHeight; z++)
 		{
-			// We are using a grayscale image, the red, blue and green color channels have the same value.
-			unsigned char blue;
-			char colorBuffer;
-			inStream.read(&colorBuffer, 1);
-			memcpy(&blue, &colorBuffer, 1);
+			for(unsigned long x = 0; x < this->bitmapInfoHeader.biWidth; x++)
+			{
+				unsigned char blue;
+				char colorBuffer;
+				inStream.read(&colorBuffer, 1);
+				inStream.read(&colorBuffer, 1);
+				inStream.read(&colorBuffer, 1);
+				memcpy(&blue, &colorBuffer, 1);
 
-			this->pPixelData[i] = blue;
+				this->pPixelData[(z * this->bitmapInfoHeader.biWidth) + x] = blue;
+			}
+			inStream.seekg(patch, std::ifstream::cur);
 		}
 
 		return true;

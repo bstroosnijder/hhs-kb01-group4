@@ -87,6 +87,7 @@ namespace engine
 	{
 		this->windows = std::list<Window*>();
 
+		this->pHeightmap = new Heightmap();
 		this->pCamera = new Camera();
 		this->models = std::map<std::string, Model*>();
 		this->scripts = std::list<std::string>();
@@ -115,6 +116,7 @@ namespace engine
 	void Scene::Update()
 	{
 		this->pCamera->Update();
+		//this->pHeightmap->Update();
 
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
@@ -137,6 +139,10 @@ namespace engine
 	{
 		argPRenderer->Push();
 		this->pCamera->Draw(argPRenderer);
+
+		argPRenderer->Push();
+		this->pHeightmap->Draw(argPRenderer);
+		argPRenderer->Pop();
 
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
@@ -176,6 +182,15 @@ namespace engine
 	std::list<Window*> Scene::GetWindows()
 	{
 		return this->windows;
+	}
+	
+	/**
+	 * Gets the heightmap object
+	 * @return		Heightmap*
+	 */
+	Heightmap* Scene::GetHeightmap()
+	{
+		return this->pHeightmap;
 	}
 
 	/**

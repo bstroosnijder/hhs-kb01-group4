@@ -37,9 +37,11 @@ namespace engine
 								&presentParameters, &pDevice);
 
 		// Set render states
+		this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
+		this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
-		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
 		// Set matrices to the identity
 		this->SetupMatricis();
@@ -82,10 +84,10 @@ namespace engine
 			this->matView->Release();
 		}
 		// Cleans the projection matrix stack
-		/*if(this->matProjection != NULL)
+		if(this->matProjection != NULL)
 		{
 			this->matProjection->Release();
-		}*/
+		}
 	}
 
 	/**

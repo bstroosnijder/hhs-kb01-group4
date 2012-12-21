@@ -97,6 +97,7 @@ namespace engine
 				pRenderer->Clear();
 				pRenderer->BeginScene();
 
+				// Draw the scene
 				pScene->Draw(pRenderer);
 
 				pRenderer->EndScene();
