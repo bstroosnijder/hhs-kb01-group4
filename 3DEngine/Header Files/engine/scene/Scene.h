@@ -7,6 +7,7 @@
 #include <iostream>
 #include "..\kernel\ResourceManager.h"
 #include "..\renderer\Renderer.h"
+#include "Heightmap.h"
 #include "entities\Camera.h"
 #include "entities\Model.h"
 
@@ -22,6 +23,7 @@ namespace engine
 	private:
 		std::list<Window*> windows;
 
+		Heightmap* pHeightmap;
 		Camera* pCamera;
 		std::map<std::string, Model*> models;
 
@@ -39,6 +41,7 @@ namespace engine
 		void RemoveWindow(Window* argPWindow);
 		std::list<Window*> GetWindows();
 
+		Heightmap* GetHeightmap();
 		Camera* GetCamera();
 		
 		Model* GetModel(std::string argModelName);

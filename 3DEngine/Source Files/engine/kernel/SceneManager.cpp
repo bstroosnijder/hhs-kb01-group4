@@ -115,7 +115,7 @@ namespace engine
 			if(peek == '#')
 			{
 				curSegment = line.substr(1);
-				Logger::Log("Found segment: " + curSegment, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+				Logger::Log("+++ Found segment: " + curSegment, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 
 				// auto set the next line as the line so that we can handle it
 				peek = inStream.peek();
@@ -129,7 +129,19 @@ namespace engine
 				std::vector<std::string> data = explode(';', line);
 
 				// Because switch case isn't supported with string :(
-				if(curSegment == "camera")
+				if(curSegment == "heightmap")
+				{
+					std::string mapFileName = data.at(0);
+					Heightmap* pHeightmap = pScene->GetHeightmap();
+					pHeightmap->LoadMap(mapFileName);
+					pHeightmap->SetupVertices(argPRenderer);
+
+					for(unsigned long i = 1; i < data.size(); i++)
+					{
+						pHeightmap->SetTexture((i - 1), this->pResourceManager->GetTexture(data.at(i)));
+					}
+				}
+				else if(curSegment == "camera")
 				{
 					Vector3 position	= Vector3(	(float)std::atof(data.at(0).c_str()),
 													(float)std::atof(data.at(1).c_str()),
@@ -184,7 +196,6 @@ namespace engine
 					pModel->SetRotation(rotation);
 					pModel->SetScaling(scaling);
 
-					// todo: custom textures
 					for(unsigned long i = 11; i < data.size(); i++)
 					{
 						pModel->SetTexture((i - 11), this->pResourceManager->GetTexture(data.at(i)));

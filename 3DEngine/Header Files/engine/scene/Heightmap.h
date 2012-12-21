@@ -1,12 +1,19 @@
 #ifndef HEIGHTMAP_H_
 #define HEIGHTMAP_H_
 
-#include "..\..\..\Header Files\engine\renderer\DirectX9Renderer.h"
+#include <d3dx9.h>
+#include "..\utils\Vector3.h"
+#include "..\utils\Bitmap.h"
+#include "..\renderer\DirectX9Renderer.h"
 
 struct CUSTOMVERTEX
 {
-    FLOAT x, y, z;      // The untransformed, 3D position for the vertex
-    DWORD color;        // The vertex color
+	float x;
+	float y;
+	float z;
+    unsigned long color;
+	//CUSTOMVERTEX(){}
+	//CUSTOMVERTEX(float x, float y, float z, unsigned long color) : x(x),y(y),z(z),color(color) {}
 };
 
 // Our custom FVF, which describes our custom vertex structure
@@ -17,10 +24,24 @@ namespace engine
 	class Heightmap
 	{
 	private:
-		LPDIRECT3DVERTEXBUFFER9 g_pVB;
+		Bitmap* pBitmap;
+		LPDIRECT3DTEXTURE9 textures[8];
+
+		unsigned long numPrimitives;
+		unsigned long numVertices;
+
+		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
+		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;
 	public:
-		void Init(Renderer* argPRenderer);
+		Heightmap();
+		~Heightmap();
+		void CleanUp();
+		
+		void LoadMap(std::string argMapFileName);
+		void SetupVertices(Renderer* argPRenderer);
 		void Draw(Renderer* argPRenderer);
+
+		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);
 	};
 }
 
