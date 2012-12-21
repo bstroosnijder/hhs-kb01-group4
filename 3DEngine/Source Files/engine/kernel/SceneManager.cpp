@@ -131,14 +131,16 @@ namespace engine
 				// Because switch case isn't supported with string :(
 				if(curSegment == "heightmap")
 				{
-					std::string mapFileName = data.at(0);
+					std::string mapFileName				= data.at(0);
+					unsigned long smoothingIterations	= (unsigned long)std::atof(data.at(1).c_str());
+
 					Heightmap* pHeightmap = pScene->GetHeightmap();
 					pHeightmap->LoadMap(mapFileName);
-					pHeightmap->SetupVertices(argPRenderer);
+					pHeightmap->SetupVertices(argPRenderer, smoothingIterations);
 
-					for(unsigned long i = 1; i < data.size(); i++)
+					for(unsigned long i = 2; i < data.size(); i++)
 					{
-						pHeightmap->SetTexture((i - 1), this->pResourceManager->GetTexture(data.at(i)));
+						pHeightmap->SetTexture((i - 2), this->pResourceManager->GetTexture(data.at(i)));
 					}
 				}
 				else if(curSegment == "camera")
