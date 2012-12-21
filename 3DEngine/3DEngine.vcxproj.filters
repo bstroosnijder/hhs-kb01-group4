@@ -164,9 +164,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source Files\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
@@ -232,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="Source Files\engine\utils\fileExists.cpp">
       <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

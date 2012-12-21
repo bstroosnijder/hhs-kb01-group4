@@ -4,16 +4,26 @@ namespace engine
 {
 	//no clue why we need this
 	#define KEYDOWN(name, key) (name[key] & 0x80) 
-
+	
 	/**
-	 * todo
+	 * Compiler wants a empty constructor
 	 * @author Alex Hodes
 	 */
 	Keyboard::Keyboard()
 	{
-		dInput	= NULL; 
-		dDevice	= NULL; 
-		hwnd	= NULL;
+		
+	}
+
+
+	/**
+	 * Constructs the keyboard
+	 * @author Alex Hodes
+	 */
+	Keyboard::Keyboard(HWND argHwnd,LPDIRECTINPUT8 argdInput,LPDIRECTINPUTDEVICE8 argdDevice)
+	{
+		dInput	= argdInput; 
+		dDevice	= argdDevice; 
+		hwnd	= argHwnd;
 		InitKeyboard();
 	}
 
@@ -26,20 +36,9 @@ namespace engine
 	}
 
 	/**
-	 * todo
-	 * @author Alex Hodes
-	 */
-	Keyboard::Keyboard(HWND argHwnd)
-	{
-		dInput	= NULL; 
-		dDevice	= NULL; 
-		hwnd	= argHwnd;
-		InitKeyboard();
-	}
-
-	/**
-	 * todo
-	 * @author Alex Hodes
+	 * checks if device creating, Dataformat and cooperativelevel succeeds 
+	 * @return	True of succeeds and false if something fails 
+	 * @author	Alex Hodes
 	 */
 	bool Keyboard::InitKeyboard()
 	{
@@ -48,6 +47,7 @@ namespace engine
 		if FAILED( hr ) 
 		{ 
 			SaveReleaseDevice(); 
+			Logger::Log("Keyboard: Creating device failed",Logger::LOG_LEVEL_WARNING,__FILE__,__LINE__);
 			return false; 
 		}
 
@@ -55,6 +55,7 @@ namespace engine
 		if FAILED( hr ) 
 		{ 
 			SaveReleaseDevice(); 
+			Logger::Log("Keyboard: Setting dataformat failed",Logger::LOG_LEVEL_WARNING,__FILE__,__LINE__);
 			return false; 
 		} 
 
@@ -62,14 +63,16 @@ namespace engine
 		if FAILED( hr )
 		{ 
 			SaveReleaseDevice(); 
+			Logger::Log("Keyboard: Setting cooperativelevel failed",Logger::LOG_LEVEL_WARNING,__FILE__,__LINE__);
 			return false; 
 		} 
-
+		Logger::Log("Keyboard created correctly",Logger::LOG_LEVEL_INFO,__FILE__,__LINE__);
 		return true; 
 	}
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * Is a safe delete
+	 * @param	void
+	 * @author	Alex Hodes
 	 */
 	void Keyboard::SaveReleaseDevice()
 	{ 
@@ -88,8 +91,9 @@ namespace engine
 	}
 	
 		/**
-		 * todo
-		 * @author Alex Hodes
+		 * This method acquires the keyboard in case its lost.
+		 * return	bool		true if device is acquired. Else its false
+		 * @author	Alex Hodes
 		 */
 	bool Keyboard::DoAcquire()
 	{
@@ -103,15 +107,12 @@ namespace engine
 		}
 		return false;
 	}
-	/**
-		 * todo
-		 * @author Alex Hodes
-		 */
-	void Keyboard::SetHWND(HWND argHWND)
-	{
-		argHWND = hwnd;
-	}
 
+		/**
+		 * This method acquires the keyboard in case its lost.
+		 * return	bool		true if KEYDOWN is eqaul to argKeyPressed. False if not
+		 * @author	Alex Hodes
+		 */
 	bool Keyboard::ProcessKBInput(byte argKeyPressed) 
 	{ 
 		byte keyBuffer[256];
@@ -124,7 +125,6 @@ namespace engine
 	
 		// Check if keybuffer contains given key
 		int pressed = KEYDOWN( keyBuffer, argKeyPressed );
-		//Logger::Log("d",Logger::LOG_LEVEL_INFO,__FILE__,__LINE__);
 		// pressed == 0 or 128 (0x80); meaning false or true
 		if( pressed == 0 )
 		{

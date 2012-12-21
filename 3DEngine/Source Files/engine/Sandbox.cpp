@@ -103,8 +103,8 @@ namespace engine
 		return pWindow;
 	}
 
-	void Sandbox::Keyboard(Window* argPWindow)
+	void Sandbox::CreateKeyboard(Window* argPWindow)
 	{
-		
+		this->kernel->GetInputManager()->CreateKeyboard(argPWindow);
 	}
 }

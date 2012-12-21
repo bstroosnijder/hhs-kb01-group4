@@ -103,6 +103,7 @@ namespace engine
 				pRenderer->Present(pWindow);
 			}
 		}
+		pInputManager->InputBeat();
 	}
 
 	/**
