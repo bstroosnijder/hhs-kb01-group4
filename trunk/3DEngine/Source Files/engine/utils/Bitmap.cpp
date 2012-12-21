@@ -85,7 +85,7 @@ namespace engine
 		//	this->pPixelData[i] = blue;
 		//}
 
-		int patch = (4 - (this->bitmapInfoHeader.biWidth * 3) % 4) % 4;
+		int padding = (4 - (this->bitmapInfoHeader.biWidth * 3) % 4) % 4;
 		for(unsigned long z = 0; z < this->bitmapInfoHeader.biHeight; z++)
 		{
 			for(unsigned long x = 0; x < this->bitmapInfoHeader.biWidth; x++)
@@ -93,13 +93,11 @@ namespace engine
 				unsigned char blue;
 				char colorBuffer;
 				inStream.read(&colorBuffer, 1);
-				inStream.read(&colorBuffer, 1);
-				inStream.read(&colorBuffer, 1);
 				memcpy(&blue, &colorBuffer, 1);
 
 				this->pPixelData[(z * this->bitmapInfoHeader.biWidth) + x] = blue;
 			}
-			inStream.seekg(patch, std::ifstream::cur);
+			inStream.seekg(padding, std::ifstream::cur);
 		}
 
 		return true;
