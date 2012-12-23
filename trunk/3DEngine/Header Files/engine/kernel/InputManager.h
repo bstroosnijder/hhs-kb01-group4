@@ -1,13 +1,14 @@
 #ifndef INPUTMANAGER_H_
 #define INPUTMANAGER_H_
-
 #define DIRECTINPUT_VERSION 0x0800
+
 #include <d3d9.h>
 #include <dinput.h>
-#include <DXGI.h>  
+#include <DXGI.h>
+#include "..\logger\Logger.h"
 #include "WindowManager.h"
-#include "..\scene\entities\camera.h"
 #include "..\input\Keyboard.h"
+#include "..\input\Mouse.h"
 
 namespace engine
 {
@@ -19,16 +20,18 @@ namespace engine
 	class InputManager
 	{
 	private:
-		LPDIRECTINPUT8 dInput;
-		LPDIRECTINPUTDEVICE8 dDevice;
-		Keyboard keyboard;
+		LPDIRECTINPUT8 pInput;
+
+		Keyboard* pKeyboard;
+		Mouse* pMouse;
 	public:
 		InputManager();
 		~InputManager();
 		void CleanUp();
-		void RegistrateObserver(Camera* argPCamera);
-		bool CreateInputDevice();
-		void CreateKeyboard(Window* argWindow);
+
+		void SetupDevices(Window* argWindow);
+
+ 		// TOOD: needed here?
 		void InputBeat();
 	};
 }

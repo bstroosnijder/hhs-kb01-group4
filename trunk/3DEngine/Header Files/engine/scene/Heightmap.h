@@ -2,28 +2,21 @@
 #define HEIGHTMAP_H_
 
 #include <d3dx9.h>
-#include "..\utils\Vector3.h"
+#include "..\logger\Logger.h"
+#include "Drawable.h"
 #include "..\utils\Bitmap.h"
-#include "..\renderer\DirectX9Renderer.h"
-
-struct CUSTOMVERTEX
-{
-	float x;
-	float y;
-	float z;
-
-	unsigned long color;
-
-	float u;
-	float v;
-};
+#include "..\utils\TexturedVector3.h"
+#include "..\renderer\Renderer.h"
 
 // Our custom FVF, which describes our custom vertex structure
-#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1)
+#define D3DFVFTexturedVector3 (D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1)
 
 namespace engine
 {
-	class Heightmap
+	/**
+	 * Uses an 8bit BMP file to generate a heigtmap terrain
+	 */
+	class Heightmap : public Drawable
 	{
 	private:
 		Bitmap* pBitmap;
@@ -35,7 +28,7 @@ namespace engine
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;
 		
-		void SmoothMap(CUSTOMVERTEX* argVertices, unsigned long argNumIterations);
+		void SmoothMap(TexturedVector3* argVertices, unsigned long argNumIterations);
 	public:
 		Heightmap();
 		~Heightmap();
@@ -43,6 +36,8 @@ namespace engine
 		
 		void LoadMap(std::string argMapFileName);
 		void SetupVertices(Renderer* argPRenderer, unsigned long argSmoothing);
+
+		void Update();
 		void Draw(Renderer* argPRenderer);
 
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);

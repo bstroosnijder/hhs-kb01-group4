@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include "Window.h"
+#include "..\logger\Logger.h"
 #include "..\kernel\WindowManager.h"
 
 namespace engine

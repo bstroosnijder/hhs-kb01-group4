@@ -1,64 +1,55 @@
 #include "..\..\..\Header Files\engine\input\Mouse.h"
 
-	/**
-	 * todo
-	 * @author Alex Hodes
-	 */
-engine::Mouse::Mouse()
+namespace engine
 {
-
-}
+	//---Private attributes---
+	//---Public attributes---
+	//---Private methods---
+	//---Public methods---
+	
+	/**
+	 * Constructs the keyboard
+	 */
+	Mouse::Mouse()
+	{
+	}
 
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * Destructs the Keyboard object.
 	 */
-engine::Mouse::~Mouse(void)
-{
-
-}
+	Mouse::~Mouse()
+	{
+		this->CleanUp();
+	}
 
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * Lazy cleanup method for destructing this object.
+	 * @return		void
 	 */
-bool engine::Mouse::InitMouse()
-{
-	return true;
-}
+	void Mouse::CleanUp()
+	{
+	}
 
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * TODO
 	 */
-//stond zo in de tutorial compilede niet zonder struct wss
-//MouseStruct engine::Mouse::GetMouseInput()
-//{
-//}
-
+	bool Mouse::InitMouse()
+	{
+		return true;
+	}
+	
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * TODO
 	 */
-bool engine::Mouse::DoAcquire()
-{
-	return true;
-}
-
+	bool Mouse::DoAcquire()
+	{
+		return true;
+	}
+	
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * TODO
 	 */
-void engine::Mouse::SetMouseBuffer()
-{
-
-}
-
-	/**
-	 * todo
-	 * @author Alex Hodes
-	 */
-void engine::Mouse::SaveReleaseDevice()
-{
-
+	void Mouse::SetMouseBuffer()
+	{
+	}
 }

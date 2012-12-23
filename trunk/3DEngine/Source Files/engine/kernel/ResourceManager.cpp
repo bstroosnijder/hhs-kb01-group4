@@ -12,8 +12,12 @@ namespace engine
 	 */
 	ResourceManager::ResourceManager()
 	{
+		Logger::Log("ResourceManager: Initializing", Logger::INFO, __FILE__, __LINE__);
+
 		this->meshes = std::map<std::string, Mesh*>();
 		this->textures = std::map<std::string, LPDIRECT3DTEXTURE9>();
+
+		Logger::Log("ResourceManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -22,6 +26,7 @@ namespace engine
 	 */
 	ResourceManager::~ResourceManager()
 	{
+		Logger::Log("ResourceManager: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -45,12 +50,12 @@ namespace engine
 
 	bool ResourceManager::LoadMesh(Renderer* argPRenderer, std::string argMeshFileName)
 	{
-		engine::Logger::Log("Loading mesh: " + argMeshFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("ResourceManager: Loading mesh: " + argMeshFileName, Logger::INFO, __FILE__, __LINE__);
 
 		// this checks if the resource exists
 		if(this->meshes.count(argMeshFileName) > 0)
 		{
-			Logger::Log("Mesh already in memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+			Logger::Log("ResourceManager: Mesh already in memory", Logger::INFO, __FILE__, __LINE__);
 			return true;
 		}
 
@@ -59,7 +64,7 @@ namespace engine
 		// Check if the resource exists
 		if(!fileExists(fileName))
 		{
-			Logger::Log("Cannot find mesh: " + fileName, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			Logger::Log("ResourceManager: Mesh not found: " + fileName, Logger::FATAL, __FILE__, __LINE__);
 			return false;
 		}
 
@@ -68,10 +73,9 @@ namespace engine
 		this->meshes[argMeshFileName] = pMesh;
 
 		LPD3DXBUFFER pD3DMaterialsBuffer;
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 
 		// Load model from .x file
-		D3DXLoadMeshFromX(	fileName.c_str(), D3DXMESH_SYSTEMMEM, pRenderer->GetDevice(),
+		D3DXLoadMeshFromX(	fileName.c_str(), D3DXMESH_SYSTEMMEM, (LPDIRECT3DDEVICE9)argPRenderer->GetDevice(),
 							NULL, &pD3DMaterialsBuffer, NULL, &pMesh->numMaterials,
 							&pMesh->mesh);
 
@@ -92,7 +96,7 @@ namespace engine
 		
 		
 		pD3DMaterialsBuffer->Release();
-		Logger::Log("Mesh loaded", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("ResourceManager: Mesh: " + argMeshFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
 		return true;
 	}
 
@@ -114,11 +118,11 @@ namespace engine
 	 */
 	bool ResourceManager::LoadTexture(Renderer* argPRenderer, std::string argTextureFileName)
 	{
-		Logger::Log("Loading texture: " + argTextureFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("ResourceManager: Loading texture: " + argTextureFileName, Logger::INFO, __FILE__, __LINE__);
 
 		if(this->textures.count(argTextureFileName) > 0)
 		{
-			Logger::Log("Texture already in memory", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+			Logger::Log("ResourceManager: Texture already in memory", Logger::INFO, __FILE__, __LINE__);
 			return true;
 		}
 
@@ -127,17 +131,15 @@ namespace engine
 		// Check if the texture exists
 		if (!fileExists(fileName))
 		{
-			Logger::Log("Cannot find texture: " + fileName, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+			Logger::Log("ResourceManager: Texture not found: " + fileName, Logger::WARNING, __FILE__, __LINE__);
 			return false;
 		}
 
-
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
-
 		LPDIRECT3DTEXTURE9 texture;
-		D3DXCreateTextureFromFileA(pRenderer->GetDevice(), fileName.c_str(), &texture);
+		D3DXCreateTextureFromFileA((LPDIRECT3DDEVICE9)argPRenderer->GetDevice(), fileName.c_str(), &texture);
 		this->textures[argTextureFileName] = texture;
-
+		
+		Logger::Log("ResourceManager: Texture: " + argTextureFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
 		return true;
 	}
 

@@ -1,7 +1,10 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
+// to suppres the warning that we should use the windows specific "localtime_s" instead of just localtime
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <list>
 #include <ctime>
@@ -15,14 +18,12 @@ namespace engine
 	class Logger
 	{
 	private:
-		
-
 		static char* Logger::GetSeverity(int argSeverity);
 	public:
+		static const int INFO;
+		static const int WARNING;
+		static const int FATAL;
 		static std::list<LogStrategy*> strategies;
-		static const int LOG_LEVEL_INFO;
-		static const int LOG_LEVEL_WARNING;
-		static const int LOG_LEVEL_ERROR;
 
 		static void AddStrategy(LogStrategy* argPStrat);
 		static void RemoveStrategy(LogStrategy* argPStrat);

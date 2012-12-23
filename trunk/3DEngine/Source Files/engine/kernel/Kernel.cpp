@@ -14,25 +14,26 @@ namespace engine
 	 */
 	Kernel::Kernel()
 	{
+		Logger::Log("Kernel: Initializing", Logger::INFO, __FILE__, __LINE__);
+		
 		// Initialize the managers
-		Logger::Log("Creating Kernel", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-		this->pWindowManager = new WindowManager();
-		this->pResourceManager = new ResourceManager();
-		this->pInputManager = new InputManager();
-		this->pSceneManager = new SceneManager(this->pResourceManager);
+		this->pWindowManager	= new WindowManager();
+		this->pResourceManager	= new ResourceManager();
+		this->pInputManager		= new InputManager();
+		this->pSceneManager		= new SceneManager(this->pResourceManager);
 
-		//Initialise and fill the renderers vector with the default renderers.
-		this->renderers = std::vector<Renderer*>();
-		this->renderers.push_back(new DirectX9Renderer(GetConsoleWindow()));
+		//Initialise and fill the renderers map with the default renderers.
+		this->renderers			= std::map<unsigned int, Renderer*>();
+		this->renderers[Renderer::DIRECTX_9] = new DirectX9Renderer(GetConsoleWindow());
 
 		//Initialise the map that associates windows with renderers.
-		this->winRenderer = std::map<Window*, Renderer*>();
-		Logger::Log("Kernel Created", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		this->winRenderer		= std::map<Window*, Renderer*>();
+
+		Logger::Log("Kernel: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
 	 * Destructs the Kernel object.
-	 * @return		void
 	 */
 	Kernel::~Kernel()
 	{
@@ -45,7 +46,7 @@ namespace engine
 	 */
 	void Kernel::CleanUp()
 	{
-		Logger::Log("Disposing Kernel", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("Kernel: Disposing", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -104,7 +105,9 @@ namespace engine
 				pRenderer->Present(pWindow);
 			}
 		}
-		pInputManager->InputBeat();
+
+		// Handle the input
+		//this->pInputManager->InputBeat();
 	}
 
 	/**
@@ -114,14 +117,7 @@ namespace engine
 	 */
 	Renderer* Kernel::GetRenderer(unsigned int argIndex)
 	{
-		if(argIndex < this->renderers.size()) 
-		{
-			return this->renderers[argIndex];
-		}
-		else
-		{
-			return 0;
-		}
+		return this->renderers[argIndex];
 	}
 
 	/**

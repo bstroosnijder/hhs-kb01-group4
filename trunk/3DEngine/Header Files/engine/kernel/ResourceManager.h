@@ -4,16 +4,17 @@
 #include <map>
 #include <string>
 #include <d3dx9.h>
-#include "..\utils\fileExists.h"
 #include "..\logger\Logger.h"
-#include "..\renderer\DirectX9Renderer.h"
+#include "..\utils\fileExists.h"
+#include "..\renderer\Renderer.h"
 #include "..\resource\Resource.h"
 #include "..\resource\\Mesh.h"
 
 namespace engine
 {
 	/**
-	 * This class is responsible for the textures and models.
+	 * This class is responsible for the loading of the textures and the models,
+	 * it makes sure that every resource is only loaded once.
 	 */
 	class ResourceManager
 	{

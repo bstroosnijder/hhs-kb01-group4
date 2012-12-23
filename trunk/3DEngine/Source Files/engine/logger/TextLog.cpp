@@ -12,7 +12,6 @@ namespace engine
 	 */
 	TextLog::TextLog()
 	{
-
 	}
 
 	/**
@@ -30,7 +29,6 @@ namespace engine
 	 */
 	void TextLog::CleanUp()
 	{
-
 	}
 
 	/**

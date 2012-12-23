@@ -3,12 +3,12 @@
 
 #include <map>
 #include <string>
-#include <vector>
 #include "..\logger\Logger.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
+#include "..\renderer\Renderer.h"
 #include "..\renderer\DirectX9Renderer.h"
 
 namespace engine
@@ -25,7 +25,7 @@ namespace engine
 		ResourceManager* pResourceManager;
 		InputManager* pInputManager;
 		SceneManager* pSceneManager;
-		std::vector<Renderer*> renderers;
+		std::map<unsigned int, Renderer*> renderers;
 		std::map<Window*, Renderer*> winRenderer;
 	public:
 		Kernel();
@@ -45,5 +45,5 @@ namespace engine
 		void AddWindowRenderer(Window* argWindow, Renderer* argRenderer);
 	};
 }
-#endif
 
+#endif

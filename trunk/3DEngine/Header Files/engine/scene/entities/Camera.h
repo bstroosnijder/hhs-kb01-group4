@@ -1,7 +1,9 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+#include "..\..\logger\Logger.h"
 #include "..\Entity.h"
+#include "..\..\renderer\Renderer.h"
 
 namespace engine
 {

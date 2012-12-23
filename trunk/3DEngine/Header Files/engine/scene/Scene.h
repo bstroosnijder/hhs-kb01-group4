@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "..\logger\Logger.h"
 #include "..\kernel\ResourceManager.h"
 #include "..\renderer\Renderer.h"
 #include "Heightmap.h"

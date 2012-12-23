@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header Files\engine\scene\Drawable.h" />
     <ClInclude Include="Header Files\engine\input\Keyboard.h" />
     <ClInclude Include="Header Files\engine\input\Mouse.h" />
     <ClInclude Include="Header Files\engine\kernel\InputManager.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Header Files\engine\window\Win32Window.h" />
     <ClInclude Include="Header Files\engine\window\Window.h" />
     <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
+    <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\scene\Heightmap.cpp" />
@@ -64,13 +66,6 @@
     <ClCompile Include="Source Files\engine\utils\fileExists.cpp" />
     <ClCompile Include="Source Files\engine\window\Win32Window.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource Files\Textures\heightmap.bmp" />
-    <None Include="scenes\mainScene.scene" />
-    <None Include="scenes\mainScene2.scene" />
-    <None Include="scenes\pirateScene.scene" />
-    <None Include="scenes\shootScene.scene" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0771E178-34CE-4F57-B617-85D6D7B75094}</ProjectGuid>

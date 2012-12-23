@@ -4,9 +4,12 @@
 #include <list>
 #include <vector>
 #include <string>
+#include <d3dx9.h>
+#include "..\logger\Logger.h"
+#include "Drawable.h"
 #include "..\utils\Vector3.h"
 #include "..\utils\explode.h"
-#include "..\renderer\DirectX9Renderer.h"
+#include "..\renderer\Renderer.h"
 
 namespace engine
 {
@@ -14,9 +17,8 @@ namespace engine
 	 * The Entity class is a representation of an object in a game or program.
 	 * This class is responsible for drawing and updating itself on the screen.
 	 * Class is abstract becuase entities will created via this template
-	 * @author Alex Hodes
 	 */
-	class Entity
+	class Entity : public Drawable
 	{
 	private:
 	protected:

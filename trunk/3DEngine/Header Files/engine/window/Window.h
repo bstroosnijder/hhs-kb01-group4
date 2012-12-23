@@ -1,6 +1,8 @@
 #ifndef Window_H_
 #define Window_H_
 
+#include "..\logger\Logger.h"
+
 namespace engine
 {
 	/**

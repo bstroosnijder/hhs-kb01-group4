@@ -2,8 +2,9 @@
 #define MODEL_H_
 
 #include <map>
-#include <d3dx9.h>
+#include "..\..\logger\Logger.h"
 #include "..\..\kernel\ResourceManager.h"
+#include "..\..\renderer\Renderer.h"
 #include "..\Entity.h"
 
 namespace engine

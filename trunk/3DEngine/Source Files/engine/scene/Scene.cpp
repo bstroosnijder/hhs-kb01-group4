@@ -35,12 +35,12 @@ namespace engine
 			Vector3 rotCamera = this->pCamera->GetRotation();
 			Vector3 posCamera = this->pCamera->GetPosition();
 
-			rotCamera.x = rotTarget.x;
+			rotCamera.x = (rotTarget.x * -1);
 			rotCamera.y = rotTarget.y + D3DX_PI;
 			rotCamera.z = rotTarget.z;
 
 			posCamera.x = posTarget.x - (sin(rotCamera.y) * 10);
-			posCamera.y = posTarget.y + 2;
+			posCamera.y = posTarget.y + 2 + (tan(rotCamera.x) * 10);
 			posCamera.z = posTarget.z - (cos(rotCamera.y) * 10);
 			
 			this->pCamera->SetRotation(rotCamera);
@@ -161,7 +161,7 @@ namespace engine
 	 */
 	void Scene::AddWindow(Window* argPWindow)
 	{
-		Logger::Log("Adding window to scene", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("Adding window to scene", Logger::INFO, __FILE__, __LINE__);
 		this->windows.push_back(argPWindow);
 	}
 

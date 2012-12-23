@@ -12,7 +12,6 @@ namespace engine
 	 */
 	ConsoleLog::ConsoleLog()
 	{
-
 	}
 
 	/**
@@ -30,7 +29,6 @@ namespace engine
 	 */
 	void ConsoleLog::CleanUp()
 	{
-
 	}
 
 	/**

@@ -3,7 +3,6 @@
 
 #include <map>
 #include <string>
-#include <algorithm>
 #include "..\logger\Logger.h"
 #include "..\window\Win32Window.h"
 

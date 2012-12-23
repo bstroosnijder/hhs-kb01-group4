@@ -1,9 +1,7 @@
 #ifndef BITMAP_H_
 #define BITMAP_H_
 
-#include <iostream>
 #include <fstream>
-#include <ios>
 #include "..\logger\Logger.h"
 
 namespace engine

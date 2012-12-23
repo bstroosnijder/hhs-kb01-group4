@@ -10,8 +10,7 @@ namespace engine
 	/**
 	 * Constructs the Camera object.
 	 */
-	Camera::Camera() 
-		: Entity()
+	Camera::Camera() : Entity()
 	{
 	}
 
@@ -20,6 +19,7 @@ namespace engine
 	 */
 	Camera::~Camera()
 	{
+		Logger::Log("Camera: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -29,7 +29,6 @@ namespace engine
 	 */
 	void Camera::CleanUp()
 	{
-		Logger::Log("Disposing Camera", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	void Camera::Update()
@@ -39,10 +38,8 @@ namespace engine
 
 	void Camera::Draw(Renderer* argPRenderer)
 	{
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 		D3DXMatrixIdentity(&this->matWorld);
 
-		
 		// Scaling
 		D3DXMATRIXA16 matScaling;
 		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
@@ -68,12 +65,11 @@ namespace engine
 		
 		D3DXMatrixInverse(&this->matWorld, NULL, &this->matWorld);
 		// Multiplies the entity world matrix with the renderer's world matrix (this->matWorld * renderer->matWorld)
-		pRenderer->AddToWorldMatrix(&this->matWorld);
-
+		argPRenderer->AddToWorldMatrix(&this->matWorld);
 
 		// Apply the matrix transformations
-		pRenderer->TransformWorldMatrix();
-		pRenderer->TransformViewMatrix();
-		pRenderer->TransformProjectionMatrix();
+		argPRenderer->TransformWorldMatrix();
+		argPRenderer->TransformViewMatrix();
+		argPRenderer->TransformProjectionMatrix();
 	}
 }
