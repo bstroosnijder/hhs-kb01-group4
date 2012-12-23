@@ -2,7 +2,21 @@
 
 namespace engine
 {
-	void Heightmap::SmoothMap(CUSTOMVERTEX* argVertices, unsigned long argNumIterations)
+	//---Private attributes---
+	//---Public attributes---
+	//---Private methods---
+
+	/**
+	 * Will check every position in the vetices array it's giving and tries to smooth out the values.
+	 * The smoothing works by taking the sum of the 8 surrounding vertices.
+	 * Adding it's own value to that and deviding it by 2. This gives us the average of the 2 values 
+	 * and makes the terrain smoother.
+	 * 
+	 * @param		TexturedVector3*		The array with vertices to smooth out
+	 * @param		unsigned long			The number of iterations to execute this function
+	 * @return		void
+	 */
+	void Heightmap::SmoothMap(TexturedVector3* argVertices, unsigned long argNumIterations)
 	{
 		// check if the iteration count has reached 0
 		if(argNumIterations == 0)
@@ -14,7 +28,7 @@ namespace engine
 		long imageWidth					= this->pBitmap->GetImageWidth();
 		long imageHeight				= this->pBitmap->GetImageHeight();
 
-		CUSTOMVERTEX* newVertices		= new CUSTOMVERTEX[this->numVertices];
+		TexturedVector3* tempVertices	= new TexturedVector3[this->numVertices];
 		
 		// Calculate new Y value, but don't set it yet or we corrupt the data
 		for(long z = 0; z < imageHeight; z++)
@@ -83,7 +97,7 @@ namespace engine
 				}
 
 				// Set the new value
-				newVertices[vIndex].y = (argVertices[vIndex].y + (sectionsTotal / numSections)) * 0.5f;
+				tempVertices[vIndex].y = (argVertices[vIndex].y + (sectionsTotal / numSections)) * 0.5f;
 			}
 		}
 
@@ -93,15 +107,22 @@ namespace engine
 			for(long x = 0; x < imageWidth; x++)
 			{
 				long vIndex	= (z * imageWidth) + x;
-				argVertices[vIndex].y	= newVertices[vIndex].y;
+				argVertices[vIndex].y	= tempVertices[vIndex].y;
 			}
 		}
 
+		// Clean up the temp vertices
+		delete tempVertices;
 
 		// Rerun the algorithm
 		this->SmoothMap(argVertices, numIterationsLeft);
 	}
-
+	
+	//---Public methods---
+	
+	/**
+	 * Constructs the Heightmap object.
+	 */
 	Heightmap::Heightmap()
 	{
 		this->pBitmap = new Bitmap();
@@ -109,12 +130,19 @@ namespace engine
 		this->numPrimitives = 0;
 		this->numVertices = 0;
 	}
-
+	
+	/**
+	 * Destructs the Heightmap object.
+	 */
 	Heightmap::~Heightmap()
 	{
 		this->CleanUp();
 	}
 
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
 	void Heightmap::CleanUp()
 	{
 		if(this->pVertexBuffer != NULL)
@@ -128,18 +156,24 @@ namespace engine
 		}
 	}
 
+	/**
+	 * Passes the file forward to the bitmap class so that it can load the pixel data.
+	 * @param		std::string				The file name of the BMP file to load
+	 */
 	void Heightmap::LoadMap(std::string argMapFileName)
 	{
 		this->pBitmap->Load(argMapFileName);
 	}
 
+	/**
+	 * Takes the pixel data from the Bitmap class and generates a vertices array with the Y value as the pixel value.
+	 * @param		Renderer*				The renderer to use
+	 * @param		unsigned long			The number of smoothing iteration to do
+	 * @return		void
+	 */
 	void Heightmap::SetupVertices(Renderer* argPRenderer, unsigned long argSmoothing)
 	{
-		DirectX9Renderer* pRenderer		= (DirectX9Renderer*)argPRenderer;
-		
 		float pixelDistance				= 1;
-		unsigned long pixelColor1		= 0xFFFF0000;
-		unsigned long pixelColor2		= 0xFF0000FF;
 		unsigned char* pixelData		= this->pBitmap->GetPixelData();
 		long imageWidth					= this->pBitmap->GetImageWidth();
 		long imageHeight				= this->pBitmap->GetImageHeight();
@@ -151,9 +185,9 @@ namespace engine
 		// --- Create the vertex array ---
 		this->numPrimitives				= (imageWidth * imageHeight) * 2;
 		this->numVertices				= imageWidth * imageHeight;
-		unsigned long vertexArraySize	= this->numVertices * sizeof(CUSTOMVERTEX);
+		unsigned long vertexArraySize	= this->numVertices * sizeof(TexturedVector3);
 
-		CUSTOMVERTEX* vertices			= new CUSTOMVERTEX[this->numVertices];
+		TexturedVector3* vertices			= new TexturedVector3[this->numVertices];
 
 		for(long z = 0; z < imageHeight; z++)
 		{
@@ -168,13 +202,17 @@ namespace engine
 				vertices[vIndex].y		= pixelY;
 				vertices[vIndex].z		= pixelZ;
 
-				if(pixelY >= 0.5f)
+				if(pixelY >= 12.0f)
 				{
-					vertices[vIndex].color	= pixelColor1;
+					vertices[vIndex].color	= 0xFFFF0000;
+				}
+				else if(pixelY < 0.3f)
+				{
+					vertices[vIndex].color	= 0xFF0000FF;
 				}
 				else
 				{
-					vertices[vIndex].color	= pixelColor2;
+					vertices[vIndex].color	= 0xFFcccccc * ((unsigned long)pixelY);
 				}
 
 				if(vIndex % 2 == 0)
@@ -229,55 +267,50 @@ namespace engine
 			}
 		}
 
-
+		
 		// Create the vertex buffer.
-		pRenderer->GetDevice()->CreateVertexBuffer(	vertexArraySize,
-													0, D3DFVF_CUSTOMVERTEX,
-													D3DPOOL_DEFAULT, &this->pVertexBuffer, NULL );
-
-		// Create the index buffer.
-		pRenderer->GetDevice()->CreateIndexBuffer(	indiceArraySize,
-													0, D3DFMT_INDEX16,
-													D3DPOOL_DEFAULT, &this->pIndexBuffer, NULL);
-
-		void* pVertices;
-		// Fill the vertex buffer.
-		this->pVertexBuffer->Lock(0, vertexArraySize, (void**)&pVertices, 0);
-		memcpy(pVertices, vertices, vertexArraySize);
-		this->pVertexBuffer->Unlock();
-		// Remove the vertex array
+		argPRenderer->CreateVertexBuffer(&this->pVertexBuffer, vertexArraySize, D3DFVFTexturedVector3, vertices);
 		delete vertices;
 		
-		void* pIndices;
-		// Fill the index buffer.
-		this->pIndexBuffer->Lock(0, indiceArraySize, (void**)&pIndices, 0);
-		memcpy(pIndices, indices, indiceArraySize);
-		this->pIndexBuffer->Unlock();
-		// Remove the indice array
+		// Create the index buffer.
+		argPRenderer->CreateIndexBuffer(&this->pIndexBuffer, indiceArraySize, indices);
 		delete indices;
 	}
 
+	/**
+	 * The update method
+	 * @return		void
+	 */
+	void Heightmap::Update()
+	{
+	}
+
+	/**
+	 * Renders the terrain
+	 * @param		Renderer*				The renderer to use
+	 * @return		void
+	 */
 	void Heightmap::Draw(Renderer* argPRenderer)
 	{
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
-
-		pRenderer->TransformWorldMatrix();
-		pRenderer->TransformViewMatrix();
-		pRenderer->TransformProjectionMatrix();
+		argPRenderer->TransformWorldMatrix();
+		argPRenderer->TransformViewMatrix();
+		argPRenderer->TransformProjectionMatrix();
 		
-		pRenderer->GetDevice()->SetStreamSource(0, this->pVertexBuffer, 0, sizeof(CUSTOMVERTEX));
-		pRenderer->GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
-		pRenderer->GetDevice()->SetIndices(this->pIndexBuffer);
+		argPRenderer->SetStreamSource(this->pVertexBuffer, sizeof(TexturedVector3));
+		argPRenderer->SetFVF(D3DFVFTexturedVector3);
+		argPRenderer->SetIndices(this->pIndexBuffer);
 
-		pRenderer->GetDevice()->SetTexture(0, this->textures[0]);
-        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-        pRenderer->GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+		argPRenderer->SetTexture(0, this->textures[0]);
 
-		pRenderer->GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, this->numVertices, 0, this->numPrimitives);
+		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, this->numVertices, this->numPrimitives);
 	}
 	
+	/**
+	 * Sets a texture at a given index
+	 * @param		unsigned long			The index to place the texture at
+	 * @param		LPDIRECT3DTEXTURE9		The texture to draw on the giving index
+	 * @return		void
+	 */
 	void Heightmap::SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture)
 	{
 		this->textures[argIndex] = argTexture;

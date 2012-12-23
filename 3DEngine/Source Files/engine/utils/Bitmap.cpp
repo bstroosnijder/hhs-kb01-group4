@@ -4,7 +4,7 @@ namespace engine
 {
 	bool Bitmap::Load(std::string argFilename)
 	{
-		Logger::Log("Loading bitmap: " + argFilename, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("Loading bitmap: " + argFilename, Logger::INFO, __FILE__, __LINE__);
 		std::string fileName ("Resource Files\\Textures\\" + argFilename);
 		std::ifstream inStream (fileName);
 		char buffer[sizeof(unsigned long)];

@@ -65,8 +65,12 @@ namespace engine
 	 */
 	Entity::Entity()
 	{
+		Logger::Log("Entity: Initializing", Logger::INFO, __FILE__, __LINE__);
+
 		this->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
 		this->scripts = std::list<std::string>();
+
+		Logger::Log("Entity: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -74,6 +78,7 @@ namespace engine
 	 */
 	Entity::~Entity()
 	{
+		Logger::Log("Entity: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -83,7 +88,6 @@ namespace engine
 	 */
 	void Entity::CleanUp()
 	{
-		Logger::Log("Disposing Entityy", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -105,10 +109,8 @@ namespace engine
 	 */
 	void Entity::Draw(Renderer* argPRenderer)
 	{
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 		D3DXMatrixIdentity(&this->matWorld);
 
-		
 		// Scaling
 		D3DXMATRIXA16 matScaling;
 		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
@@ -133,13 +135,12 @@ namespace engine
 		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matPosition);
 
 		// Multiplies the entity world matrix with the renderer's world matrix (this->matWorld * renderer->matWorld)
-		pRenderer->AddToWorldMatrix(&this->matWorld);
-
+		argPRenderer->AddToWorldMatrix(&this->matWorld);
 
 		// Apply the matrix transformations
-		pRenderer->TransformWorldMatrix();
-		pRenderer->TransformViewMatrix();
-		pRenderer->TransformProjectionMatrix();
+		argPRenderer->TransformWorldMatrix();
+		argPRenderer->TransformViewMatrix();
+		argPRenderer->TransformProjectionMatrix();
 	}
 
 	/**

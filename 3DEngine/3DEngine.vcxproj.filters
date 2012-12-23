@@ -162,6 +162,12 @@
     <ClInclude Include="header files\engine\resource\mesh.h">
       <Filter>Header Files\engine\resource</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\TexturedVector3.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Drawable.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
@@ -231,22 +237,5 @@
       <Filter>Source Files\engine\utils</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resource Files\Textures\heightmap.bmp">
-      <Filter>Resource Files\textures</Filter>
-    </None>
-    <None Include="scenes\mainScene.scene">
-      <Filter>Resource Files\scenes</Filter>
-    </None>
-    <None Include="scenes\mainScene2.scene">
-      <Filter>Resource Files\scenes</Filter>
-    </None>
-    <None Include="scenes\pirateScene.scene">
-      <Filter>Resource Files\scenes</Filter>
-    </None>
-    <None Include="scenes\shootScene.scene">
-      <Filter>Resource Files\scenes</Filter>
-    </None>
   </ItemGroup>
 </Project>

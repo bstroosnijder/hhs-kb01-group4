@@ -2,14 +2,13 @@
 #define SCENEMANAGER_H_
 
 #include <map>
-#include <algorithm>
-#include <iostream>
 #include <fstream>
 #include <string>
+#include "..\logger\Logger.h"
 #include "..\utils\explode.h"
 #include "..\utils\fileExists.h"
 #include "..\scene\Scene.h"
-#include "..\renderer\DirectX9Renderer.h"
+#include "..\renderer\Renderer.h"
 
 namespace engine
 {
@@ -30,7 +29,6 @@ namespace engine
 		Scene* GetScene(std::string argSceneName);
 		std::map<std::string, Scene*> GetScenes();
 
-		void AddScene(std::string argSceneName, Scene* argPScene);
 		Scene* LoadScene(Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName);
 		void RemoveScene(std::string argSceneName);
 	};

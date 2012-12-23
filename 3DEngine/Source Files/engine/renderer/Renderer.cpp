@@ -5,8 +5,8 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 
-	const int Renderer::DIRECTX_9_RENDERER = 0;
-	const int Renderer::OPEN_GL_RENDERER = 1;
+	const unsigned int Renderer::DIRECTX_9 = 0;
+	const unsigned int Renderer::OPEN_GL = 1;
 
 	//---Private methods---
 	//---Public methods---

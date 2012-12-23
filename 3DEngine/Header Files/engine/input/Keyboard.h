@@ -1,36 +1,30 @@
 #ifndef KEYBOARD_H_
 #define KEYBOARD_H_
+#define DIRECTINPUT_VERSION 0x0800
 
 #include <d3d9.h>
-#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-#include <DXGI.h> 
 #include "..\logger\logger.h"
-#include <stdlib.h>
+#include "..\window\Win32Window.h"
 	
 namespace engine
 {
-	class Keyboard
 	/**
 	 * This class is responsible for listening to, and handling of, keyboard input.
 	 * @author Alex Hodes
 	 */
+	class Keyboard
 	{
 	private:
-		LPDIRECTINPUT8 dInput;
-		LPDIRECTINPUTDEVICE8 dDevice;
-		HWND hwnd;
-
+		LPDIRECTINPUTDEVICE8 pDevice;
 	public:
-		Keyboard::Keyboard();
-		Keyboard::Keyboard(HWND argHwnd,LPDIRECTINPUT8 argdInput,LPDIRECTINPUTDEVICE8 argdDevice);
+		Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Keyboard();
-		bool Keyboard::InitKeyboard();
-		void Keyboard::SaveReleaseDevice();
+		void CleanUp();
+
 		bool Keyboard::DoAcquire();
 		bool Keyboard::ProcessKBInput(byte argKeyPressed);
-		void SetHWND(); //todo
 	};
 }
-#endif
 
+#endif

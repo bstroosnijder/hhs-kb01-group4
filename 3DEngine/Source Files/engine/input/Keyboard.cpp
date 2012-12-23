@@ -2,131 +2,92 @@
 
 namespace engine
 {
-	//no clue why we need this
-	#define KEYDOWN(name, key) (name[key] & 0x80) 
-	
-	/**
-	 * Compiler wants a empty constructor
-	 * @author Alex Hodes
-	 */
-	Keyboard::Keyboard()
-	{
-		
-	}
+	//---Private attributes---
+	//---Public attributes---
 
+	//no clue why we need this
+	#define KEYDOWN(name, key) (name[key] & 0x80)
+
+	//---Private methods---
+	//---Public methods---
 
 	/**
 	 * Constructs the keyboard
-	 * @author Alex Hodes
+	 * @param		HWND						The window that is receiving input
+	 * @param		LPDIRECTINPUT8				???
 	 */
-	Keyboard::Keyboard(HWND argHwnd,LPDIRECTINPUT8 argdInput,LPDIRECTINPUTDEVICE8 argdDevice)
+	Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput)
 	{
-		dInput	= argdInput; 
-		dDevice	= argdDevice; 
-		hwnd	= argHwnd;
-		InitKeyboard();
+		Logger::Log("Keyboard: Creating", Logger::INFO, __FILE__, __LINE__);
+
+		Win32Window* pWindow = (Win32Window*)argPWindow;
+
+		argPInput->CreateDevice(GUID_SysKeyboard, &this->pDevice, NULL);
+		this->pDevice->SetDataFormat(&c_dfDIKeyboard);
+		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+
+		Logger::Log("Keyboard: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
-	 * todo
-	 * @author Alex Hodes
+	 * Destructs the Keyboard object.
 	 */
 	Keyboard::~Keyboard()
 	{
+		Logger::Log("Keyboard: Disposing", Logger::INFO, __FILE__, __LINE__);
+		this->CleanUp();
 	}
 
 	/**
-	 * checks if device creating, Dataformat and cooperativelevel succeeds 
-	 * @return	True of succeeds and false if something fails 
-	 * @author	Alex Hodes
+	 * Lazy cleanup method for destructing this object.
+	 * @return		void
 	 */
-	bool Keyboard::InitKeyboard()
+	void Keyboard::CleanUp()
 	{
-		
-		HRESULT hr = this->dInput->CreateDevice( GUID_SysKeyboard, &dDevice, NULL );
-		if FAILED( hr ) 
-		{ 
-			SaveReleaseDevice(); 
-			Logger::Log("Keyboard: Creating device failed",Logger::LOG_LEVEL_WARNING,__FILE__,__LINE__);
-			return false; 
+		if (this->pDevice != NULL)
+		{
+			this->pDevice->Unacquire();
+			this->pDevice->Release();
+			delete this->pDevice;
 		}
-
-		hr = this->dDevice->SetDataFormat( &c_dfDIKeyboard ); 
-		if FAILED( hr ) 
-		{ 
-			SaveReleaseDevice(); 
-			Logger::Log("Keyboard: Setting dataformat failed",Logger::LOG_LEVEL_WARNING,__FILE__,__LINE__);
-			return false; 
-		} 
-
-		hr = this->dDevice->SetCooperativeLevel( hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND );
-		if FAILED( hr )
-		{ 
-			SaveReleaseDevice(); 
-			Logger::Log("Keyboard: Setting cooperativelevel failed",Logger::LOG_LEVEL_WARNING,__FILE__,__LINE__);
-			return false; 
-		} 
-		Logger::Log("Keyboard created correctly",Logger::LOG_LEVEL_INFO,__FILE__,__LINE__);
-		return true; 
 	}
+	
 	/**
-	 * Is a safe delete
-	 * @param	void
-	 * @author	Alex Hodes
+	 * This method acquires the keyboard in case its lost.
+	 * @return		bool						true if device is acquired. Else its false
 	 */
-	void Keyboard::SaveReleaseDevice()
-	{ 
-		if (dInput) 
-		{ 
-			if (dDevice) 
-			{ 
-				dDevice->Unacquire(); 
-				dDevice->Release();
-				dDevice = NULL; 
-			} 
-			dInput->Release();
-			dInput = NULL; 
-		}  
-	
-	}
-	
-		/**
-		 * This method acquires the keyboard in case its lost.
-		 * return	bool		true if device is acquired. Else its false
-		 * @author	Alex Hodes
-		 */
 	bool Keyboard::DoAcquire()
 	{
 		int times = 5;
-		for( int i = 0; i < times; i++ )
+		for(int i = 0; i < times; i++)
 		{
-			if( SUCCEEDED( dDevice->Acquire() ) )
+			if(SUCCEEDED(this->pDevice->Acquire()))
 			{
 				return true;
 			}
 		}
+
 		return false;
 	}
 
-		/**
-		 * This method acquires the keyboard in case its lost.
-		 * return	bool		true if KEYDOWN is eqaul to argKeyPressed. False if not
-		 * @author	Alex Hodes
-		 */
+	/**
+	 * This method acquires the keyboard in case its lost.
+	 * @return		bool						true if KEYDOWN is eqaul to argKeyPressed. False if not
+	 */
 	bool Keyboard::ProcessKBInput(byte argKeyPressed) 
 	{ 
 		byte keyBuffer[256];
-		if(!SUCCEEDED( dDevice->Poll() ))
+		if(!SUCCEEDED(this->pDevice->Poll()))
 		{
-			DoAcquire();
+			this->DoAcquire();
 		}
 		
-		dDevice->GetDeviceState( sizeof( keyBuffer ) , (LPVOID)&keyBuffer );
+		this->pDevice->GetDeviceState(sizeof(keyBuffer), (LPVOID)&keyBuffer);
 	
 		// Check if keybuffer contains given key
-		int pressed = KEYDOWN( keyBuffer, argKeyPressed );
+		int pressed = KEYDOWN(keyBuffer, argKeyPressed);
 		// pressed == 0 or 128 (0x80); meaning false or true
-		if( pressed == 0 )
+		if(pressed == 0)
 		{
 			return false;
 		}

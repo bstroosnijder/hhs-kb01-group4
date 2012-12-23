@@ -1,23 +1,26 @@
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
+#include "..\logger\Logger.h"
+
+namespace engine
+{
 	/**
 	 * This class is responsible for listening to, and handling of, mouse input.
 	 * @author Alex Hodes
 	 */
-namespace engine
-{
 	class Mouse
 	{
 	public:
 		Mouse();//HWND argHwnd );
 		~Mouse();
-		bool Mouse::InitMouse();
-		//MouseStruct Mouse::GetMouseInput();
-		bool Mouse::DoAcquire();
-		void Mouse::SetMouseBuffer();
-		void Mouse::SaveReleaseDevice(); 
+		void CleanUp();
 
+		bool Mouse::InitMouse();
+		bool Mouse::DoAcquire();
+		//MouseStruct Mouse::GetMouseInput();
+		void Mouse::SetMouseBuffer();
 	};
 }
+
 #endif

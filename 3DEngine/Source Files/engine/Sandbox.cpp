@@ -39,41 +39,7 @@ namespace engine
 	void Sandbox::Start()
 	{
 		this->kernel->Start();
-		Logger::Log("End of Sandbox", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-	}
-
-	/**
-	 * Gets a scene from the collection by it's name.
-	 * @param		char*			is the identifier for the scene in the collection
-	*/
-	Scene* Sandbox::GetScene(std::string argSceneName)
-	{
-		return this->kernel->GetSceneManager()->GetScene(argSceneName);
-	}
-
-	/**
-	 * Add a scene to the scene collection within the Scene manager
-	 * @param		argFileName		is the identifier for the scene in the collection
-	 * @param		Scene*			is the scene that will be added to the scene collection
-	*/
-	void Sandbox::AddScene(std::string argSceneName, Scene* argScene)
-	{
-		this->kernel->GetSceneManager()->AddScene(argSceneName, argScene);
-	}
-	
-	Scene* Sandbox::LoadScene(std::string argSceneName, std::string argSceneFileName)
-	{
-		return this->kernel->LoadScene(argSceneName, argSceneFileName);
-	}
-
-	/**
-	 * Removes a scene to the scene collection within the Scene manager
-	 * @param		std::string		is the scene that will be removed in the collection
-	 * @return		void
-	 */
-	void Sandbox::RemoveScene(std::string argSceneName)
-	{
-		this->kernel->GetSceneManager()->RemoveScene(argSceneName);
+		Logger::Log("End of Sandbox", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -94,7 +60,7 @@ namespace engine
 		{
 			char* msg = "Renderer with 888 could not be found";
 			sprintf_s(msg, sizeof(msg), "Renderer with index %d could not be found", argRendererIndex);
-			Logger::Log(msg, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			Logger::Log(msg, Logger::FATAL, __FILE__, __LINE__);
 		}
 
 		Window* pWindow = this->kernel->GetWindowManager()->NewWindow(argTitle, argX, argY, argWidth, argHeight);
@@ -103,8 +69,43 @@ namespace engine
 		return pWindow;
 	}
 
+	/**
+	 * iets
+	 * @param		Window*			The window to hook input listening to
+	 * @return		void
+	 */
 	void Sandbox::CreateKeyboard(Window* argPWindow)
 	{
-		this->kernel->GetInputManager()->CreateKeyboard(argPWindow);
+		this->kernel->GetInputManager()->SetupDevices(argPWindow);
+	}
+
+	/**
+	 * Gets a scene from the collection by it's name.
+	 * @param		char*			the identifier for the scene in the collection
+	*/
+	Scene* Sandbox::GetScene(std::string argSceneName)
+	{
+		return this->kernel->GetSceneManager()->GetScene(argSceneName);
+	}
+	
+	/**
+	 * iets
+	 * @param		std::string		The identifier for the scene in the collection
+	 * @param		std::string		The scene file to load
+	 * @return		Scene*
+	 */
+	Scene* Sandbox::LoadScene(std::string argSceneName, std::string argSceneFileName)
+	{
+		return this->kernel->LoadScene(argSceneName, argSceneFileName);
+	}
+
+	/**
+	 * Removes a scene to the scene collection within the Scene manager
+	 * @param		std::string		is the scene that will be removed in the collection
+	 * @return		void
+	 */
+	void Sandbox::RemoveScene(std::string argSceneName)
+	{
+		this->kernel->GetSceneManager()->RemoveScene(argSceneName);
 	}
 }

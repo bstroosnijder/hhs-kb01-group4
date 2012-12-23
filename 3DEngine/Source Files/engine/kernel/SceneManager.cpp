@@ -12,9 +12,12 @@ namespace engine
 	 */
 	SceneManager::SceneManager(ResourceManager* argPResourceManager)
 	{
-		engine::Logger::Log("Creating SceneManager", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("SceneManager: Initializing", Logger::INFO, __FILE__, __LINE__);
+
 		this->pResourceManager = argPResourceManager;
 		this->scenes = std::map<std::string, Scene*>();
+
+		Logger::Log("SceneManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -23,6 +26,7 @@ namespace engine
 	 */
 	SceneManager::~SceneManager()
 	{
+		Logger::Log("SceneManager: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -50,7 +54,6 @@ namespace engine
 	 */
 	Scene* SceneManager::GetScene(std::string argSceneName)
 	{
-		Logger::Log("Geting scene:" + argSceneName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		return this->scenes.at(argSceneName);
 	}
 
@@ -62,23 +65,45 @@ namespace engine
 	{
 		return this->scenes;
 	}
-
-	/**
-	 * Add a scene to the scene collection within the Scene manager
-	 * @deprecated
-	 * @param		std::string				argPSceneName is the identifier for the scene in the collection
-	 * @param		Scene*					Scene is the scene that will be added to the scene collection
-	*/
-	void SceneManager::AddScene(std::string argSceneName, Scene* argPScene)
-	{
-		Logger::Log("Adding scene: " + argSceneName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-		this->scenes[argSceneName] = argPScene;
-		Logger::Log("Scene " + argSceneName + " added", Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
-	}
 	
+	/**
+	 * Loads a scene file and parses it acording to a format:
+	 * #resources
+	 * <resource type>;<filename>
+	 * - resource type can be: "texture" or "model"
+	 * - filename is used to indentify a resource.
+	 * 
+	 * #heigtmap
+	 * <heightmap file>;<number of smoothing iterations>;<texture1>;<texture2>;<..texture[n]>
+	 * - heightmap has to be an 8bit bmp file
+	 * - at the moment only 1 texture works
+	 * - the texture has to be loaded in the resource segment
+	 *
+	 * #camera
+	 * <posX>;<posY>;<posZ>;<rotX>;<rotY>;<rotZ>;<scaleX>;<scaleY>;<scaleZ>
+	 * - just simple numbers :)
+	 *
+	 * #models
+	 * <modelID>;<posX>;<posY>;<posZ>;<rotX>;<rotY>;<rotZ>;<scaleX>;<scaleY>;<scaleZ>;<modelfile>;<texture1>;<texture2>;<..texture[n]>
+	 * - model ID is used to identify it later. this must be unique
+	 * - modelfile has to be loaded in the resource segment
+	 * - textures has to be loaded in the resouce segment
+	 *
+	 * #scripts
+	 * <ID>;<script1>;<script2>;<..script[n]>
+	 * - ID is either "camera" to apply to the camera, a modelID to apply to that model, or empty (start the line with ;) to be applied to the scene
+	 * - script can either be a function or a basic mutation of the pos, rot and scale vector; Example: camera;position.x++
+	 * 
+	 * In addition to this format, lines can also be ignored by prepending an exclamation mark (!) to the line.
+	 *
+	 * @param		Renderer*		The renderer to use for loading
+	 * @param		std::string		The name to store the scene file under
+	 * @param		std::string		The scene file to load
+	 * @return		Scene*			The created scene
+	 */
 	Scene* SceneManager::LoadScene(Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName)
 	{
-		Logger::Log("Loading scenefile: " + argSceneFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("SceneManager: Loading: " + argSceneFileName, Logger::INFO, __FILE__, __LINE__);
 		
 		// Create a new scene object to load the data of the scenefile in
 		Scene* pScene = new Scene();
@@ -89,7 +114,7 @@ namespace engine
 		// Check if the texture exists
 		if (!fileExists(fileName))
 		{
-			Logger::Log("Cannot find scenefile: " + fileName, Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			Logger::Log("SceneManager: Scenefile not found: " + fileName, Logger::FATAL, __FILE__, __LINE__);
 			return NULL;
 		}
 
@@ -98,7 +123,7 @@ namespace engine
 		// Check if the scene file has opened
 		if(!inStream.is_open())
 		{
-			Logger::Log("Failed to open scenefile", Logger::LOG_LEVEL_ERROR, __FILE__, __LINE__);
+			Logger::Log("SceneManager: Scenefile failed to open: " + fileName, Logger::FATAL, __FILE__, __LINE__);
 		}
 
 		// Keep track of the current segment so that we know what to do with each line
@@ -115,7 +140,7 @@ namespace engine
 			if(peek == '#')
 			{
 				curSegment = line.substr(1);
-				Logger::Log("+++ Found segment: " + curSegment, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+				Logger::Log("SceneManager: +++ Segment - " + curSegment, Logger::INFO, __FILE__, __LINE__);
 
 				// auto set the next line as the line so that we can handle it
 				peek = inStream.peek();
@@ -145,6 +170,7 @@ namespace engine
 				}
 				else if(curSegment == "camera")
 				{
+					Logger::Log("SceneManager: Setting camera data", Logger::INFO, __FILE__, __LINE__);
 					Vector3 position	= Vector3(	(float)std::atof(data.at(0).c_str()),
 													(float)std::atof(data.at(1).c_str()),
 													(float)std::atof(data.at(2).c_str()));
@@ -167,21 +193,25 @@ namespace engine
 
 					if(resourceType == "model")
 					{
+						Logger::Log("SceneManager: Model: " + resourceFileName, Logger::INFO, __FILE__, __LINE__);
 						this->pResourceManager->LoadMesh(argPRenderer, resourceFileName);
 					}
 					else if(resourceType == "texture")
 					{
+						Logger::Log("SceneManager: Texture: " + resourceFileName, Logger::INFO, __FILE__, __LINE__);
 						this->pResourceManager->LoadTexture(argPRenderer, resourceFileName);
 					}
 					else
 					{
-						Logger::Log("Resource type unsupported: " + resourceType, Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+						Logger::Log("SceneManager: Unsupported resource: " + resourceType, Logger::WARNING, __FILE__, __LINE__);
 					}
 				}
 				else if(curSegment == "models")
 				{
 					std::string modelName		= data.at(0);
 					std::string modelResource	= data.at(10);
+					Logger::Log("SceneManager: Creating model: " + modelName, Logger::INFO, __FILE__, __LINE__);
+
 					Vector3 position			= Vector3(	(float)std::atof(data.at(1).c_str()),
 															(float)std::atof(data.at(2).c_str()),
 															(float)std::atof(data.at(3).c_str()));
@@ -210,28 +240,31 @@ namespace engine
 					{
 						if(modelName.empty())
 						{
+							Logger::Log("SceneManager: Adding script to scene", Logger::INFO, __FILE__, __LINE__);
 							pScene->AddScript(data.at(i));
 						}
 						else if(modelName == "camera")
 						{
+							Logger::Log("SceneManager: Adding script to camera", Logger::INFO, __FILE__, __LINE__);
 							pScene->GetCamera()->AddScript(data.at(i));
 						}
 						else
 						{
+							Logger::Log("SceneManager: Adding script to model: " + modelName, Logger::INFO, __FILE__, __LINE__);
 							pScene->GetModel(modelName)->AddScript(data.at(i));
 						}
 					}
 				}
 				else
 				{
-					Logger::Log("Segment unsupported", Logger::LOG_LEVEL_WARNING, __FILE__, __LINE__);
+					Logger::Log("SceneManager: Unsupported Segment", Logger::WARNING, __FILE__, __LINE__);
 				}
 			}
 		}
 
 		// Porperly close the scene file
 		inStream.close();
-		Logger::Log("Scenefile loaded: " + argSceneFileName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
+		Logger::Log("SceneManager: Scenefile: " + argSceneFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
 		return pScene;
 	}
 
@@ -242,7 +275,6 @@ namespace engine
 	 */
 	void SceneManager::RemoveScene(std::string argSceneName)
 	{
-		engine::Logger::Log("Removing Scene: " + argSceneName, Logger::LOG_LEVEL_INFO, __FILE__, __LINE__);
 		this -> scenes.erase(argSceneName);
 	}
 }

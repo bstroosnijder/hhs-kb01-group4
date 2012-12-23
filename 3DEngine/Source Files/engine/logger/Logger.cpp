@@ -5,11 +5,13 @@ namespace engine
 	//---Private attributes---
 	
 	//---Public attributes---
+
+	// One-time initialisation of the logger's constant variables.
+	const int Logger::INFO = 1;
+	const int Logger::WARNING = 2;
+	const int Logger::FATAL = 3;
+
 	std::list<LogStrategy*> Logger::strategies = std::list<LogStrategy*>();
-	//One-time initialisation of the logger's constant variables.
-	const int Logger::LOG_LEVEL_INFO = 1;
-	const int Logger::LOG_LEVEL_WARNING = 2;
-	const int Logger::LOG_LEVEL_ERROR = 3;
 
 	//---Private methods---
 
@@ -22,18 +24,18 @@ namespace engine
 	{
 		char* severity;
 
-		//Switch on argSeverity, checking if the number given matches any of the defined constants.
-		//If it doesn't, 'UNKNOWN SEVERITY' is returned.
+		// Switch on argSeverity, checking if the number given matches any of the defined constants.
+		// If it doesn't, 'UNKNOWN SEVERITY' is returned.
 		switch(argSeverity)
 		{
-		case LOG_LEVEL_INFO:
+		case INFO:
 			severity = "INFO";
 			break;
-		case LOG_LEVEL_WARNING:
+		case WARNING:
 			severity = "WARNING";
 			break;
-		case LOG_LEVEL_ERROR:
-			severity = "ERROR";
+		case FATAL:
+			severity = "FATAL";
 			break;
 		default:
 			severity = "UNKNOWN SEVERITY";
@@ -84,13 +86,22 @@ namespace engine
 	 */
 	void Logger::Log(std::string argMessage, int argSeverity, char* argPFile, int argLineNumber)
 	{	
-		//Obtain a descriptive string version of the given severity number.
-		char* severity = GetSeverity(argSeverity);
+		// Obtain a descriptive string version of the given severity number.
+		char* severity	= GetSeverity(argSeverity);
+		// Obtain the current date and time
+		time_t now		= std::time(0);
+		tm* localTime	= std::localtime(&now);
+		// Create a date object
+		std::stringstream date;
+		date << localTime->tm_year << "/" << localTime->tm_mon << "/" << localTime->tm_mday;
+		// Create a time object
+		std::stringstream time;
+		time << localTime->tm_hour << ":" << localTime->tm_min << ":" << localTime->tm_sec;
 
-		//Log the message, severity (info/warning/error), current date, current time, file location and line number to each strategy.
+		// Log the message, severity (info/warning/error), current date, current time, file location and line number to each strategy.
 		for each(LogStrategy* strat in strategies)
 		{
-			strat->Write(argMessage, severity, (char*)__DATE__, (char*)__TIME__, argPFile, argLineNumber);
+			strat->Write(argMessage, severity, (char*)date.str().c_str(), (char*)time.str().c_str(), argPFile, argLineNumber);
 		}
 	}
 }
