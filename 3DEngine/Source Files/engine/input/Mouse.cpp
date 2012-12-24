@@ -28,6 +28,12 @@ namespace engine
 	 */
 	void Mouse::CleanUp()
 	{
+		if (this->pDevice != NULL)
+		{
+			this->pDevice->Unacquire();
+			this->pDevice->Release();
+			delete this->pDevice;
+		}
 	}
 
 	/**

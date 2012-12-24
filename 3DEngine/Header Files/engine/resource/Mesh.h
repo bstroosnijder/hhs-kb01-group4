@@ -5,6 +5,9 @@
 
 namespace engine
 {
+	/**
+	 * Stores all the data of a mesh and it's default textures
+	 */
 	struct Mesh
 	{
 		LPD3DXMESH mesh;

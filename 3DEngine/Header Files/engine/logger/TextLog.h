@@ -11,6 +11,8 @@ namespace engine
 	 */
 	class TextLog : public LogStrategy
 	{
+	private:
+		std::ofstream fout;
 	public:
 		TextLog();
 		~TextLog();

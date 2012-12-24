@@ -77,7 +77,7 @@ namespace engine
 			bool i = this->pKeyboard->ProcessKBInput(DIK_W);
 			if(i == true)
 			{
-				Logger::Log("Naar voren",Logger::INFO,0,0);
+				Logger::Log("Naar voren", Logger::INFO, __FILE__, __LINE__);
 			}
 		}
 		if (DIK_A)
@@ -85,7 +85,7 @@ namespace engine
 			bool i = this->pKeyboard->ProcessKBInput(DIK_A);
 			if(i == true)
 			{
-				Logger::Log("Naar links",Logger::INFO,0,0);
+				Logger::Log("Naar links", Logger::INFO, __FILE__, __LINE__);
 			}
 		}
 		if (DIK_D)
@@ -93,7 +93,7 @@ namespace engine
 			bool i = this->pKeyboard->ProcessKBInput(DIK_D);
 			if(i == true)
 			{
-				Logger::Log("Naar rechts",Logger::INFO,0,0);
+				Logger::Log("Naar rechts", Logger::INFO, __FILE__, __LINE__);
 			}
 		}
 		if (DIK_S)
@@ -101,7 +101,7 @@ namespace engine
 			bool i = this->pKeyboard->ProcessKBInput(DIK_S);
 			if(i == true)
 			{
-				Logger::Log("Naar achteren",Logger::INFO,0,0);
+				Logger::Log("Naar achteren", Logger::INFO, __FILE__, __LINE__);
 			}
 			
 		}

@@ -37,6 +37,7 @@ namespace engine
 	 */
 	Kernel::~Kernel()
 	{
+		Logger::Log("Kernel: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -46,7 +47,34 @@ namespace engine
 	 */
 	void Kernel::CleanUp()
 	{
-		Logger::Log("Kernel: Disposing", Logger::INFO, __FILE__, __LINE__);
+		if(this->pWindowManager != NULL)
+		{
+			delete this->pWindowManager;
+		}
+
+		if(this->pResourceManager != NULL)
+		{
+			delete this->pResourceManager;
+		}
+
+		if(this->pInputManager != NULL)
+		{
+			delete this->pInputManager;
+		}
+
+		if(this->pSceneManager != NULL)
+		{
+			delete this->pSceneManager;
+		}
+
+		std::map<unsigned int, Renderer*>::iterator itRenderers;
+		for(itRenderers = this->renderers.begin(); itRenderers != this->renderers.end(); itRenderers++)
+		{
+			delete itRenderers->second;
+		}
+		this->renderers.clear();
+
+		this->winRenderer.clear();
 	}
 
 	/**
@@ -84,10 +112,10 @@ namespace engine
 	void Kernel::HeartBeat()
 	{
 		std::map<std::string, Scene*> scenes = this->pSceneManager->GetScenes();
-		std::map<std::string, Scene*>::iterator it;
-		for(it = scenes.begin(); it != scenes.end(); it++)
+		std::map<std::string, Scene*>::iterator itScenes;
+		for(itScenes = scenes.begin(); itScenes != scenes.end(); itScenes++)
 		{
-			Scene* pScene = it->second;
+			Scene* pScene = itScenes->second;
 			pScene->Update();
 
 			// Loop through scene windows
@@ -107,7 +135,7 @@ namespace engine
 		}
 
 		// Handle the input
-		//this->pInputManager->InputBeat();
+		this->pInputManager->InputBeat();
 	}
 
 	/**

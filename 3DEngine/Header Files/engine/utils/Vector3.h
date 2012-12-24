@@ -3,6 +3,9 @@
 
 namespace engine
 {
+	/**
+	 * Struct for the containment of x, y and z values
+	 */
 	struct Vector3
 	{
 		float x;

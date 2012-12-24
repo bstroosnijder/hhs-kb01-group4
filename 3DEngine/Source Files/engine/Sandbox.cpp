@@ -29,7 +29,10 @@ namespace engine
 	 */
 	void Sandbox::CleanUp()
 	{
-
+		if(this->kernel != NULL)
+		{
+			delete this->kernel;
+		}
 	}
 
 	/**
@@ -39,7 +42,6 @@ namespace engine
 	void Sandbox::Start()
 	{
 		this->kernel->Start();
-		Logger::Log("End of Sandbox", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**

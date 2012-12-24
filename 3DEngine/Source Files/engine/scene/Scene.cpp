@@ -85,12 +85,17 @@ namespace engine
 	 */
 	Scene::Scene()
 	{
-		this->windows = std::list<Window*>();
+		Logger::Log("Scene: Initializing", Logger::INFO, __FILE__, __LINE__);
 
-		this->pHeightmap = new Heightmap();
-		this->pCamera = new Camera();
-		this->models = std::map<std::string, Model*>();
-		this->scripts = std::list<std::string>();
+		this->windows = std::list<Window*>();
+		
+		this->pSkybox		= new Skybox();
+		this->pHeightmap	= new Heightmap();
+		this->pCamera		= new Camera();
+		this->models		= std::map<std::string, Model*>();
+		this->scripts		= std::list<std::string>();
+		
+		Logger::Log("Scene: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -98,6 +103,7 @@ namespace engine
 	 */
 	Scene::~Scene()
 	{
+		Logger::Log("Scene: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -107,6 +113,34 @@ namespace engine
 	 */
 	void Scene::CleanUp()
 	{
+		for each(Window* pWindow in this->windows)
+		{
+			delete pWindow;
+		}
+
+		if(this->pSkybox != NULL)
+		{
+			delete this->pSkybox;
+		}
+
+		if(this->pHeightmap != NULL)
+		{
+			delete this->pHeightmap;
+		}
+
+		if(this->pCamera != NULL)
+		{
+			delete this->pCamera;
+		}
+
+		std::map<std::string, Model*>::iterator itModels;
+		for(itModels = this->models.begin(); itModels != this->models.end(); itModels++)
+		{
+			delete itModels->second;
+		}
+		this->models.clear();
+
+		this->scripts.clear();
 	}
 
 	/**
@@ -116,7 +150,8 @@ namespace engine
 	void Scene::Update()
 	{
 		this->pCamera->Update();
-		//this->pHeightmap->Update();
+		this->pSkybox->Update();
+		this->pHeightmap->Update();
 
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
@@ -139,10 +174,12 @@ namespace engine
 	{
 		argPRenderer->Push();
 		this->pCamera->Draw(argPRenderer);
-
 		argPRenderer->Push();
-		this->pHeightmap->Draw(argPRenderer);
+		this->pSkybox->Draw(argPRenderer);
 		argPRenderer->Pop();
+		
+
+		this->pHeightmap->Draw(argPRenderer);
 
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
@@ -182,6 +219,15 @@ namespace engine
 	std::list<Window*> Scene::GetWindows()
 	{
 		return this->windows;
+	}
+
+	/**
+	 * Gets the skybox object
+	 * @return		Skybox*
+	 */
+	Skybox* Scene::GetSkybox()
+	{
+		return this->pSkybox;
 	}
 	
 	/**

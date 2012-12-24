@@ -36,6 +36,17 @@ namespace engine
 	 */
 	void SceneManager::CleanUp()
 	{
+		if(this->pResourceManager != NULL)
+		{
+			delete this->pResourceManager;
+		}
+
+		std::map<std::string, Scene*>::iterator itScenes;
+		for(itScenes = this->scenes.begin(); itScenes != this->scenes.end(); itScenes++)
+		{
+			delete itScenes->second;
+		}
+		this->scenes.clear();
 	}
 
 	/**
@@ -154,7 +165,12 @@ namespace engine
 				std::vector<std::string> data = explode(';', line);
 
 				// Because switch case isn't supported with string :(
-				if(curSegment == "heightmap")
+				if(curSegment == "skybox")
+				{
+					pScene->GetSkybox()->SetupVertices(argPRenderer);
+					pScene->GetSkybox()->SetTexture(0, this->pResourceManager->GetTexture(data.at(0)));
+				}
+				else if(curSegment == "heightmap")
 				{
 					std::string mapFileName				= data.at(0);
 					unsigned long smoothingIterations	= (unsigned long)std::atof(data.at(1).c_str());

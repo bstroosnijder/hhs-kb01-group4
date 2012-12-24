@@ -34,6 +34,12 @@ namespace engine
 	 */
 	void WindowManager::CleanUp()
 	{
+		std::map<HWND, Window*>::iterator itWindows;
+		for(itWindows = WindowManager::windows.begin(); itWindows != WindowManager::windows.end(); itWindows++)
+		{
+			delete itWindows->second;
+		}
+		WindowManager::windows.clear();
 	}
 
 	/**

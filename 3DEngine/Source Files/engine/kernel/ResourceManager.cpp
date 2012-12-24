@@ -36,6 +36,19 @@ namespace engine
 	 */
 	void ResourceManager::CleanUp()
 	{
+		std::map<std::string, Mesh*>::iterator itMeshes;
+		for(itMeshes = this->meshes.begin(); itMeshes != this->meshes.end(); itMeshes++)
+		{
+			delete itMeshes->second;
+		}
+		this->meshes.clear();
+
+		std::map<std::string, LPDIRECT3DTEXTURE9>::iterator itTextures;
+		for(itTextures = this->textures.begin(); itTextures != this->textures.end(); itTextures++)
+		{
+			delete itTextures->second;
+		}
+		this->textures.clear();
 	}
 
 	/**

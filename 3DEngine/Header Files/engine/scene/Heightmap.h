@@ -8,9 +8,6 @@
 #include "..\utils\TexturedVector3.h"
 #include "..\renderer\Renderer.h"
 
-// Our custom FVF, which describes our custom vertex structure
-#define D3DFVFTexturedVector3 (D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1)
-
 namespace engine
 {
 	/**
