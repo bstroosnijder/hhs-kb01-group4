@@ -184,8 +184,10 @@ namespace engine
 		long imageHeight				= this->pBitmap->GetImageHeight();
 
 		float offsetX					= -(((float)imageWidth) / 2);
+		//float offsetX					= 0;
 		float offsetY					= 0;
 		float offsetZ					= -(((float)imageHeight) / 2);
+		//float offsetZ					= 0;
 		
 		// --- Create the vertex array ---
 		this->numPrimitives				= (imageWidth * imageHeight) * 2;
@@ -198,7 +200,7 @@ namespace engine
 		{
 			for(long x = 0; x < imageWidth; x++)
 			{
-				long vIndex	= (z * imageWidth) + x;
+				long vIndex				= (z * imageWidth) + x;
 				float pixelX			= offsetX + (x * pixelDistance);
 				float pixelY			= offsetY + pixelData[vIndex] / 15.0f;
 				float pixelZ			= offsetZ + (z * pixelDistance);

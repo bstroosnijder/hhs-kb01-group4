@@ -29,28 +29,29 @@ namespace engine
 	
 	void Skybox::SetupVertices(Renderer* argPRenderer)
 	{
-		float boxSize					= 3.5f;
+		float boxSize					= 1.5f;
 
 		unsigned long numVertices = 8;
 		unsigned long vertexArraySize	= numVertices * sizeof(TexturedVector3);
 		TexturedVector3 vertices[]		=
 		{
-			// Left Top Front
-			{-boxSize, boxSize, boxSize, 0xFFFF0000, 1.0f, 0.0f },
-			// Right Top Front
-			{ boxSize, boxSize, boxSize, 0xFF00FF00, 0.0f, 0.0f },
-			// Left Bottom Front
-			{-boxSize,-boxSize, boxSize, 0xFFFF00FF, 1.0f, 0.0f },
-			// Right Bottom Front
-			{ boxSize,-boxSize, boxSize, 0xFF0000FF, 0.0f, 0.0f },
-			// Left Top Back
-			{-boxSize, boxSize,-boxSize, 0xFFFF0000, 1.0f, 0.0f },
-			// Right Top Back
-			{ boxSize, boxSize,-boxSize, 0xFFFF0000, 0.0f, 0.0f },
-			// Left Bottom Back
-			{-boxSize,-boxSize,-boxSize, 0xFFFF0000, 1.0f, 0.0f },
-			// Right Bottom Back
-			{ boxSize,-boxSize,-boxSize, 0xFFFF0000, 0.0f, 0.0f }
+			// Front Top Left
+			{-boxSize, boxSize, boxSize, 0xFFCCCCCC, 1.0f, 0.0f },
+			// Front Top Right
+			{ boxSize, boxSize, boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
+			// Front Bottom Left
+			{-boxSize,-boxSize, boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
+			// Front Bottom Right
+			{ boxSize,-boxSize, boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
+
+			// Back Top Left
+			{-boxSize, boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
+			// Back Top Right
+			{ boxSize, boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 0.0f },
+			// Back Bottom Left
+			{-boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
+			// Back Bottom Right
+			{ boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 1.0f }
 		};
 		
 		unsigned long indexArraySize	= 36 * sizeof(short);
@@ -94,7 +95,6 @@ namespace engine
 
 	void Skybox::Draw(Renderer* argPRenderer)
 	{
-		Entity::Draw(argPRenderer);
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 		D3DXMatrixIdentity(&this->matWorld);
 		D3DXMatrixMultiply(&this->matWorld, pRenderer->matWorld->GetTop(), &this->matWorld);

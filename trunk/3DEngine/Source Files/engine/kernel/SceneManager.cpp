@@ -10,11 +10,10 @@ namespace engine
 	/**
 	 * Construct the SceneManager object.
 	 */
-	SceneManager::SceneManager(ResourceManager* argPResourceManager)
+	SceneManager::SceneManager()
 	{
 		Logger::Log("SceneManager: Initializing", Logger::INFO, __FILE__, __LINE__);
 
-		this->pResourceManager = argPResourceManager;
 		this->scenes = std::map<std::string, Scene*>();
 
 		Logger::Log("SceneManager: Finished", Logger::INFO, __FILE__, __LINE__);
@@ -36,11 +35,6 @@ namespace engine
 	 */
 	void SceneManager::CleanUp()
 	{
-		if(this->pResourceManager != NULL)
-		{
-			delete this->pResourceManager;
-		}
-
 		std::map<std::string, Scene*>::iterator itScenes;
 		for(itScenes = this->scenes.begin(); itScenes != this->scenes.end(); itScenes++)
 		{
@@ -112,7 +106,8 @@ namespace engine
 	 * @param		std::string		The scene file to load
 	 * @return		Scene*			The created scene
 	 */
-	Scene* SceneManager::LoadScene(Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName)
+	Scene* SceneManager::LoadScene(ResourceManager* argPResourceManager, InputManager* argPInputManager,
+			Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName)
 	{
 		Logger::Log("SceneManager: Loading: " + argSceneFileName, Logger::INFO, __FILE__, __LINE__);
 		
@@ -168,7 +163,7 @@ namespace engine
 				if(curSegment == "skybox")
 				{
 					pScene->GetSkybox()->SetupVertices(argPRenderer);
-					pScene->GetSkybox()->SetTexture(0, this->pResourceManager->GetTexture(data.at(0)));
+					pScene->GetSkybox()->SetTexture(0, argPResourceManager->GetTexture(data.at(0)));
 				}
 				else if(curSegment == "heightmap")
 				{
@@ -181,7 +176,7 @@ namespace engine
 
 					for(unsigned long i = 2; i < data.size(); i++)
 					{
-						pHeightmap->SetTexture((i - 2), this->pResourceManager->GetTexture(data.at(i)));
+						pHeightmap->SetTexture((i - 2), argPResourceManager->GetTexture(data.at(i)));
 					}
 				}
 				else if(curSegment == "camera")
@@ -210,12 +205,12 @@ namespace engine
 					if(resourceType == "model")
 					{
 						Logger::Log("SceneManager: Model: " + resourceFileName, Logger::INFO, __FILE__, __LINE__);
-						this->pResourceManager->LoadMesh(argPRenderer, resourceFileName);
+						argPResourceManager->LoadMesh(argPRenderer, resourceFileName);
 					}
 					else if(resourceType == "texture")
 					{
 						Logger::Log("SceneManager: Texture: " + resourceFileName, Logger::INFO, __FILE__, __LINE__);
-						this->pResourceManager->LoadTexture(argPRenderer, resourceFileName);
+						argPResourceManager->LoadTexture(argPRenderer, resourceFileName);
 					}
 					else
 					{
@@ -238,7 +233,7 @@ namespace engine
 															(float)std::atof(data.at(8).c_str()),
 															(float)std::atof(data.at(9).c_str()));
 
-					Model* pModel = new Model(this->pResourceManager->NewResource(modelResource));
+					Model* pModel = new Model(argPResourceManager->NewResource(modelResource));
 					pScene->AddModel(modelName, pModel);
 					pModel->SetPosition(position);
 					pModel->SetRotation(rotation);
@@ -246,8 +241,14 @@ namespace engine
 
 					for(unsigned long i = 11; i < data.size(); i++)
 					{
-						pModel->SetTexture((i - 11), this->pResourceManager->GetTexture(data.at(i)));
+						pModel->SetTexture((i - 11), argPResourceManager->GetTexture(data.at(i)));
 					}
+				}
+				else if(curSegment == "input")
+				{
+					std::string inputEntity		= data.at(0);
+					Logger::Log("SceneManager: Hooking input to: " + inputEntity, Logger::INFO, __FILE__, __LINE__);
+					argPInputManager->AddObserver(pScene->GetModel(inputEntity));
 				}
 				else if(curSegment == "scripts")
 				{

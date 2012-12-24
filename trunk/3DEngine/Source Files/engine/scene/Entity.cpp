@@ -20,8 +20,8 @@ namespace engine
 			float radius	= (float)std::atof(parts.at(3).c_str());
 
 			this->rotation.y += (rotSpeed * speed);
-			this->position.x -= ((sin(this->rotation.y) * radius) * speed);
-			this->position.z -= ((cos(this->rotation.y) * radius) * speed);
+			this->position.x = ((sin(this->rotation.y + (D3DX_PI / 2)) * radius) * speed);
+			this->position.z = ((cos(this->rotation.y + (D3DX_PI / 2)) * radius) * speed);
 		}
 		else
 		{
