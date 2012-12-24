@@ -8,6 +8,8 @@
 #include "..\utils\explode.h"
 #include "..\utils\fileExists.h"
 #include "..\scene\Scene.h"
+#include "ResourceManager.h"
+#include "InputManager.h"
 #include "..\renderer\Renderer.h"
 
 namespace engine
@@ -18,10 +20,9 @@ namespace engine
 	class SceneManager
 	{
 	private:
-		ResourceManager* pResourceManager;
 		std::map<std::string, Scene*> scenes;
 	public:
-		SceneManager(ResourceManager* argPResourceManager);
+		SceneManager();
 		~SceneManager();
 		void CleanUp();
 		
@@ -29,7 +30,8 @@ namespace engine
 		Scene* GetScene(std::string argSceneName);
 		std::map<std::string, Scene*> GetScenes();
 
-		Scene* LoadScene(Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName);
+		Scene* LoadScene(ResourceManager* argPResourceManager, InputManager* argPInputManager,
+			Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName);
 		void RemoveScene(std::string argSceneName);
 	};
 }

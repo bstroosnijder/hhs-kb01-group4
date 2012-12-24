@@ -171,6 +171,12 @@
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\input\InputObserver.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\KeyboardState.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">

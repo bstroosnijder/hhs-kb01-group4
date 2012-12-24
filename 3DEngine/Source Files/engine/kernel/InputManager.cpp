@@ -5,6 +5,15 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
+
+	void InputManager::NotifyObservers()
+	{
+		for each(InputObserver* pInputObserver in this->pObservers)
+		{
+			pInputObserver->Notify(this->pKeyboardState);
+		}
+	}
+
 	//---Public methods---
 
 	/**
@@ -18,6 +27,9 @@ namespace engine
 		this->pInput = NULL;
 		// Create the input object
 		DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&this->pInput, NULL);
+
+		this->pKeyboardState = new KeyboardState();
+		this->pObservers = std::list<InputObserver*>();
 
 		Logger::Log("InputManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -72,38 +84,52 @@ namespace engine
 	 */
 	void InputManager::InputBeat()
 	{
-		if (DIK_W)
+		if(DIK_W)
 		{
-			bool i = this->pKeyboard->ProcessKBInput(DIK_W);
-			if(i == true)
-			{
-				Logger::Log("Naar voren", Logger::INFO, __FILE__, __LINE__);
-			}
+			this->pKeyboardState->KEY_W			= this->pKeyboard->ProcessKBInput(DIK_W);
 		}
-		if (DIK_A)
+		if(DIK_S)
 		{
-			bool i = this->pKeyboard->ProcessKBInput(DIK_A);
-			if(i == true)
-			{
-				Logger::Log("Naar links", Logger::INFO, __FILE__, __LINE__);
-			}
+			this->pKeyboardState->KEY_S			= this->pKeyboard->ProcessKBInput(DIK_S);
 		}
-		if (DIK_D)
+		if(DIK_A)
 		{
-			bool i = this->pKeyboard->ProcessKBInput(DIK_D);
-			if(i == true)
-			{
-				Logger::Log("Naar rechts", Logger::INFO, __FILE__, __LINE__);
-			}
+			this->pKeyboardState->KEY_A			= this->pKeyboard->ProcessKBInput(DIK_A);
 		}
-		if (DIK_S)
+		if(DIK_D)
 		{
-			bool i = this->pKeyboard->ProcessKBInput(DIK_S);
-			if(i == true)
-			{
-				Logger::Log("Naar achteren", Logger::INFO, __FILE__, __LINE__);
-			}
-			
+			this->pKeyboardState->KEY_D			= this->pKeyboard->ProcessKBInput(DIK_D);
 		}
+		if(DIK_Q)
+		{
+			this->pKeyboardState->KEY_Q			= this->pKeyboard->ProcessKBInput(DIK_Q);
+		}
+		if(DIK_E)
+		{
+			this->pKeyboardState->KEY_E			= this->pKeyboard->ProcessKBInput(DIK_E);
+		}
+		if(DIK_LSHIFT)
+		{
+			this->pKeyboardState->KEY_LSHIFT	= this->pKeyboard->ProcessKBInput(DIK_LSHIFT);
+		}
+		if(DIK_SPACE)
+		{
+			this->pKeyboardState->KEY_SPACE		= this->pKeyboard->ProcessKBInput(DIK_SPACE);
+		}
+		if(DIK_HOME)
+		{
+			this->pKeyboardState->KEY_HOME		= this->pKeyboard->ProcessKBInput(DIK_HOME);
+		}
+		this->NotifyObservers();
+	}
+
+	void InputManager::AddObserver(InputObserver* argPInputObserver)
+	{
+		this->pObservers.push_back(argPInputObserver);
+	}
+
+	void InputManager::RemoveObserver(InputObserver* argPInputObserver)
+	{
+		this->pObservers.remove(argPInputObserver);
 	}
 }

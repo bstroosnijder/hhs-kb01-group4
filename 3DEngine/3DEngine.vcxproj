@@ -42,6 +42,8 @@
     <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
     <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
+    <ClInclude Include="Header Files\engine\input\InputObserver.h" />
+    <ClInclude Include="Header Files\engine\input\KeyboardState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\scene\entities\Skybox.cpp" />

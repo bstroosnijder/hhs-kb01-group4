@@ -203,7 +203,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformProjectionMatrix()
 	{
-		D3DXMatrixPerspectiveFovLH(this->matProjection->GetTop(), D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
+		D3DXMatrixPerspectiveFovLH(this->matProjection->GetTop(), (D3DX_PI / 4), 1.0f, 1.0f, 1000.0f);
 		this->pDevice->SetTransform(D3DTS_PROJECTION, this->matProjection->GetTop());
 	}
 

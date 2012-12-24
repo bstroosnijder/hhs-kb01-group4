@@ -20,7 +20,7 @@ namespace engine
 		this->pWindowManager	= new WindowManager();
 		this->pResourceManager	= new ResourceManager();
 		this->pInputManager		= new InputManager();
-		this->pSceneManager		= new SceneManager(this->pResourceManager);
+		this->pSceneManager		= new SceneManager();
 
 		//Initialise and fill the renderers map with the default renderers.
 		this->renderers			= std::map<unsigned int, Renderer*>();
@@ -192,7 +192,8 @@ namespace engine
 	 */
 	Scene* Kernel::LoadScene(std::string argSceneName, std::string argSceneFileName)
 	{
-		return this->pSceneManager->LoadScene(this->renderers[0], argSceneName, argSceneFileName);
+		return this->pSceneManager->LoadScene(this->pResourceManager, this->pInputManager,
+			this->renderers[0], argSceneName, argSceneFileName);
 	}
 
 	/**
