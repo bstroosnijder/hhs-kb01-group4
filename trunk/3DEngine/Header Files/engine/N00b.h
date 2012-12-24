@@ -5,6 +5,9 @@
 
 namespace engine
 {
+	/**
+	 * TODO: make this!
+	 */
 	class N00b
 	{
 	private:

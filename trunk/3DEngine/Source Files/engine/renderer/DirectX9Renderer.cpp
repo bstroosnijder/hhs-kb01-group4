@@ -31,11 +31,11 @@ namespace engine
 								&presentParameters, &pDevice);
 
 		// Set render states
-		this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
-		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		//this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
 
 		// Set matrices to the identity
 		this->SetupMatricis();
@@ -234,7 +234,7 @@ namespace engine
 	void DirectX9Renderer::Push()
 	{
 		this->matWorld->Push();
-		//this->matView->Push();
+		this->matView->Push();
 		//this->matProjection->Push();
 	}
 
@@ -286,7 +286,7 @@ namespace engine
 	void DirectX9Renderer::Pop()
 	{
 		this->matWorld->Pop();
-		//this->matView->Pop();
+		this->matView->Pop();
 		//this->matProjection->Pop();
 	}
 

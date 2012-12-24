@@ -10,7 +10,6 @@ namespace engine
 {
 	/**
 	 * This is a Sandbox. This a Facade.
-	 * @author: Alex Hodes
 	 */
 	class Sandbox
 	{

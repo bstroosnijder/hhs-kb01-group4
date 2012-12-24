@@ -9,6 +9,9 @@
 
 namespace engine
 {
+	/**
+	 * An entity with meshes and textures
+	 */
 	class Model : public Entity
 	{
 	private:

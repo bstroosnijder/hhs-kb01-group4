@@ -35,14 +35,16 @@
     <ClInclude Include="Header Files\engine\scene\Scene.h" />
     <ClInclude Include="Header Files\engine\utils\Bitmap.h" />
     <ClInclude Include="Header Files\engine\utils\explode.h" />
-    <ClInclude Include="header files\engine\utils\fileexists.h" />
+    <ClInclude Include="header files\engine\utils\fileExists.h" />
     <ClInclude Include="Header Files\engine\utils\Vector3.h" />
     <ClInclude Include="Header Files\engine\window\Win32Window.h" />
     <ClInclude Include="Header Files\engine\window\Window.h" />
     <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
     <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
+    <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\engine\scene\entities\Skybox.cpp" />
     <ClCompile Include="Source Files\engine\scene\Heightmap.cpp" />
     <ClCompile Include="Source Files\engine\input\Keyboard.cpp" />
     <ClCompile Include="Source Files\engine\input\Mouse.cpp" />

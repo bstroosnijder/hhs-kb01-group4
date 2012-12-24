@@ -11,7 +11,6 @@ namespace engine
 {
 	/**
 	 * This class is responsible for listening to, and handling of, keyboard input.
-	 * @author Alex Hodes
 	 */
 	class Keyboard
 	{

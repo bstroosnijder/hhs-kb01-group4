@@ -43,6 +43,6 @@ namespace engine
 	 */
 	void ConsoleLog::Write(std::string argMessage, char* argPSeverity, char* argPDate, char* argPTime, char* argPFileName, int argLineNumber)
 	{
-		printf("[%s] [%s] %s\n", argPTime, argPSeverity, argMessage.c_str());
+		std::cout << "[" << argPTime << "] [" << argPSeverity << "] " << argMessage << std::endl;
 	}
 }

@@ -8,6 +8,7 @@
 #include "..\logger\Logger.h"
 #include "..\kernel\ResourceManager.h"
 #include "..\renderer\Renderer.h"
+#include "entities\Skybox.h"
 #include "Heightmap.h"
 #include "entities\Camera.h"
 #include "entities\Model.h"
@@ -23,7 +24,8 @@ namespace engine
 	{
 	private:
 		std::list<Window*> windows;
-
+		
+		Skybox* pSkybox;
 		Heightmap* pHeightmap;
 		Camera* pCamera;
 		std::map<std::string, Model*> models;
@@ -42,6 +44,7 @@ namespace engine
 		void RemoveWindow(Window* argPWindow);
 		std::list<Window*> GetWindows();
 
+		Skybox* GetSkybox();
 		Heightmap* GetHeightmap();
 		Camera* GetCamera();
 		

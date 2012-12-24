@@ -125,10 +125,14 @@ namespace engine
 	 */
 	Heightmap::Heightmap()
 	{
+		Logger::Log("Heightmap: Initializing", Logger::INFO, __FILE__, __LINE__);
+
 		this->pBitmap = new Bitmap();
 
 		this->numPrimitives = 0;
 		this->numVertices = 0;
+		
+		Logger::Log("Heightmap: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 	
 	/**
@@ -136,6 +140,7 @@ namespace engine
 	 */
 	Heightmap::~Heightmap()
 	{
+		Logger::Log("Heightmap: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -236,7 +241,7 @@ namespace engine
 		
 		// --- Create the index array ---
 		unsigned long numIndices		= this->numPrimitives * 3;
-		unsigned long indiceArraySize	= numIndices * sizeof(short);
+		unsigned long indexArraySize	= numIndices * sizeof(short);
 
 		short* indices					= new short[numIndices];
 		
@@ -273,7 +278,7 @@ namespace engine
 		delete vertices;
 		
 		// Create the index buffer.
-		argPRenderer->CreateIndexBuffer(&this->pIndexBuffer, indiceArraySize, indices);
+		argPRenderer->CreateIndexBuffer(&this->pIndexBuffer, indexArraySize, indices);
 		delete indices;
 	}
 

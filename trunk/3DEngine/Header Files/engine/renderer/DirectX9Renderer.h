@@ -18,10 +18,10 @@ namespace engine
 		LPDIRECT3D9 pDirect3d;
 		LPDIRECT3DDEVICE9 pDevice;
 		
-		LPD3DXMATRIXSTACK matWorld;
 		LPD3DXMATRIXSTACK matView;
 		LPD3DXMATRIXSTACK matProjection;
 	public:
+		LPD3DXMATRIXSTACK matWorld;
 		DirectX9Renderer(HWND argHWin);
 		~DirectX9Renderer();
 		void CleanUp();

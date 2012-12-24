@@ -28,6 +28,9 @@ namespace engine
 		unsigned long biClrImportant;
 	} BITMAPINFOHEADER;
 
+	/**
+	 * Reads the pixel data from a bit map and makes it usable for the engine
+	 */
 	class Bitmap
 	{
 	private:

@@ -6,6 +6,10 @@
 
 namespace engine
 {
+	/**
+	 * Data container for a mesh and textures.
+	 * This way we can keep meshes singleton in the resource manager, and overwrite it's textures via this struct
+	 */
 	struct Resource
 	{
 		Mesh* pMesh;
