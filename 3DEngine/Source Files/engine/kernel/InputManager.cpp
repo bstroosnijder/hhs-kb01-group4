@@ -28,6 +28,9 @@ namespace engine
 		// Create the input object
 		DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&this->pInput, NULL);
 
+		this->pKeyboard = NULL;
+		this->pMouse = NULL;
+
 		this->pKeyboardState = new KeyboardState();
 		this->pObservers = std::list<InputObserver*>();
 
@@ -57,7 +60,6 @@ namespace engine
 		if(this->pInput != NULL)
 		{
 			this->pInput->Release();
-			delete this->pInput;
 		}
 	}
 
@@ -84,42 +86,53 @@ namespace engine
 	 */
 	void InputManager::InputBeat()
 	{
-		if(DIK_W)
+		// If we have a keyboard, process it
+		if(this->pKeyboard != NULL)
 		{
-			this->pKeyboardState->KEY_W			= this->pKeyboard->ProcessKBInput(DIK_W);
+			if(DIK_W)
+			{
+				this->pKeyboardState->KEY_W			= this->pKeyboard->ProcessKBInput(DIK_W);
+			}
+			if(DIK_S)
+			{
+				this->pKeyboardState->KEY_S			= this->pKeyboard->ProcessKBInput(DIK_S);
+			}
+			if(DIK_A)
+			{
+				this->pKeyboardState->KEY_A			= this->pKeyboard->ProcessKBInput(DIK_A);
+			}
+			if(DIK_D)
+			{
+				this->pKeyboardState->KEY_D			= this->pKeyboard->ProcessKBInput(DIK_D);
+			}
+			if(DIK_Q)
+			{
+				this->pKeyboardState->KEY_Q			= this->pKeyboard->ProcessKBInput(DIK_Q);
+			}
+			if(DIK_E)
+			{
+				this->pKeyboardState->KEY_E			= this->pKeyboard->ProcessKBInput(DIK_E);
+			}
+			if(DIK_LSHIFT)
+			{
+				this->pKeyboardState->KEY_LSHIFT	= this->pKeyboard->ProcessKBInput(DIK_LSHIFT);
+			}
+			if(DIK_SPACE)
+			{
+				this->pKeyboardState->KEY_SPACE		= this->pKeyboard->ProcessKBInput(DIK_SPACE);
+			}
+			if(DIK_HOME)
+			{
+				this->pKeyboardState->KEY_HOME		= this->pKeyboard->ProcessKBInput(DIK_HOME);
+			}
 		}
-		if(DIK_S)
+		
+		// If we have a mouse, process it
+		if(this->pMouse != NULL)
 		{
-			this->pKeyboardState->KEY_S			= this->pKeyboard->ProcessKBInput(DIK_S);
 		}
-		if(DIK_A)
-		{
-			this->pKeyboardState->KEY_A			= this->pKeyboard->ProcessKBInput(DIK_A);
-		}
-		if(DIK_D)
-		{
-			this->pKeyboardState->KEY_D			= this->pKeyboard->ProcessKBInput(DIK_D);
-		}
-		if(DIK_Q)
-		{
-			this->pKeyboardState->KEY_Q			= this->pKeyboard->ProcessKBInput(DIK_Q);
-		}
-		if(DIK_E)
-		{
-			this->pKeyboardState->KEY_E			= this->pKeyboard->ProcessKBInput(DIK_E);
-		}
-		if(DIK_LSHIFT)
-		{
-			this->pKeyboardState->KEY_LSHIFT	= this->pKeyboard->ProcessKBInput(DIK_LSHIFT);
-		}
-		if(DIK_SPACE)
-		{
-			this->pKeyboardState->KEY_SPACE		= this->pKeyboard->ProcessKBInput(DIK_SPACE);
-		}
-		if(DIK_HOME)
-		{
-			this->pKeyboardState->KEY_HOME		= this->pKeyboard->ProcessKBInput(DIK_HOME);
-		}
+
+		// Tell our fans! :D
 		this->NotifyObservers();
 	}
 

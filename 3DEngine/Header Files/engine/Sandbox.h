@@ -24,7 +24,7 @@ namespace engine
 		
 		Window* Sandbox::NewWindow(int argRendererIndex, std::string argTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
 
-		void CreateKeyboard(Window* argPWindow);
+		void SetupDevices(Window* argPWindow);
 
 		Scene* GetScene(std::string argSceneName);
 		Scene* LoadScene(std::string argSceneName, std::string argSceneFileName);
