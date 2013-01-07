@@ -73,63 +73,75 @@ namespace engine
 		argPRenderer->TransformProjectionMatrix();
 	}
 
-	void Camera::Notify(KeyboardState* argPKeyboardState)
+	void Camera::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState)
 	{
 		float speed = 0.025f;
-		// Move Forward
-		if(argPKeyboardState->KEY_W)
+
+		std::map<std::string, std::string>::iterator keybindsIt;
+		for(keybindsIt = argKeybinds.begin(); keybindsIt != argKeybinds.end(); keybindsIt++)
 		{
-			this->position.x += sin(this->rotation.y);
-			//this->position.y += sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y);
-		}
-		// Move Backward
-		if(argPKeyboardState->KEY_S)
-		{
-			this->position.x -= sin(this->rotation.y);
-			//this->position.y -= sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y);
-		}
-		// Turn Left
-		if(argPKeyboardState->KEY_A)
-		{
-			this->rotation.y -= speed;
-		}
-		// Turn Right
-		if(argPKeyboardState->KEY_D)
-		{
-			this->rotation.y += speed;
-		}
-		// Move Left
-		if(argPKeyboardState->KEY_Q)
-		{
-			this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
-			//this->position.y += sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
-		}
-		// Move Right
-		if(argPKeyboardState->KEY_E)
-		{
-			this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
-			//this->position.y -= sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
-		}
-		// Move Up
-		if(argPKeyboardState->KEY_LSHIFT)
-		{
-			this->position.y -= speed * 20;
-		}
-		// Move Down
-		if(argPKeyboardState->KEY_SPACE)
-		{
-			this->position.y += speed * 20;
-		}
-		// Reset
-		if(argPKeyboardState->KEY_HOME)
-		{
-			this->position = Vector3(0.0f, 0.0f, 0.0f);
-			this->rotation = Vector3(0.0f, 0.0f, 0.0f);
-			this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
+			std::string key		= keybindsIt->first;
+			std::string bind	= keybindsIt->second;
+
+			if(argPKeyboardState->IsKeyDown(key))
+			{
+				// Move Forward
+				if(bind == "move_forward")
+				{
+					this->position.x += sin(this->rotation.y);
+					//this->position.y -= sin(this->rotation.x);
+					this->position.z += cos(this->rotation.y);
+				}
+				// Move Backward
+				else if(bind == "move_backward")
+				{
+					this->position.x -= sin(this->rotation.y);
+					//this->position.y += sin(this->rotation.x);
+					this->position.z -= cos(this->rotation.y);
+				}
+				// Move Left
+				else if(bind == "move_left")
+				{
+					this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
+					//this->position.y -= sin(this->rotation.x);
+					this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
+				}
+				// Move Right
+				else if(bind == "move_right")
+				{
+					this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
+					//this->position.y += sin(this->rotation.x);
+					this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
+				}
+				// Move Up
+				else if(bind == "move_up")
+				{
+					this->position.y += speed * 20;
+				}
+				// Move Down
+				else if(bind == "move_down")
+				{
+					this->position.y -= speed * 20;
+				}
+				// Turn Left
+				else if(bind == "turn_left")
+				{
+					this->rotation.y -= speed;
+				}
+				// Turn Right
+				else if(bind == "turn_right")
+				{
+					this->rotation.y += speed;
+				}
+
+				// Reset
+				else if(bind == "reset")
+				{
+					this->position = Vector3(0.0f, 0.0f, 0.0f);
+					this->rotation = Vector3(0.0f, 0.0f, 0.0f);
+					this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
+				}
+			}
 		}
 	}
 }
