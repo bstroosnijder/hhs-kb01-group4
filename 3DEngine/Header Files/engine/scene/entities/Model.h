@@ -31,6 +31,7 @@ namespace engine
 
 		void SetResource(Resource* argPResource);
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);
+		Model* GetModel(std::string argModelName);
 		void AddModel(std::string argModelName, Model* argPModel);
 	};
 }

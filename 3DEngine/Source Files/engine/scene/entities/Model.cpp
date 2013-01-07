@@ -160,7 +160,17 @@ namespace engine
 	}
 
 	/**
-	 * Adds an model
+	 * Gets a model
+	 * @param		std::string			The model name
+	 * @param		Model*				The model
+	 */
+	Model* Model::GetModel(std::string argModelName)
+	{
+		return this->models[argModelName];
+	}
+
+	/**
+	 * Adds a model
 	 * @param		Model*					The model to add
 	 * @param		std::string				The name of the model
 	 * @return		void

@@ -4,6 +4,7 @@
 #include <map>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include "..\logger\Logger.h"
 #include "..\utils\explode.h"
 #include "..\utils\fileExists.h"
