@@ -89,9 +89,9 @@ namespace engine
 
 		this->windows = std::list<Window*>();
 		
-		this->pSkybox		= new Skybox();
-		this->pHeightmap	= new Heightmap();
 		this->pCamera		= new Camera();
+		this->pSkybox		= NULL;
+		this->pHeightmap	= NULL;
 		this->models		= std::map<std::string, Model*>();
 		this->scripts		= std::list<std::string>();
 		
@@ -150,8 +150,14 @@ namespace engine
 	void Scene::Update()
 	{
 		this->pCamera->Update();
-		this->pSkybox->Update();
-		this->pHeightmap->Update();
+		if(this->pSkybox != NULL)
+		{
+			this->pSkybox->Update();
+		}
+		if(this->pHeightmap != NULL)
+		{
+			this->pHeightmap->Update();
+		}
 
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
@@ -174,12 +180,16 @@ namespace engine
 	{
 		argPRenderer->Push();
 		this->pCamera->Draw(argPRenderer);
-		argPRenderer->Push();
-		this->pSkybox->Draw(argPRenderer);
-		argPRenderer->Pop();
-		
-
-		this->pHeightmap->Draw(argPRenderer);
+		if(this->pSkybox != NULL)
+		{
+			argPRenderer->Push();
+			this->pSkybox->Draw(argPRenderer);
+			argPRenderer->Pop();
+		}
+		if(this->pHeightmap != NULL)
+		{
+			this->pHeightmap->Draw(argPRenderer);
+		}
 
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
@@ -222,12 +232,31 @@ namespace engine
 	}
 
 	/**
+	 * Gets the camera object
+	 * @return		Camera*
+	 */
+	Camera* Scene::GetCamera()
+	{
+		return this->pCamera;
+	}
+
+	/**
 	 * Gets the skybox object
 	 * @return		Skybox*
 	 */
 	Skybox* Scene::GetSkybox()
 	{
 		return this->pSkybox;
+	}
+
+	/**
+	 * Sets the skybox object
+	 * @param		Skybox*						The skybox to add
+	 * @return		void
+	 */
+	void Scene::SetSkybox(Skybox* argPSkybox)
+	{
+		this->pSkybox = argPSkybox;
 	}
 	
 	/**
@@ -240,12 +269,13 @@ namespace engine
 	}
 
 	/**
-	 * Gets the camera object
-	 * @return		Camera*
+	 * Sets the heightmap object
+	 * @param		Heightmap*					The heightmap to add
+	 * @return		void
 	 */
-	Camera* Scene::GetCamera()
+	void Scene::SetHeightmap(Heightmap* argPHeightmap)
 	{
-		return this->pCamera;
+		this->pHeightmap = argPHeightmap;
 	}
 
 	/**
