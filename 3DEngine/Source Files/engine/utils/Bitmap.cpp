@@ -90,6 +90,12 @@ namespace engine
 				inStream.read(&colorBuffer, 1);
 				memcpy(&blue, &colorBuffer, 1);
 
+				// skip 2 byte for 24 bit bmp
+				if(this->bitmapInfoHeader.biBitCount == 24)
+				{
+					inStream.seekg(2, std::ifstream::cur);
+				}
+
 				this->pPixelData[(z * this->bitmapInfoHeader.biWidth) + x] = blue;
 			}
 			// Set the cursor after the padding so we can continue reading
