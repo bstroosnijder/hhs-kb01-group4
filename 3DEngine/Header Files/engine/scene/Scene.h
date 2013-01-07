@@ -25,9 +25,9 @@ namespace engine
 	private:
 		std::list<Window*> windows;
 		
+		Camera* pCamera;
 		Skybox* pSkybox;
 		Heightmap* pHeightmap;
-		Camera* pCamera;
 		std::map<std::string, Model*> models;
 
 		std::list<std::string> scripts;
@@ -43,10 +43,12 @@ namespace engine
 		void AddWindow(Window* argPWindow);
 		void RemoveWindow(Window* argPWindow);
 		std::list<Window*> GetWindows();
-
-		Skybox* GetSkybox();
-		Heightmap* GetHeightmap();
+		
 		Camera* GetCamera();
+		Skybox* GetSkybox();
+		void SetSkybox(Skybox* argPSkybox);
+		Heightmap* GetHeightmap();
+		void SetHeightmap(Heightmap* argPHeightmap);
 		
 		Model* GetModel(std::string argModelName);
 		std::map<std::string, Model*> GetModels();
