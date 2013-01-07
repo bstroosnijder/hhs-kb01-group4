@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header Files\engine\input\MouseState.h" />
     <ClInclude Include="Header Files\engine\scene\Drawable.h" />
     <ClInclude Include="Header Files\engine\input\Keyboard.h" />
     <ClInclude Include="Header Files\engine\input\Mouse.h" />
@@ -44,7 +45,6 @@
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
     <ClInclude Include="Header Files\engine\input\InputObserver.h" />
     <ClInclude Include="Header Files\engine\input\KeyboardState.h" />
-    <ClInclude Include="Header Files\engine\input\MouseState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\main.cpp" />

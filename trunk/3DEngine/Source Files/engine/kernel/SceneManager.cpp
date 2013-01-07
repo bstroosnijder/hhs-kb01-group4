@@ -78,7 +78,7 @@ namespace engine
 	 * - resource type can be: "texture" or "model"
 	 * - filename is used to indentify a resource.
 	 * 
-	 * #heigtmap
+	 * #heightmap
 	 * <heightmap file>;<number of smoothing iterations>;<texture1>;<texture2>;<..texture[n]>
 	 * - heightmap has to be an 8bit bmp file
 	 * - at the moment only 1 texture works
@@ -325,6 +325,8 @@ namespace engine
 			Logger::Log("SceneManager: No model data", Logger::INFO, __FILE__, __LINE__);
 		}
 
+		std::vector<Model*> modelStack = std::vector<Model*>();
+		int numPrevTabs = 0;
 		// Loop through the models
 		for each(std::string dataLineModel in dataModels)
 		{
@@ -333,6 +335,18 @@ namespace engine
 
 			std::string modelName		= data.at(0);
 			std::string modelResource	= data.at(10);
+
+			int numTabs					= std::count(modelName.begin(), modelName.end(), '\t');
+			// Remove the tabs from the model name
+			modelName = modelName.substr(numTabs);
+			if(!modelStack.empty() && numTabs <= numPrevTabs)
+			{
+				for(long i = 0; i <= (numPrevTabs - numTabs); i++)
+				{
+					modelStack.pop_back();
+				}
+			}
+
 			
 			Logger::Log("SceneManager: Creating model: " + modelName, Logger::INFO, __FILE__, __LINE__);
 
@@ -355,7 +369,20 @@ namespace engine
 			{
 				pModel->SetTexture((i - 11), argPResourceManager->GetTexture(data.at(i)));
 			}
-			pScene->AddModel(modelName, pModel);
+
+			if(!modelStack.empty() && numTabs > 0)
+			{
+				modelStack.back()->AddModel(modelName, pModel);
+			}
+			else
+			{
+				pScene->AddModel(modelName, pModel);
+			}
+
+			modelStack.push_back(pModel);
+
+			// Set the number of prev tabs for the next iteration
+			numPrevTabs = numTabs;
 		}
 
 
@@ -408,7 +435,15 @@ namespace engine
 				else
 				{
 					Logger::Log("SceneManager: Adding script to model: " + modelName, Logger::INFO, __FILE__, __LINE__);
-					pScene->GetModel(modelName)->AddScript(data.at(i));
+					std::vector<std::string> modelNameParts = explode(':', modelName);
+
+					Model* pModel = pScene->GetModel(modelNameParts.front());
+					for(unsigned long j = 1; j < modelNameParts.size(); j++)
+					{
+						pModel = pModel->GetModel(modelNameParts.at(j));
+					}
+
+					pModel->AddScript(data.at(i));
 				}
 			}
 		}

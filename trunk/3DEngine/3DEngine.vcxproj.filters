@@ -180,6 +180,7 @@
     <ClInclude Include="Header Files\engine\input\MouseState.h">
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\input\MouseState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
