@@ -400,7 +400,14 @@ namespace engine
 
 			std::string inputEntity		= data.at(0);
 			Logger::Log("SceneManager: Hooking input to: " + inputEntity, Logger::INFO, __FILE__, __LINE__);
-			argPInputManager->AddObserver(pScene->GetModel(inputEntity));
+			if(inputEntity == "camera")
+			{
+				argPInputManager->AddObserver(pScene->GetCamera());
+			}
+			else
+			{
+				argPInputManager->AddObserver(pScene->GetModel(inputEntity));
+			}
 		}
 
 
