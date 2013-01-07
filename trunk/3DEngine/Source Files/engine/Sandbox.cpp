@@ -76,7 +76,7 @@ namespace engine
 	 * @param		Window*			The window to hook input listening to
 	 * @return		void
 	 */
-	void Sandbox::CreateKeyboard(Window* argPWindow)
+	void Sandbox::SetupDevices(Window* argPWindow)
 	{
 		this->kernel->GetInputManager()->SetupDevices(argPWindow);
 	}
