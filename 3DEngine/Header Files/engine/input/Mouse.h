@@ -1,9 +1,10 @@
 #ifndef MOUSE_H_
 #define MOUSE_H_
 
-#include <d3dx9.h>
+#include <d3d9.h>
 #include <dinput.h>
-#include "..\logger\Logger.h"
+#include "..\logger\logger.h"
+#include "..\window\Win32Window.h"
 
 namespace engine
 {
@@ -15,9 +16,11 @@ namespace engine
 	private:
 		LPDIRECTINPUTDEVICE8 pDevice;
 	public:
-		Mouse();//HWND argHwnd );
+		Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Mouse();
 		void CleanUp();
+
+		LPDIRECTINPUTDEVICE8 Mouse::GetDevice();
 
 		bool Mouse::InitMouse();
 		bool Mouse::DoAcquire();
