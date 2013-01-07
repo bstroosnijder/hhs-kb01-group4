@@ -24,7 +24,7 @@ namespace engine
 		void Update();
 		void Draw(Renderer* argPRenderer);
 
-		void Notify(KeyboardState* argPKeyboardState);
+		void Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState);
 	};
 }
 

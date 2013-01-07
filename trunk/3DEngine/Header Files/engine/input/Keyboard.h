@@ -2,9 +2,12 @@
 #define KEYBOARD_H_
 #define DIRECTINPUT_VERSION 0x0800
 
+#include <list>
+#include <string>
 #include <d3d9.h>
 #include <dinput.h>
 #include "..\logger\logger.h"
+#include "KeyboardState.h"
 #include "..\window\Win32Window.h"
 	
 namespace engine
@@ -15,14 +18,19 @@ namespace engine
 	class Keyboard
 	{
 	private:
+		std::list<std::string> keymap;
 		LPDIRECTINPUTDEVICE8 pDevice;
+		KeyboardState* pState;
 	public:
 		Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Keyboard();
 		void CleanUp();
 
+		void RegisterKey(std::string argKey);
+
 		bool Keyboard::DoAcquire();
-		bool Keyboard::ProcessKBInput(byte argKeyPressed);
+		KeyboardState* GetState();
+		void UpdateState();
 	};
 }
 

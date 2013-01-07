@@ -2,6 +2,7 @@
 #define MODEL_H_
 
 #include <map>
+#include <string>
 #include "..\..\logger\Logger.h"
 #include "..\Entity.h"
 #include "..\..\input\InputObserver.h"
@@ -27,7 +28,7 @@ namespace engine
 		void Update();
 		void Draw(Renderer* argPRenderer);
 
-		void Notify(KeyboardState* argPKeyboardState);
+		void Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState);
 
 		void SetResource(Resource* argPResource);
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);

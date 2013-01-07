@@ -10,7 +10,7 @@ namespace engine
 	{
 		for each(InputObserver* pInputObserver in this->pObservers)
 		{
-			pInputObserver->Notify(this->pKeyboardState);
+			pInputObserver->Notify(this->keybinds, this->pKeyboard->GetState()/*, this->mousebinds, this->pMouse->GetState()*/);
 		}
 	}
 
@@ -23,18 +23,18 @@ namespace engine
 	InputManager::InputManager()
 	{
 		Logger::Log("InputManager: Initializing", Logger::INFO, __FILE__, __LINE__);
+		this->keybinds		= std::map<std::string, std::string>();
 
-		this->pInput = NULL;
+		this->pInput		= NULL;
 		// Create the input object
 		DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&this->pInput, NULL);
 
-		this->pKeyboard = NULL;
-		this->pMouse = NULL;
+		this->pKeyboard		= NULL;
+		this->pMouse		= NULL;
 
-		this->pKeyboardState = new KeyboardState();
-		this->pMouseState = new MouseState();
+		this->pMouseState	= new MouseState();
 
-		this->pObservers = std::list<InputObserver*>();
+		this->pObservers	= std::list<InputObserver*>();
 
 		Logger::Log("InputManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -91,47 +91,13 @@ namespace engine
 		// If we have a keyboard, process it
 		if(this->pKeyboard != NULL)
 		{
-			if(DIK_W)
-			{
-				this->pKeyboardState->KEY_W			= this->pKeyboard->ProcessKBInput(DIK_W);
-			}
-			if(DIK_S)
-			{
-				this->pKeyboardState->KEY_S			= this->pKeyboard->ProcessKBInput(DIK_S);
-			}
-			if(DIK_A)
-			{
-				this->pKeyboardState->KEY_A			= this->pKeyboard->ProcessKBInput(DIK_A);
-			}
-			if(DIK_D)
-			{
-				this->pKeyboardState->KEY_D			= this->pKeyboard->ProcessKBInput(DIK_D);
-			}
-			if(DIK_Q)
-			{
-				this->pKeyboardState->KEY_Q			= this->pKeyboard->ProcessKBInput(DIK_Q);
-			}
-			if(DIK_E)
-			{
-				this->pKeyboardState->KEY_E			= this->pKeyboard->ProcessKBInput(DIK_E);
-			}
-			if(DIK_LSHIFT)
-			{
-				this->pKeyboardState->KEY_LSHIFT	= this->pKeyboard->ProcessKBInput(DIK_LSHIFT);
-			}
-			if(DIK_SPACE)
-			{
-				this->pKeyboardState->KEY_SPACE		= this->pKeyboard->ProcessKBInput(DIK_SPACE);
-			}
-			if(DIK_HOME)
-			{
-				this->pKeyboardState->KEY_HOME		= this->pKeyboard->ProcessKBInput(DIK_HOME);
-			}
+			this->pKeyboard->UpdateState();
 		}
 		
 		// If we have a mouse, process it
 		if(this->pMouse != NULL)
 		{
+			//this->pMouse->UpdateState();
 		}
 
 		// Tell our fans! :D
@@ -175,12 +141,33 @@ namespace engine
 
 		this->NotifyObservers();
 	}
+	
+	/**
+	 * Adds a new key to look out for
+	 * @param		std::string			The key to listen to
+	 * @param		std::string			The command to execute with this key
+	 */
+	void InputManager::RegisterKey(std::string argKey, std::string argBind)
+	{
+		this->pKeyboard->RegisterKey(argKey);
+		this->keybinds[argKey] = argBind;
+	}
 
+	/**
+	 * Adds an observer to the input manager
+	 * @param		InputObserver*		The observer that wil listen
+	 * @return		void
+	 */
 	void InputManager::AddObserver(InputObserver* argPInputObserver)
 	{
 		this->pObservers.push_back(argPInputObserver);
 	}
-
+	
+	/**
+	 * Removes an observer from the input manager
+	 * @param		InputObserver*		The observer that wil be removed
+	 * @return		void
+	 */
 	void InputManager::RemoveObserver(InputObserver* argPInputObserver)
 	{
 		this->pObservers.remove(argPInputObserver);

@@ -139,7 +139,7 @@ namespace engine
 		std::string dataSkybox;
 		std::string dataHeightmap;
 		std::vector<std::string> dataModels		= std::vector<std::string>();
-		std::string dataInput;
+		std::vector<std::string> dataInput		= std::vector<std::string>();
 		std::vector<std::string> dataScripts	= std::vector<std::string>();
 
 
@@ -190,7 +190,7 @@ namespace engine
 				}
 				else if(curSegment == "input")
 				{
-					dataInput = line;
+					dataInput.push_back(line);
 				}
 				else if(curSegment == "scripts")
 				{
@@ -244,8 +244,10 @@ namespace engine
 		}
 
 		// Loop through the resources
-		for each(std::string dataLineResource in dataResources)
+		std::vector<std::string>::iterator resourceIt;
+		for(resourceIt = dataResources.begin(); resourceIt != dataResources.end(); resourceIt++)
 		{
+			std::string dataLineResource = *resourceIt;
 			// explode the resource data
 			data = explode(';', dataLineResource);
 
@@ -328,9 +330,11 @@ namespace engine
 		std::vector<Model*> modelStack = std::vector<Model*>();
 		int numPrevTabs = 0;
 		// Loop through the models
-		for each(std::string dataLineModel in dataModels)
+		std::vector<std::string>::iterator modelIt;
+		for(modelIt = dataModels.begin(); modelIt != dataModels.end(); modelIt++)
 		{
-			// explode the script data
+			std::string dataLineModel = *modelIt;
+			// explode the resource data
 			data = explode(';', dataLineModel);
 
 			std::string modelName		= data.at(0);
@@ -393,20 +397,38 @@ namespace engine
 		{
 			Logger::Log("SceneManager: No input data", Logger::INFO, __FILE__, __LINE__);
 		}
-		else
-		{
-			// explode the resource data
-			data = explode(';', dataInput);
 
-			std::string inputEntity		= data.at(0);
-			Logger::Log("SceneManager: Hooking input to: " + inputEntity, Logger::INFO, __FILE__, __LINE__);
-			if(inputEntity == "camera")
+		// Loop through the models
+		std::vector<std::string>::iterator inputIt;
+		for(inputIt = dataInput.begin(); inputIt != dataInput.end(); inputIt++)
+		{
+			std::string dataLineInput = *inputIt;
+			// explode the resource data
+			data = explode(';', dataLineInput);
+
+			std::string action = data.at(0);
+			// Register an action to keys
+			if(action == "keymap")
 			{
-				argPInputManager->AddObserver(pScene->GetCamera());
+				std::string bind = data.at(1);
+				for(unsigned long i = 2; i < data.size(); i++)
+				{
+					argPInputManager->RegisterKey(data.at(i), bind);
+				}
 			}
-			else
+			// Add observers to the input manager
+			else if(action == "hook")
 			{
-				argPInputManager->AddObserver(pScene->GetModel(inputEntity));
+				std::string device	= data.at(1);
+				std::string entity	= data.at(2);
+				if(entity == "camera")
+				{
+					argPInputManager->AddObserver(pScene->GetCamera());
+				}
+				else
+				{
+					argPInputManager->AddObserver(pScene->GetModel(entity));
+				}
 			}
 		}
 
