@@ -198,6 +198,8 @@ namespace engine
 				}
 			}
 		}
+		// Porperly close the scene file
+		inStream.close();
 
 		// --- Parse the scene data
 
@@ -411,8 +413,6 @@ namespace engine
 			}
 		}
 
-		// Porperly close the scene file
-		inStream.close();
 		Logger::Log("SceneManager: Scenefile: " + argSceneFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
 		return pScene;
 	}
