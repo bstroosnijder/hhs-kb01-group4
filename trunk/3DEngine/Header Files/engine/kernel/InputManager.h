@@ -12,6 +12,7 @@
 #include "..\input\Keyboard.h"
 #include "..\input\KeyboardState.h"
 #include "..\input\Mouse.h"
+#include "..\input\MouseState.h"
 
 namespace engine
 {
@@ -27,7 +28,7 @@ namespace engine
 		Keyboard* pKeyboard;
 		KeyboardState* pKeyboardState;
 		Mouse* pMouse;
-		//MouseState* pMouseState;
+		MouseState* pMouseState;
 
 		std::list<InputObserver*> pObservers;
 		void NotifyObservers();

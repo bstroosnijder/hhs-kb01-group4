@@ -3,7 +3,7 @@
 
 #include <map>
 #include <string>
-#include <d3dx9.h>
+#include <d3dX9.h>
 #include "..\logger\Logger.h"
 #include "..\utils\fileExists.h"
 #include "..\renderer\Renderer.h"

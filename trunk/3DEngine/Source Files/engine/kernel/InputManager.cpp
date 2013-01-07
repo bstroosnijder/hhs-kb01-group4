@@ -32,6 +32,8 @@ namespace engine
 		this->pMouse = NULL;
 
 		this->pKeyboardState = new KeyboardState();
+		this->pMouseState = new MouseState();
+
 		this->pObservers = std::list<InputObserver*>();
 
 		Logger::Log("InputManager: Finished", Logger::INFO, __FILE__, __LINE__);
@@ -75,7 +77,7 @@ namespace engine
 		// Create a new keyboard device
 		this->pKeyboard			= new Keyboard(argPWindow, this->pInput);
 		// Create a new mouse device
-		//this->pMouse			= new Mouse(argPWindow, this->pInput);
+		this->pMouse			= new Mouse(argPWindow, this->pInput);
 	}
 
 	/**
@@ -133,6 +135,44 @@ namespace engine
 		}
 
 		// Tell our fans! :D
+
+		if(!SUCCEEDED(this->pMouse->GetDevice()->Poll())) 
+		{
+			this->pMouse->DoAcquire();
+		}
+
+		DIDEVICEOBJECTDATA od;
+		DWORD elements = 0;
+
+		HRESULT hr = this->pMouse->GetDevice()->GetDeviceData( sizeof(DIDEVICEOBJECTDATA), &od, &elements, 0 );
+
+		/*if(FAILED(hr)) {
+			Logger::Log("FAIL", Logger::FATAL, __FILE__, __LINE__);
+		} else {
+			Logger::Log("SUCCESS!", Logger::FATAL, __FILE__, __LINE__);
+		}*/
+
+		switch (od.dwOfs) 
+		{
+			// Mouse horizontal motion
+			case DIMOFS_X:
+				Logger::Log("Horizontal mouse movement detected", Logger::INFO, __FILE__, __LINE__);
+				break;
+
+			// Mouse vertical motion
+			case DIMOFS_Y:
+				Logger::Log("Vertical mouse movement detected", Logger::INFO, __FILE__, __LINE__);
+				break;
+
+			case DIMOFS_BUTTON0:
+				Logger::Log("Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
+				break;
+
+			case DIMOFS_BUTTON1:
+				Logger::Log("Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
+				break;
+		}
+
 		this->NotifyObservers();
 	}
 
