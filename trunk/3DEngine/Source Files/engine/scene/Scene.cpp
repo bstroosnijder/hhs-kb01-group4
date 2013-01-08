@@ -61,20 +61,42 @@ namespace engine
 			
 			pModelTarget->SetPosition(posTarget);
 		}
-		else if(funcName == "trample")
+		else if(funcName == "rotLeft")
+		{
+			Model* pModelTarget	= this->models[parts.at(1)];
+
+			Vector3 posTarget = pModelTarget->GetRotation();
+
+			posTarget.y -= 0.10f;
+
+			pModelTarget->SetRotation(posTarget);
+		}
+		else if(funcName == "rotRight")
+		{
+			Model* pModelTarget	= this->models[parts.at(1)];
+
+			Vector3 posTarget = pModelTarget->GetRotation();
+
+			posTarget.y += 0.10f;
+
+			pModelTarget->SetRotation(posTarget);
+		}
+		if(funcName == "equip")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
 
 			Vector3 posTarget = pModelTarget->GetPosition();
+			Vector3 rotTarget = pModelTarget->GetRotation();
+			Vector3 posCamera = this->pCamera->GetPosition();
 
-			posTarget.z -= 0.10f;
+			posCamera.x = posTarget.x - 1.0f;
+			posCamera.y = posTarget.y + 1.4f;
+			posCamera.z = posTarget.z - 5.0f;
 
-			if ( posTarget.z <= -5.0f)
-			{
-				posTarget.z = 20.0f;
-			}
+
+			pModelTarget->SetRotation(rotTarget);
+			this->pCamera->SetPosition(posCamera);
 			
-			pModelTarget->SetPosition(posTarget);
 		}
 	}
 

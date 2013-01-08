@@ -183,6 +183,11 @@ namespace engine
 		long imageWidth					= this->pBitmap->GetImageWidth();
 		long imageHeight				= this->pBitmap->GetImageHeight();
 
+		if (imageWidth != imageHeight)
+		{
+			Logger::Log("Trying to load a non-sqaure bitmap. This may cause runtime errors", Logger::FATAL, __FILE__, __LINE__);
+		}
+
 		float offsetX					= -(((float)imageWidth) / 2);
 		//float offsetX					= 0;
 		float offsetY					= 0;
