@@ -22,13 +22,13 @@ namespace engine
 		LPDIRECTINPUTDEVICE8 pDevice;
 		KeyboardState* pState;
 	public:
-		Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput);
+		Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Keyboard();
 		void CleanUp();
 
 		void RegisterKey(std::string argKey);
 
-		bool Keyboard::DoAcquire();
+		bool DoAcquire();
 		KeyboardState* GetState();
 		void UpdateState();
 	};

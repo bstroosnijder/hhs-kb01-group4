@@ -7,6 +7,7 @@
 #include "..\Entity.h"
 #include "..\..\input\InputObserver.h"
 #include "..\..\input\KeyboardState.h"
+#include "..\..\input\MouseState.h"
 #include "..\..\kernel\ResourceManager.h"
 #include "..\..\renderer\Renderer.h"
 
@@ -28,7 +29,8 @@ namespace engine
 		void Update();
 		void Draw(Renderer* argPRenderer);
 
-		void Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState);
+		void Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
+					std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState);
 
 		void SetResource(Resource* argPResource);
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);

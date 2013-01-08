@@ -78,7 +78,8 @@ namespace engine
 		}
 	}
 
-	void Model::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState)
+	void Model::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
+						std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState)
 	{
 		float speed = 0.025f;
 

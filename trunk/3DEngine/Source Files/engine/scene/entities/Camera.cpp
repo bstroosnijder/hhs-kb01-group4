@@ -73,7 +73,8 @@ namespace engine
 		argPRenderer->TransformProjectionMatrix();
 	}
 
-	void Camera::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState)
+	void Camera::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
+						std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState)
 	{
 		float speed = 0.025f;
 

@@ -3,6 +3,9 @@
 namespace engine
 {
 	//---Private attributes---
+
+	#define KEYDOWN(name, key) (name[key] & 0x80)
+
 	//---Public attributes---
 	//---Private methods---
 	//---Public methods---
@@ -34,6 +37,9 @@ namespace engine
 
 		this->pDevice->SetProperty( DIPROP_BUFFERSIZE, &dipdw.diph );
 
+		this->keymap = std::list<std::string>();
+		this->pState = new MouseState();
+
 		Logger::Log("Mouse: Finishing", Logger::INFO, __FILE__, __LINE__);
 	}
 
@@ -59,18 +65,12 @@ namespace engine
 		}
 	}
 
-	LPDIRECTINPUTDEVICE8 Mouse::GetDevice()
+	
+	MouseState* Mouse::GetState()
 	{
-		return this->pDevice;
+		return this->pState;
 	}
 
-	/**
-	 * TODO
-	 */
-	bool Mouse::InitMouse()
-	{
-		return true;
-	}
 	
 	/**
 	 * This method acquires the mouse in case its lost.
@@ -89,12 +89,15 @@ namespace engine
 
 		return false;
 	}
-	
+
 	/**
-	 * TODO
+	 * Adds a key to the keymap
+	 * @param		std::string					The key to add to the keymap
+	 * @return		void
 	 */
-	void Mouse::SetMouseBuffer()
+	void Mouse::RegisterKey(std::string argKey)
 	{
+		this->keymap.push_back(argKey);
 	}
 
 	/**
@@ -103,62 +106,91 @@ namespace engine
 	 */
 	void Mouse::UpdateState()
 	{
+		byte keyBuffer[256];
 		if(!SUCCEEDED(this->pDevice->Poll())) 
 		{			
-			bool res = this->DoAcquire();
-			if(res == true) {
-				Logger::Log("Acquired!", Logger::INFO, __FILE__, __LINE__);
-			} else {
-				
-				Logger::Log("Not acquired!", Logger::INFO, __FILE__, __LINE__);
-			}
+			this->DoAcquire();
 		}
-
-		DIDEVICEOBJECTDATA od;
-		DWORD elements = 1;
-
-		HRESULT hr = this->pDevice->GetDeviceData( sizeof(DIDEVICEOBJECTDATA), &od, &elements, 0 );
-
-		if(hr == DIERR_INPUTLOST) {
-			Logger::Log("INPUTLOST", Logger::FATAL, __FILE__, __LINE__);
-		}
-		if(hr == DIERR_INVALIDPARAM) {
-			Logger::Log("PARAM", Logger::FATAL, __FILE__, __LINE__);
-		}
-		if(hr == DIERR_NOTACQUIRED) {
-			Logger::Log("NOTACQ", Logger::FATAL, __FILE__, __LINE__);
-		}
-		if(hr == DIERR_NOTBUFFERED) {
-			Logger::Log("NOTBUFF", Logger::FATAL, __FILE__, __LINE__);
-		}
-		if(hr == DIERR_NOTINITIALIZED) {
-			Logger::Log("NOTINIT", Logger::FATAL, __FILE__, __LINE__);
-		}
-
-		std::stringstream ss;//create a stringstream
-		ss << elements;//add number to the stream
-		Logger::Log(ss.str(), Logger::INFO, __FILE__, __LINE__);
-
-		switch (od.dwOfs) 
+		else
 		{
+			this->pDevice->GetDeviceState(sizeof(keyBuffer), (LPVOID)&keyBuffer);
 
-			// Mouse horizontal motion
-			case DIMOFS_X:
-				Logger::Log("Horizontal mouse movement detected", Logger::INFO, __FILE__, __LINE__);
-				break;
+			DIDEVICEOBJECTDATA od;
+			DWORD elements = 1;
 
-			// Mouse vertical motion
-			case DIMOFS_Y:
-				Logger::Log("Vertical mouse movement detected", Logger::INFO, __FILE__, __LINE__);
-				break;
+			HRESULT hr = this->pDevice->GetDeviceData( sizeof(DIDEVICEOBJECTDATA), &od, &elements, 0 );
 
-			case DIMOFS_BUTTON0:
-				Logger::Log("Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
-				break;
+			if(hr == DIERR_INVALIDPARAM) 
+			{
+				Logger::Log("Mouse: Invalid paramater detected.", Logger::FATAL, __FILE__, __LINE__);
+				return;
+			}
+			if(hr == DIERR_NOTBUFFERED) 
+			{
+				Logger::Log("Mouse: Mouse is not buffered.", Logger::FATAL, __FILE__, __LINE__);
+				return;
+			}
+			if(hr == DIERR_NOTINITIALIZED) 
+			{
+				Logger::Log("Mouse: Mouse could not be initialized.", Logger::FATAL, __FILE__, __LINE__);
+				return;
+			}
 
-			case DIMOFS_BUTTON1:
-				Logger::Log("Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
-				break;
+			std::list<std::string>::iterator keymapIt;
+			for(keymapIt = this->keymap.begin(); keymapIt != this->keymap.end(); keymapIt++)
+			{
+				std::string key = *keymapIt;
+
+				if(key == "MOUSE_LEFT")
+				{
+					this->pState->MOUSE_LEFT = od.dwOfs == DIMOFS_X;
+				}
+				else if(key == "MOUSE_RIGHT")
+				{
+					this->pState->MOUSE_RIGHT = (bool)(KEYDOWN(keyBuffer, DIK_D) != 0);
+				}
+				else if(key == "MOUSE_UP")
+				{
+					this->pState->MOUSE_UP = (bool)(KEYDOWN(keyBuffer, DIK_E) != 0);
+				}
+				else if(key == "MOUSE_DOWN")
+				{
+					this->pState->MOUSE_DOWN = (bool)(KEYDOWN(keyBuffer, DIK_Q) != 0);
+				}
+				else if(key == "KEY_LMB")
+				{
+					this->pState->KEY_LMB = (bool)(KEYDOWN(keyBuffer, DIK_S) != 0);
+				}
+				else if(key == "KEY_RMB")
+				{
+					this->pState->KEY_RMB = (bool)(KEYDOWN(keyBuffer, DIK_W) != 0);
+				}
+
+				if(od.dwOfs == DIMOFS_X) 
+				{
+					// Mouse horizontal motion		
+					Logger::Log("Horizontal mouse movement detected", Logger::INFO, __FILE__, __LINE__);
+				}
+				if(od.dwOfs == DIMOFS_Y) 
+				{
+					// Mouse vertical motion		
+					Logger::Log("Vertical mouse movement detected", Logger::INFO, __FILE__, __LINE__);
+				}
+				if(od.dwOfs == DIMOFS_BUTTON0)
+				{
+					if(od.dwSequence % 2 == 0)
+					{
+						Logger::Log("Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
+					}
+				}
+				if(od.dwOfs == DIMOFS_BUTTON1)
+				{
+					if(od.dwSequence % 2 == 0)
+					{
+						Logger::Log("Right-Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
+					}
+				}
+			}
 		}
 	}
 }
