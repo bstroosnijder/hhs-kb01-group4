@@ -4,12 +4,13 @@
 namespace engine
 {
 	struct MouseState {
-		bool MOUSE_LEFT;
-		bool MOUSE_RIGHT;
-		bool MOUSE_UP;
-		bool MOUSE_DOWN;
 		bool KEY_LMB;
 		bool KEY_RMB;
+
+		long MOUSE_UP;
+		long MOUSE_DOWN;
+		long MOUSE_LEFT;
+		long MOUSE_RIGHT;
 
 		/**
 		 * Checks if a key is down based on a string
@@ -18,23 +19,7 @@ namespace engine
 		 */
 		bool IsKeyDown(std::string argKey)
 		{
-			if(argKey == "MOUSE_LEFT")
-			{
-				return MOUSE_LEFT;
-			}
-			else if(argKey == "MOUSE_RIGHT")
-			{
-				return MOUSE_RIGHT;
-			}
-			else if(argKey == "MOUSE_UP")
-			{
-				return MOUSE_UP;
-			}
-			if(argKey == "MOUSE_DOWN")
-			{
-				return MOUSE_DOWN;
-			}
-			else if(argKey == "KEY_LMB")
+			if(argKey == "KEY_LMB")
 			{
 				return KEY_LMB;
 			}
@@ -42,9 +27,49 @@ namespace engine
 			{
 				return KEY_RMB;
 			}
+			else if(argKey == "MOUSE_UP")
+			{
+				return MOUSE_UP > 0;
+			}
+			else if(argKey == "MOUSE_DOWN")
+			{
+				return MOUSE_DOWN > 0;
+			}
+			else if(argKey == "MOUSE_LEFT")
+			{
+				return MOUSE_LEFT > 0;
+			}
+			else if(argKey == "MOUSE_RIGHT")
+			{
+				return MOUSE_RIGHT > 0;
+			}
 			else
 			{
 				return false;
+			}
+		}
+		
+		long GetMouseSpeed(std::string argAxis)
+		{
+			if(argAxis == "MOUSE_UP")
+			{
+				return MOUSE_UP;
+			}
+			else if(argAxis == "MOUSE_DOWN")
+			{
+				return MOUSE_DOWN;
+			}
+			else if(argAxis == "MOUSE_LEFT")
+			{
+				return MOUSE_LEFT;
+			}
+			else if(argAxis == "MOUSE_RIGHT")
+			{
+				return MOUSE_RIGHT;
+			}
+			else
+			{
+				return 0;
 			}
 		}
 	};

@@ -21,6 +21,7 @@ namespace engine
 	private:
 		Resource* pResource;
 		std::map<std::string, Model*> models;
+		void PerformBind(std::string argBind, long argMouseSpeed);
 	public:
 		Model(Resource* argPResource);
 		~Model();
