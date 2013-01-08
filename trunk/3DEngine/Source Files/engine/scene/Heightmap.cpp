@@ -210,7 +210,7 @@ namespace engine
 				vertices[vIndex].z		= offsetZ + pixelZ;
 
 				vertices[vIndex].u		= pixelX / ((float)imageWidth);
-				vertices[vIndex].v		= pixelZ / ((float)imageHeight);
+				vertices[vIndex].v		= 1 - (pixelZ / ((float)imageHeight));
 			
 			}
 		}

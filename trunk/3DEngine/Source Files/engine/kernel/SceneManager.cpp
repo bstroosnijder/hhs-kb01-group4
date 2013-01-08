@@ -413,7 +413,9 @@ namespace engine
 				std::string bind = data.at(1);
 				for(unsigned long i = 2; i < data.size(); i++)
 				{
-					argPInputManager->RegisterKey(data.at(i), bind);
+					std::string key = data.at(i);
+					Logger::Log("SceneManager: " + key + ": " + bind, Logger::INFO, __FILE__, __LINE__);
+					argPInputManager->RegisterKey(key, bind);
 				}
 			}
 			// Add observers to the input manager
@@ -421,6 +423,8 @@ namespace engine
 			{
 				std::string device	= data.at(1);
 				std::string entity	= data.at(2);
+
+				Logger::Log("SceneManager: Hooking input to: " + entity, Logger::INFO, __FILE__, __LINE__);
 				if(entity == "camera")
 				{
 					argPInputManager->AddObserver(pScene->GetCamera());
