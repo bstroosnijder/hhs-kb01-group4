@@ -139,6 +139,16 @@ namespace engine
 				{
 					this->rotation.y += speed;
 				}
+				// Pan Up
+				else if(bind == "pan_up")
+				{
+					this->rotation.x -= speed;
+				}
+				// Pan Down
+				else if(bind == "pan_down")
+				{
+					this->rotation.x += speed;
+				}
 
 				// Reset
 				else if(bind == "reset")
