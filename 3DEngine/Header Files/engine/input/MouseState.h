@@ -3,8 +3,11 @@
 
 namespace engine
 {
-	struct MouseState
-	{
+	struct MouseState {
+		LONG    lX;
+		LONG    lY;
+		LONG    lZ;
+		BYTE    rgbButtons[8];
 	};
 }
 

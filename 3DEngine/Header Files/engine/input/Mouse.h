@@ -15,6 +15,7 @@ namespace engine
 	{
 	private:
 		LPDIRECTINPUTDEVICE8 pDevice;
+		DIPROPDWORD dipdw;
 	public:
 		Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Mouse();
@@ -26,6 +27,7 @@ namespace engine
 		bool Mouse::DoAcquire();
 		//MouseStruct Mouse::GetMouseInput();
 		void Mouse::SetMouseBuffer();
+		void Mouse::UpdateState();
 	};
 }
 
