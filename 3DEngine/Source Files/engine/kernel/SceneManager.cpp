@@ -413,7 +413,7 @@ namespace engine
 				std::string bind = data.at(1);
 				for(unsigned long i = 2; i < data.size(); i++)
 				{
-					argPInputManager->RegisterMouseKey(data.at(i), bind);
+					argPInputManager->RegisterKey(data.at(i), bind);
 				}
 			}
 			//Register an action a mousekey/movement

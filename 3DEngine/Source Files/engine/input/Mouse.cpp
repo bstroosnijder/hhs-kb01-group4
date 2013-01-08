@@ -168,26 +168,22 @@ namespace engine
 
 				if(od.dwOfs == DIMOFS_X) 
 				{
-					// Mouse horizontal motion		
-					Logger::Log("Horizontal mouse movement detected", Logger::INFO, __FILE__, __LINE__);
+					// Mouse horizontal motion
 				}
 				if(od.dwOfs == DIMOFS_Y) 
 				{
-					// Mouse vertical motion		
-					Logger::Log("Vertical mouse movement detected", Logger::INFO, __FILE__, __LINE__);
+					// Mouse vertical motion
 				}
 				if(od.dwOfs == DIMOFS_BUTTON0)
 				{
 					if(od.dwSequence % 2 == 0)
 					{
-						Logger::Log("Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
 					}
 				}
 				if(od.dwOfs == DIMOFS_BUTTON1)
 				{
 					if(od.dwSequence % 2 == 0)
 					{
-						Logger::Log("Right-Mousebutton detected", Logger::INFO, __FILE__, __LINE__);
 					}
 				}
 			}
