@@ -5,6 +5,91 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
+
+	/**
+	 * A method that performs the action corresponding to the bind
+	 * @param		std::string		The bind to execute
+	 * @param		int				mouse x
+	 * @param		int				mouse y
+	 * @return		void
+	 */
+	void Model::PerformBind(std::string argBind, long argMouseSpeed)
+	{
+		float speed = 0.025f;
+		if(argMouseSpeed > 0)
+		{
+			speed *= argMouseSpeed;
+		}
+
+
+		// Move Forward
+		if(argBind == "move_forward")
+		{
+			this->position.x -= sin(this->rotation.y);
+			//this->position.y += sin(this->rotation.x);
+			this->position.z -= cos(this->rotation.y);
+		}
+		// Move Backward
+		else if(argBind == "move_backward")
+		{
+			this->position.x += sin(this->rotation.y);
+			//this->position.y -= sin(this->rotation.x);
+			this->position.z += cos(this->rotation.y);
+		}
+		// Move Left
+		else if(argBind == "move_left")
+		{
+			this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
+			//this->position.y += sin(this->rotation.x);
+			this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
+		}
+		// Move Right
+		else if(argBind == "move_right")
+		{
+			this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
+			//this->position.y -= sin(this->rotation.x);
+			this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
+		}
+		// Move Up
+		else if(argBind == "move_up")
+		{
+			this->position.y += speed * 20;
+		}
+		// Move Down
+		else if(argBind == "move_down")
+		{
+			this->position.y -= speed * 20;
+		}
+		// Turn Left
+		else if(argBind == "turn_left")
+		{
+			this->rotation.y -= speed;
+		}
+		// Turn Right
+		else if(argBind == "turn_right")
+		{
+			this->rotation.y += speed;
+		}
+		// Pan Up
+		else if(argBind == "pan_up")
+		{
+			this->rotation.x -= speed;
+		}
+		// Pan Down
+		else if(argBind == "pan_down")
+		{
+			this->rotation.x += speed;
+		}
+
+		// Reset
+		else if(argBind == "reset")
+		{
+			this->position = Vector3(0.0f, 0.0f, 0.0f);
+			this->rotation = Vector3(0.0f, 0.0f, 0.0f);
+			this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
+		}
+	}
+
 	//---Public methods---
 
 	/**
@@ -81,8 +166,6 @@ namespace engine
 	void Model::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
 						std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState)
 	{
-		float speed = 0.025f;
-
 		std::map<std::string, std::string>::iterator keybindsIt;
 		for(keybindsIt = argKeybinds.begin(); keybindsIt != argKeybinds.end(); keybindsIt++)
 		{
@@ -91,72 +174,19 @@ namespace engine
 
 			if(argPKeyboardState->IsKeyDown(key))
 			{
-				// Move Forward
-				if(bind == "move_forward")
-				{
-					this->position.x -= sin(this->rotation.y);
-					//this->position.y += sin(this->rotation.x);
-					this->position.z -= cos(this->rotation.y);
-				}
-				// Move Backward
-				else if(bind == "move_backward")
-				{
-					this->position.x += sin(this->rotation.y);
-					//this->position.y -= sin(this->rotation.x);
-					this->position.z += cos(this->rotation.y);
-				}
-				// Move Left
-				else if(bind == "move_left")
-				{
-					this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
-					//this->position.y += sin(this->rotation.x);
-					this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
-				}
-				// Move Right
-				else if(bind == "move_right")
-				{
-					this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
-					//this->position.y -= sin(this->rotation.x);
-					this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
-				}
-				// Move Up
-				else if(bind == "move_up")
-				{
-					this->position.y += speed * 20;
-				}
-				// Move Down
-				else if(bind == "move_down")
-				{
-					this->position.y -= speed * 20;
-				}
-				// Turn Left
-				else if(bind == "turn_left")
-				{
-					this->rotation.y -= speed;
-				}
-				// Turn Right
-				else if(bind == "turn_right")
-				{
-					this->rotation.y += speed;
-				}
-				// Pan Up
-				else if(bind == "pan_up")
-				{
-					this->rotation.x -= speed;
-				}
-				// Pan Down
-				else if(bind == "pan_down")
-				{
-					this->rotation.x += speed;
-				}
+				this->PerformBind(bind, 0);
+			}
+		}
 
-				// Reset
-				else if(bind == "reset")
-				{
-					this->position = Vector3(0.0f, 0.0f, 0.0f);
-					this->rotation = Vector3(0.0f, 0.0f, 0.0f);
-					this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
-				}
+		std::map<std::string, std::string>::iterator mouseKeybindsIt;
+		for(mouseKeybindsIt = argMouseKeybinds.begin(); mouseKeybindsIt != argMouseKeybinds.end(); mouseKeybindsIt++)
+		{
+			std::string key		= mouseKeybindsIt->first;
+			std::string bind	= mouseKeybindsIt->second;
+
+			if(argPMouseState->IsKeyDown(key))
+			{
+				this->PerformBind(bind, argPMouseState->GetMouseSpeed(key));
 			}
 		}
 	}

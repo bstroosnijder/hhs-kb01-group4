@@ -3,9 +3,6 @@
 namespace engine
 {
 	//---Private attributes---
-
-	#define KEYDOWN(name, key) (name[key] & 0x80)
-
 	//---Public attributes---
 	//---Private methods---
 	//---Public methods---
@@ -33,9 +30,8 @@ namespace engine
 
 		argPInput->CreateDevice(GUID_SysMouse, &this->pDevice, NULL);
 		this->pDevice->SetDataFormat(&c_dfDIMouse2);
-		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_EXCLUSIVE | DISCL_FOREGROUND);
-
-		this->pDevice->SetProperty( DIPROP_BUFFERSIZE, &dipdw.diph );
+		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+		this->pDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
 
 		this->keymap = std::list<std::string>();
 		this->pState = new MouseState();
@@ -113,12 +109,9 @@ namespace engine
 		}
 		else
 		{
-			this->pDevice->GetDeviceState(sizeof(keyBuffer), (LPVOID)&keyBuffer);
-
-			DIDEVICEOBJECTDATA od;
-			DWORD elements = 1;
-
-			HRESULT hr = this->pDevice->GetDeviceData( sizeof(DIDEVICEOBJECTDATA), &od, &elements, 0 );
+			unsigned long elements = 1;
+			DIDEVICEOBJECTDATA data;
+			HRESULT hr = this->pDevice->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &data, &elements, 0);
 
 			if(hr == DIERR_INVALIDPARAM) 
 			{
@@ -136,54 +129,73 @@ namespace engine
 				return;
 			}
 
-			std::list<std::string>::iterator keymapIt;
-			for(keymapIt = this->keymap.begin(); keymapIt != this->keymap.end(); keymapIt++)
+			std::list<std::string>::iterator mouseKeymapIt;
+			for(mouseKeymapIt = this->keymap.begin(); mouseKeymapIt != this->keymap.end(); mouseKeymapIt++)
 			{
-				std::string key = *keymapIt;
+				std::string key = *mouseKeymapIt;
 
-				if(key == "MOUSE_LEFT")
+				if(key == "KEY_LMB")
 				{
-					this->pState->MOUSE_LEFT = od.dwOfs == DIMOFS_X;
-				}
-				else if(key == "MOUSE_RIGHT")
-				{
-					this->pState->MOUSE_RIGHT = (bool)(KEYDOWN(keyBuffer, DIK_D) != 0);
-				}
-				else if(key == "MOUSE_UP")
-				{
-					this->pState->MOUSE_UP = (bool)(KEYDOWN(keyBuffer, DIK_E) != 0);
-				}
-				else if(key == "MOUSE_DOWN")
-				{
-					this->pState->MOUSE_DOWN = (bool)(KEYDOWN(keyBuffer, DIK_Q) != 0);
-				}
-				else if(key == "KEY_LMB")
-				{
-					this->pState->KEY_LMB = (bool)(KEYDOWN(keyBuffer, DIK_S) != 0);
+					if(data.dwOfs == DIMOFS_BUTTON0)
+					{
+						if(this->pState->KEY_LMB == true)
+						{
+							this->pState->KEY_LMB = false;
+						}
+						else
+						{
+							this->pState->KEY_LMB = true;
+						}
+					}
 				}
 				else if(key == "KEY_RMB")
 				{
-					this->pState->KEY_RMB = (bool)(KEYDOWN(keyBuffer, DIK_W) != 0);
-				}
-
-				if(od.dwOfs == DIMOFS_X) 
-				{
-					// Mouse horizontal motion
-				}
-				if(od.dwOfs == DIMOFS_Y) 
-				{
-					// Mouse vertical motion
-				}
-				if(od.dwOfs == DIMOFS_BUTTON0)
-				{
-					if(od.dwSequence % 2 == 0)
+					if(data.dwOfs == DIMOFS_BUTTON1)
 					{
+						if(this->pState->KEY_RMB == true)
+						{
+							this->pState->KEY_RMB = false;
+						}
+						else
+						{
+							this->pState->KEY_RMB = true;
+						}
 					}
 				}
-				if(od.dwOfs == DIMOFS_BUTTON1)
+				else if(key == "MOUSE_UP")
 				{
-					if(od.dwSequence % 2 == 0)
+					long speed = (long)data.dwData;
+					this->pState->MOUSE_UP = 0;
+					if(data.dwOfs == DIMOFS_Y && speed < 0)
 					{
+						this->pState->MOUSE_UP = -speed;
+					}
+				}
+				else if(key == "MOUSE_DOWN")
+				{
+					long speed = (long)data.dwData;
+					this->pState->MOUSE_DOWN = 0;
+					if(data.dwOfs == DIMOFS_Y && speed > 0)
+					{
+						this->pState->MOUSE_DOWN = speed;
+					}
+				}
+				else if(key == "MOUSE_LEFT")
+				{
+					long speed = (long)data.dwData;
+					this->pState->MOUSE_LEFT = 0;
+					if(data.dwOfs == DIMOFS_X && speed < 0)
+					{
+						this->pState->MOUSE_LEFT = -speed;
+					}
+				}
+				else if(key == "MOUSE_RIGHT")
+				{
+					long speed = (long)data.dwData;
+					this->pState->MOUSE_RIGHT = 0;
+					if(data.dwOfs == DIMOFS_X && speed > 0)
+					{
+						this->pState->MOUSE_RIGHT = speed;
 					}
 				}
 			}

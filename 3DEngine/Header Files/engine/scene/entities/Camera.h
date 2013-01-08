@@ -17,6 +17,8 @@ namespace engine
 	 */
 	class Camera : public Entity, public InputObserver
 	{
+	private:
+		void PerformBind(std::string argBind, long argMouseSpeed);
 	public:
 		Camera();
 		~Camera();
