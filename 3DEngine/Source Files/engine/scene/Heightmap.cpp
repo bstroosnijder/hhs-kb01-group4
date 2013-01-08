@@ -201,42 +201,20 @@ namespace engine
 			for(long x = 0; x < imageWidth; x++)
 			{
 				long vIndex				= (z * imageWidth) + x;
-				float pixelX			= offsetX + (x * pixelDistance);
-				float pixelY			= offsetY + pixelData[vIndex] / 15.0f;
-				float pixelZ			= offsetZ + (z * pixelDistance);
+				float pixelX			= x * pixelDistance;
+				float pixelY			= pixelData[vIndex] / 15.0f;
+				float pixelZ			= z * pixelDistance;
 
-				vertices[vIndex].x		= pixelX;
-				vertices[vIndex].y		= pixelY;
-				vertices[vIndex].z		= pixelZ;
+				vertices[vIndex].x		= offsetX + pixelX;
+				vertices[vIndex].y		= offsetY + pixelY;
+				vertices[vIndex].z		= offsetZ + pixelZ;
 
-				if(pixelY >= 12.0f)
-				{
-					vertices[vIndex].color	= 0xFFFF0000;
-				}
-				else if(pixelY < 0.3f)
-				{
-					vertices[vIndex].color	= 0xFF0000FF;
-				}
-				else
-				{
-					vertices[vIndex].color	= 0xFFcccccc * ((unsigned long)pixelY);
-				}
-
-				if(vIndex % 2 == 0)
-				{
-					// TODO: figure out how to make this dynamic
-					// it has to do with how the texture is multiplied over the primitives
-					// with the current numbers it puts 1 image on 1 primitive
-					vertices[vIndex].u		= ((float)vIndex) / (128 - 1);
-					vertices[vIndex].v		= 1.0f;
-				}
-				else
-				{
-					vertices[vIndex].u		= ((float)vIndex) / (128 - 1);
-					vertices[vIndex].v		= 0.0f;
-				}
+				vertices[vIndex].u		= pixelX / ((float)imageWidth);
+				vertices[vIndex].v		= pixelZ / ((float)imageHeight);
+			
 			}
 		}
+
 
 		// Smooth the map
 		this->SmoothMap(vertices, argSmoothing);
@@ -306,8 +284,8 @@ namespace engine
 		argPRenderer->SetStreamSource(this->pVertexBuffer, sizeof(TexturedVector3));
 		argPRenderer->SetFVF(D3DFVFTexturedVector3);
 		argPRenderer->SetIndices(this->pIndexBuffer);
-
 		argPRenderer->SetTexture(0, this->textures[0]);
+		
 
 		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, this->numVertices, this->numPrimitives);
 	}
