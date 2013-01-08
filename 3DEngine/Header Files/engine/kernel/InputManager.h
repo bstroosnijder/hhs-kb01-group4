@@ -24,6 +24,7 @@ namespace engine
 	{
 	private:
 		std::map<std::string, std::string> keybinds;
+		std::map<std::string, std::string> mousekeybinds;
 
 		LPDIRECTINPUT8 pInput;
 
@@ -40,10 +41,10 @@ namespace engine
 
 		void SetupDevices(Window* argWindow);
 
- 		// TOOD: needed here?
 		void InputBeat();
 
 		void RegisterKey(std::string argKey, std::string argBind);
+		void RegisterMouseKey(std::string argKey, std::string argBind);
 
 		void AddObserver(InputObserver* argPInputObserver);
 		void RemoveObserver(InputObserver* argPInputObserver);

@@ -10,7 +10,7 @@ namespace engine
 	{
 		for each(InputObserver* pInputObserver in this->pObservers)
 		{
-			pInputObserver->Notify(this->keybinds, this->pKeyboard->GetState()/*, this->mousebinds, this->pMouse->GetState()*/);
+			pInputObserver->Notify(this->keybinds, this->pKeyboard->GetState(), this->mousekeybinds, this->pMouse->GetState());
 		}
 	}
 
@@ -113,6 +113,12 @@ namespace engine
 	{
 		this->pKeyboard->RegisterKey(argKey);
 		this->keybinds[argKey] = argBind;
+	}
+
+	void InputManager::RegisterMouseKey(std::string argKey, std::string argBind)
+	{
+		this->pMouse->RegisterKey(argKey);
+		this->mousekeybinds[argKey] = argBind;
 	}
 
 	/**

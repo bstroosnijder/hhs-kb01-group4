@@ -5,6 +5,7 @@
 #include <dinput.h>
 #include "..\logger\logger.h"
 #include "..\window\Win32Window.h"
+#include "MouseState.h"
 
 namespace engine
 {
@@ -14,20 +15,21 @@ namespace engine
 	class Mouse
 	{
 	private:
+		std::list<std::string> keymap;
 		LPDIRECTINPUTDEVICE8 pDevice;
+		MouseState* pState;
+
 		DIPROPDWORD dipdw;
 	public:
 		Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Mouse();
 		void CleanUp();
-
-		LPDIRECTINPUTDEVICE8 Mouse::GetDevice();
-
-		bool Mouse::InitMouse();
-		bool Mouse::DoAcquire();
-		//MouseStruct Mouse::GetMouseInput();
-		void Mouse::SetMouseBuffer();
-		void Mouse::UpdateState();
+		
+		void RegisterKey(std::string argKey);
+		
+		bool DoAcquire();
+		MouseState* GetState();
+		void UpdateState();
 	};
 }
 
