@@ -58,28 +58,28 @@ namespace engine
 		short indices[]					=
 		{
 			// Front
-			0, 2, 1,
-			3, 1, 2,
+			0, 1, 2,
+			3, 2, 1,
 
 			// Back
-			5, 7, 4,
-			6, 4, 7,
+			5, 4, 7,
+			6, 7, 4,
 
 			// Left
-			4, 6, 0,
-			2, 0, 6,
+			4, 0, 6,
+			2, 6, 0,
 
 			// Right
-			1, 3, 5,
-			7, 5, 3,
+			1, 5, 3,
+			7, 3, 5,
 
 			// Top
-			4, 0, 5,
-			1, 5, 0,
+			4, 5, 0,
+			1, 0, 5,
 
 			// Bottom
-			2, 6, 3,
-			7, 3, 6
+			2, 3, 6,
+			7, 6, 3,
 		};
 
 		// Create the vertex buffer
@@ -96,16 +96,39 @@ namespace engine
 	void Skybox::Draw(Renderer* argPRenderer)
 	{
 		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
+		// Reset the actual world matrxi again
 		D3DXMatrixIdentity(&this->matWorld);
+
+		// Scaling
+		D3DXMATRIXA16 matScaling;
+		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matScaling);
+
+		// Rotation X
+		D3DXMATRIXA16 matRotationX;
+		D3DXMatrixRotationX(&matRotationX, this->rotation.x);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationX);
+		// Rotation Y
+		D3DXMATRIXA16 matRotationY;
+		D3DXMatrixRotationY(&matRotationY, this->rotation.y);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationY);
+		// Rotation Z
+		D3DXMATRIXA16 matRotationZ;
+		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationZ);
+
+
 		D3DXMatrixMultiply(&this->matWorld, pRenderer->matWorld->GetTop(), &this->matWorld);
 
 		D3DXVECTOR3 vecScale;
 		D3DXQUATERNION quatRotation;
 		D3DXVECTOR3 vecTranslation;
+		// Decompose the current world matrix, we need this so we counter camera movement and keep the skybox still
 		D3DXMatrixDecompose(&vecScale, &quatRotation, &vecTranslation, &this->matWorld);
-
+		
+		// Position
 		D3DXMATRIXA16 matTranslation;
-		D3DXMatrixTranslation(&matTranslation, vecTranslation.x, vecTranslation.y, vecTranslation.z);
+		D3DXMatrixTranslation(&matTranslation, (vecTranslation.x + this->position.x), (vecTranslation.y + this->position.y), (vecTranslation.z + this->position.z));
 		D3DXMatrixInverse(&matTranslation, NULL, &matTranslation);
 		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matTranslation);
 
@@ -116,8 +139,8 @@ namespace engine
 		argPRenderer->TransformViewMatrix();
 		argPRenderer->TransformProjectionMatrix();
 
-		// Turn of the Z axis
 		LPDIRECT3DDEVICE9 pDevice = (LPDIRECT3DDEVICE9)argPRenderer->GetDevice();
+		// Turn of the Z axis
 		pDevice->SetRenderState(D3DRS_ZENABLE, false);
 
 		argPRenderer->SetStreamSource(this->pVertexBuffer, sizeof(TexturedVector3));
