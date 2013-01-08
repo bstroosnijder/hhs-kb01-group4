@@ -85,18 +85,30 @@ namespace engine
 		{
 			for(long x = 0; x < this->imageWidth; x++)
 			{
-				unsigned char blue;
 				char colorBuffer;
+				unsigned int color	= 0;
+				unsigned char red	= 0;
+				unsigned char green	= 0;
+				unsigned char blue	= 0;
+
+				// Read and save the red color
 				inStream.read(&colorBuffer, 1);
-				memcpy(&blue, &colorBuffer, 1);
+				memcpy(&red, &colorBuffer, 1);
+				color += red;
 
 				// skip 2 byte for 24 bit bmp
 				if(this->bitmapInfoHeader.biBitCount == 24)
 				{
-					inStream.seekg(2, std::ifstream::cur);
+					// Read and save the green color
+					inStream.read(&colorBuffer, 1);
+					memcpy(&green, &colorBuffer, 1);
+
+					// Read and save the blue color
+					inStream.read(&colorBuffer, 1);
+					memcpy(&blue, &colorBuffer, 1);
 				}
 
-				this->pPixelData[(z * this->bitmapInfoHeader.biWidth) + x] = blue;
+				this->pPixelData[(z * this->bitmapInfoHeader.biWidth) + x] = (unsigned char)color;
 			}
 			// Set the cursor after the padding so we can continue reading
 			inStream.seekg(padding, std::ifstream::cur);
