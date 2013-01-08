@@ -413,7 +413,9 @@ namespace engine
 				std::string bind = data.at(1);
 				for(unsigned long i = 2; i < data.size(); i++)
 				{
-					argPInputManager->RegisterKey(data.at(i), bind);
+					std::string key = data.at(i);
+					Logger::Log("SceneManager: " + key + ": " + bind, Logger::INFO, __FILE__, __LINE__);
+					argPInputManager->RegisterKey(key, bind);
 				}
 			}
 			//Register an action a mousekey/movement
@@ -422,7 +424,9 @@ namespace engine
 				std::string bind = data.at(1);
 				for(unsigned long i = 2; i < data.size(); i++)
 				{
-					argPInputManager->RegisterMouseKey(data.at(i), bind);
+					std::string key = data.at(i);
+					Logger::Log("SceneManager: " + key + ": " + bind, Logger::INFO, __FILE__, __LINE__);
+					argPInputManager->RegisterMouseKey(key, bind);
 				}
 			}
 			// Add observers to the input manager
