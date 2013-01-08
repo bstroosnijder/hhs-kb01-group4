@@ -31,7 +31,7 @@ namespace engine
 								&presentParameters, &pDevice);
 
 		// Set render states
-		this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
@@ -203,7 +203,7 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformProjectionMatrix()
 	{
-		D3DXMatrixPerspectiveFovLH(this->matProjection->GetTop(), (D3DX_PI / 4), 1.0f, 1.0f, 1000.0f);
+		D3DXMatrixPerspectiveFovLH(this->matProjection->GetTop(), (D3DX_PI / 4), 1.0f, 1.0f, 200.0f);
 		this->pDevice->SetTransform(D3DTS_PROJECTION, this->matProjection->GetTop());
 	}
 
