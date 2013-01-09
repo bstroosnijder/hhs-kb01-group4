@@ -91,13 +91,40 @@ namespace engine
         while(this->pWindowManager->GetWindowCount() > 0)
         {
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-            {				
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
+            {
+				switch(msg.message)
+				{
+				case WM_KEYDOWN:
+				case WM_KEYUP:
+					// Update the keyboard
+					if(this->pInputManager->HasDevice(InputManager::KEYBOARD))
+					{
+						//this->pInputManager->UpdateDevice(InputManager::KEYBOARD);
+					}
+					break;
+
+				case WM_LBUTTONDOWN:
+				case WM_LBUTTONUP:
+				case WM_RBUTTONDOWN:
+				case WM_RBUTTONUP:
+				case WM_MOUSEMOVE:
+					// Update the mouse
+					if(this->pInputManager->HasDevice(InputManager::MOUSE))
+					{
+						//this->pInputManager->UpdateDevice(InputManager::MOUSE);
+					}
+					break;
+
+				default:
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+					break;
+				}
             }
 			else
 			{
 				this->HeartBeat();
+				this->pInputManager->InputBeat();
 			}
         }
 
@@ -133,9 +160,6 @@ namespace engine
 				pRenderer->Present(pWindow);
 			}
 		}
-
-		// Handle the input
-		this->pInputManager->InputBeat();
 	}
 
 	/**

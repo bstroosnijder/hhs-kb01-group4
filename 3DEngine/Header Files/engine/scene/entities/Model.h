@@ -5,8 +5,9 @@
 #include <string>
 #include "..\..\logger\Logger.h"
 #include "..\Entity.h"
-#include "..\..\input\InputObserver.h"
+#include "..\..\input\listeners\KeyboardListener.h"
 #include "..\..\input\KeyboardState.h"
+#include "..\..\input\listeners\MouseListener.h"
 #include "..\..\input\MouseState.h"
 #include "..\..\kernel\ResourceManager.h"
 #include "..\..\renderer\Renderer.h"
@@ -16,22 +17,23 @@ namespace engine
 	/**
 	 * An entity with meshes and textures
 	 */
-	class Model : public Entity, public InputObserver
+	class Model : public Entity, public KeyboardListener, public MouseListener
 	{
 	private:
 		Resource* pResource;
 		std::map<std::string, Model*> models;
-		void PerformBind(std::string argBind, long argMouseSpeed);
+
+		void DoBind(std::string argBind, long argSpeed);
 	public:
 		Model(Resource* argPResource);
 		~Model();
 		void CleanUp();
+		
+		void DoKeyboardEvent(std::map<std::string, std::string> argBinds, KeyboardState* argPState);
+		void DoMouseEvent(std::map<std::string, std::string> argBinds, MouseState* argPState);
 
 		void Update();
 		void Draw(Renderer* argPRenderer);
-
-		void Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
-					std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState);
 
 		void SetResource(Resource* argPResource);
 		void SetTexture(unsigned long argIndex, LPDIRECT3DTEXTURE9 argTexture);

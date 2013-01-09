@@ -2,8 +2,8 @@
 #define SCENEMANAGER_H_
 
 #include <map>
-#include <fstream>
 #include <string>
+#include <fstream>
 #include <algorithm>
 #include "..\logger\Logger.h"
 #include "..\utils\explode.h"
@@ -11,6 +11,7 @@
 #include "..\scene\Scene.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
+#include "..\input\InputDevice.h"
 #include "..\renderer\Renderer.h"
 
 namespace engine

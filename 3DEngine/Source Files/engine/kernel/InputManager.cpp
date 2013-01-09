@@ -4,16 +4,11 @@ namespace engine
 {
 	//---Private attributes---
 	//---Public attributes---
+
+	const unsigned long InputManager::KEYBOARD	= 0;
+	const unsigned long InputManager::MOUSE		= 1;
+
 	//---Private methods---
-
-	void InputManager::NotifyObservers()
-	{
-		for each(InputObserver* pInputObserver in this->pObservers)
-		{
-			pInputObserver->Notify(this->keybinds, this->pKeyboard->GetState(), this->mousekeybinds, this->pMouse->GetState());
-		}
-	}
-
 	//---Public methods---
 
 	/**
@@ -23,7 +18,6 @@ namespace engine
 	InputManager::InputManager()
 	{
 		Logger::Log("InputManager: Initializing", Logger::INFO, __FILE__, __LINE__);
-		this->keybinds		= std::map<std::string, std::string>();
 
 		this->pInput		= NULL;
 		// Create the input object
@@ -31,10 +25,6 @@ namespace engine
 
 		this->pKeyboard		= NULL;
 		this->pMouse		= NULL;
-
-		this->pMouseState	= new MouseState();
-
-		this->pObservers	= std::list<InputObserver*>();
 
 		Logger::Log("InputManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -69,7 +59,7 @@ namespace engine
 	 * This creates the keyboard object 
 	 * This only happens for the main file. 
 	 * Becuase keyboard needs a HWND to function correctly.
-	 * @param		Window*		this window get casted to a win32window and gets the hwnd which is not known within the window class 
+	 * @param		Window*				this window get casted to a win32window and gets the hwnd which is not known within the window class 
 	 * @return		void
 	 */
 	void InputManager::SetupDevices(Window* argPWindow)
@@ -78,6 +68,82 @@ namespace engine
 		this->pKeyboard			= new Keyboard(argPWindow, this->pInput);
 		// Create a new mouse device
 		this->pMouse			= new Mouse(argPWindow, this->pInput);
+	}
+
+	/**
+	 * Gets the keyboard object
+	 * @return		Keyboard*
+	 */
+	Keyboard* InputManager::GetKeyboard()
+	{
+		return this->pKeyboard;
+	}
+
+	/**
+	 * Gets the mouse object
+	 * @return		Mouse*
+	 */
+	Mouse* InputManager::GetMouse()
+	{
+		return this->pMouse;
+	}
+
+	/**
+	 * Checks whether a device is created
+	 * @param		unsigned long		The device index to check
+	 * @return		bool
+	 */
+	bool InputManager::HasDevice(unsigned long argDeviceIndex)
+	{
+		bool hasDevice = false;
+		if(	(argDeviceIndex == InputManager::KEYBOARD && this->pKeyboard != NULL) ||
+			(argDeviceIndex == InputManager::MOUSE && this->pMouse != NULL))
+		{
+			hasDevice = true;
+		}
+
+		return hasDevice;
+	}
+	
+	/**
+	 * Gets a device
+	 * @param		unsigned long		The device index to check
+	 * @return		InputDevice*
+	 */
+	InputDevice* InputManager::GetDevice(unsigned long argDeviceIndex)
+	{
+		InputDevice* pDevice;
+		if(argDeviceIndex == InputManager::KEYBOARD)
+		{
+			pDevice = this->pKeyboard;
+		}
+		else if(argDeviceIndex == InputManager::MOUSE)
+		{
+			pDevice = this->pMouse;
+		}
+		else
+		{
+			pDevice = NULL;
+		}
+
+		return pDevice;
+	}
+
+	/**
+	 * Updates a device
+	 * @param		unsigned long		The device index to check
+	 * @return		void
+	 */
+	void InputManager::UpdateDevice(unsigned long argDeviceIndex)
+	{
+		if(argDeviceIndex == InputManager::KEYBOARD)
+		{
+			this->pKeyboard->UpdateState();
+		}
+		else if(argDeviceIndex == InputManager::MOUSE)
+		{
+			this->pMouse->UpdateState();
+		}
 	}
 
 	/**
@@ -99,45 +165,5 @@ namespace engine
 		{
 			this->pMouse->UpdateState();
 		}
-
-		// Tell our fans! :D
-		this->NotifyObservers();
-	}
-	
-	/**
-	 * Adds a new key to look out for
-	 * @param		std::string			The key to listen to
-	 * @param		std::string			The command to execute with this key
-	 */
-	void InputManager::RegisterKey(std::string argKey, std::string argBind)
-	{
-		this->pKeyboard->RegisterKey(argKey);
-		this->keybinds[argKey] = argBind;
-	}
-
-	void InputManager::RegisterMouseKey(std::string argKey, std::string argBind)
-	{
-		this->pMouse->RegisterKey(argKey);
-		this->mousekeybinds[argKey] = argBind;
-	}
-
-	/**
-	 * Adds an observer to the input manager
-	 * @param		InputObserver*		The observer that wil listen
-	 * @return		void
-	 */
-	void InputManager::AddObserver(InputObserver* argPInputObserver)
-	{
-		this->pObservers.push_back(argPInputObserver);
-	}
-	
-	/**
-	 * Removes an observer from the input manager
-	 * @param		InputObserver*		The observer that wil be removed
-	 * @return		void
-	 */
-	void InputManager::RemoveObserver(InputObserver* argPInputObserver)
-	{
-		this->pObservers.remove(argPInputObserver);
 	}
 }

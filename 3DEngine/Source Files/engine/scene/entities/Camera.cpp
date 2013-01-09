@@ -8,19 +8,12 @@ namespace engine
 
 	/**
 	 * A method that performs the action corresponding to the bind
-	 * @param		std::string		The bind to execute
-	 * @param		int				mouse x
-	 * @param		int				mouse y
+	 * @param		std::string		The bind to do
 	 * @return		void
 	 */
-	void Camera::PerformBind(std::string argBind, long argMouseSpeed)
+	void Camera::DoBind(std::string argBind, float argMousePos)
 	{
-		float speed = 0.025f;
-		if(argMouseSpeed > 0)
-		{
-			speed *= argMouseSpeed;
-		}
-
+		float speed = 0.0025f;
 
 		// Move Forward
 		if(argBind == "move_forward")
@@ -53,32 +46,32 @@ namespace engine
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += speed * 20;
+			this->position.y += speed * 50;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= speed * 20;
+			this->position.y -= speed * 50;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
 		{
-			this->rotation.y -= speed;
+			this->rotation.y = (float)(argMousePos / 10);
 		}
 		// Turn Right
 		else if(argBind == "turn_right")
 		{
-			this->rotation.y += speed;
+			this->rotation.y = (float)(argMousePos / 10);
 		}
 		// Pan Up
 		else if(argBind == "pan_up")
 		{
-			this->rotation.x -= speed;
+			this->rotation.x = (float)(argMousePos / 10);
 		}
 		// Pan Down
 		else if(argBind == "pan_down")
 		{
-			this->rotation.x += speed;
+			this->rotation.x = (float)(argMousePos / 10);
 		}
 
 		// Reset
@@ -115,9 +108,54 @@ namespace engine
 	void Camera::CleanUp()
 	{
 	}
+	
+	/**
+	 * Handle any incomming keyboard events
+	 * @param		std::map<std::string, std::string>		The bindings and keys
+	 * @param		KeyboardState*							The state of the keyboard
+	 * @return		void
+	 */
+	void Camera::DoKeyboardEvent(std::map<std::string, std::string> argBinds, KeyboardState* argPState)
+	{
+		std::map<std::string, std::string>::iterator bindsIt;
+		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
+		{
+			std::string key		= bindsIt->first;
+			std::string bind	= bindsIt->second;
+
+			if(argPState->IsBindActive(key))
+			{
+				long speed = 0;
+				this->DoBind(bind, speed);
+			}
+		}
+	}
+	
+	/**
+	 * Handle any incomming mouse events
+	 * @param		std::map<std::string, std::string>		The bindings and keys
+	 * @param		KeyboardState*							The state of the mouse
+	 * @return		void
+	 */
+	void Camera::DoMouseEvent(std::map<std::string, std::string> argBinds, MouseState* argPState)
+	{
+		std::map<std::string, std::string>::iterator bindsIt;
+		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
+		{
+			std::string key		= bindsIt->first;
+			std::string bind	= bindsIt->second;
+
+			if(argPState->IsBindActive(key))
+			{
+				float speed = (argPState->GetMouseSpeed(key) / 100);
+				this->DoBind(bind, speed);
+			}
+		}
+	}
 
 	/**
-	 *
+	 * Default implementation of the Update method for all entities
+	 * @return		void
 	 */
 	void Camera::Update()
 	{
@@ -125,7 +163,9 @@ namespace engine
 	}
 
 	/**
-	 *
+	 * Draw the camera, adjust the world matrix to move around us
+	 * @param		Renderer*				The renderer to use.
+	 * @return		void
 	 */
 	void Camera::Draw(Renderer* argPRenderer)
 	{
@@ -162,36 +202,5 @@ namespace engine
 		argPRenderer->TransformWorldMatrix();
 		argPRenderer->TransformViewMatrix();
 		argPRenderer->TransformProjectionMatrix();
-	}
-
-	/**
-	 *
-	 */
-	void Camera::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
-						std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState)
-	{
-		std::map<std::string, std::string>::iterator keybindsIt;
-		for(keybindsIt = argKeybinds.begin(); keybindsIt != argKeybinds.end(); keybindsIt++)
-		{
-			std::string key		= keybindsIt->first;
-			std::string bind	= keybindsIt->second;
-
-			if(argPKeyboardState->IsKeyDown(key))
-			{
-				this->PerformBind(bind, 0);
-			}
-		}
-
-		std::map<std::string, std::string>::iterator mouseKeybindsIt;
-		for(mouseKeybindsIt = argMouseKeybinds.begin(); mouseKeybindsIt != argMouseKeybinds.end(); mouseKeybindsIt++)
-		{
-			std::string key		= mouseKeybindsIt->first;
-			std::string bind	= mouseKeybindsIt->second;
-
-			if(argPMouseState->IsKeyDown(key))
-			{
-				this->PerformBind(bind, argPMouseState->GetMouseSpeed(key));
-			}
-		}
 	}
 }

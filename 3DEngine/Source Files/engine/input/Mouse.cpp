@@ -4,37 +4,74 @@ namespace engine
 {
 	//---Private attributes---
 	//---Public attributes---
+
+	#define KEYDOWN(name, key) (name[key] & 0x80)
+
 	//---Private methods---
+
+	/**
+	 * Notifies all the listener
+	 * @return		void
+	 */
+	void Mouse::NotifyListeners()
+	{
+		std::list<MouseListener*>::iterator listenerIt;
+		for(listenerIt = this->listeners.begin(); listenerIt != this->listeners.end(); listenerIt++)
+		{
+			MouseListener* pMouseListener = *listenerIt;
+			pMouseListener->DoMouseEvent(this->binds, this->pState);
+		}
+	}
+
+	/**
+	 * Reset the state of the keyboard
+	 * @return		void
+	 */
+	void Mouse::ResetState()
+	{
+		this->pState->KEY_LMB		= false;
+		this->pState->KEY_RMB		= false;
+		this->pState->MOUSE_UP		= 0;
+		this->pState->MOUSE_DOWN	= 0;
+		this->pState->MOUSE_LEFT	= 0;
+		this->pState->MOUSE_RIGHT	= 0;
+
+		// testje
+		this->pState->MOUSE_X		= 0;
+		this->pState->MOUSE_Y		= 0;
+	}
+
 	//---Public methods---
 	
 	/**
 	 * Constructs the keyboard
 	 */
-	Mouse::Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput)
+	Mouse::Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput) : InputDevice()
 	{
 		Logger::Log("Mouse: Creating", Logger::INFO, __FILE__, __LINE__);
-
+		this->listeners = std::list<MouseListener*>();
 		Win32Window* pWindow = (Win32Window*)argPWindow;
 
+		DIPROPDWORD mData;
 		// - size of enclosing structure
-        dipdw.diph.dwSize       = sizeof(DIPROPDWORD);
+        mData.diph.dwSize       = sizeof(DIPROPDWORD);
         // - always size of DIPROPHEADER
-        dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+        mData.diph.dwHeaderSize = sizeof(DIPROPHEADER);
         // - identifier for property in question - 0 for entire device
-        dipdw.diph.dwObj        = 0;
+        mData.diph.dwObj        = 0;
         // - DIPH_DEVICE since entire device is involved
-        dipdw.diph.dwHow        = DIPH_DEVICE;
+        mData.diph.dwHow        = DIPH_DEVICE;
         // property data member (takes a single word of data)
         // - the buffer size goes here
-        dipdw.dwData            = 200;
+        mData.dwData            = 2;
 
 		argPInput->CreateDevice(GUID_SysMouse, &this->pDevice, NULL);
 		this->pDevice->SetDataFormat(&c_dfDIMouse2);
 		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
-		this->pDevice->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+		this->pDevice->SetProperty(DIPROP_BUFFERSIZE, &mData.diph);
 
-		this->keymap = std::list<std::string>();
 		this->pState = new MouseState();
+		this->ResetState();
 
 		Logger::Log("Mouse: Finishing", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -61,39 +98,24 @@ namespace engine
 		}
 	}
 
-	
-	MouseState* Mouse::GetState()
-	{
-		return this->pState;
-	}
-
-	
 	/**
-	 * This method acquires the mouse in case its lost.
-	 * @return		bool						true if device is acquired. Else its false
-	 */
-	bool Mouse::DoAcquire()
-	{
-		int times = 5;
-		for(int i = 0; i < times; i++)
-		{
-			if(SUCCEEDED(this->pDevice->Acquire()))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Adds a key to the keymap
-	 * @param		std::string					The key to add to the keymap
+	 * Adds a listener to the device
+	 * @param		InputListener*		The listener to add to the list
 	 * @return		void
 	 */
-	void Mouse::RegisterKey(std::string argKey)
+	void Mouse::AddListener(MouseListener* argPMouseListener)
 	{
-		this->keymap.push_back(argKey);
+		this->listeners.push_back(argPMouseListener);
+	}
+
+	/**
+	 * Removes a listener from the device
+	 * @param		InputListener*		The listener to remove from the list
+	 * @return		void
+	 */
+	void Mouse::RemoveListener(MouseListener* argPMouseListener)
+	{
+		this->listeners.remove(argPMouseListener);
 	}
 
 	/**
@@ -102,103 +124,59 @@ namespace engine
 	 */
 	void Mouse::UpdateState()
 	{
-		byte keyBuffer[256];
 		if(!SUCCEEDED(this->pDevice->Poll())) 
 		{			
 			this->DoAcquire();
 		}
-		else
-		{
+		//else
+		//{
 			unsigned long elements = 1;
 			DIDEVICEOBJECTDATA data;
-			HRESULT hr = this->pDevice->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &data, &elements, 0);
+			this->pDevice->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &data, &elements, 0);
 
-			if(hr == DIERR_INVALIDPARAM) 
+			switch(data.dwOfs)
 			{
-				Logger::Log("Mouse: Invalid paramater detected.", Logger::FATAL, __FILE__, __LINE__);
-				return;
-			}
-			if(hr == DIERR_NOTBUFFERED) 
-			{
-				Logger::Log("Mouse: Mouse is not buffered.", Logger::FATAL, __FILE__, __LINE__);
-				return;
-			}
-			if(hr == DIERR_NOTINITIALIZED) 
-			{
-				Logger::Log("Mouse: Mouse could not be initialized.", Logger::FATAL, __FILE__, __LINE__);
-				return;
+			// MOUSE_X: Horizontal movement
+			case DIMOFS_X:
+				this->pState->MOUSE_X += (long)data.dwData;
+				break;
+
+			// MOUSE_Y: Vertical movement
+			case DIMOFS_Y:
+				this->pState->MOUSE_Y += (long)data.dwData;
+				break;
+
+			// KEY_LMB: Left Mouse Button
+			case DIMOFS_BUTTON0:
+				// Check if the button is pressed
+				// Button is pressed if dwData is not 0
+				if(data.dwData & 0x80)
+				{
+					this->pState->KEY_LMB = true;
+				}
+				else
+				{
+					this->pState->KEY_LMB = false;
+				}
+				break;
+				
+			// KEY_RMB: Right Mouse Button
+			case DIMOFS_BUTTON1:
+				// Check if the button is pressed
+				// Button is pressed if dwData is not 0
+				if(data.dwData & 0x80)
+				{
+					this->pState->KEY_RMB = true;
+				}
+				else
+				{
+					this->pState->KEY_RMB = false;
+				}
+				break;
 			}
 
-			std::list<std::string>::iterator mouseKeymapIt;
-			for(mouseKeymapIt = this->keymap.begin(); mouseKeymapIt != this->keymap.end(); mouseKeymapIt++)
-			{
-				std::string key = *mouseKeymapIt;
-
-				if(key == "KEY_LMB")
-				{
-					if(data.dwOfs == DIMOFS_BUTTON0)
-					{
-						if(this->pState->KEY_LMB == true)
-						{
-							this->pState->KEY_LMB = false;
-						}
-						else
-						{
-							this->pState->KEY_LMB = true;
-						}
-					}
-				}
-				else if(key == "KEY_RMB")
-				{
-					if(data.dwOfs == DIMOFS_BUTTON1)
-					{
-						if(this->pState->KEY_RMB == true)
-						{
-							this->pState->KEY_RMB = false;
-						}
-						else
-						{
-							this->pState->KEY_RMB = true;
-						}
-					}
-				}
-				else if(key == "MOUSE_UP")
-				{
-					long speed = (long)data.dwData;
-					this->pState->MOUSE_UP = 0;
-					if(data.dwOfs == DIMOFS_Y && speed < 0)
-					{
-						this->pState->MOUSE_UP = -speed;
-					}
-				}
-				else if(key == "MOUSE_DOWN")
-				{
-					long speed = (long)data.dwData;
-					this->pState->MOUSE_DOWN = 0;
-					if(data.dwOfs == DIMOFS_Y && speed > 0)
-					{
-						this->pState->MOUSE_DOWN = speed;
-					}
-				}
-				else if(key == "MOUSE_LEFT")
-				{
-					long speed = (long)data.dwData;
-					this->pState->MOUSE_LEFT = 0;
-					if(data.dwOfs == DIMOFS_X && speed < 0)
-					{
-						this->pState->MOUSE_LEFT = -speed;
-					}
-				}
-				else if(key == "MOUSE_RIGHT")
-				{
-					long speed = (long)data.dwData;
-					this->pState->MOUSE_RIGHT = 0;
-					if(data.dwOfs == DIMOFS_X && speed > 0)
-					{
-						this->pState->MOUSE_RIGHT = speed;
-					}
-				}
-			}
-		}
+			// Tell our fans
+			this->NotifyListeners();
+		//}
 	}
 }

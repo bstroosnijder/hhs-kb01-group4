@@ -398,7 +398,7 @@ namespace engine
 			Logger::Log("SceneManager: No input data", Logger::INFO, __FILE__, __LINE__);
 		}
 
-		// Loop through the models
+		// Loop through the input data
 		std::vector<std::string>::iterator inputIt;
 		for(inputIt = dataInput.begin(); inputIt != dataInput.end(); inputIt++)
 		{
@@ -406,41 +406,72 @@ namespace engine
 			// explode the resource data
 			data = explode(';', dataLineInput);
 
-			std::string action = data.at(0);
-			// Register an action to keys
-			if(action == "keymap")
+			std::string action	= data.at(0);
+			std::string device	= data.at(1);
+
+			// Hook an entity to an input device
+			if(action == "hook")
 			{
-				std::string bind = data.at(1);
-				for(unsigned long i = 2; i < data.size(); i++)
+				std::string entity = data.at(2);
+				if(device == "all")
+				{
+					if(entity == "camera")
+					{
+						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
+						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
+					}
+					else
+					{
+						argPInputManager->GetKeyboard()->AddListener(pScene->GetModel(entity));
+						argPInputManager->GetMouse()->AddListener(pScene->GetModel(entity));
+					}
+				}
+				else if(device == "keyboard")
+				{
+					if(entity == "camera")
+					{
+						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
+					}
+					else
+					{
+						argPInputManager->GetKeyboard()->AddListener(pScene->GetModel(entity));
+					}
+				}
+				else if(device == "mouse")
+				{
+					if(entity == "camera")
+					{
+						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
+					}
+					else
+					{
+						argPInputManager->GetMouse()->AddListener(pScene->GetModel(entity));
+					}
+				}
+			}
+			// Map binds to keys of a device
+			else if(action == "bind")
+			{
+				std::string bind = data.at(2);
+				for(unsigned long i = 3; i < data.size(); i++)
 				{
 					std::string key = data.at(i);
 					Logger::Log("SceneManager: " + key + ": " + bind, Logger::INFO, __FILE__, __LINE__);
-					argPInputManager->RegisterKey(key, bind);
-				}
-			}
-			//Register an action a mousekey/movement
-			else if(action == "mousekeymap")
-			{
-				std::string bind = data.at(1);
-				for(unsigned long i = 2; i < data.size(); i++)
-				{
-					std::string key = data.at(i);
-					Logger::Log("SceneManager: " + key + ": " + bind, Logger::INFO, __FILE__, __LINE__);
-					argPInputManager->RegisterMouseKey(key, bind);
-				}
-			}
-			// Add observers to the input manager
-			else if(action == "hook")
-			{
-				std::string device	= data.at(1);
-				std::string entity	= data.at(2);
-				if(entity == "camera")
-				{
-					argPInputManager->AddObserver(pScene->GetCamera());
-				}
-				else
-				{
-					argPInputManager->AddObserver(pScene->GetModel(entity));
+
+					InputDevice* pInputDevice;
+					if(device == "keyboard")
+					{
+						pInputDevice = argPInputManager->GetDevice(InputManager::KEYBOARD);
+					}
+					else if(device == "mouse")
+					{
+						pInputDevice = argPInputManager->GetDevice(InputManager::MOUSE);
+					}
+
+					if(pInputDevice != NULL)
+					{
+						pInputDevice->AddBind(key, bind);
+					}
 				}
 			}
 		}

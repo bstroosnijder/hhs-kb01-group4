@@ -5,22 +5,15 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
-
+	
 	/**
 	 * A method that performs the action corresponding to the bind
-	 * @param		std::string		The bind to execute
-	 * @param		int				mouse x
-	 * @param		int				mouse y
+	 * @param		std::string		The bind to do
 	 * @return		void
 	 */
-	void Model::PerformBind(std::string argBind, long argMouseSpeed)
+	void Model::DoBind(std::string argBind, long argSpeed)
 	{
-		float speed = 0.025f;
-		if(argMouseSpeed > 0)
-		{
-			speed *= argMouseSpeed;
-		}
-
+		float speed = argSpeed * 0.025f;
 
 		// Move Forward
 		if(argBind == "move_forward")
@@ -117,6 +110,54 @@ namespace engine
 	void Model::CleanUp()
 	{
 	}
+	
+	/**
+	 * Handle any incomming keyboard events
+	 * @param		std::map<std::string, std::string>		The bindings and keys
+	 * @param		KeyboardState*							The state of the keyboard
+	 * @return		void
+	 */
+	void Model::DoKeyboardEvent(std::map<std::string, std::string> argBinds, KeyboardState* argPState)
+	{
+		std::map<std::string, std::string>::iterator bindsIt;
+		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
+		{
+			std::string key		= bindsIt->first;
+			std::string bind	= bindsIt->second;
+
+			if(argPState->IsBindActive(key))
+			{
+				long speed = 1;
+				this->DoBind(bind, speed);
+			}
+		}
+	}
+	
+	/**
+	 * Handle any incomming mouse events
+	 * @param		std::map<std::string, std::string>		The bindings and keys
+	 * @param		MouseState*								The state of the mouse
+	 * @return		void
+	 */
+	void Model::DoMouseEvent(std::map<std::string, std::string> argBinds, MouseState* argPState)
+	{
+		std::map<std::string, std::string>::iterator bindsIt;
+		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
+		{
+			std::string key		= bindsIt->first;
+			std::string bind	= bindsIt->second;
+
+			if(argPState->IsBindActive(key))
+			{
+				long speed = (argPState->GetMouseSpeed(key) / 20);
+				if(speed <=0)
+				{
+					speed = 1;
+				}
+				this->DoBind(bind, speed);
+			}
+		}
+	}
 
 	/**
 	 * Default implementation of the Update method for all entities
@@ -129,7 +170,8 @@ namespace engine
 		std::map<std::string, Model*>::iterator it;
 		for(it = this->models.begin(); it != this->models.end(); it++)
 		{
-			it->second->Update();
+			Model* pModel = it->second;
+			pModel->Update();
 		}
 	}
 
@@ -160,34 +202,6 @@ namespace engine
 			argPRenderer->Push();
 			it->second->Draw(argPRenderer);
 			argPRenderer->Pop();
-		}
-	}
-
-	void Model::Notify(std::map<std::string, std::string> argKeybinds, KeyboardState* argPKeyboardState,
-						std::map<std::string, std::string> argMouseKeybinds, MouseState* argPMouseState)
-	{
-		std::map<std::string, std::string>::iterator keybindsIt;
-		for(keybindsIt = argKeybinds.begin(); keybindsIt != argKeybinds.end(); keybindsIt++)
-		{
-			std::string key		= keybindsIt->first;
-			std::string bind	= keybindsIt->second;
-
-			if(argPKeyboardState->IsKeyDown(key))
-			{
-				this->PerformBind(bind, 0);
-			}
-		}
-
-		std::map<std::string, std::string>::iterator mouseKeybindsIt;
-		for(mouseKeybindsIt = argMouseKeybinds.begin(); mouseKeybindsIt != argMouseKeybinds.end(); mouseKeybindsIt++)
-		{
-			std::string key		= mouseKeybindsIt->first;
-			std::string bind	= mouseKeybindsIt->second;
-
-			if(argPMouseState->IsKeyDown(key))
-			{
-				this->PerformBind(bind, argPMouseState->GetMouseSpeed(key));
-			}
 		}
 	}
 

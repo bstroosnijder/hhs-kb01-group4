@@ -9,6 +9,42 @@ namespace engine
 	#define KEYDOWN(name, key) (name[key] & 0x80)
 
 	//---Private methods---
+
+	/**
+	 * Notifies all the listener
+	 * @return		void
+	 */
+	void Keyboard::NotifyListeners()
+	{
+		std::list<KeyboardListener*>::iterator listenerIt;
+		for(listenerIt = this->listeners.begin(); listenerIt != this->listeners.end(); listenerIt++)
+		{
+			KeyboardListener* pKeyboardListener = *listenerIt;
+			pKeyboardListener->DoKeyboardEvent(this->binds, this->pState);
+		}
+	}
+
+	/**
+	 * Reset the state of the keyboard
+	 * @return		void
+	 */
+	void Keyboard::ResetState()
+	{
+		this->pState->KEY_A			= false;
+		this->pState->KEY_D			= false;
+		this->pState->KEY_E			= false;
+		this->pState->KEY_Q			= false;
+		this->pState->KEY_S			= false;
+		this->pState->KEY_W			= false;
+		this->pState->KEY_DOWN		= false;
+		this->pState->KEY_HOME		= false;
+		this->pState->KEY_LEFT		= false;
+		this->pState->KEY_LSHIFT	= false;
+		this->pState->KEY_RIGHT		= false;
+		this->pState->KEY_SPACE		= false;
+		this->pState->KEY_UP		= false;
+	}
+
 	//---Public methods---
 
 	/**
@@ -16,20 +52,19 @@ namespace engine
 	 * @param		HWND						The window that is receiving input
 	 * @param		LPDIRECTINPUT8				???
 	 */
-	Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput)
+	Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput) : InputDevice()
 	{
 		Logger::Log("Keyboard: Creating", Logger::INFO, __FILE__, __LINE__);
-
-		this->keymap = std::list<std::string>();
-
+		this->listeners = std::list<KeyboardListener*>();
 		Win32Window* pWindow = (Win32Window*)argPWindow;
 
 		argPInput->CreateDevice(GUID_SysKeyboard, &this->pDevice, NULL);
 		this->pDevice->SetDataFormat(&c_dfDIKeyboard);
-		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 
 		// Init the keyboard state
 		this->pState = new KeyboardState();
+		this->ResetState();
 
 		Logger::Log("Keyboard: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -58,40 +93,23 @@ namespace engine
 	}
 
 	/**
-	 * Adds a key to the keymap
-	 * @param		std::string					The key to add to the keymap
+	 * Adds a listener to the device
+	 * @param		InputListener*		The listener to add to the list
 	 * @return		void
 	 */
-	void Keyboard::RegisterKey(std::string argKey)
+	void Keyboard::AddListener(KeyboardListener* argPKeyboardListener)
 	{
-		this->keymap.push_back(argKey);
-	}
-	
-	/**
-	 * This method acquires the keyboard in case its lost.
-	 * @return		bool						true if device is acquired. Else its false
-	 */
-	bool Keyboard::DoAcquire()
-	{
-		int times = 5;
-		for(int i = 0; i < times; i++)
-		{
-			if(SUCCEEDED(this->pDevice->Acquire()))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		this->listeners.push_back(argPKeyboardListener);
 	}
 
 	/**
-	 * Gets for the keyboard state
-	 * @return		KeyboardState*
+	 * Removes a listener from the device
+	 * @param		InputListener*		The listener to remove from the list
+	 * @return		void
 	 */
-	KeyboardState* Keyboard::GetState()
+	void Keyboard::RemoveListener(KeyboardListener* argPKeyboardListener)
 	{
-		return this->pState;
+		this->listeners.remove(argPKeyboardListener);
 	}
 
 	/**
@@ -103,16 +121,18 @@ namespace engine
 		byte keyBuffer[256];
 		if(!SUCCEEDED(this->pDevice->Poll()))
 		{
-			DoAcquire();
+			this->DoAcquire();
 		}
 		else
 		{
 			this->pDevice->GetDeviceState(sizeof(keyBuffer), (LPVOID)&keyBuffer);
 
-			std::list<std::string>::iterator keymapIt;
-			for(keymapIt = this->keymap.begin(); keymapIt != this->keymap.end(); keymapIt++)
+			std::map<std::string, std::string>::iterator bindsIt;
+			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
 			{
-				std::string key = *keymapIt;
+				std::string key		= bindsIt->first;
+				std::string bind	= bindsIt->second;
+
 				if(key == "KEY_A")
 				{
 					this->pState->KEY_A = (bool)(KEYDOWN(keyBuffer, DIK_A) != 0);
@@ -166,6 +186,9 @@ namespace engine
 					this->pState->KEY_UP = (bool)(KEYDOWN(keyBuffer, DIK_UP) != 0);
 				}
 			}
+
+			// Tell our fans
+			this->NotifyListeners();
 		}
 	}
 }
