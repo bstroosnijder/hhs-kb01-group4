@@ -2,34 +2,38 @@
 #define MOUSE_H_
 #define DIRECTINPUT_VERSION 0x0800
 
+#include <map>
+#include <list>
+#include <string>
 #include <d3d9.h>
 #include <dinput.h>
+#include "InputDevice.h"
+#include "listeners\MouseListener.h"
 #include "..\logger\logger.h"
-#include "..\window\Win32Window.h"
 #include "MouseState.h"
+#include "..\window\Win32Window.h"
 
 namespace engine
 {
 	/**
 	 * This class is responsible for listening to, and handling of, mouse input.
 	 */
-	class Mouse
+	class Mouse : public InputDevice
 	{
 	private:
-		std::list<std::string> keymap;
-		LPDIRECTINPUTDEVICE8 pDevice;
+		std::list<MouseListener*> listeners;
 		MouseState* pState;
 
-		DIPROPDWORD dipdw;
+		void NotifyListeners();
+		void ResetState();
 	public:
 		Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Mouse();
 		void CleanUp();
 		
-		void RegisterKey(std::string argKey);
+		void AddListener(MouseListener* argPMouseListener);
+		void RemoveListener(MouseListener* argPMouseListener);
 		
-		bool DoAcquire();
-		MouseState* GetState();
 		void UpdateState();
 	};
 }

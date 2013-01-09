@@ -76,6 +76,12 @@
     <Filter Include="Source Files\engine\input">
       <UniqueIdentifier>{722c9327-3a48-493a-904d-886f93decd2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\engine\input\listeners">
+      <UniqueIdentifier>{98fe960c-b514-484e-94b3-6c7826aea07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\input\listeners">
+      <UniqueIdentifier>{d7c48a2d-66b6-4dbe-8029-ce5689df2390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\engine\N00b.h">
@@ -171,9 +177,6 @@
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\engine\input\InputObserver.h">
-      <Filter>Header Files\engine\input</Filter>
-    </ClInclude>
     <ClInclude Include="Header Files\engine\input\KeyboardState.h">
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
@@ -181,6 +184,15 @@
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
     <ClInclude Include="Header Files\engine\input\MouseState.h" />
+    <ClInclude Include="Header Files\engine\input\InputDevice.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\listeners\KeyboardListener.h">
+      <Filter>Header Files\engine\input\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\listeners\MouseListener.h">
+      <Filter>Header Files\engine\input\listeners</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
@@ -254,6 +266,15 @@
     </ClCompile>
     <ClCompile Include="Source Files\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\InputDevice.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\listeners\KeyboardListener.cpp">
+      <Filter>Source Files\engine\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\listeners\MouseListener.cpp">
+      <Filter>Source Files\engine\input\listeners</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

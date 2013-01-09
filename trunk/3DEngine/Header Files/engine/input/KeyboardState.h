@@ -26,57 +26,57 @@ namespace engine
 		 * @param		std::string		The key to check
 		 * @return		bool
 		 */
-		bool IsKeyDown(std::string argKey)
+		bool IsBindActive(std::string argBind)
 		{
-			if(argKey == "KEY_A")
+			if(argBind == "KEY_A")
 			{
 				return KEY_A;
 			}
-			else if(argKey == "KEY_D")
+			else if(argBind == "KEY_D")
 			{
 				return KEY_D;
 			}
-			else if(argKey == "KEY_E")
+			else if(argBind == "KEY_E")
 			{
 				return KEY_E;
 			}
-			if(argKey == "KEY_Q")
+			else if(argBind == "KEY_Q")
 			{
 				return KEY_Q;
 			}
-			else if(argKey == "KEY_S")
+			else if(argBind == "KEY_S")
 			{
 				return KEY_S;
 			}
-			else if(argKey == "KEY_W")
+			else if(argBind == "KEY_W")
 			{
 				return KEY_W;
 			}
-			if(argKey == "KEY_DOWN")
+			else if(argBind == "KEY_DOWN")
 			{
 				return KEY_DOWN;
 			}
-			else if(argKey == "KEY_HOME")
+			else if(argBind == "KEY_HOME")
 			{
 				return KEY_HOME;
 			}
-			else if(argKey == "KEY_LEFT")
+			else if(argBind == "KEY_LEFT")
 			{
 				return KEY_LEFT;
 			}
-			if(argKey == "KEY_LSHIFT")
+			else if(argBind == "KEY_LSHIFT")
 			{
 				return KEY_LSHIFT;
 			}
-			else if(argKey == "KEY_RIGHT")
+			else if(argBind == "KEY_RIGHT")
 			{
 				return KEY_RIGHT;
 			}
-			else if(argKey == "KEY_SPACE")
+			else if(argBind == "KEY_SPACE")
 			{
 				return KEY_SPACE;
 			}
-			else if(argKey == "KEY_UP")
+			else if(argBind == "KEY_UP")
 			{
 				return KEY_UP;
 			}

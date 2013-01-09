@@ -9,10 +9,9 @@
 #include <DXGI.h>
 #include "..\logger\Logger.h"
 #include "WindowManager.h"
-#include "..\input\InputObserver.h"
+#include "..\input\InputDevice.h"
 #include "..\input\Keyboard.h"
 #include "..\input\Mouse.h"
-#include "..\input\MouseState.h"
 
 namespace engine
 {
@@ -23,31 +22,27 @@ namespace engine
 	class InputManager
 	{
 	private:
-		std::map<std::string, std::string> keybinds;
-		std::map<std::string, std::string> mousekeybinds;
-
 		LPDIRECTINPUT8 pInput;
 
 		Keyboard* pKeyboard;
 		Mouse* pMouse;
-		MouseState* pMouseState;
-
-		std::list<InputObserver*> pObservers;
-		void NotifyObservers();
 	public:
+		static const unsigned long KEYBOARD;
+		static const unsigned long MOUSE;
+
 		InputManager();
 		~InputManager();
 		void CleanUp();
-
 		void SetupDevices(Window* argWindow);
 
+		Keyboard* GetKeyboard();
+		Mouse* GetMouse();
+
+		bool HasDevice(unsigned long argDeviceIndex);
+		InputDevice* GetDevice(unsigned long argDeviceIndex);
+		void UpdateDevice(unsigned long argDeviceIndex);
+
 		void InputBeat();
-
-		void RegisterKey(std::string argKey, std::string argBind);
-		void RegisterMouseKey(std::string argKey, std::string argBind);
-
-		void AddObserver(InputObserver* argPInputObserver);
-		void RemoveObserver(InputObserver* argPInputObserver);
 	};
 }
 
