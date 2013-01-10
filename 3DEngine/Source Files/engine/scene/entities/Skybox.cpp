@@ -29,9 +29,9 @@ namespace engine
 	
 	void Skybox::SetupVertices(Renderer* argPRenderer)
 	{
-		float boxSize					= 1.5f;
+		float boxSize					= 2.5f;
 
-		unsigned long numVertices = 8;
+		unsigned long numVertices = 16;
 		unsigned long vertexArraySize	= numVertices * sizeof(TexturedVector3);
 		TexturedVector3 vertices[]		=
 		{
@@ -51,7 +51,26 @@ namespace engine
 			// Back Bottom Left
 			{-boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
 			// Back Bottom Right
-			{ boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 1.0f }
+			{ boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
+
+
+			// Front Top Left
+			{-boxSize, boxSize, boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
+			// Front Top Right
+			{ boxSize, boxSize, boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
+			// Back Top Left
+			{-boxSize, boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
+			// Back Top Right
+			{ boxSize, boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 0.0f },
+
+			// Front Bottom Left
+			{-boxSize,-boxSize, boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
+			// Front Bottom Right
+			{ boxSize,-boxSize, boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
+			// Back Bottom Left
+			{-boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
+			// Back Bottom Right
+			{ boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 0.0f }
 		};
 		
 		unsigned long indexArraySize	= 36 * sizeof(short);
@@ -74,12 +93,14 @@ namespace engine
 			7, 3, 5,
 
 			// Top
-			4, 5, 0,
-			1, 0, 5,
+			11, 9, 8,
+			8, 10, 11,
+			//4, 5, 0,
+			//1, 0, 5,
 
 			// Bottom
-			2, 3, 6,
-			7, 6, 3,
+			12, 13, 15,
+			15, 14, 12
 		};
 
 		// Create the vertex buffer
@@ -142,12 +163,13 @@ namespace engine
 		LPDIRECT3DDEVICE9 pDevice = (LPDIRECT3DDEVICE9)argPRenderer->GetDevice();
 		// Turn of the Z axis
 		pDevice->SetRenderState(D3DRS_ZENABLE, false);
+		
 
 		argPRenderer->SetStreamSource(this->pVertexBuffer, sizeof(TexturedVector3));
 		argPRenderer->SetIndices(this->pIndexBuffer);
 		argPRenderer->SetFVF(D3DFVFTexturedVector3);
 		argPRenderer->SetTexture(0, this->textures[0]);
-		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 8, 12);
+		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 16, 12);
 
 		pDevice->SetRenderState(D3DRS_ZENABLE, true);
 	}
