@@ -15,9 +15,9 @@ namespace engine
 	 * @param		unsigned int		argWidth is the width for the new window
 	 * @param		unsigned int		argHeight is the height for the new window
 	 */
-	Win32Window::Win32Window(char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight)
+	Win32Window::Win32Window(std::string argTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight)
 	{
-		this->title = argPTitle;
+		this->title = argTitle;
 		this->x = argX;
 		this->y = argY;
 		this->width = argWidth;
@@ -32,7 +32,7 @@ namespace engine
 
 		RegisterClassEx(&wc);
 
-		this->hWin = CreateWindow(	"3DEngine", this->title, WS_OVERLAPPEDWINDOW,
+		this->hWin = CreateWindow(	"3DEngine", this->title.c_str(), WS_OVERLAPPEDWINDOW,
 									this->x, this->y, this->width, this->height,
 									NULL, NULL, wc.hInstance, NULL);
 
@@ -55,7 +55,6 @@ namespace engine
 	 */
 	void Win32Window::CleanUp()
 	{
-
 	}
 
 	/**
@@ -63,7 +62,7 @@ namespace engine
 	 * @param		char*				The new title for this window.
 	 * @return		void
 	 */
-	void Win32Window::SetTitle(char* argPTitle)
+	void Win32Window::SetTitle(std::string argPTitle)
 	{
 		this->title = argPTitle;
 	}
@@ -72,45 +71,45 @@ namespace engine
 	 * Obtain the title of this Window.
 	 * @return		char*
 	 */
-	char* Win32Window::GetTitle()
+	std::string Win32Window::GetTitle()
 	{
 		return this->title;
 	}
 
 	/**
 	 * Set the X position (relative to the screen) of this Window.
-	 * @param		unsigned int		The new x position.
+	 * @param		int		The new x position.
 	 * @return		void
 	 */
-	void Win32Window::SetX(unsigned int argX)
+	void Win32Window::SetX(int argX)
 	{
 		this->x = argX;
 	}
 
 	/**
 	 * Get the X position (relative to the screen) of this Window.
-	 * @return		unsigned int
+	 * @return		int
 	 */
-	unsigned int Win32Window::GetX()
+	int Win32Window::GetX()
 	{
 		return this->x;
 	}
 
 	/**
 	 * Set the Y position (relative to the screen) of this Window.
-	 * @param		unsigned int		The new Y position.
+	 * @param		int		The new Y position.
 	 * @return		void
 	 */
-	void Win32Window::SetY(unsigned int argY)
+	void Win32Window::SetY(int argY)
 	{
 		this->y = argY;
 	}
 
 	/**
 	 * Get the Y position (relative to the screen) of this Window.
-	 * @return		unsigned int
+	 * @return		int
 	 */
-	unsigned int Win32Window::GetY()
+	int Win32Window::GetY()
 	{
 		return this->y;
 	}

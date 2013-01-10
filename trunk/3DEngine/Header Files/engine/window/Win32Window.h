@@ -16,15 +16,15 @@ namespace engine
 	private:
 		HWND hWin;
 	public:
-		Win32Window(char* argPTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight);
+		Win32Window(std::string argTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight);
 		~Win32Window();
 		void CleanUp();
-		void SetTitle(char* argTitle);
-		char* GetTitle();
-		void SetX(unsigned int argX);
-		unsigned int GetX();
-		void SetY(unsigned int argY);
-		unsigned int GetY();
+		void SetTitle(std::string argTitle);
+		std::string GetTitle();
+		void SetX(int argX);
+		int GetX();
+		void SetY(int argY);
+		int GetY();
 		void SetWidth(unsigned int argWidth);
 		unsigned int GetWidth();
 		void SetHeight(unsigned int argHeight);

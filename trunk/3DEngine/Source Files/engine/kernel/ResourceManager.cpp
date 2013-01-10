@@ -39,14 +39,16 @@ namespace engine
 		std::map<std::string, Mesh*>::iterator itMeshes;
 		for(itMeshes = this->meshes.begin(); itMeshes != this->meshes.end(); itMeshes++)
 		{
-			delete itMeshes->second;
+			Mesh* pMesh = itMeshes->second;
+			pMesh->mesh->Release();
 		}
 		this->meshes.clear();
 
 		std::map<std::string, LPDIRECT3DTEXTURE9>::iterator itTextures;
 		for(itTextures = this->textures.begin(); itTextures != this->textures.end(); itTextures++)
 		{
-			delete itTextures->second;
+			LPDIRECT3DTEXTURE9 texture = itTextures->second;
+			texture->Release();
 		}
 		this->textures.clear();
 	}

@@ -1,6 +1,7 @@
 #ifndef Window_H_
 #define Window_H_
 
+#include <string>
 #include "..\logger\Logger.h"
 
 namespace engine
@@ -13,18 +14,18 @@ namespace engine
 	private:
 		
 	protected:
-		char* title;
-		unsigned int x;
-		unsigned int y;
+		std::string title;
+		int x;
+		int y;
 		unsigned int width;
 		unsigned int height;
 	public:
-		virtual void SetTitle(char* argPTitle)=0;
-		virtual char* GetTitle()=0;
-		virtual void SetX(unsigned int argX)=0;
-		virtual unsigned int GetX()=0;
-		virtual void SetY(unsigned int argY)=0;
-		virtual unsigned int GetY()=0;
+		virtual void SetTitle(std::string argTitle)=0;
+		virtual std::string GetTitle()=0;
+		virtual void SetX(int argX)=0;
+		virtual int GetX()=0;
+		virtual void SetY(int argY)=0;
+		virtual int GetY()=0;
 		virtual void SetWidth(unsigned int argWidth)=0;
 		virtual unsigned int GetWidth()=0;
 		virtual void SetHeight(unsigned int argHeight)=0;

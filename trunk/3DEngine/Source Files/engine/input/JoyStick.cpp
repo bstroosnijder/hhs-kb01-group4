@@ -88,7 +88,6 @@ namespace engine
 		{
 			this->pDevice->Unacquire();
 			this->pDevice->Release();
-			delete this->pDevice;
 		}
 	}
 
