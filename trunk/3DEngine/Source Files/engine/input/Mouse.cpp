@@ -4,9 +4,6 @@ namespace engine
 {
 	//---Private attributes---
 	//---Public attributes---
-
-	#define KEYDOWN(name, key) (name[key] & 0x80)
-
 	//---Private methods---
 
 	/**
@@ -29,16 +26,10 @@ namespace engine
 	 */
 	void Mouse::ResetState()
 	{
-		this->pState->KEY_LMB		= false;
-		this->pState->KEY_RMB		= false;
-		this->pState->MOUSE_UP		= 0;
-		this->pState->MOUSE_DOWN	= 0;
-		this->pState->MOUSE_LEFT	= 0;
-		this->pState->MOUSE_RIGHT	= 0;
-
-		// testje
 		this->pState->MOUSE_X		= 0;
 		this->pState->MOUSE_Y		= 0;
+		this->pState->KEY_LMB		= false;
+		this->pState->KEY_RMB		= false;
 	}
 
 	//---Public methods---

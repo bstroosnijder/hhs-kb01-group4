@@ -38,22 +38,6 @@ namespace engine
 			{
 				return KEY_RMB;
 			}
-			else if(argBind == "MOUSE_UP")
-			{
-				return MOUSE_UP > 0;
-			}
-			else if(argBind == "MOUSE_DOWN")
-			{
-				return MOUSE_DOWN > 0;
-			}
-			else if(argBind == "MOUSE_LEFT")
-			{
-				return MOUSE_LEFT > 0;
-			}
-			else if(argBind == "MOUSE_RIGHT")
-			{
-				return MOUSE_RIGHT > 0;
-			}
 			else
 			{
 				return false;
@@ -69,22 +53,6 @@ namespace engine
 			else if(argAxis == "MOUSE_Y")
 			{
 				return MOUSE_Y;
-			}
-			else if(argAxis == "MOUSE_UP")
-			{
-				return MOUSE_UP;
-			}
-			else if(argAxis == "MOUSE_DOWN")
-			{
-				return MOUSE_DOWN;
-			}
-			else if(argAxis == "MOUSE_LEFT")
-			{
-				return MOUSE_LEFT;
-			}
-			else if(argAxis == "MOUSE_RIGHT")
-			{
-				return MOUSE_RIGHT;
 			}
 			else
 			{
