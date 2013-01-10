@@ -147,7 +147,7 @@ namespace engine
 
 			if(argPState->IsBindActive(key))
 			{
-				float speed = (argPState->GetMouseSpeed(key) / 100);
+				float speed = (argPState->GetMouseSpeed(key) / 10.5);
 				this->DoBind(bind, speed);
 			}
 		}

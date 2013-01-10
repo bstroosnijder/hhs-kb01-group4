@@ -94,27 +94,6 @@ namespace engine
             {
 				switch(msg.message)
 				{
-				case WM_KEYDOWN:
-				case WM_KEYUP:
-					// Update the keyboard
-					if(this->pInputManager->HasDevice(InputManager::KEYBOARD))
-					{
-						//this->pInputManager->UpdateDevice(InputManager::KEYBOARD);
-					}
-					break;
-
-				case WM_LBUTTONDOWN:
-				case WM_LBUTTONUP:
-				case WM_RBUTTONDOWN:
-				case WM_RBUTTONUP:
-				case WM_MOUSEMOVE:
-					// Update the mouse
-					if(this->pInputManager->HasDevice(InputManager::MOUSE))
-					{
-						//this->pInputManager->UpdateDevice(InputManager::MOUSE);
-					}
-					break;
-
 				default:
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
@@ -146,8 +125,11 @@ namespace engine
 			pScene->Update();
 
 			// Loop through scene windows
-			for each(Window* pWindow in pScene->GetWindows())
+			std::list<Window*> windows = pScene->GetWindows();
+			std::list<Window*>::iterator windowIt;
+			for(windowIt = windows.begin(); windowIt != windows.end(); windowIt++)
 			{
+				Window* pWindow = *windowIt;
 				//Render the content of this window.
 				Renderer* pRenderer = this->winRenderer[pWindow];
 				pRenderer->Clear();
