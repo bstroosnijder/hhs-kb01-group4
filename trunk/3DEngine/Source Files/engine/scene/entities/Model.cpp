@@ -11,7 +11,7 @@ namespace engine
 	 * @param		std::string		The bind to do
 	 * @return		void
 	 */
-	void Model::DoBind(std::string argBind, long argSpeed)
+	void Model::DoBind(std::string argBind, float argSpeed)
 	{
 		float speed = argSpeed * 0.025f;
 
@@ -127,7 +127,7 @@ namespace engine
 
 			if(argPState->IsBindActive(key))
 			{
-				long speed = 1;
+				float speed = 1.0f;
 				this->DoBind(bind, speed);
 			}
 		}
@@ -149,10 +149,10 @@ namespace engine
 
 			if(argPState->IsBindActive(key))
 			{
-				long speed = (argPState->GetMouseSpeed(key) / 10.5);
+				float speed = (argPState->GetMouseSpeed(key) / 10.5f);
 				if(speed <=0)
 				{
-					speed = 1;
+					speed = 1.0f;
 				}
 				this->DoBind(bind, speed);
 			}
@@ -175,7 +175,7 @@ namespace engine
 
 			if(argPState->IsBindActive(key))
 			{
-				float speed = (argPState->GetStickSpeed(key) / 10.5);
+				float speed = (argPState->GetStickSpeed(key) / 10.5f);
 				this->DoBind(bind, speed);
 			}
 		}

@@ -25,7 +25,7 @@ namespace engine
 		Resource* pResource;
 		std::map<std::string, Model*> models;
 
-		void DoBind(std::string argBind, long argSpeed);
+		void DoBind(std::string argBind, float argSpeed);
 	public:
 		Model(Resource* argPResource);
 		~Model();
