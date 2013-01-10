@@ -193,7 +193,6 @@
     <ClInclude Include="Header Files\engine\input\listeners\MouseListener.h">
       <Filter>Header Files\engine\input\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="Source Files\engine\N00b.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
@@ -277,6 +276,8 @@
     <ClCompile Include="Source Files\engine\input\listeners\MouseListener.cpp">
       <Filter>Source Files\engine\input\listeners</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\engine\N00b.cpp" />
+    <ClCompile Include="Source Files\engine\N00b.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
