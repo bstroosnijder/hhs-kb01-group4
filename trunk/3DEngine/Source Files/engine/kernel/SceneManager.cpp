@@ -486,8 +486,9 @@ namespace engine
 		}
 
 		// Loop through the scripts
-		for each(std::string dataLineScript in dataScripts)
+		for(int lineIndex = 0; lineIndex < dataScripts.size(); lineIndex++)
 		{
+			std::string dataLineScript = dataScripts[lineIndex];
 			// explode the script data
 			data = explode(';', dataLineScript);
 
