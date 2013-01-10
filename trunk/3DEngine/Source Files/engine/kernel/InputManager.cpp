@@ -61,6 +61,11 @@ namespace engine
 		}
 	}
 
+	/**
+	 * @param		LPCDIDEVICEINSTANCE		The instance of the device
+	 * @param		void*					???
+
+	 */
 	BOOL CALLBACK InputManager::SetupDeviceCallback(LPCDIDEVICEINSTANCE lpddi, void* pvRef)
 	{
 		InputManager::HasJoyStick = true;
