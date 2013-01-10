@@ -385,7 +385,10 @@ namespace engine
 					{
 						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
 						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
-						argPInputManager->GetJoyStick()->AddListener(pScene->GetCamera());
+						if(argPInputManager->HasDevice(InputManager::JOYSTICK))
+						{
+							argPInputManager->GetJoyStick()->AddListener(pScene->GetCamera());
+						}
 					}
 					else
 					{
