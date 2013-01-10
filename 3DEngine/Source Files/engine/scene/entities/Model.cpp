@@ -13,7 +13,7 @@ namespace engine
 	 */
 	void Model::DoBind(std::string argBind, float argSpeed)
 	{
-		float speed = argSpeed * 0.025f;
+		float speed = 0.0025f;
 
 		// Move Forward
 		if(argBind == "move_forward")

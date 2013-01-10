@@ -72,6 +72,7 @@ namespace engine
 	 */
 	Mouse::~Mouse()
 	{
+		Logger::Log("Mouse: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -85,7 +86,6 @@ namespace engine
 		{
 			this->pDevice->Unacquire();
 			this->pDevice->Release();
-			delete this->pDevice;
 		}
 	}
 

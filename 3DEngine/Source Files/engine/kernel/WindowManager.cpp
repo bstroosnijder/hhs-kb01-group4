@@ -69,16 +69,16 @@ namespace engine
 	 * @param		int							argHeight is the height for the new window
 	 * @return		Window*						The created window.
 	 */
-	Window* WindowManager::NewWindow(std::string argTitle, unsigned int argX, unsigned int argY, unsigned int argWidth, unsigned int argHeight)
+	Window* WindowManager::NewWindow(std::string argTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight)
 	{
 		Logger::Log("WindowManager: New window: " + argTitle, Logger::INFO, __FILE__, __LINE__);
 		Window* pWindow;
 		#ifdef _WIN32
 		// Windows 32bit
-		pWindow = new Win32Window((char*)argTitle.c_str(), argX, argY, argWidth, argHeight);
+		pWindow = new Win32Window(argTitle, argX, argY, argWidth, argHeight);
 		#elif _WIN64
 		// Windows 64bit
-		pWindow = new Win32Window((char*)argTitle.c_str(), argX, argY, argWidth, argHeight);
+		pWindow = new Win32Window(argTitle, argX, argY, argWidth, argHeight);
 		#endif
 		WindowManager::windows[((Win32Window*)pWindow)->GetHWin()] = pWindow;
 
@@ -96,7 +96,7 @@ namespace engine
 	void WindowManager::RemoveWindow(HWND argHWND)
 	{
 		Window* pWindow = WindowManager::windows[argHWND];
-		Logger::Log("WindowManager: Removing window: " + std::string(pWindow->GetTitle()), Logger::INFO, __FILE__, __LINE__);
+		Logger::Log("WindowManager: Removing window: " + pWindow->GetTitle(), Logger::INFO, __FILE__, __LINE__);
 
 		WindowManager::windows.erase(argHWND);
 	}
