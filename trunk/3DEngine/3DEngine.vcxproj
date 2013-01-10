@@ -47,7 +47,6 @@
     <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
     <ClInclude Include="Header Files\engine\input\KeyboardState.h" />
-    <ClInclude Include="Source Files\engine\N00b.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />

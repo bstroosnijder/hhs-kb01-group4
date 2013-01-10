@@ -45,16 +45,16 @@ namespace engine
 
 		DIPROPDWORD mData;
 		// - size of enclosing structure
-        mData.diph.dwSize       = sizeof(DIPROPDWORD);
-        // - always size of DIPROPHEADER
-        mData.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-        // - identifier for property in question - 0 for entire device
-        mData.diph.dwObj        = 0;
-        // - DIPH_DEVICE since entire device is involved
-        mData.diph.dwHow        = DIPH_DEVICE;
-        // property data member (takes a single word of data)
-        // - the buffer size goes here
-        mData.dwData            = 2;
+		mData.diph.dwSize       = sizeof(DIPROPDWORD);
+		// - always size of DIPROPHEADER
+		mData.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+		// - identifier for property in question - 0 for entire device
+		mData.diph.dwObj        = 0;
+		// - DIPH_DEVICE since entire device is involved
+		mData.diph.dwHow        = DIPH_DEVICE;
+		// property data member (takes a single word of data)
+		// - the buffer size goes here
+		mData.dwData            = 2;
 
 		argPInput->CreateDevice(GUID_SysMouse, &this->pDevice, NULL);
 		this->pDevice->SetDataFormat(&c_dfDIMouse);
