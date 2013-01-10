@@ -385,11 +385,13 @@ namespace engine
 					{
 						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
 						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
+						argPInputManager->GetJoyStick()->AddListener(pScene->GetCamera());
 					}
 					else
 					{
 						argPInputManager->GetKeyboard()->AddListener(pScene->GetModel(entity));
 						argPInputManager->GetMouse()->AddListener(pScene->GetModel(entity));
+						//argPInputManager->GetJoyStick()->AddListener(pScene->GetModel(entity));
 					}
 				}
 				else if(device == "keyboard")
@@ -432,6 +434,11 @@ namespace engine
 					else if(device == "mouse")
 					{
 						pInputDevice = argPInputManager->GetDevice(InputManager::MOUSE);
+					}
+
+					else if(device == "joystick")
+					{
+						pInputDevice = argPInputManager->GetDevice(InputManager::JOYSTICK);
 					}
 
 					if(pInputDevice != NULL)

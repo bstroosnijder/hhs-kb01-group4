@@ -153,6 +153,22 @@ namespace engine
 		}
 	}
 
+	void Camera::DoQJoyStickEvent(std::map<std::string, std::string> argBinds, QJoyStickState* argPState)
+	{
+		std::map<std::string, std::string>::iterator bindsIt;
+		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
+		{
+			std::string key		= bindsIt->first;
+			std::string bind	= bindsIt->second;
+
+			if(argPState->IsBindActive(key))
+			{
+				long speed = 0;
+				this->DoBind(bind, speed);
+			}
+		}
+	}
+
 	/**
 	 * Default implementation of the Update method for all entities
 	 * @return		void

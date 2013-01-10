@@ -12,6 +12,7 @@
 #include "..\input\InputDevice.h"
 #include "..\input\Keyboard.h"
 #include "..\input\Mouse.h"
+#include "..\input\QJoyStick.h"
 
 namespace engine
 {
@@ -26,9 +27,13 @@ namespace engine
 
 		Keyboard* pKeyboard;
 		Mouse* pMouse;
+		QJoyStick* pJoyStick;
+
+
 	public:
 		static const unsigned long KEYBOARD;
 		static const unsigned long MOUSE;
+		static const unsigned long JOYSTICK;
 
 		InputManager();
 		~InputManager();
@@ -37,6 +42,7 @@ namespace engine
 
 		Keyboard* GetKeyboard();
 		Mouse* GetMouse();
+		QJoyStick* GetJoyStick();
 
 		bool HasDevice(unsigned long argDeviceIndex);
 		InputDevice* GetDevice(unsigned long argDeviceIndex);
