@@ -47,11 +47,13 @@
     <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
     <ClInclude Include="Header Files\engine\input\KeyboardState.h" />
+    <ClInclude Include="Source Files\engine\N00b.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />
     <ClCompile Include="Source Files\engine\input\listeners\KeyboardListener.cpp" />
     <ClCompile Include="Source Files\engine\input\listeners\MouseListener.cpp" />
+    <ClCompile Include="Source Files\engine\N00b.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\Skybox.cpp" />
     <ClCompile Include="Source Files\engine\scene\Heightmap.cpp" />
