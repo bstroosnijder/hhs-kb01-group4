@@ -72,7 +72,13 @@ namespace engine
 		// Create a new mouse device
 		this->pMouse			= new Mouse(argPWindow, this->pInput);
 		// Create a new joystick device
-		this->pJoyStick			= new QJoyStick(argPWindow, this->pInput);
+
+		//Check to see if joystick excists in slot 0 (index of an array of potential joysticks)
+		JOYINFO ji;
+		if(joyGetPos(0, &ji) == JOYERR_NOERROR()) 
+		{
+			this->pJoyStick			= new QJoyStick(argPWindow, this->pInput);
+		}
 	}
 
 	/**

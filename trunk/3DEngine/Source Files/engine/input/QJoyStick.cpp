@@ -44,8 +44,6 @@ namespace engine
 		this->pState->KEY_UP		= false;
 	}
 
-
-
 	engine::QJoyStick::QJoyStick(Window* argPWindow, LPDIRECTINPUT8 argPInput)
 	{
 		Logger::Log("QJoyStick: Creating", Logger::INFO, __FILE__, __LINE__);
