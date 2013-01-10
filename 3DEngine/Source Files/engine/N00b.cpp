@@ -2,6 +2,11 @@
 
 namespace engine
 {
+	//engine::N00b* n000by = new engine::N00b();
+	//engine::Window* pWindow = n000by->NewWindow("I'm a noob window");
+	//n000by->LoadScene("NoobScene", "mainScene.scene", pWindow);
+	//n000by->Start();
+
 	N00b::N00b()
 	{
 		this->kernel = new Kernel();
