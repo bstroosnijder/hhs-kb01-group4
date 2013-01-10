@@ -36,6 +36,10 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
 		//this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		
+		this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+		this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+		this->pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
 		// Set matrices to the identity
 		this->SetupMatricis();
