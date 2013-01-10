@@ -19,6 +19,7 @@ namespace engine
 		bool KEY_DOWN;
 		bool KEY_RIGHT;
 		bool KEY_UP;
+		unsigned long JOY_X;
 
 		/**
 		 * Checks if a key is down based on a string
@@ -75,9 +76,26 @@ namespace engine
 			{
 				return KEY_UP;
 			}
+			else if(argBind == "JOY_X")
+			{
+				return true;
+			}
+
+			
 			else
 			{
 				return false;
+			}
+		}
+		long GetStickSpeed(std::string argAxis)
+		{
+			if(argAxis == "JOY_X")
+			{
+				return JOY_X;
+			}
+			else
+			{
+				return 0;
 			}
 		}
 	};

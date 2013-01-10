@@ -163,7 +163,7 @@ namespace engine
 
 			if(argPState->IsBindActive(key))
 			{
-				long speed = 0;
+				float speed = (argPState->GetStickSpeed(key) / 10.5);
 				this->DoBind(bind, speed);
 			}
 		}
