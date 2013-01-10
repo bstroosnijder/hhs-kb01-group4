@@ -92,13 +92,8 @@ namespace engine
         {
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
             {
-				switch(msg.message)
-				{
-				default:
-					TranslateMessage(&msg);
-					DispatchMessage(&msg);
-					break;
-				}
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
             }
 			else
 			{

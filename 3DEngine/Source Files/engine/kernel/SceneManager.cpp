@@ -458,7 +458,7 @@ namespace engine
 		}
 
 		// Loop through the scripts
-		for(int lineIndex = 0; lineIndex < dataScripts.size(); lineIndex++)
+		for(unsigned int lineIndex = 0; lineIndex < dataScripts.size(); lineIndex++)
 		{
 			std::string dataLineScript = dataScripts[lineIndex];
 			// explode the script data
