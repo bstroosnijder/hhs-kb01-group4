@@ -96,9 +96,10 @@ namespace engine
 	 */
 	void Entity::Update()
 	{
-		for each(std::string script in this->scripts)
+		std::list<std::string>::iterator scriptIt;
+		for (scriptIt = this->scripts.begin(); scriptIt != this->scripts.end(); scriptIt++)
 		{
-			this->ParseAndExecuteScript(script);
+			this->ParseAndExecuteScript(*scriptIt);
 		}
 	}
 

@@ -99,9 +99,10 @@ namespace engine
 		time << localTime->tm_hour << ":" << localTime->tm_min << ":" << localTime->tm_sec;
 
 		// Log the message, severity (info/warning/error), current date, current time, file location and line number to each strategy.
-		for each(LogStrategy* strat in strategies)
+		std::list<LogStrategy*>::iterator stratIt;
+		for (stratIt = strategies.begin(); stratIt != strategies.end(); stratIt++)
 		{
-			strat->Write(argMessage, severity, (char*)date.str().c_str(), (char*)time.str().c_str(), argPFile, argLineNumber);
+			(*stratIt)->Write(argMessage, severity, (char*)date.str().c_str(), (char*)time.str().c_str(), argPFile, argLineNumber);
 		}
 	}
 }

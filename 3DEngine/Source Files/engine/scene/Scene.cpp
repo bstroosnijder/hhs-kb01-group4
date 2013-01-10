@@ -135,9 +135,10 @@ namespace engine
 	 */
 	void Scene::CleanUp()
 	{
-		for each(Window* pWindow in this->windows)
+		std::list<Window*>::iterator windowIt;
+		for (windowIt = this->windows.begin(); windowIt != this->windows.end(); windowIt++)
 		{
-			delete pWindow;
+			delete *windowIt;
 		}
 
 		if(this->pSkybox != NULL)
@@ -187,9 +188,10 @@ namespace engine
 			it->second->Update();
 		}
 
-		for each(std::string script in this->scripts)
+		std::list<std::string>::iterator scriptIt;
+		for (scriptIt = this->scripts.begin(); scriptIt != this->scripts.end(); scriptIt++)
 		{
-			this->ParseAndExecuteScript(script);
+			this->ParseAndExecuteScript(*scriptIt);
 		}
 	}
 
