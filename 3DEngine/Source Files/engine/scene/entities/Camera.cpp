@@ -46,12 +46,12 @@ namespace engine
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += speed * 50;
+			this->position.y += speed * 100;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= speed * 50;
+			this->position.y -= speed * 100;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
@@ -152,8 +152,14 @@ namespace engine
 			}
 		}
 	}
-
-	void Camera::DoQJoyStickEvent(std::map<std::string, std::string> argBinds, QJoyStickState* argPState)
+	
+	/**
+	 * Handle any incomming joystick events
+	 * @param		std::map<std::string, std::string>		The bindings and keys
+	 * @param		KeyboardState*							The state of the joystick
+	 * @return		void
+	 */
+	void Camera::DoJoyStickEvent(std::map<std::string, std::string> argBinds, JoyStickState* argPState)
 	{
 		std::map<std::string, std::string>::iterator bindsIt;
 		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)

@@ -12,7 +12,7 @@
 #include "..\input\InputDevice.h"
 #include "..\input\Keyboard.h"
 #include "..\input\Mouse.h"
-#include "..\input\QJoyStick.h"
+#include "..\input\JoyStick.h"
 
 namespace engine
 {
@@ -28,7 +28,7 @@ namespace engine
 
 		Keyboard* pKeyboard;
 		Mouse* pMouse;
-		QJoyStick* pJoyStick;
+		JoyStick* pJoyStick;
 	public:
 		static const unsigned long KEYBOARD;
 		static const unsigned long MOUSE;
@@ -42,7 +42,7 @@ namespace engine
 
 		Keyboard* GetKeyboard();
 		Mouse* GetMouse();
-		QJoyStick* GetJoyStick();
+		JoyStick* GetJoyStick();
 
 		bool HasDevice(unsigned long argDeviceIndex);
 		InputDevice* GetDevice(unsigned long argDeviceIndex);

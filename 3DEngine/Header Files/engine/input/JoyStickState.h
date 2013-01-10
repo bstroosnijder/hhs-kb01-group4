@@ -1,12 +1,16 @@
-#ifndef QJOYSTICKSTATE_H_
-#define QJOYSTICKSTATE_H_
+#ifndef JOYSTICKSTATE_H_
+#define JOYSTICKSTATE_H_
 
 #include <string>
 
 namespace engine
 {
-	struct QJoyStickState
+	struct JoyStickState
 	{
+		long LSTICK_X;
+		long LSTICK_Y;
+		long RSTICK_X;
+		long RSTICK_Y;
 		bool KEY_1;
 		bool KEY_2;
 		bool KEY_3;
@@ -15,11 +19,10 @@ namespace engine
 		bool KEY_6;
 		bool KEY_7;
 		bool KEY_8;
-		bool KEY_LEFT;
-		bool KEY_DOWN;
-		bool KEY_RIGHT;
 		bool KEY_UP;
-		unsigned long JOY_X;
+		bool KEY_DOWN;
+		bool KEY_LEFT;
+		bool KEY_RIGHT;
 
 		/**
 		 * Checks if a key is down based on a string
@@ -28,7 +31,23 @@ namespace engine
 		 */
 		bool IsBindActive(std::string argBind)
 		{
-			if(argBind == "KEY_1")
+			if(argBind == "LSTICK_X")
+			{
+				return true;
+			}
+			else if(argBind == "LSTICK_Y")
+			{
+				return true;
+			}
+			else if(argBind == "RSTICK_X")
+			{
+				return true;
+			}
+			else if(argBind == "RSTICK_Y")
+			{
+				return true;
+			}
+			else if(argBind == "KEY_1")
 			{
 				return KEY_1;
 			}
@@ -60,38 +79,45 @@ namespace engine
 			{
 				return KEY_8;
 			}
-			else if(argBind == "KEY_LEFT")
+			else if(argBind == "KEY_UP")
 			{
-				return KEY_LEFT;
+				return KEY_UP;
 			}
 			else if(argBind == "KEY_DOWN")
 			{
 				return KEY_DOWN;
 			}
+			else if(argBind == "KEY_LEFT")
+			{
+				return KEY_LEFT;
+			}
 			else if(argBind == "KEY_RIGHT")
 			{
 				return KEY_RIGHT;
 			}
-			else if(argBind == "KEY_UP")
-			{
-				return KEY_UP;
-			}
-			else if(argBind == "JOY_X")
-			{
-				return true;
-			}
-
-			
 			else
 			{
 				return false;
 			}
 		}
+
 		long GetStickSpeed(std::string argAxis)
 		{
-			if(argAxis == "JOY_X")
+			if(argAxis == "LSTICK_X")
 			{
-				return JOY_X;
+				return LSTICK_X;
+			}
+			else if(argAxis == "LSTICK_Y")
+			{
+				return LSTICK_Y;
+			}
+			else if(argAxis == "RSTICK_X")
+			{
+				return RSTICK_X;
+			}
+			else if(argAxis == "RSTICK_Y")
+			{
+				return RSTICK_Y;
 			}
 			else
 			{

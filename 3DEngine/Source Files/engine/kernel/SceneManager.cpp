@@ -408,7 +408,7 @@ namespace engine
 					}
 					else
 					{
-						//argPInputManager->GetJoyStick()->AddListener(pScene->GetModel(entity));
+						argPInputManager->GetJoyStick()->AddListener(pScene->GetModel(entity));
 					}
 				}
 				else

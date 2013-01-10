@@ -46,12 +46,12 @@ namespace engine
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += speed * 20;
+			this->position.y += speed * 100;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= speed * 20;
+			this->position.y -= speed * 100;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
@@ -149,11 +149,33 @@ namespace engine
 
 			if(argPState->IsBindActive(key))
 			{
-				long speed = (argPState->GetMouseSpeed(key) / 20);
+				long speed = (argPState->GetMouseSpeed(key) / 10.5);
 				if(speed <=0)
 				{
 					speed = 1;
 				}
+				this->DoBind(bind, speed);
+			}
+		}
+	}
+	
+	/**
+	 * Handle any incomming joystick events
+	 * @param		std::map<std::string, std::string>		The bindings and keys
+	 * @param		KeyboardState*							The state of the joystick
+	 * @return		void
+	 */
+	void Model::DoJoyStickEvent(std::map<std::string, std::string> argBinds, JoyStickState* argPState)
+	{
+		std::map<std::string, std::string>::iterator bindsIt;
+		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
+		{
+			std::string key		= bindsIt->first;
+			std::string bind	= bindsIt->second;
+
+			if(argPState->IsBindActive(key))
+			{
+				float speed = (argPState->GetStickSpeed(key) / 10.5);
 				this->DoBind(bind, speed);
 			}
 		}

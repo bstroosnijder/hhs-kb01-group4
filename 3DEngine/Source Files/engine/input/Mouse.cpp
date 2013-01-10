@@ -132,11 +132,11 @@ namespace engine
 
 				if(key == "MOUSE_X")
 				{
-					this->pState->MOUSE_X += mState.lX;
+					this->pState->MOUSE_X += (mState.lX / 20);
 				}
 				else if(key == "MOUSE_Y")
 				{
-					this->pState->MOUSE_Y += mState.lY;
+					this->pState->MOUSE_Y += (mState.lY / 20);
 				}
 				else if(key == "KEY_LMB")
 				{
