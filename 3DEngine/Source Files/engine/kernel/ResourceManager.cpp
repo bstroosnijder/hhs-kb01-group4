@@ -60,7 +60,13 @@ namespace engine
 	{
 		return this->meshes[argMeshFileName];
 	}
-
+	
+	/**
+	 * Loads a model to be used
+	 * @param		Renderer*				The renderer to use for loading the texture on
+	 * @param		std::string				The filename of the texture
+	 * @return		bool
+	 */
 	bool ResourceManager::LoadMesh(Renderer* argPRenderer, std::string argMeshFileName)
 	{
 		Logger::Log("ResourceManager: Loading mesh: " + argMeshFileName, Logger::INFO, __FILE__, __LINE__);

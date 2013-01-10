@@ -5,6 +5,7 @@
 #include <string>
 #include <d3dX9.h>
 #include "..\logger\Logger.h"
+#include "..\utils\explode.h"
 #include "..\utils\fileExists.h"
 #include "..\renderer\Renderer.h"
 #include "..\resource\Resource.h"

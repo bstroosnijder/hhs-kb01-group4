@@ -135,7 +135,6 @@ namespace engine
 		// --- Read the scene file
 		
 		std::string dataCamera;
-		std::vector<std::string> dataResources	= std::vector<std::string>();
 		std::string dataSkybox;
 		std::string dataHeightmap;
 		std::vector<std::string> dataModels		= std::vector<std::string>();
@@ -157,7 +156,6 @@ namespace engine
 			if(peek == '#')
 			{
 				curSegment = line.substr(1);
-				Logger::Log("SceneManager: +++ Segment - " + curSegment, Logger::INFO, __FILE__, __LINE__);
 
 				// auto set the next line as the line so that we can handle it
 				peek = inStream.peek();
@@ -171,10 +169,6 @@ namespace engine
 				if(curSegment == "camera")
 				{
 					dataCamera = line;
-				}
-				else if(curSegment == "resources")
-				{
-					dataResources.push_back(line);
 				}
 				else if(curSegment == "skybox")
 				{
@@ -207,9 +201,10 @@ namespace engine
 
 
 		// === SEGMENT: Camera ===
+		Logger::Log("\nSceneManager: +++ Segment - Camera", Logger::INFO, __FILE__, __LINE__);
+
 
 		// Check if we have camera data, else set it to default
-		Logger::Log("SceneManager: Parse camera data", Logger::INFO, __FILE__, __LINE__);
 		if(dataCamera.empty())
 		{
 			Logger::Log("SceneManager: No camera data, loading defaults", Logger::WARNING, __FILE__, __LINE__);
@@ -234,46 +229,9 @@ namespace engine
 		pCamera->SetScaling(scaling);
 
 
-		// === SEGMENT: Resources ===
-
-		// Check if we have any resources, give an error we we can't find any
-		Logger::Log("SceneManager: Parse resource data", Logger::INFO, __FILE__, __LINE__);
-		if(dataResources.empty())
-		{
-			Logger::Log("SceneManager: No resource data", Logger::FATAL, __FILE__, __LINE__);
-		}
-
-		// Loop through the resources
-		std::vector<std::string>::iterator resourceIt;
-		for(resourceIt = dataResources.begin(); resourceIt != dataResources.end(); resourceIt++)
-		{
-			std::string dataLineResource = *resourceIt;
-			// explode the resource data
-			data = explode(';', dataLineResource);
-
-			std::string resourceType		= data.at(0);
-			std::string resourceFileName	= data.at(1);
-
-			if(resourceType == "model")
-			{
-				Logger::Log("SceneManager: Model: " + resourceFileName, Logger::INFO, __FILE__, __LINE__);
-				argPResourceManager->LoadMesh(argPRenderer, resourceFileName);
-			}
-			else if(resourceType == "texture")
-			{
-				Logger::Log("SceneManager: Texture: " + resourceFileName, Logger::INFO, __FILE__, __LINE__);
-				argPResourceManager->LoadTexture(argPRenderer, resourceFileName);
-			}
-			else
-			{
-				Logger::Log("SceneManager: Unsupported resource: " + resourceType, Logger::WARNING, __FILE__, __LINE__);
-			}
-		}
-
-
 		// === SEGMENT: Skybox ===
+		Logger::Log("\nSceneManager: +++ Segment - Skybox", Logger::INFO, __FILE__, __LINE__);
 
-		Logger::Log("SceneManager: Parse skybox data", Logger::INFO, __FILE__, __LINE__);
 		if(dataSkybox.empty())
 		{
 			Logger::Log("SceneManager: No skybox data", Logger::WARNING, __FILE__, __LINE__);
@@ -284,6 +242,7 @@ namespace engine
 			data = explode(';', dataSkybox);
 
 			std::string skyTexture = data.at(0);
+			argPResourceManager->LoadTexture(argPRenderer, skyTexture);
 
 			Skybox* pSkybox = new Skybox();
 			pSkybox->SetupVertices(argPRenderer);
@@ -293,8 +252,8 @@ namespace engine
 
 
 		// === SEGMENT: Heightmap ===
+		Logger::Log("\nSceneManager: +++ Segment - Heightmap", Logger::INFO, __FILE__, __LINE__);
 
-		Logger::Log("SceneManager: Parse heightmap data", Logger::INFO, __FILE__, __LINE__);
 		if(dataHeightmap.empty())
 		{
 			Logger::Log("SceneManager: No heightmap data", Logger::WARNING, __FILE__, __LINE__);
@@ -314,14 +273,17 @@ namespace engine
 
 			for(unsigned long i = 2; i < data.size(); i++)
 			{
-				pHeightmap->SetTexture((i - 2), argPResourceManager->GetTexture(data.at(i)));
+				std::string mapTexture = data.at(i);
+				argPResourceManager->LoadTexture(argPRenderer, mapTexture);
+
+				pHeightmap->SetTexture((i - 2), argPResourceManager->GetTexture(mapTexture));
 			}
 		}
 
 
 		// === SEGMENT: Models ===
+		Logger::Log("\nSceneManager: +++ Segment - Models", Logger::INFO, __FILE__, __LINE__);
 
-		Logger::Log("SceneManager: Parse model data", Logger::INFO, __FILE__, __LINE__);
 		if(dataModels.empty())
 		{
 			Logger::Log("SceneManager: No model data", Logger::INFO, __FILE__, __LINE__);
@@ -339,6 +301,7 @@ namespace engine
 
 			std::string modelName		= data.at(0);
 			std::string modelResource	= data.at(10);
+			argPResourceManager->LoadMesh(argPRenderer, modelResource);
 
 			int numTabs					= std::count(modelName.begin(), modelName.end(), '\t');
 			// Remove the tabs from the model name
@@ -371,7 +334,10 @@ namespace engine
 
 			for(unsigned long i = 11; i < data.size(); i++)
 			{
-				pModel->SetTexture((i - 11), argPResourceManager->GetTexture(data.at(i)));
+				std::string modelTexture = data.at(i);
+				argPResourceManager->LoadTexture(argPRenderer, modelTexture);
+
+				pModel->SetTexture((i - 11), argPResourceManager->GetTexture(modelTexture));
 			}
 
 			if(!modelStack.empty() && numTabs > 0)
@@ -391,8 +357,8 @@ namespace engine
 
 
 		// === SEGMENT: Input ===
+		Logger::Log("\nSceneManager: +++ Segment - Input", Logger::INFO, __FILE__, __LINE__);
 
-		Logger::Log("SceneManager: Parse input data", Logger::INFO, __FILE__, __LINE__);
 		if(dataInput.empty())
 		{
 			Logger::Log("SceneManager: No input data", Logger::INFO, __FILE__, __LINE__);
@@ -478,8 +444,8 @@ namespace engine
 
 
 		// === SEGMENT: Scripts ===
+		Logger::Log("\nSceneManager: +++ Segment - Scripts", Logger::INFO, __FILE__, __LINE__);
 
-		Logger::Log("SceneManager: Parse script data", Logger::INFO, __FILE__, __LINE__);
 		if(dataScripts.empty())
 		{
 			Logger::Log("SceneManager: No script data", Logger::INFO, __FILE__, __LINE__);
