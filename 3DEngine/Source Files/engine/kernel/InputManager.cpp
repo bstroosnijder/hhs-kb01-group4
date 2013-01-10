@@ -5,8 +5,9 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 
-	const unsigned long InputManager::KEYBOARD	= 0;
-	const unsigned long InputManager::MOUSE		= 1;
+	const unsigned long InputManager::KEYBOARD		= 0;
+	const unsigned long InputManager::MOUSE			= 1;
+	const unsigned long InputManager::JOYSTICK		= 2;
 
 	//---Private methods---
 	//---Public methods---
@@ -25,6 +26,7 @@ namespace engine
 
 		this->pKeyboard		= NULL;
 		this->pMouse		= NULL;
+		this->pJoyStick		= NULL;
 
 		Logger::Log("InputManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -47,6 +49,7 @@ namespace engine
 		// We delete the keyboard and mouse first since they contain a device
 		delete this->pKeyboard;
 		delete this->pMouse;
+		delete this->pJoyStick;
 
 		// Safly delete the input object
 		if(this->pInput != NULL)
@@ -68,6 +71,8 @@ namespace engine
 		this->pKeyboard			= new Keyboard(argPWindow, this->pInput);
 		// Create a new mouse device
 		this->pMouse			= new Mouse(argPWindow, this->pInput);
+		// Create a new joystick device
+		this->pJoyStick			= new QJoyStick(argPWindow, this->pInput);
 	}
 
 	/**
@@ -89,6 +94,15 @@ namespace engine
 	}
 
 	/**
+	 * Gets the mouse object
+	 * @return		Mouse*
+	 */
+	QJoyStick* InputManager::GetJoyStick()
+	{
+		return this->pJoyStick;
+	}
+
+	/**
 	 * Checks whether a device is created
 	 * @param		unsigned long		The device index to check
 	 * @return		bool
@@ -97,7 +111,8 @@ namespace engine
 	{
 		bool hasDevice = false;
 		if(	(argDeviceIndex == InputManager::KEYBOARD && this->pKeyboard != NULL) ||
-			(argDeviceIndex == InputManager::MOUSE && this->pMouse != NULL))
+			(argDeviceIndex == InputManager::MOUSE && this->pMouse != NULL) ||
+			(argDeviceIndex == InputManager::JOYSTICK && this->pJoyStick != NULL))
 		{
 			hasDevice = true;
 		}
@@ -120,6 +135,10 @@ namespace engine
 		else if(argDeviceIndex == InputManager::MOUSE)
 		{
 			pDevice = this->pMouse;
+		}
+		else if(argDeviceIndex == InputManager::JOYSTICK)
+		{
+			pDevice = this->pJoyStick;
 		}
 		else
 		{
@@ -144,6 +163,10 @@ namespace engine
 		{
 			this->pMouse->UpdateState();
 		}
+		else if(argDeviceIndex == InputManager::JOYSTICK)
+		{
+			this->pJoyStick->UpdateState();
+		}
 	}
 
 	/**
@@ -164,6 +187,12 @@ namespace engine
 		if(this->pMouse != NULL)
 		{
 			this->pMouse->UpdateState();
+		}
+
+		// If we have a joystick, process it
+		if(this->pJoyStick != NULL)
+		{
+			this->pJoyStick->UpdateState();
 		}
 	}
 }

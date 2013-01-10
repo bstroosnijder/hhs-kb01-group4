@@ -14,7 +14,10 @@
     <ClInclude Include="Header Files\engine\input\InputDevice.h" />
     <ClInclude Include="Header Files\engine\input\listeners\KeyboardListener.h" />
     <ClInclude Include="Header Files\engine\input\listeners\MouseListener.h" />
+    <ClInclude Include="Header Files\engine\input\listeners\QJoyStickListener.h" />
     <ClInclude Include="Header Files\engine\input\MouseState.h" />
+    <ClInclude Include="Header Files\engine\input\QJoyStick.h" />
+    <ClInclude Include="Header Files\engine\input\QJoyStickState.h" />
     <ClInclude Include="Header Files\engine\scene\Drawable.h" />
     <ClInclude Include="Header Files\engine\input\Keyboard.h" />
     <ClInclude Include="Header Files\engine\input\Mouse.h" />
@@ -52,6 +55,7 @@
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />
     <ClCompile Include="Source Files\engine\input\listeners\KeyboardListener.cpp" />
     <ClCompile Include="Source Files\engine\input\listeners\MouseListener.cpp" />
+    <ClCompile Include="Source Files\engine\input\QJoyStick.cpp" />
     <ClCompile Include="Source Files\engine\N00b.cpp" />
     <ClCompile Include="Source Files\main.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\Skybox.cpp" />
