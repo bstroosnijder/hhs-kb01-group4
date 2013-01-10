@@ -24,12 +24,11 @@ namespace engine
 	{
 	private:
 		LPDIRECTINPUT8 pInput;
+		static bool HasJoyStick;
 
 		Keyboard* pKeyboard;
 		Mouse* pMouse;
 		QJoyStick* pJoyStick;
-
-
 	public:
 		static const unsigned long KEYBOARD;
 		static const unsigned long MOUSE;
@@ -38,6 +37,7 @@ namespace engine
 		InputManager();
 		~InputManager();
 		void CleanUp();
+		static BOOL CALLBACK SetupDeviceCallback(LPCDIDEVICEINSTANCE lpddi, void* pvRef);
 		void SetupDevices(Window* argWindow);
 
 		Keyboard* GetKeyboard();

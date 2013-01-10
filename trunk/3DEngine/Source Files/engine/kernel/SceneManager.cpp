@@ -203,7 +203,6 @@ namespace engine
 		// === SEGMENT: Camera ===
 		Logger::Log("\nSceneManager: +++ Segment - Camera", Logger::INFO, __FILE__, __LINE__);
 
-
 		// Check if we have camera data, else set it to default
 		if(dataCamera.empty())
 		{
@@ -379,45 +378,42 @@ namespace engine
 			if(action == "hook")
 			{
 				std::string entity = data.at(2);
-				if(device == "all")
+				if(device == "keyboard" && argPInputManager->HasDevice(InputManager::KEYBOARD))
 				{
 					if(entity == "camera")
 					{
 						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
-						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
-						if(argPInputManager->HasDevice(InputManager::JOYSTICK))
-						{
-							argPInputManager->GetJoyStick()->AddListener(pScene->GetCamera());
-						}
 					}
 					else
 					{
 						argPInputManager->GetKeyboard()->AddListener(pScene->GetModel(entity));
+					}
+				}
+				else if(device == "mouse" && argPInputManager->HasDevice(InputManager::MOUSE))
+				{
+					if(entity == "camera")
+					{
+						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
+					}
+					else
+					{
 						argPInputManager->GetMouse()->AddListener(pScene->GetModel(entity));
+					}
+				}
+				else if(device == "joystick" && argPInputManager->HasDevice(InputManager::JOYSTICK))
+				{
+					if(entity == "camera")
+					{
+						argPInputManager->GetJoyStick()->AddListener(pScene->GetCamera());
+					}
+					else
+					{
 						//argPInputManager->GetJoyStick()->AddListener(pScene->GetModel(entity));
 					}
 				}
-				else if(device == "keyboard")
+				else
 				{
-					if(entity == "camera")
-					{
-						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
-					}
-					else
-					{
-						argPInputManager->GetKeyboard()->AddListener(pScene->GetModel(entity));
-					}
-				}
-				else if(device == "mouse")
-				{
-					if(entity == "camera")
-					{
-						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
-					}
-					else
-					{
-						argPInputManager->GetMouse()->AddListener(pScene->GetModel(entity));
-					}
+					Logger::Log("Could not hook input to device: " + device, Logger::WARNING, __FILE__, __LINE__);
 				}
 			}
 			// Map binds to keys of a device
@@ -429,17 +425,17 @@ namespace engine
 					std::string key = data.at(i);
 					Logger::Log("SceneManager: " + key + ": " + bind, Logger::INFO, __FILE__, __LINE__);
 
-					InputDevice* pInputDevice;
-					if(device == "keyboard")
+					InputDevice* pInputDevice = NULL;
+					if(device == "keyboard" && argPInputManager->HasDevice(InputManager::KEYBOARD))
 					{
 						pInputDevice = argPInputManager->GetDevice(InputManager::KEYBOARD);
 					}
-					else if(device == "mouse")
+					else if(device == "mouse" && argPInputManager->HasDevice(InputManager::MOUSE))
 					{
 						pInputDevice = argPInputManager->GetDevice(InputManager::MOUSE);
 					}
 
-					else if(device == "joystick")
+					else if(device == "joystick" && argPInputManager->HasDevice(InputManager::JOYSTICK))
 					{
 						pInputDevice = argPInputManager->GetDevice(InputManager::JOYSTICK);
 					}
