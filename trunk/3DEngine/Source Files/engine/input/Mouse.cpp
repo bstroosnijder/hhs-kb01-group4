@@ -128,11 +128,33 @@ namespace engine
 		{			
 			this->DoAcquire();
 		}
-		//else
-		//{
+		else
+		{
 			unsigned long elements = 1;
 			DIDEVICEOBJECTDATA data;
 			this->pDevice->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &data, &elements, 0);
+
+			/*std::map<std::string, std::string>::iterator bindsIt;
+			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
+			{
+				std::string key		= bindsIt->first;
+				std::string bind	= bindsIt->second;
+
+				if(key == "MOUSE_X")
+				{
+				}
+				else if(key == "MOUSE_Y")
+				{
+				}
+				else if(key == "KEY_LMB")
+				{
+				}
+				else if(key == "KEY_RMB")
+				{
+				}
+			}*/
+
+
 
 			switch(data.dwOfs)
 			{
@@ -177,6 +199,6 @@ namespace engine
 
 			// Tell our fans
 			this->NotifyListeners();
-		//}
+		}
 	}
 }
