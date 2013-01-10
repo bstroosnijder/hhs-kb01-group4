@@ -109,8 +109,13 @@ namespace engine
 			pMesh->materials[i] = pD3DXMaterials[i].MatD3D;
 			pMesh->materials[i].Ambient = pMesh->materials[i].Diffuse;
 
-			this->LoadTexture(argPRenderer, pD3DXMaterials[i].pTextureFilename);
-			pMesh->textures[i] = this->textures[std::string(pD3DXMaterials[i].pTextureFilename)];
+			std::string textureFileName = argMeshFileName + "\\" + pD3DXMaterials[i].pTextureFilename;
+			if(!this->LoadTexture(argPRenderer, textureFileName))
+			{
+				textureFileName = pD3DXMaterials[i].pTextureFilename;
+				this->LoadTexture(argPRenderer, textureFileName);
+			}
+			pMesh->textures[i] = this->textures[std::string(textureFileName)];
 		}
 		
 		

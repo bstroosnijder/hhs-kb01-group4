@@ -79,9 +79,6 @@
     <Filter Include="Header Files\engine\input\listeners">
       <UniqueIdentifier>{98fe960c-b514-484e-94b3-6c7826aea07b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\engine\input\listeners">
-      <UniqueIdentifier>{d7c48a2d-66b6-4dbe-8029-ce5689df2390}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\engine\N00b.h">
@@ -193,13 +190,13 @@
     <ClInclude Include="Header Files\engine\input\listeners\MouseListener.h">
       <Filter>Header Files\engine\input\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\engine\input\QJoyStick.h">
-      <Filter>Header Files\engine\input</Filter>
-    </ClInclude>
-    <ClInclude Include="Header Files\engine\input\listeners\QJoyStickListener.h">
+    <ClInclude Include="Header Files\engine\input\listeners\JoyStickListener.h">
       <Filter>Header Files\engine\input\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\engine\input\QJoyStickState.h">
+    <ClInclude Include="Header Files\engine\input\JoyStick.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\JoyStickState.h">
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
   </ItemGroup>
@@ -276,18 +273,12 @@
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp">
       <Filter>Source Files\engine\input</Filter>
     </ClCompile>
-    <ClCompile Include="Source Files\engine\input\listeners\KeyboardListener.cpp">
-      <Filter>Source Files\engine\input\listeners</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Files\engine\input\listeners\MouseListener.cpp">
-      <Filter>Source Files\engine\input\listeners</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\main.cpp" />
-    <ClCompile Include="Source Files\engine\input\QJoyStick.cpp">
-      <Filter>Source Files\engine\input</Filter>
-    </ClCompile>
     <ClCompile Include="Source Files\engine\N00b.cpp">
       <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\JoyStick.cpp">
+      <Filter>Source Files\engine\input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

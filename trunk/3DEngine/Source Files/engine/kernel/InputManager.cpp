@@ -89,7 +89,7 @@ namespace engine
 		this->pInput->EnumDevices(DI8DEVCLASS_GAMECTRL, InputManager::SetupDeviceCallback, NULL, DIEDFL_ATTACHEDONLY);
 		if(InputManager::HasJoyStick)
 		{
-			this->pJoyStick		= new QJoyStick(argPWindow, this->pInput);
+			this->pJoyStick		= new JoyStick(argPWindow, this->pInput);
 		}
 	}
 
@@ -115,7 +115,7 @@ namespace engine
 	 * Gets the mouse object
 	 * @return		Mouse*
 	 */
-	QJoyStick* InputManager::GetJoyStick()
+	JoyStick* InputManager::GetJoyStick()
 	{
 		return this->pJoyStick;
 	}
