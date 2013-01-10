@@ -3,6 +3,9 @@
 namespace engine
 {
 	//---Private attributes---
+
+	bool InputManager::HasJoyStick					= false;
+
 	//---Public attributes---
 
 	const unsigned long InputManager::KEYBOARD		= 0;
@@ -58,6 +61,12 @@ namespace engine
 		}
 	}
 
+	BOOL CALLBACK InputManager::SetupDeviceCallback(LPCDIDEVICEINSTANCE lpddi, void* pvRef)
+	{
+		InputManager::HasJoyStick = true;
+		return DIENUM_STOP;
+	}
+
 	/**
 	 * This creates the keyboard object 
 	 * This only happens for the main file. 
@@ -72,12 +81,10 @@ namespace engine
 		// Create a new mouse device
 		this->pMouse			= new Mouse(argPWindow, this->pInput);
 		// Create a new joystick device
-
-		//Check to see if joystick excists in slot 0 (index of an array of potential joysticks)
-		JOYINFO ji;
-		if(joyGetPos(0, &ji) == JOYERR_NOERROR()) 
+		this->pInput->EnumDevices(DI8DEVCLASS_GAMECTRL, InputManager::SetupDeviceCallback, NULL, DIEDFL_ATTACHEDONLY);
+		if(InputManager::HasJoyStick)
 		{
-			this->pJoyStick			= new QJoyStick(argPWindow, this->pInput);
+			this->pJoyStick		= new QJoyStick(argPWindow, this->pInput);
 		}
 	}
 

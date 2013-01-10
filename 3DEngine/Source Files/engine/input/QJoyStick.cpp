@@ -4,10 +4,6 @@ namespace engine
 {
 	//---Private attributes---
 	//---Public attributes---
-
-	//no clue why we need this
-	#define KEYDOWN(name, key) (name[key] & 0x80)
-
 	//---Private methods---
 
 	/**
