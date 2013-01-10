@@ -66,7 +66,7 @@ namespace engine
         mData.dwData            = 2;
 
 		argPInput->CreateDevice(GUID_SysMouse, &this->pDevice, NULL);
-		this->pDevice->SetDataFormat(&c_dfDIMouse2);
+		this->pDevice->SetDataFormat(&c_dfDIMouse);
 		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 		this->pDevice->SetProperty(DIPROP_BUFFERSIZE, &mData.diph);
 
@@ -130,11 +130,10 @@ namespace engine
 		}
 		else
 		{
-			unsigned long elements = 1;
-			DIDEVICEOBJECTDATA data;
-			this->pDevice->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &data, &elements, 0);
-
-			/*std::map<std::string, std::string>::iterator bindsIt;
+			DIMOUSESTATE mState;
+			this->pDevice->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mState);
+			
+			std::map<std::string, std::string>::iterator bindsIt;
 			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
 			{
 				std::string key		= bindsIt->first;
@@ -142,59 +141,20 @@ namespace engine
 
 				if(key == "MOUSE_X")
 				{
+					this->pState->MOUSE_X += mState.lX;
 				}
 				else if(key == "MOUSE_Y")
 				{
+					this->pState->MOUSE_Y += mState.lY;
 				}
 				else if(key == "KEY_LMB")
 				{
+					this->pState->KEY_LMB = (bool)((mState.rgbButtons[0] & 0x80) != 0);
 				}
 				else if(key == "KEY_RMB")
 				{
+					this->pState->KEY_RMB = (bool)((mState.rgbButtons[1] & 0x80) != 0);
 				}
-			}*/
-
-
-
-			switch(data.dwOfs)
-			{
-			// MOUSE_X: Horizontal movement
-			case DIMOFS_X:
-				this->pState->MOUSE_X += (long)data.dwData;
-				break;
-
-			// MOUSE_Y: Vertical movement
-			case DIMOFS_Y:
-				this->pState->MOUSE_Y += (long)data.dwData;
-				break;
-
-			// KEY_LMB: Left Mouse Button
-			case DIMOFS_BUTTON0:
-				// Check if the button is pressed
-				// Button is pressed if dwData is not 0
-				if(data.dwData & 0x80)
-				{
-					this->pState->KEY_LMB = true;
-				}
-				else
-				{
-					this->pState->KEY_LMB = false;
-				}
-				break;
-				
-			// KEY_RMB: Right Mouse Button
-			case DIMOFS_BUTTON1:
-				// Check if the button is pressed
-				// Button is pressed if dwData is not 0
-				if(data.dwData & 0x80)
-				{
-					this->pState->KEY_RMB = true;
-				}
-				else
-				{
-					this->pState->KEY_RMB = false;
-				}
-				break;
 			}
 
 			// Tell our fans
