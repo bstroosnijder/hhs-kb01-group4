@@ -94,7 +94,7 @@ namespace engine
 					speed = stickPos / stickSensitivity * stickSteps;
 
 					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
+					this->NotifyInputListeners(bind, speed*2);
 				}
 				else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - stickSensitivity)) || (jState.lY >= (SHRT_MAX + stickSensitivity))))
 				{
@@ -102,19 +102,33 @@ namespace engine
 					speed = stickPos / stickSensitivity * stickSteps;
 
 					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
+					this->NotifyInputListeners(bind, speed*2);
 				}
-				else if(key == "RSTICK_X" && false)
+				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - stickSensitivity)) || (jState.lRx >= (SHRT_MAX + stickSensitivity))))
 				{
+					float stickPos = (float)jState.lRx - SHRT_MAX;
+					speed = stickPos / stickSensitivity * stickSteps;
+
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "RSTICK_Y" && false)
+				else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - stickSensitivity)) || (jState.lRy >= (SHRT_MAX + stickSensitivity))))
 				{
+					float stickPos = (float)jState.lRy - SHRT_MAX;
+					speed = stickPos / stickSensitivity * stickSteps;
+
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
 			}
+
+			std::stringstream ss;
+
+			ss << "--- JOYSTICK STATE ---" << std::endl;
+			ss << "LSTICK_RX:\t" << jState.lRx << std::endl;
+
+
+			//Logger::Log(ss.str(), Logger::INFO, __FILE__, __LINE__);
 		}
 	}
 }
