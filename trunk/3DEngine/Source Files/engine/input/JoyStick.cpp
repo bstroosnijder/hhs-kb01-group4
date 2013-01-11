@@ -104,9 +104,25 @@ namespace engine
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed*2);
 				}
+				else if(key == "RSTICK_X" && jState.lRx == 0 && ((jState.lZ <= (SHRT_MAX - stickSensitivity)) || (jState.lZ >= (SHRT_MAX + stickSensitivity))))
+				{
+					float stickPos = (float)jState.lZ - SHRT_MAX;
+					speed = stickPos / stickSensitivity * stickSteps;
+
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
+				}
 				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - stickSensitivity)) || (jState.lRx >= (SHRT_MAX + stickSensitivity))))
 				{
 					float stickPos = (float)jState.lRx - SHRT_MAX;
+					speed = stickPos / stickSensitivity * stickSteps;
+
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
+				}
+				else if(key == "RSTICK_Y" && jState.lRy == 0 && ((jState.lRz <= (SHRT_MAX - stickSensitivity)) || (jState.lRz >= (SHRT_MAX + stickSensitivity))))
+				{
+					float stickPos = (float)jState.lRz - SHRT_MAX;
 					speed = stickPos / stickSensitivity * stickSteps;
 
 					// Tell our fans
