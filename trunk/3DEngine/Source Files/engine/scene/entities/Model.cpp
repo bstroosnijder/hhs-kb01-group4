@@ -87,45 +87,43 @@ namespace engine
 	 */
 	void Model::InputEvent(std::string argBind, float argSpeed)
 	{
-		float speed = 0.0025f;
-
 		// Move Forward
 		if(argBind == "move_forward")
 		{
-			this->position.x += sin(this->rotation.y);
-			//this->position.y -= sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y);
+			this->position.x += (sin(this->rotation.y) * argSpeed);
+			//this->position.y -= (sin(this->rotation.x) * argSpeed);
+			this->position.z += (cos(this->rotation.y) * argSpeed);
 		}
-		// Move Backward
-		else if(argBind == "move_backward")
+		// Move Backward || Move Forward or Backward
+		else if(argBind == "move_backward" || argBind == "move_forward_backward")
 		{
-			this->position.x -= sin(this->rotation.y);
-			//this->position.y += sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y);
+			this->position.x -= (sin(this->rotation.y) * argSpeed);
+			//this->position.y += (sin(this->rotation.x) * argSpeed);
+			this->position.z -= (cos(this->rotation.y) * argSpeed);
 		}
 		// Move Left
 		else if(argBind == "move_left")
 		{
-			this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
-			//this->position.y -= sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
+			this->position.x += (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			//this->position.y -= (sin(this->rotation.x) * argSpeed);
+			this->position.z += (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 		}
-		// Move Right
-		else if(argBind == "move_right")
+		// Move Right || Move Left or Right
+		else if(argBind == "move_right" || argBind == "move_left_right")
 		{
-			this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
-			//this->position.y += sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
+			this->position.x -= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			//this->position.y += (sin(this->rotation.x) * argSpeed);
+			this->position.z -= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 		}
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += speed * 100;
+			this->position.y += argSpeed * 1;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= speed * 100;
+			this->position.y -= argSpeed * 1;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
