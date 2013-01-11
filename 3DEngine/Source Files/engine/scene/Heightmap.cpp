@@ -129,6 +129,11 @@ namespace engine
 
 		this->pBitmap = new Bitmap();
 
+		for(unsigned long i = 0; i < 8; i++)
+		{
+			this->textures[i] = NULL;
+		}
+
 		this->numPrimitives = 0;
 		this->numVertices = 0;
 		
@@ -289,9 +294,13 @@ namespace engine
 		argPRenderer->SetStreamSource(this->pVertexBuffer, sizeof(TexturedVector3));
 		argPRenderer->SetFVF(D3DFVFTexturedVector3);
 		argPRenderer->SetIndices(this->pIndexBuffer);
-		argPRenderer->SetTexture(0, this->textures[0]);
-		
 
+		// Load the textures
+		for(unsigned long i = 0; i < 8; i++)
+		{
+			argPRenderer->SetTexture(i, this->textures[i]);
+		}
+		
 		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, this->numVertices, this->numPrimitives);
 	}
 	
