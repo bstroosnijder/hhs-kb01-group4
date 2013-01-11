@@ -140,6 +140,11 @@ namespace engine
 		{
 			this->rotation.y = (float)(argSpeed / 10);
 		}
+		// Turn Left or Right
+		else if(argBind == "turn_left_right")
+		{
+			this->rotation.y += (float)(argSpeed / 10);
+		}
 		// Pan Up
 		else if(argBind == "pan_up")
 		{
