@@ -78,18 +78,22 @@ namespace engine
 				std::string bind	= bindsIt->second;
 				float speed			= 1.0f;
 
-				if(	(key == "KEY_1" && (bool)((jState.rgbButtons[0] & 0x80) != 0)) ||
-					(key == "KEY_2" && (bool)((jState.rgbButtons[1] & 0x80) != 0)) ||
-					(key == "KEY_3" && (bool)((jState.rgbButtons[2] & 0x80) != 0)) ||
-					(key == "KEY_4" && (bool)((jState.rgbButtons[3] & 0x80) != 0)) ||
-					(key == "KEY_5" && (bool)((jState.rgbButtons[4] & 0x80) != 0)) ||
-					(key == "KEY_6" && (bool)((jState.rgbButtons[5] & 0x80) != 0)) ||
-					(key == "KEY_7" && (bool)((jState.rgbButtons[6] & 0x80) != 0)) ||
-					(key == "KEY_8" && (bool)((jState.rgbButtons[7] & 0x80) != 0)) ||
-					//(key == "KEY_UP" && (bool)((jState.rgdwPOV[] & 0X80) !=0)) ||
-					(key == "KEY_DOWN" && false) ||
-					(key == "KEY_LEFT" && false) ||
-					(key == "KEY_RIGHT" && false))
+				if(	(key == "KEY_1"				&& ((jState.rgbButtons[0] & 0x80) != 0)) ||
+					(key == "KEY_2"				&& ((jState.rgbButtons[1] & 0x80) != 0)) ||
+					(key == "KEY_3"				&& ((jState.rgbButtons[2] & 0x80) != 0)) ||
+					(key == "KEY_4"				&& ((jState.rgbButtons[3] & 0x80) != 0)) ||
+					(key == "KEY_5"				&& ((jState.rgbButtons[4] & 0x80) != 0)) ||
+					(key == "KEY_6"				&& ((jState.rgbButtons[5] & 0x80) != 0)) ||
+					(key == "KEY_7"				&& ((jState.rgbButtons[6] & 0x80) != 0)) ||
+					(key == "KEY_8"				&& ((jState.rgbButtons[7] & 0x80) != 0)) ||
+					(key == "KEY_UP"			&& (jState.rgdwPOV[0] == 0)) ||
+					(key == "KEY_DOWN"			&& (jState.rgdwPOV[0] == 18000)) ||
+					(key == "KEY_LEFT"			&& (jState.rgdwPOV[0] == 27000)) ||
+					(key == "KEY_RIGHT"			&& (jState.rgdwPOV[0] == 9000)) ||
+					(key == "KEY_UP_LEFT"		&& (jState.rgdwPOV[0] == 31500)) ||
+					(key == "KEY_UP_RIGHT"		&& (jState.rgdwPOV[0] == 4500)) ||
+					(key == "KEY_DOWN_LEFT"		&& (jState.rgdwPOV[0] == 22500)) ||
+					(key == "KEY_DOWN_RIGHT"	&& (jState.rgdwPOV[0] == 13500)))
 				{
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
@@ -100,7 +104,7 @@ namespace engine
 					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
-					this->NotifyInputListeners(bind, speed*2);
+					this->NotifyInputListeners(bind, speed);
 				}
 				else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - optSmoothness)) || (jState.lY >= (SHRT_MAX + optSmoothness))))
 				{
@@ -108,27 +112,11 @@ namespace engine
 					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
-					this->NotifyInputListeners(bind, speed*2);
-				}
-				else if(key == "RSTICK_X" && jState.lRx == 0 && ((jState.lZ <= (SHRT_MAX - optSmoothness)) || (jState.lZ >= (SHRT_MAX + optSmoothness))))
-				{
-					float stickPos = (float)jState.lZ - SHRT_MAX;
-					speed = (stickPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
 				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - optSmoothness)) || (jState.lRx >= (SHRT_MAX + optSmoothness))))
 				{
-					float stickPos = (float)jState.lRz - SHRT_MAX;
-					speed = (stickPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
-				}
-				else if(key == "RSTICK_Y" && jState.lRy == 0 && ((jState.lRz <= (SHRT_MAX - optSmoothness)) || (jState.lRz >= (SHRT_MAX + optSmoothness))))
-				{
-					float stickPos = (float)jState.lRz - SHRT_MAX;
+					float stickPos = (float)jState.lRx - SHRT_MAX;
 					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
@@ -136,20 +124,33 @@ namespace engine
 				}
 				else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - optSmoothness)) || (jState.lRy >= (SHRT_MAX + optSmoothness))))
 				{
-					float stickPos = (float)jState.lZ - SHRT_MAX;
+					float stickPos = (float)jState.lRy - SHRT_MAX;
 					speed = (stickPos / optSmoothness) * optSensitivity;
+
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
+				}
+				else if(key == "LTRIGGER" && (jState.lZ >= (SHRT_MAX + optSmoothness)))
+				{
+					float triggerPos = (float)jState.lZ - SHRT_MAX;
+					speed = (triggerPos / optSmoothness) * optSensitivity;
+
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
+				}
+				else if(key == "RTRIGGER" && (jState.lZ <= (SHRT_MAX - optSmoothness)))
+				{
+					float triggerPos = (float)jState.lZ - SHRT_MAX;
+					speed = (triggerPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
 			}
 
-			std::stringstream ss;
-
-			ss << "--- JOYSTICK STATE ---" << std::endl;
-			ss << "LSTICK_RX:\t" << jState.lRz << std::endl;
-
-
+			//std::stringstream ss;
+			//ss << "--- JOYSTICK STATE ---" << std::endl;
+			//ss << "DIRECTIONS:\t" << (jState.rgdwPOV[0]) << std::endl;
 			//Logger::Log(ss.str(), Logger::INFO, __FILE__, __LINE__);
 		}
 	}

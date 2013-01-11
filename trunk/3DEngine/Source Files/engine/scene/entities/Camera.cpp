@@ -121,12 +121,12 @@ namespace engine
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += argSpeed * 1;
+			this->position.y += argSpeed;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= argSpeed * 1;
+			this->position.y -= argSpeed;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")

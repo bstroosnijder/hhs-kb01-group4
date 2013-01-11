@@ -90,40 +90,40 @@ namespace engine
 		// Move Forward
 		if(argBind == "move_forward")
 		{
-			this->position.x += (sin(this->rotation.y) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y) * argSpeed);
-		}
-		// Move Backward || Move Forward or Backward
-		else if(argBind == "move_backward" || argBind == "move_forward_backward")
-		{
 			this->position.x -= (sin(this->rotation.y) * argSpeed);
 			//this->position.y += (sin(this->rotation.x) * argSpeed);
 			this->position.z -= (cos(this->rotation.y) * argSpeed);
 		}
+		// Move Backward || Move Forward or Backward
+		else if(argBind == "move_backward" || argBind == "move_forward_backward")
+		{
+			this->position.x += (sin(this->rotation.y) * argSpeed);
+			//this->position.y -= (sin(this->rotation.x) * argSpeed);
+			this->position.z += (cos(this->rotation.y) * argSpeed);
+		}
 		// Move Left
 		else if(argBind == "move_left")
-		{
-			this->position.x += (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-		}
-		// Move Right || Move Left or Right
-		else if(argBind == "move_right" || argBind == "move_left_right")
 		{
 			this->position.x -= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 			//this->position.y += (sin(this->rotation.x) * argSpeed);
 			this->position.z -= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 		}
+		// Move Right || Move Left or Right
+		else if(argBind == "move_right" || argBind == "move_left_right")
+		{
+			this->position.x += (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			//this->position.y -= (sin(this->rotation.x) * argSpeed);
+			this->position.z += (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+		}
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += argSpeed * 1;
+			this->position.y += argSpeed;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= argSpeed * 1;
+			this->position.y -= argSpeed;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
@@ -143,17 +143,17 @@ namespace engine
 		// Pan Up
 		else if(argBind == "pan_up")
 		{
-			this->rotation.x = (float)(argSpeed / 10);
+			this->rotation.x -= (float)(argSpeed / 10);
 		}
 		// Pan Down
 		else if(argBind == "pan_down")
 		{
-			this->rotation.x = (float)(argSpeed / 10);
+			this->rotation.x += (float)(argSpeed / 10);
 		}
 		// Pan Up or Down
 		else if(argBind == "pan_up_down")
 		{
-			this->rotation.x += (float)(argSpeed / 10);
+			this->rotation.x -= (float)(argSpeed / 10);
 		}
 
 		// Reset
