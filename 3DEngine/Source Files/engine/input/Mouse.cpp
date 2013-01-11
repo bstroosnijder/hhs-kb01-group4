@@ -86,19 +86,19 @@ namespace engine
 				std::string bind	= bindsIt->second;
 				float speed			= 1.0f;
 
-				if(	(key == "KEY_LMB" && (bool)((mState.rgbButtons[0] & 0x80) != 0)) ||
-					(key == "KEY_LMB" && (bool)((mState.rgbButtons[1] & 0x80) != 0)))
+				if(	(key == "KEY_LMB"		&& (bool)((mState.rgbButtons[0] & 0x80) != 0)) ||
+					(key == "KEY_LMB"		&& (bool)((mState.rgbButtons[1] & 0x80) != 0)))
 				{
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "MOUSE_X" && (bool)(mState.lX != 0))
+				else if(key == "MOUSE_X"	&& (bool)(mState.lX != 0))
 				{
 					speed = (mState.lX * optSensitivity);
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "MOUSE_Y" && (bool)(mState.lY != 0))
+				else if(key == "MOUSE_Y"	&& (bool)(mState.lY != 0))
 				{
 					speed = (mState.lY * optSensitivity);
 					// Tell our fans
