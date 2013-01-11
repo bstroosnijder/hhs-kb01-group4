@@ -90,24 +90,22 @@ namespace engine
 	 */
 	void Camera::InputEvent(std::string argBind, float argSpeed)
 	{
-		float speed = 0.0025f;
-
-		// Move Forward
-		if(argBind == "move_forward")
+		// Move Forward || Move Forward or Backward
+		if(argBind == "move_forward" || argBind == "move_forward_backward")
 		{
-			this->position.x += sin(this->rotation.y);
+			this->position.x += (sin(this->rotation.y) * argSpeed);
 			//this->position.y -= sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y);
+			this->position.z += (cos(this->rotation.y) * argSpeed);
 		}
 		// Move Backward
 		else if(argBind == "move_backward")
 		{
-			this->position.x -= sin(this->rotation.y);
+			this->position.x -= (sin(this->rotation.y) * argSpeed);
 			//this->position.y += sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y);
+			this->position.z -= (cos(this->rotation.y) * argSpeed);
 		}
-		// Move Left
-		else if(argBind == "move_left")
+		// Move Left || Move Left or Right
+		else if(argBind == "move_left" || argBind == "move_left_right")
 		{
 			this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
 			//this->position.y -= sin(this->rotation.x);
@@ -123,12 +121,12 @@ namespace engine
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += speed * 100;
+			this->position.y += argSpeed * 1;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= speed * 100;
+			this->position.y -= argSpeed * 1;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
