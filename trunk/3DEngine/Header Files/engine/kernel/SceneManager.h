@@ -12,6 +12,7 @@
 #include "ResourceManager.h"
 #include "InputManager.h"
 #include "..\input\InputDevice.h"
+#include "..\input\InputListener.h"
 #include "..\renderer\Renderer.h"
 
 namespace engine

@@ -12,12 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header Files\engine\input\InputDevice.h" />
-    <ClInclude Include="Header Files\engine\input\listeners\KeyboardListener.h" />
-    <ClInclude Include="Header Files\engine\input\listeners\MouseListener.h" />
-    <ClInclude Include="Header Files\engine\input\listeners\JoyStickListener.h" />
-    <ClInclude Include="Header Files\engine\input\MouseState.h" />
     <ClInclude Include="Header Files\engine\input\JoyStick.h" />
-    <ClInclude Include="Header Files\engine\input\JoyStickState.h" />
     <ClInclude Include="Header Files\engine\scene\Drawable.h" />
     <ClInclude Include="Header Files\engine\input\Keyboard.h" />
     <ClInclude Include="Header Files\engine\input\Mouse.h" />
@@ -49,7 +44,7 @@
     <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
     <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
-    <ClInclude Include="Header Files\engine\input\KeyboardState.h" />
+    <ClInclude Include="Header Files\engine\input\InputListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />

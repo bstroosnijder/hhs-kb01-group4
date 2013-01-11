@@ -5,33 +5,6 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
-
-	/**
-	 * Notifies all the listener
-	 * @return		void
-	 */
-	void Mouse::NotifyListeners()
-	{
-		std::list<MouseListener*>::iterator listenerIt;
-		for(listenerIt = this->listeners.begin(); listenerIt != this->listeners.end(); listenerIt++)
-		{
-			MouseListener* pMouseListener = *listenerIt;
-			pMouseListener->DoMouseEvent(this->binds, this->pState);
-		}
-	}
-
-	/**
-	 * Reset the state of the keyboard
-	 * @return		void
-	 */
-	void Mouse::ResetState()
-	{
-		this->pState->MOUSE_X		= 0;
-		this->pState->MOUSE_Y		= 0;
-		this->pState->KEY_LMB		= false;
-		this->pState->KEY_RMB		= false;
-	}
-
 	//---Public methods---
 	
 	/**
@@ -40,7 +13,6 @@ namespace engine
 	Mouse::Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput) : InputDevice()
 	{
 		Logger::Log("Mouse: Creating", Logger::INFO, __FILE__, __LINE__);
-		this->listeners = std::list<MouseListener*>();
 		Win32Window* pWindow = (Win32Window*)argPWindow;
 
 		DIPROPDWORD mData;
@@ -60,9 +32,6 @@ namespace engine
 		this->pDevice->SetDataFormat(&c_dfDIMouse);
 		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 		this->pDevice->SetProperty(DIPROP_BUFFERSIZE, &mData.diph);
-
-		this->pState = new MouseState();
-		this->ResetState();
 
 		Logger::Log("Mouse: Finishing", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -90,26 +59,6 @@ namespace engine
 	}
 
 	/**
-	 * Adds a listener to the device
-	 * @param		InputListener*		The listener to add to the list
-	 * @return		void
-	 */
-	void Mouse::AddListener(MouseListener* argPMouseListener)
-	{
-		this->listeners.push_back(argPMouseListener);
-	}
-
-	/**
-	 * Removes a listener from the device
-	 * @param		InputListener*		The listener to remove from the list
-	 * @return		void
-	 */
-	void Mouse::RemoveListener(MouseListener* argPMouseListener)
-	{
-		this->listeners.remove(argPMouseListener);
-	}
-
-	/**
 	 * Updates the mouse state
 	 * @return		void
 	 */
@@ -129,27 +78,27 @@ namespace engine
 			{
 				std::string key		= bindsIt->first;
 				std::string bind	= bindsIt->second;
+				float speed			= 1.0f;
 
-				if(key == "MOUSE_X")
+				if(	(key == "KEY_LMB" && (bool)((mState.rgbButtons[0] & 0x80) != 0)) ||
+					(key == "KEY_LMB" && (bool)((mState.rgbButtons[1] & 0x80) != 0)))
 				{
-					this->pState->MOUSE_X += (mState.lX / 20);
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "MOUSE_Y")
+				else if(key == "MOUSE_X" && (bool)(mState.lX != 0))
 				{
-					this->pState->MOUSE_Y += (mState.lY / 20);
+					speed = (mState.lX * 0.5f);
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "KEY_LMB")
+				else if(key == "MOUSE_Y" && (bool)(mState.lY != 0))
 				{
-					this->pState->KEY_LMB = (bool)((mState.rgbButtons[0] & 0x80) != 0);
-				}
-				else if(key == "KEY_RMB")
-				{
-					this->pState->KEY_RMB = (bool)((mState.rgbButtons[1] & 0x80) != 0);
+					speed = (mState.lX * 0.5f);
+					// Tell our fans
+					this->NotifyInputListeners(bind, speed);
 				}
 			}
-
-			// Tell our fans
-			this->NotifyListeners();
 		}
 	}
 }

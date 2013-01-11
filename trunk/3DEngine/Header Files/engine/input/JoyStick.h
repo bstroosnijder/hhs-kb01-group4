@@ -8,9 +8,7 @@
 #include <d3d9.h>
 #include <dinput.h>
 #include "InputDevice.h"
-#include "listeners\JoyStickListener.h"
 #include "..\logger\logger.h"
-#include "JoyStickState.h"
 #include "..\window\Win32Window.h"
 
 namespace engine
@@ -20,19 +18,10 @@ namespace engine
 	 */
 	class JoyStick : public InputDevice
 	{
-	private:
-		std::list<JoyStickListener*> listeners;
-		JoyStickState* pState;
-
-		void NotifyListeners();
-		void ResetState();
 	public:
 		JoyStick(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~JoyStick(void);
 		void CleanUp();
-		
-		void AddListener(JoyStickListener* argPJoyStickListener);
-		void RemoveListener(JoyStickListener* argPJoyStickListener);
 
 		void UpdateState();
 	};

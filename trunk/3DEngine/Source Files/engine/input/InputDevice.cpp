@@ -5,6 +5,17 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
+
+	void InputDevice::NotifyInputListeners(std::string argBind, float argSpeed)
+	{
+		std::list<InputListener*>::iterator inputListenerIt;
+		for(inputListenerIt = this->inputListeners.begin(); inputListenerIt != this->inputListeners.end(); inputListenerIt++)
+		{
+			InputListener* pInputListener = *inputListenerIt;
+			pInputListener->InputEvent(argBind, argSpeed);
+		}
+	}
+
 	//---Public methods---
 
 	/**
@@ -12,18 +23,8 @@ namespace engine
 	 */
 	InputDevice::InputDevice()
 	{
-		this->binds		= std::map<std::string, std::string>();
-	}
-
-	/**
-	 * Adds a binding to track
-	 * @param		std::string		The key to watch
-	 * @param		std::string		The bind to link with the key
-	 * @return		void
-	 */
-	void InputDevice::AddBind(std::string argKey, std::string argBind)
-	{
-		this->binds[argKey] = argBind;
+		this->binds				= std::map<std::string, std::string>();
+		this->inputListeners	= std::list<InputListener*>();
 	}
 	
 	/**
@@ -42,5 +43,26 @@ namespace engine
 		}
 
 		return false;
+	}
+
+	/**
+	 * Adds a binding to track
+	 * @param		std::string		The key to watch
+	 * @param		std::string		The bind to link with the key
+	 * @return		void
+	 */
+	void InputDevice::AddBind(std::string argKey, std::string argBind)
+	{
+		this->binds[argKey] = argBind;
+	}
+
+	void InputDevice::AddInputListener(InputListener* argPInputListener)
+	{
+		this->inputListeners.push_back(argPInputListener);
+	}
+
+	void InputDevice::RemoveInputListener(InputListener* argPInputListener)
+	{
+		this->inputListeners.remove(argPInputListener);
 	}
 }

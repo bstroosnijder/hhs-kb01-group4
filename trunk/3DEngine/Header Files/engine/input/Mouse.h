@@ -8,9 +8,7 @@
 #include <d3d9.h>
 #include <dinput.h>
 #include "InputDevice.h"
-#include "listeners\MouseListener.h"
 #include "..\logger\logger.h"
-#include "MouseState.h"
 #include "..\window\Win32Window.h"
 
 namespace engine
@@ -20,19 +18,10 @@ namespace engine
 	 */
 	class Mouse : public InputDevice
 	{
-	private:
-		std::list<MouseListener*> listeners;
-		MouseState* pState;
-
-		void NotifyListeners();
-		void ResetState();
 	public:
 		Mouse(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Mouse();
 		void CleanUp();
-		
-		void AddListener(MouseListener* argPMouseListener);
-		void RemoveListener(MouseListener* argPMouseListener);
 		
 		void UpdateState();
 	};

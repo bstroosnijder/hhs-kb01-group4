@@ -5,84 +5,6 @@ namespace engine
 	//---Private attributes---
 	//---Public attributes---
 	//---Private methods---
-
-	/**
-	 * A method that performs the action corresponding to the bind
-	 * @param		std::string		The bind to do
-	 * @return		void
-	 */
-	void Camera::DoBind(std::string argBind, float argMousePos)
-	{
-		float speed = 0.0025f;
-
-		// Move Forward
-		if(argBind == "move_forward")
-		{
-			this->position.x += sin(this->rotation.y);
-			//this->position.y -= sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y);
-		}
-		// Move Backward
-		else if(argBind == "move_backward")
-		{
-			this->position.x -= sin(this->rotation.y);
-			//this->position.y += sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y);
-		}
-		// Move Left
-		else if(argBind == "move_left")
-		{
-			this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
-			//this->position.y -= sin(this->rotation.x);
-			this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
-		}
-		// Move Right
-		else if(argBind == "move_right")
-		{
-			this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
-			//this->position.y += sin(this->rotation.x);
-			this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
-		}
-		// Move Up
-		else if(argBind == "move_up")
-		{
-			this->position.y += speed * 100;
-		}
-		// Move Down
-		else if(argBind == "move_down")
-		{
-			this->position.y -= speed * 100;
-		}
-		// Turn Left
-		else if(argBind == "turn_left")
-		{
-			this->rotation.y = (float)(argMousePos / 10);
-		}
-		// Turn Right
-		else if(argBind == "turn_right")
-		{
-			this->rotation.y = (float)(argMousePos / 10);
-		}
-		// Pan Up
-		else if(argBind == "pan_up")
-		{
-			this->rotation.x = (float)(argMousePos / 10);
-		}
-		// Pan Down
-		else if(argBind == "pan_down")
-		{
-			this->rotation.x = (float)(argMousePos / 10);
-		}
-
-		// Reset
-		else if(argBind == "reset")
-		{
-			this->position = Vector3(0.0f, 0.0f, 0.0f);
-			this->rotation = Vector3(0.0f, 0.0f, 0.0f);
-			this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
-		}
-	}
-
 	//---Public methods---
 
 	/**
@@ -107,72 +29,6 @@ namespace engine
 	 */
 	void Camera::CleanUp()
 	{
-	}
-	
-	/**
-	 * Handle any incomming keyboard events
-	 * @param		std::map<std::string, std::string>		The bindings and keys
-	 * @param		KeyboardState*							The state of the keyboard
-	 * @return		void
-	 */
-	void Camera::DoKeyboardEvent(std::map<std::string, std::string> argBinds, KeyboardState* argPState)
-	{
-		std::map<std::string, std::string>::iterator bindsIt;
-		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
-		{
-			std::string key		= bindsIt->first;
-			std::string bind	= bindsIt->second;
-
-			if(argPState->IsBindActive(key))
-			{
-				float speed = 1.0f;
-				this->DoBind(bind, speed);
-			}
-		}
-	}
-	
-	/**
-	 * Handle any incomming mouse events
-	 * @param		std::map<std::string, std::string>		The bindings and keys
-	 * @param		KeyboardState*							The state of the mouse
-	 * @return		void
-	 */
-	void Camera::DoMouseEvent(std::map<std::string, std::string> argBinds, MouseState* argPState)
-	{
-		std::map<std::string, std::string>::iterator bindsIt;
-		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
-		{
-			std::string key		= bindsIt->first;
-			std::string bind	= bindsIt->second;
-
-			if(argPState->IsBindActive(key))
-			{
-				float speed = (argPState->GetMouseSpeed(key) / 10.5f);
-				this->DoBind(bind, speed);
-			}
-		}
-	}
-	
-	/**
-	 * Handle any incomming joystick events
-	 * @param		std::map<std::string, std::string>		The bindings and keys
-	 * @param		KeyboardState*							The state of the joystick
-	 * @return		void
-	 */
-	void Camera::DoJoyStickEvent(std::map<std::string, std::string> argBinds, JoyStickState* argPState)
-	{
-		std::map<std::string, std::string>::iterator bindsIt;
-		for(bindsIt = argBinds.begin(); bindsIt != argBinds.end(); bindsIt++)
-		{
-			std::string key		= bindsIt->first;
-			std::string bind	= bindsIt->second;
-
-			if(argPState->IsBindActive(key))
-			{
-				float speed = (argPState->GetStickSpeed(key) / 10.5f);
-				this->DoBind(bind, speed);
-			}
-		}
 	}
 
 	/**
@@ -224,5 +80,83 @@ namespace engine
 		argPRenderer->TransformWorldMatrix();
 		argPRenderer->TransformViewMatrix();
 		argPRenderer->TransformProjectionMatrix();
+	}
+
+	/**
+	 * Processes any input events
+	 * @param		std::string		the bind to execute
+	 * @param		float			the speed
+	 * @return		void
+	 */
+	void Camera::InputEvent(std::string argBind, float argSpeed)
+	{
+		float speed = 0.0025f;
+
+		// Move Forward
+		if(argBind == "move_forward")
+		{
+			this->position.x += sin(this->rotation.y);
+			//this->position.y -= sin(this->rotation.x);
+			this->position.z += cos(this->rotation.y);
+		}
+		// Move Backward
+		else if(argBind == "move_backward")
+		{
+			this->position.x -= sin(this->rotation.y);
+			//this->position.y += sin(this->rotation.x);
+			this->position.z -= cos(this->rotation.y);
+		}
+		// Move Left
+		else if(argBind == "move_left")
+		{
+			this->position.x += sin(this->rotation.y - (D3DX_PI / 2));
+			//this->position.y -= sin(this->rotation.x);
+			this->position.z += cos(this->rotation.y - (D3DX_PI / 2));
+		}
+		// Move Right
+		else if(argBind == "move_right")
+		{
+			this->position.x -= sin(this->rotation.y - (D3DX_PI / 2));
+			//this->position.y += sin(this->rotation.x);
+			this->position.z -= cos(this->rotation.y - (D3DX_PI / 2));
+		}
+		// Move Up
+		else if(argBind == "move_up")
+		{
+			this->position.y += speed * 100;
+		}
+		// Move Down
+		else if(argBind == "move_down")
+		{
+			this->position.y -= speed * 100;
+		}
+		// Turn Left
+		else if(argBind == "turn_left")
+		{
+			this->rotation.y = (float)(argSpeed / 10);
+		}
+		// Turn Right
+		else if(argBind == "turn_right")
+		{
+			this->rotation.y = (float)(argSpeed / 10);
+		}
+		// Pan Up
+		else if(argBind == "pan_up")
+		{
+			this->rotation.x = (float)(argSpeed / 10);
+		}
+		// Pan Down
+		else if(argBind == "pan_down")
+		{
+			this->rotation.x = (float)(argSpeed / 10);
+		}
+
+		// Reset
+		else if(argBind == "reset")
+		{
+			this->position = Vector3(0.0f, 0.0f, 0.0f);
+			this->rotation = Vector3(0.0f, 0.0f, 0.0f);
+			this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
+		}
 	}
 }
