@@ -314,4 +314,21 @@ namespace engine
 		Win32Window* window = (Win32Window*)argPWindow;
 		this->pDevice->Present(NULL, NULL, window->GetHWin(), NULL);
 	}
+
+	void DirectX9Renderer::InputEvent(std::string argBind, float argSpeed)
+	{
+		if(argBind == "toggle_wireframe")
+		{
+			unsigned long renderState;
+			this->pDevice->GetRenderState(D3DRS_FILLMODE, &renderState);
+			if (renderState == D3DFILL_SOLID)
+			{
+				this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			}
+			else
+			{
+				this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+			}
+		}
+	}
 }

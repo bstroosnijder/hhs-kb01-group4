@@ -41,6 +41,7 @@ namespace engine
 		{
 			Mesh* pMesh = itMeshes->second;
 			pMesh->mesh->Release();
+
 		}
 		this->meshes.clear();
 

@@ -86,7 +86,7 @@ namespace engine
 					(key == "KEY_6" && (bool)((jState.rgbButtons[5] & 0x80) != 0)) ||
 					(key == "KEY_7" && (bool)((jState.rgbButtons[6] & 0x80) != 0)) ||
 					(key == "KEY_8" && (bool)((jState.rgbButtons[7] & 0x80) != 0)) ||
-					(key == "KEY_UP" && false) ||
+					//(key == "KEY_UP" && (bool)((jState.rgdwPOV[] & 0X80) !=0)) ||
 					(key == "KEY_DOWN" && false) ||
 					(key == "KEY_LEFT" && false) ||
 					(key == "KEY_RIGHT" && false))
@@ -120,7 +120,7 @@ namespace engine
 				}
 				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - optSmoothness)) || (jState.lRx >= (SHRT_MAX + optSmoothness))))
 				{
-					float stickPos = (float)jState.lRx - SHRT_MAX;
+					float stickPos = (float)jState.lRz - SHRT_MAX;
 					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
@@ -136,7 +136,7 @@ namespace engine
 				}
 				else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - optSmoothness)) || (jState.lRy >= (SHRT_MAX + optSmoothness))))
 				{
-					float stickPos = (float)jState.lRy - SHRT_MAX;
+					float stickPos = (float)jState.lZ - SHRT_MAX;
 					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
@@ -147,7 +147,7 @@ namespace engine
 			std::stringstream ss;
 
 			ss << "--- JOYSTICK STATE ---" << std::endl;
-			ss << "LSTICK_RX:\t" << jState.lRx << std::endl;
+			ss << "LSTICK_RX:\t" << jState.lRz << std::endl;
 
 
 			//Logger::Log(ss.str(), Logger::INFO, __FILE__, __LINE__);

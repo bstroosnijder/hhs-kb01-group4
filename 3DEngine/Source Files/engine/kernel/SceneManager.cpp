@@ -403,6 +403,12 @@ namespace engine
 				{
 					pInputListener = pScene->GetCamera();
 				}
+				else if (entity == "renderer")
+				{
+					DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
+
+					pInputListener = (InputListener*) pRenderer;
+				}
 				else
 				{
 					pInputListener = pScene->GetModel(entity);
