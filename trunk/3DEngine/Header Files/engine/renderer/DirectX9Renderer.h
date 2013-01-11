@@ -5,6 +5,7 @@
 #include <d3dx9.h>
 #include "..\logger\Logger.h"
 #include "Renderer.h"
+#include "..\input\InputListener.h"
 #include "..\window\Win32Window.h"
 
 namespace engine
@@ -12,7 +13,7 @@ namespace engine
 	/**
 	 * The DirectX9Renderer is responsible for providing a communication gateway towards the DirectX9 API.
 	 */
-	class DirectX9Renderer : public Renderer
+	class DirectX9Renderer : public Renderer , public InputListener
 	{
 	private:
 		LPDIRECT3D9 pDirect3d;
@@ -54,6 +55,8 @@ namespace engine
 		void Pop();
 		void EndScene();
 		void Present(Window* argWindow);
+
+		void InputEvent(std::string argBind, float argSpeed);
 	};
 }
 
