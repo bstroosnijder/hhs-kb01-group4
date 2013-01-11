@@ -188,16 +188,9 @@ namespace engine
 		long imageWidth					= this->pBitmap->GetImageWidth();
 		long imageHeight				= this->pBitmap->GetImageHeight();
 
-		if (imageWidth != imageHeight)
-		{
-			Logger::Log("Trying to load a non-sqaure bitmap. This may cause runtime errors", Logger::FATAL, __FILE__, __LINE__);
-		}
-
 		float offsetX					= -(((float)imageWidth) / 2);
-		//float offsetX					= 0;
 		float offsetY					= 0;
 		float offsetZ					= -(((float)imageHeight) / 2);
-		//float offsetZ					= 0;
 		
 		// --- Create the vertex array ---
 		this->numPrimitives				= (imageWidth * imageHeight) * 2;
@@ -221,7 +214,6 @@ namespace engine
 
 				vertices[vIndex].u		= pixelX / ((float)imageWidth);
 				vertices[vIndex].v		= 1 - (pixelZ / ((float)imageHeight));
-			
 			}
 		}
 
