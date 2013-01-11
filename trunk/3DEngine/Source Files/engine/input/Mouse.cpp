@@ -94,7 +94,7 @@ namespace engine
 				}
 				else if(key == "MOUSE_Y" && (bool)(mState.lY != 0))
 				{
-					speed = (mState.lX * 0.5f);
+					speed = (mState.lY * 0.5f);
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
