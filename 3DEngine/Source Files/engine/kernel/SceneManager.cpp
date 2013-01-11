@@ -374,8 +374,26 @@ namespace engine
 			std::string action	= data.at(0);
 			std::string device	= data.at(1);
 
+			if(action == "option")
+			{
+				std::string key		= data.at(2);
+				std::string value	= data.at(3);
+
+				if(device == "keyboard" && argPInputManager->HasDevice(InputManager::KEYBOARD))
+				{
+					argPInputManager->GetKeyboard()->SetOption(key, value);
+				}
+				else if(device == "mouse" && argPInputManager->HasDevice(InputManager::MOUSE))
+				{
+					argPInputManager->GetMouse()->SetOption(key, value);
+				}
+				else if(device == "joystick" && argPInputManager->HasDevice(InputManager::JOYSTICK))
+				{
+					argPInputManager->GetJoyStick()->SetOption(key, value);
+				}
+			}
 			// Hook an entity to an input device
-			if(action == "hook")
+			else if(action == "hook")
 			{
 				std::string entity = data.at(2);
 

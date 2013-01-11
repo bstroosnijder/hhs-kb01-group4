@@ -33,6 +33,9 @@ namespace engine
 		this->pDevice->SetCooperativeLevel(pWindow->GetHWin(), DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 		this->pDevice->SetProperty(DIPROP_BUFFERSIZE, &mData.diph);
 
+		// Set default options
+		this->options["sensitivity"] = "0.05";
+
 		Logger::Log("Mouse: Finishing", Logger::INFO, __FILE__, __LINE__);
 	}
 
@@ -72,6 +75,9 @@ namespace engine
 		{
 			DIMOUSESTATE mState;
 			this->pDevice->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mState);
+
+			// Get options
+			float optSensitivity = (float)std::atof(this->options["sensitivity"].c_str());
 			
 			std::map<std::string, std::string>::iterator bindsIt;
 			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
@@ -88,13 +94,13 @@ namespace engine
 				}
 				else if(key == "MOUSE_X" && (bool)(mState.lX != 0))
 				{
-					speed = (mState.lX * 0.5f);
+					speed = (mState.lX * optSensitivity);
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
 				else if(key == "MOUSE_Y" && (bool)(mState.lY != 0))
 				{
-					speed = (mState.lY * 0.5f);
+					speed = (mState.lY * optSensitivity);
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}

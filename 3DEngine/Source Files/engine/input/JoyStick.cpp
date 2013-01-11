@@ -21,13 +21,17 @@ namespace engine
 		this->pDevice->GetCapabilities(&caps);
 
 		DIPROPRANGE propRange; 
-		propRange.diph.dwSize       = sizeof(DIPROPRANGE); 
-		propRange.diph.dwHeaderSize = sizeof(DIPROPHEADER); 
-		propRange.diph.dwHow        = DIPH_BYID; 
-		propRange.diph.dwObj        = 0;
-		propRange.lMin              = -1000; 
-		propRange.lMax              = +1000; 
+		propRange.diph.dwSize			= sizeof(DIPROPRANGE); 
+		propRange.diph.dwHeaderSize		= sizeof(DIPROPHEADER); 
+		propRange.diph.dwHow			= DIPH_BYID; 
+		propRange.diph.dwObj			= 0;
+		propRange.lMin					= -1000; 
+		propRange.lMax					= +1000; 
 		pDevice->SetProperty(DIPROP_RANGE, &propRange.diph);
+
+		// Set default options
+		this->options["sensitivity"]	= "0.05";
+		this->options["smoothness"]		= "8000";
 
 		Logger::Log("JoyStick: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -62,8 +66,10 @@ namespace engine
 		{
 			DIJOYSTATE jState;
 			this->pDevice->GetDeviceState(sizeof(DIJOYSTATE), (LPVOID)&jState);
-			float stickSensitivity	= 8000.0f;
-			float stickSteps		= 0.08f;
+
+			// Get options
+			float optSensitivity		= (float)std::atof(this->options["sensitivity"].c_str());
+			float optSmoothness			= (float)std::atof(this->options["smoothness"].c_str());
 			
 			std::map<std::string, std::string>::iterator bindsIt;
 			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
@@ -88,50 +94,50 @@ namespace engine
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "LSTICK_X" && ((jState.lX <= (SHRT_MAX - stickSensitivity)) || (jState.lX >= (SHRT_MAX + stickSensitivity))))
+				else if(key == "LSTICK_X" && ((jState.lX <= (SHRT_MAX - optSmoothness)) || (jState.lX >= (SHRT_MAX + optSmoothness))))
 				{
 					float stickPos = (float)jState.lX - SHRT_MAX;
-					speed = stickPos / stickSensitivity * stickSteps;
+					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed*2);
 				}
-				else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - stickSensitivity)) || (jState.lY >= (SHRT_MAX + stickSensitivity))))
+				else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - optSmoothness)) || (jState.lY >= (SHRT_MAX + optSmoothness))))
 				{
 					float stickPos = (float)jState.lY - SHRT_MAX;
-					speed = stickPos / stickSensitivity * stickSteps;
+					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed*2);
 				}
-				else if(key == "RSTICK_X" && jState.lRx == 0 && ((jState.lZ <= (SHRT_MAX - stickSensitivity)) || (jState.lZ >= (SHRT_MAX + stickSensitivity))))
+				else if(key == "RSTICK_X" && jState.lRx == 0 && ((jState.lZ <= (SHRT_MAX - optSmoothness)) || (jState.lZ >= (SHRT_MAX + optSmoothness))))
 				{
 					float stickPos = (float)jState.lZ - SHRT_MAX;
-					speed = stickPos / stickSensitivity * stickSteps;
+					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - stickSensitivity)) || (jState.lRx >= (SHRT_MAX + stickSensitivity))))
+				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - optSmoothness)) || (jState.lRx >= (SHRT_MAX + optSmoothness))))
 				{
 					float stickPos = (float)jState.lRx - SHRT_MAX;
-					speed = stickPos / stickSensitivity * stickSteps;
+					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "RSTICK_Y" && jState.lRy == 0 && ((jState.lRz <= (SHRT_MAX - stickSensitivity)) || (jState.lRz >= (SHRT_MAX + stickSensitivity))))
+				else if(key == "RSTICK_Y" && jState.lRy == 0 && ((jState.lRz <= (SHRT_MAX - optSmoothness)) || (jState.lRz >= (SHRT_MAX + optSmoothness))))
 				{
 					float stickPos = (float)jState.lRz - SHRT_MAX;
-					speed = stickPos / stickSensitivity * stickSteps;
+					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - stickSensitivity)) || (jState.lRy >= (SHRT_MAX + stickSensitivity))))
+				else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - optSmoothness)) || (jState.lRy >= (SHRT_MAX + optSmoothness))))
 				{
 					float stickPos = (float)jState.lRy - SHRT_MAX;
-					speed = stickPos / stickSensitivity * stickSteps;
+					speed = (stickPos / optSmoothness) * optSensitivity;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
