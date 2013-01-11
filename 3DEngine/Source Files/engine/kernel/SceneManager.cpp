@@ -378,38 +378,29 @@ namespace engine
 			if(action == "hook")
 			{
 				std::string entity = data.at(2);
+
+				InputListener* pInputListener;
+				if(entity == "camera")
+				{
+					pInputListener = pScene->GetCamera();
+				}
+				else
+				{
+					pInputListener = pScene->GetModel(entity);
+				}
+
+
 				if(device == "keyboard" && argPInputManager->HasDevice(InputManager::KEYBOARD))
 				{
-					if(entity == "camera")
-					{
-						argPInputManager->GetKeyboard()->AddListener(pScene->GetCamera());
-					}
-					else
-					{
-						argPInputManager->GetKeyboard()->AddListener(pScene->GetModel(entity));
-					}
+					argPInputManager->GetKeyboard()->AddInputListener(pInputListener);
 				}
 				else if(device == "mouse" && argPInputManager->HasDevice(InputManager::MOUSE))
 				{
-					if(entity == "camera")
-					{
-						argPInputManager->GetMouse()->AddListener(pScene->GetCamera());
-					}
-					else
-					{
-						argPInputManager->GetMouse()->AddListener(pScene->GetModel(entity));
-					}
+					argPInputManager->GetMouse()->AddInputListener(pInputListener);
 				}
 				else if(device == "joystick" && argPInputManager->HasDevice(InputManager::JOYSTICK))
 				{
-					if(entity == "camera")
-					{
-						argPInputManager->GetJoyStick()->AddListener(pScene->GetCamera());
-					}
-					else
-					{
-						argPInputManager->GetJoyStick()->AddListener(pScene->GetModel(entity));
-					}
+					argPInputManager->GetJoyStick()->AddInputListener(pInputListener);
 				}
 				else
 				{

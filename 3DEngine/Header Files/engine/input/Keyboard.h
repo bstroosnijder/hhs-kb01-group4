@@ -8,9 +8,7 @@
 #include <d3d9.h>
 #include <dinput.h>
 #include "InputDevice.h"
-#include "listeners\KeyboardListener.h"
 #include "..\logger\logger.h"
-#include "KeyboardState.h"
 #include "..\window\Win32Window.h"
 	
 namespace engine
@@ -20,19 +18,10 @@ namespace engine
 	 */
 	class Keyboard : public InputDevice
 	{
-	private:
-		std::list<KeyboardListener*> listeners;
-		KeyboardState* pState;
-
-		void NotifyListeners();
-		void ResetState();
 	public:
 		Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput);
 		~Keyboard();
 		void CleanUp();
-		
-		void AddListener(KeyboardListener* argPKeyboardListener);
-		void RemoveListener(KeyboardListener* argPKeyboardListener);
 
 		void UpdateState();
 	};

@@ -3,24 +3,32 @@
 #define DIRECTINPUT_VERSION 0x0800
 
 #include <map>
+#include <list>
 #include <string>
 #include <d3d9.h>
 #include <dinput.h>
+#include "InputListener.h"
 
 namespace engine
 {
 	class InputDevice
 	{
 	protected:
-		std::map<std::string, std::string> binds;
 		LPDIRECTINPUTDEVICE8 pDevice;
+		std::map<std::string, std::string> binds;
+		std::list<InputListener*> inputListeners;
+
+		void NotifyInputListeners(std::string argBind, float argSpeed);
 	public:
 		InputDevice();
-
-		void AddBind(std::string argKey, std::string argBind);
 		
 		bool DoAcquire();
 		virtual void UpdateState()=0;
+
+		void AddBind(std::string argKey, std::string argBind);
+
+		void AddInputListener(InputListener* argPInputListener);
+		void RemoveInputListener(InputListener* argPInputListener);
 	};
 }
 
