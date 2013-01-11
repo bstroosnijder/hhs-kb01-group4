@@ -46,6 +46,17 @@ namespace engine
 	}
 
 	/**
+	 * Adds a option to the device
+	 * @param		std::string		The key of the option
+	 * @param		std::string		The value of the option
+	 * @return		void
+	 */
+	void InputDevice::SetOption(std::string argKey, std::string argValue)
+	{
+		this->options[argKey] = argValue;
+	}
+
+	/**
 	 * Adds a binding to track
 	 * @param		std::string		The key to watch
 	 * @param		std::string		The bind to link with the key
@@ -56,11 +67,21 @@ namespace engine
 		this->binds[argKey] = argBind;
 	}
 
+	/**
+	 * Adds an input listener
+	 * @param		InputListener*		The inputListener to add
+	 * @return		void
+	 */
 	void InputDevice::AddInputListener(InputListener* argPInputListener)
 	{
 		this->inputListeners.push_back(argPInputListener);
 	}
 
+	/**
+	 * Removes an input listener
+	 * @param		InputListener*		The inputListener to remove
+	 * @return		void
+	 */
 	void InputDevice::RemoveInputListener(InputListener* argPInputListener)
 	{
 		this->inputListeners.remove(argPInputListener);

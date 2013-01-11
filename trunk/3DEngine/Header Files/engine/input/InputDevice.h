@@ -15,6 +15,7 @@ namespace engine
 	{
 	protected:
 		LPDIRECTINPUTDEVICE8 pDevice;
+		std::map<std::string, std::string> options;
 		std::map<std::string, std::string> binds;
 		std::list<InputListener*> inputListeners;
 
@@ -25,6 +26,7 @@ namespace engine
 		bool DoAcquire();
 		virtual void UpdateState()=0;
 
+		void SetOption(std::string argKey, std::string argValue);
 		void AddBind(std::string argKey, std::string argBind);
 
 		void AddInputListener(InputListener* argPInputListener);
