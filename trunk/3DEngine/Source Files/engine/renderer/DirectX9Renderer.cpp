@@ -34,8 +34,9 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
-		this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
-		//this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		this->pDevice->SetRenderState(D3DRS_LIGHTING, true);
+		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		this->pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		
 		this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
@@ -314,14 +315,20 @@ namespace engine
 		Win32Window* window = (Win32Window*)argPWindow;
 		this->pDevice->Present(NULL, NULL, window->GetHWin(), NULL);
 	}
-
+	
+	/**
+	 * Processes any input events
+	 * @param		std::string		the bind to execute
+	 * @param		float			the speed
+	 * @return		void
+	 */
 	void DirectX9Renderer::InputEvent(std::string argBind, float argSpeed)
 	{
 		if(argBind == "toggle_wireframe")
 		{
 			unsigned long renderState;
 			this->pDevice->GetRenderState(D3DRS_FILLMODE, &renderState);
-			if (renderState == D3DFILL_SOLID)
+			if(renderState == D3DFILL_SOLID)
 			{
 				this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 			}

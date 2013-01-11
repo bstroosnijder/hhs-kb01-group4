@@ -13,7 +13,7 @@ namespace engine
 	/**
 	 * The DirectX9Renderer is responsible for providing a communication gateway towards the DirectX9 API.
 	 */
-	class DirectX9Renderer : public Renderer , public InputListener
+	class DirectX9Renderer : public Renderer, public InputListener
 	{
 	private:
 		LPDIRECT3D9 pDirect3d;
