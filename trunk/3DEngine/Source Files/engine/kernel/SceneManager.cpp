@@ -379,6 +379,7 @@ namespace engine
 				std::string key		= data.at(2);
 				std::string value	= data.at(3);
 
+				Logger::Log("SceneManager: Adding device option " + device + "." + key + " = " + value, Logger::INFO, __FILE__, __LINE__);
 				if(device == "keyboard" && argPInputManager->HasDevice(InputManager::KEYBOARD))
 				{
 					argPInputManager->GetKeyboard()->SetOption(key, value);
