@@ -63,7 +63,7 @@ namespace engine
 			DIJOYSTATE jState;
 			this->pDevice->GetDeviceState(sizeof(DIJOYSTATE), (LPVOID)&jState);
 			float stickSensitivity	= 8000.0f;
-			float stickSteps		= 0.05f;
+			float stickSteps		= 0.08f;
 			
 			std::map<std::string, std::string>::iterator bindsIt;
 			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
@@ -88,28 +88,18 @@ namespace engine
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "LSTICK_X" && (bool)(jState.lX != 0))
+				else if(key == "LSTICK_X" && ((jState.lX <= (SHRT_MAX - stickSensitivity)) || (jState.lX >= (SHRT_MAX + stickSensitivity))))
 				{
 					float stickPos = (float)jState.lX - SHRT_MAX;
-					speed = ceil(stickPos / stickSensitivity) * stickSteps;
-
-					if(stickPos >= -stickSensitivity && stickPos <= stickSensitivity)
-					{
-						speed = 0.0f;
-					}
+					speed = stickPos / stickSensitivity * stickSteps;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "LSTICK_Y" && (bool)(jState.lY != 0))
+				else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - stickSensitivity)) || (jState.lY >= (SHRT_MAX + stickSensitivity))))
 				{
 					float stickPos = (float)jState.lY - SHRT_MAX;
-					speed = ceil(stickPos / stickSensitivity) * stickSteps;
-
-					if(stickPos >= -stickSensitivity && stickPos <= stickSensitivity)
-					{
-						speed = 0.0f;
-					}
+					speed = stickPos / stickSensitivity * stickSteps;
 
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
