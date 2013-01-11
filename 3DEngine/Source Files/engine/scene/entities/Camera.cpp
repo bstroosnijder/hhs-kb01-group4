@@ -155,6 +155,11 @@ namespace engine
 		{
 			this->rotation.x = (float)(argSpeed / 10);
 		}
+		// Pan Up or Down
+		else if(argBind == "pan_up_down")
+		{
+			this->rotation.x += (float)(argSpeed / 10);
+		}
 
 		// Reset
 		else if(argBind == "reset")
