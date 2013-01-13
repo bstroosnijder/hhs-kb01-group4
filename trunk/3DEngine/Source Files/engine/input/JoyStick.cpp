@@ -130,15 +130,8 @@ namespace engine
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
-				else if(key == "LTRIGGER" && (jState.lZ >= (SHRT_MAX + optSmoothness)))
-				{
-					float triggerPos = (float)jState.lZ - SHRT_MAX;
-					speed = (triggerPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
-				}
-				else if(key == "RTRIGGER" && (jState.lZ <= (SHRT_MAX - optSmoothness)))
+				else if((key == "LTRIGGER"	&& (jState.lZ >= (SHRT_MAX + optSmoothness))) ||
+						(key == "RTRIGGER"	&& (jState.lZ <= (SHRT_MAX - optSmoothness))))
 				{
 					float triggerPos = (float)jState.lZ - SHRT_MAX;
 					speed = (triggerPos / optSmoothness) * optSensitivity;
@@ -147,11 +140,6 @@ namespace engine
 					this->NotifyInputListeners(bind, speed);
 				}
 			}
-
-			//std::stringstream ss;
-			//ss << "--- JOYSTICK STATE ---" << std::endl;
-			//ss << "DIRECTIONS:\t" << (jState.rgdwPOV[0]) << std::endl;
-			//Logger::Log(ss.str(), Logger::INFO, __FILE__, __LINE__);
 		}
 	}
 }

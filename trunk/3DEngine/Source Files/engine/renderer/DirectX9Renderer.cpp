@@ -35,7 +35,7 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_LIGHTING, true);
-		this->pDevice->SetRenderState(D3DRS_AMBIENT, 0xFFFFFFFF);
+		this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		this->pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		
 		this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
@@ -336,6 +336,11 @@ namespace engine
 			{
 				this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 			}
+		}
+		else if(argBind == "control_light")
+		{
+			float lightLevel = (argSpeed / 2) + 1;
+			this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(lightLevel, lightLevel, lightLevel, 1.0f));
 		}
 	}
 }

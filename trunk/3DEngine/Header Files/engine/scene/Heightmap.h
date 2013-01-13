@@ -32,7 +32,7 @@ namespace engine
 		void CleanUp();
 		
 		void LoadMap(std::string argMapFileName);
-		void SetupVertices(Renderer* argPRenderer, unsigned long argSmoothing);
+		void SetupVertices(Renderer* argPRenderer, float argPixelScale, unsigned long argSmoothing);
 
 		void Update();
 		void Draw(Renderer* argPRenderer);

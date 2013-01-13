@@ -178,12 +178,12 @@ namespace engine
 	/**
 	 * Takes the pixel data from the Bitmap class and generates a vertices array with the Y value as the pixel value.
 	 * @param		Renderer*				The renderer to use
+	 * @param		float					The scaling of each pixel
 	 * @param		unsigned long			The number of smoothing iteration to do
 	 * @return		void
 	 */
-	void Heightmap::SetupVertices(Renderer* argPRenderer, unsigned long argSmoothing)
+	void Heightmap::SetupVertices(Renderer* argPRenderer, float argPixelScale, unsigned long argSmoothing)
 	{
-		float pixelDistance				= 1;
 		unsigned char* pixelData		= this->pBitmap->GetPixelData();
 		long imageWidth					= this->pBitmap->GetImageWidth();
 		long imageHeight				= this->pBitmap->GetImageHeight();
@@ -204,16 +204,16 @@ namespace engine
 			for(long x = 0; x < imageWidth; x++)
 			{
 				long vIndex				= (z * imageWidth) + x;
-				float pixelX			= x * pixelDistance;
+				float pixelX			= x * argPixelScale;
 				float pixelY			= pixelData[vIndex] / 15.0f;
-				float pixelZ			= z * pixelDistance;
+				float pixelZ			= z * argPixelScale;
 
 				vertices[vIndex].x		= offsetX + pixelX;
 				vertices[vIndex].y		= offsetY + pixelY;
 				vertices[vIndex].z		= offsetZ + pixelZ;
 
-				vertices[vIndex].u		= pixelX / ((float)imageWidth);
-				vertices[vIndex].v		= 1 - (pixelZ / ((float)imageHeight));
+				vertices[vIndex].u		= pixelX / ((float)(imageWidth * argPixelScale));
+				vertices[vIndex].v		= 1 - (pixelZ / ((float)(imageHeight * argPixelScale)));
 			}
 		}
 
