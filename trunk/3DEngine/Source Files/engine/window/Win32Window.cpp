@@ -59,12 +59,23 @@ namespace engine
 
 	/**
 	 * Set the title of this window.
-	 * @param		char*				The new title for this window.
+	 * @param		std::string			The new title for this window.
 	 * @return		void
 	 */
 	void Win32Window::SetTitle(std::string argPTitle)
 	{
 		this->title = argPTitle;
+	}
+	
+	/**
+	 * Adds a part to the title as sub title
+	 * @param		std::string			The new title for this window.
+	 * @return		void
+	 */
+	void Win32Window::AddTitle(std::string argAddTitle)
+	{
+		std::string newTitle = this->title + ": " + argAddTitle;
+		SetWindowText(this->GetHWin(), newTitle.c_str());
 	}
 
 	/**

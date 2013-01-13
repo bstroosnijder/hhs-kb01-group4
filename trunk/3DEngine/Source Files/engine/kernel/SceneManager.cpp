@@ -72,6 +72,18 @@ namespace engine
 	}
 	
 	/**
+	 * Creates a new empty scene
+	 * @param		std::string		The identifier of the scene
+	 * @return		Scene*
+	 */
+	Scene* SceneManager::NewScene(std::string argPSceneName)
+	{
+		Scene* pScene = new Scene();
+		this->scenes[argPSceneName] = pScene;
+		return pScene;
+	}
+	
+	/**
 	 * Loads a scene file and parses it acording to a format:
 	 * #resources
 	 * <resource type>;<filename>
@@ -111,9 +123,18 @@ namespace engine
 	{
 		Logger::Log("SceneManager: Loading: " + argSceneFileName, Logger::INFO, __FILE__, __LINE__);
 		
-		// Create a new scene object to load the data of the scenefile in
-		Scene* pScene = new Scene();
-		this->scenes[argSceneName] = pScene;
+		Scene* pScene;
+		// Check if the scene already exists
+		if(this->scenes.count(argSceneName)  == 1)
+		{
+			pScene = this->scenes[argSceneName];
+		}
+		// Create a new scene if it doesn't
+		else
+		{
+			pScene = new Scene();
+			this->scenes[argSceneName] = pScene;
+		}
 		
 		// Parse the correct file name
 		std::string fileName = std::string("Resource Files\\Scenes\\" + argSceneFileName);
@@ -248,6 +269,7 @@ namespace engine
 			pSkybox->SetTexture(0, argPResourceManager->GetTexture(skyTexture));
 			pScene->SetSkybox(pSkybox);
 		}
+
 
 
 		// === SEGMENT: Heightmap ===

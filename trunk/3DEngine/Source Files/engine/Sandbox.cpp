@@ -91,7 +91,17 @@ namespace engine
 	}
 	
 	/**
-	 * iets
+	 * Creates a new empty scene
+	 * @param		std::string		The identifier of the scene
+	 * @return		Scene*
+	 */
+	Scene* Sandbox::NewScene(std::string argPSceneName)
+	{
+		return this->kernel->GetSceneManager()->NewScene(argPSceneName);
+	}
+	
+	/**
+	 * Loads a scene file into a scene
 	 * @param		std::string		The identifier for the scene in the collection
 	 * @param		std::string		The scene file to load
 	 * @return		Scene*

@@ -21,6 +21,7 @@ namespace engine
 		unsigned int height;
 	public:
 		virtual void SetTitle(std::string argTitle)=0;
+		virtual void AddTitle(std::string argAddTitle)=0;
 		virtual std::string GetTitle()=0;
 		virtual void SetX(int argX)=0;
 		virtual int GetX()=0;
