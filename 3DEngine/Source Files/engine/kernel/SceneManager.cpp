@@ -263,19 +263,20 @@ namespace engine
 			data = explode(';', dataHeightmap);
 
 			std::string mapFileName				= data.at(0);
-			unsigned long smoothingIterations	= (unsigned long)std::atof(data.at(1).c_str());
+			float pixelScale					= (float)std::atof(data.at(1).c_str());
+			unsigned long smoothingIterations	= (unsigned long)std::atof(data.at(2).c_str());
 
 			Heightmap* pHeightmap = new Heightmap();
 			pScene->SetHeightmap(pHeightmap);
 			pHeightmap->LoadMap(mapFileName);
-			pHeightmap->SetupVertices(argPRenderer, smoothingIterations);
+			pHeightmap->SetupVertices(argPRenderer, pixelScale, smoothingIterations);
 
-			for(unsigned long i = 2; i < data.size(); i++)
+			for(unsigned long i = 3; i < data.size(); i++)
 			{
 				std::string mapTexture = data.at(i);
 				argPResourceManager->LoadTexture(argPRenderer, mapTexture);
 
-				pHeightmap->SetTexture((i - 2), argPResourceManager->GetTexture(mapTexture));
+				pHeightmap->SetTexture((i - 3), argPResourceManager->GetTexture(mapTexture));
 			}
 		}
 
