@@ -27,6 +27,7 @@ namespace engine
 		void SetupDevices(Window* argPWindow);
 
 		Scene* GetScene(std::string argSceneName);
+		Scene* NewScene(std::string argPSceneName);
 		Scene* LoadScene(std::string argSceneName, std::string argSceneFileName);
 		void RemoveScene(std::string argSceneName);
 	};

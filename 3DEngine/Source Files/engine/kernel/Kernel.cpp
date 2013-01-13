@@ -113,10 +113,11 @@ namespace engine
 	void Kernel::HeartBeat()
 	{
 		std::map<std::string, Scene*> scenes = this->pSceneManager->GetScenes();
-		std::map<std::string, Scene*>::iterator itScenes;
-		for(itScenes = scenes.begin(); itScenes != scenes.end(); itScenes++)
+		std::map<std::string, Scene*>::iterator sceneIt;
+		for(sceneIt = scenes.begin(); sceneIt != scenes.end(); sceneIt++)
 		{
-			Scene* pScene = itScenes->second;
+			std::string sceneName	= sceneIt->first;
+			Scene* pScene			= sceneIt->second;
 			pScene->Update();
 
 			// Loop through scene windows
@@ -125,7 +126,9 @@ namespace engine
 			for(windowIt = windows.begin(); windowIt != windows.end(); windowIt++)
 			{
 				Window* pWindow = *windowIt;
-				//Render the content of this window.
+				// Add to the window title
+				pWindow->AddTitle(sceneName);
+				// Render the content of this window.
 				Renderer* pRenderer = this->winRenderer[pWindow];
 				pRenderer->Clear();
 				pRenderer->BeginScene();

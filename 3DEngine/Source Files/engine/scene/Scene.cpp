@@ -141,6 +141,11 @@ namespace engine
 			delete *windowIt;
 		}
 
+		if(this->pCamera != NULL)
+		{
+			delete this->pCamera;
+		}
+
 		if(this->pSkybox != NULL)
 		{
 			delete this->pSkybox;
@@ -149,11 +154,6 @@ namespace engine
 		if(this->pHeightmap != NULL)
 		{
 			delete this->pHeightmap;
-		}
-
-		if(this->pCamera != NULL)
-		{
-			delete this->pCamera;
 		}
 
 		std::map<std::string, Model*>::iterator itModels;

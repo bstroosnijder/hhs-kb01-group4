@@ -20,6 +20,7 @@ namespace engine
 		~Win32Window();
 		void CleanUp();
 		void SetTitle(std::string argTitle);
+		void AddTitle(std::string argAddTitle);
 		std::string GetTitle();
 		void SetX(int argX);
 		int GetX();

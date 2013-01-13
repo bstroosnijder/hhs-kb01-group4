@@ -87,7 +87,7 @@ namespace engine
 				float speed			= 1.0f;
 
 				if(	(key == "KEY_LMB"		&& (bool)((mState.rgbButtons[0] & 0x80) != 0)) ||
-					(key == "KEY_LMB"		&& (bool)((mState.rgbButtons[1] & 0x80) != 0)))
+					(key == "KEY_RMB"		&& (bool)((mState.rgbButtons[1] & 0x80) != 0)))
 				{
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
