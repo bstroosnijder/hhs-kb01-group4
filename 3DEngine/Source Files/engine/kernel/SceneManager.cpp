@@ -21,7 +21,6 @@ namespace engine
 
 	/**
 	 * Destructs the SceneManager object.
-	 * @return		void
 	 */
 	SceneManager::~SceneManager()
 	{
