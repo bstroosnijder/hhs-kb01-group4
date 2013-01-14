@@ -14,6 +14,7 @@ namespace engine
 	{
 		Logger::Log("Camera: Initializing", Logger::INFO, __FILE__, __LINE__);
 		this->range = 100.0f;
+		this->AddScript("doOrbitAtPlace y CW 0.007 56");
 		Logger::Log("Camera: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 

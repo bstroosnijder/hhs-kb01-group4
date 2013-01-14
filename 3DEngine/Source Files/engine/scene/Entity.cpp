@@ -17,20 +17,47 @@ namespace engine
 		std::vector<std::string> parts = explode(' ', argScript);
 		std::string funcName = parts.at(0);
 
+		// Makes the entity orbit at it's place around the given axis in the given direction
 		if(funcName == "doOrbitAtPlace")
 		{
-			float speed		= 1;
-			if(parts.at(1) == "CCW")
-			{
-				speed		= -1;
-			}
-			float rotSpeed	= (float)std::atof(parts.at(2).c_str());
-			float radius	= (float)std::atof(parts.at(3).c_str());
+			std::string axis	= parts.at(1);
+			std::string dir		= parts.at(2);
 
-			this->rotation.y += (rotSpeed * speed);
-			this->position.x = ((sin(this->rotation.y + (D3DX_PI / 2)) * radius) * speed);
-			this->position.z = ((cos(this->rotation.y + (D3DX_PI / 2)) * radius) * speed);
+			float speed		= 1;
+			if(dir == "CCW")
+				speed		= -1;
+			float rotSpeed	= (float)std::atof(parts.at(3).c_str());
+			float radius	= (float)std::atof(parts.at(4).c_str());
+
+			float* rot;
+			float* pos1;
+			float* pos2;
+
+			if(axis == "x")
+			{
+				rot		= &this->rotation.x;
+				pos1	= &this->position.y;
+				pos2	= &this->position.z;
+			}
+			else if(axis == "y")
+			{
+				rot		= &this->rotation.y;
+				pos1	= &this->position.x;
+				pos2	= &this->position.z;
+			}
+			else
+			{
+				rot		= &this->rotation.z;
+				pos1	= &this->position.x;
+				pos2	= &this->position.y;
+			}
+
+
+			(*rot)	+= (rotSpeed * speed);
+			(*pos1)	= ((sin(*rot + (D3DX_PI / 2)) * radius) * speed);
+			(*pos2)	= ((cos(*rot + (D3DX_PI / 2)) * radius) * speed);
 		}
+		// Parses a small scriptlet that allows for basic mutation on the pos/rot/scale x/y/z
 		else
 		{
 			unsigned long posDot		= argScript.find(".");
