@@ -11,6 +11,10 @@
 
 namespace engine
 {
+	/**
+	 * This class is responsible for generalizing the diferrent input devices.
+	 * It offers a single point where the inputlisteners, binds and options are set.
+	 */
 	class InputDevice
 	{
 	protected:

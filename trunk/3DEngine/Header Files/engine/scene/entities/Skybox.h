@@ -9,6 +9,10 @@
 
 namespace engine
 {
+	/**
+	 * The Skybox is the entity that fills the outer sides of the 3D world.
+	 * The "Walls", "Ceiling" and "Floor" that confine the 3D world are set up by this entity.	
+	 */
 	class Skybox : public Entity
 	{
 	private:

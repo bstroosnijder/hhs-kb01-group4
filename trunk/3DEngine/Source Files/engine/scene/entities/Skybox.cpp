@@ -2,18 +2,28 @@
 
 namespace engine
 {
+	/**
+	 * Construct the Skybox object.
+	 */
 	Skybox::Skybox() : Entity()
 	{
 		Logger::Log("Skybox: Initializing", Logger::INFO, __FILE__, __LINE__);
 		Logger::Log("Skybox: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
+	/**
+	 * Destructs the Skybox object.
+	 */
 	Skybox::~Skybox()
 	{
 		Logger::Log("Skybox: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
 	void Skybox::CleanUp()
 	{
 		if(this->pVertexBuffer != NULL)
@@ -27,6 +37,12 @@ namespace engine
 		}
 	}
 	
+	/**
+	 * Sets up the vertices and indices within those vertices to properly setup the skybox.
+	 * Vertices created this way are stored inside the private indexbuffer and vertexbuffer for later potential manipulation and usage.
+	 * @param		Renderer*			A pointer to the renderer used to render the vertices.
+	 * @return		void
+	 */
 	void Skybox::SetupVertices(Renderer* argPRenderer)
 	{
 		float boxSize					= 2.0f;
@@ -127,13 +143,22 @@ namespace engine
 		argPRenderer->CreateIndexBuffer(&this->pIndexBuffer, indexArraySize, indices);
 	}
 
+	/**
+	 * Nothing here yet...
+	 * @return		void
+	 */
 	void Skybox::Update()
 	{
 	}
 
+	/**
+	 * Draws the skybox.
+	 * @param		Renderer*			The renderer to use for drawing the skybox's vertices and texture.
+	 * @return		void
+	 */
 	void Skybox::Draw(Renderer* argPRenderer)
 	{
-		// Reset the actual world matrxi again
+		// Reset the actual world matrix again.
 		D3DXMatrixIdentity(&this->matWorld);
 
 		// Scaling

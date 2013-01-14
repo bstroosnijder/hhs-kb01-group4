@@ -2,6 +2,11 @@
 
 namespace engine
 {
+	/**
+	 * Load bitmap pixel- and headerdata into chunks that our engine can understand and interpret.
+	 * @param	std::string		The file name of the bitmap that should be loaded.
+	 * @return	bool			Whether the load was successful or not.
+	 */
 	bool Bitmap::Load(std::string argFilename)
 	{
 		Logger::Log("Loading bitmap: " + argFilename, Logger::INFO, __FILE__, __LINE__);
