@@ -6,6 +6,9 @@
 
 namespace engine
 {
+	/**
+	 * The BITMAPFILEHEADER structure contains information about the type, size, and layout of a file that contains a DIB.
+	 */
 	typedef struct tagBITMAPFILEHEADER {
 		unsigned short bfType;
 		unsigned long bfSize;
@@ -14,6 +17,9 @@ namespace engine
 		unsigned long bfOffBits;
 	} BITMAPFILEHEADER;
 
+	/**
+	 * The BITMAPINFOHEADER structure contains information about the dimensions and color format of a DIB.
+	 */
 	typedef struct tagBITMAPINFOHEADER {
 		unsigned long biSize;
 		long  biWidth;

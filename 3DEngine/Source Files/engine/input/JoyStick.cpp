@@ -7,6 +7,11 @@ namespace engine
 	//---Private methods---
 	//---Public methods---
 
+	/**
+	 * Constructs the Joystick object.
+	 * @param		Window*					The Window on which this Joystick should listen. This is needed to obtain the HWND object.
+	 * @param		LPDIRECTINPUT8			The Direct8Input* object, needed to allow Direct3D to perform it's magic!
+	 */
 	JoyStick::JoyStick(Window* argPWindow, LPDIRECTINPUT8 argPInput)
 	{
 		Logger::Log("JoyStick: Creating", Logger::INFO, __FILE__, __LINE__);
@@ -36,13 +41,19 @@ namespace engine
 		Logger::Log("JoyStick: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 	
-	
+	/**
+	 * Destructs the Joystick object.
+	 */
 	engine::JoyStick::~JoyStick()
 	{
 		Logger::Log("JoyStick: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
+	/**
+	 * Lazy cleanup method for destructing
+	 * @return		void
+	 */
 	void JoyStick::CleanUp()
 	{
 		if (this->pDevice != NULL)

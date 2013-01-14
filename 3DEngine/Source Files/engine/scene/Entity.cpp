@@ -6,6 +6,12 @@ namespace engine
 	//---Public attributes---
 	//---Private methods---
 	
+	/**
+	 * The #scripts segment in the scene file is sent to this method for interpretation.
+	 * Each line interpreted this way is executed and loaded directly.
+	 * @param		std::string		The script which is to be parsed and executed.
+	 * @return		void
+	 */
 	void Entity::ParseAndExecuteScript(std::string argScript)
 	{
 		std::vector<std::string> parts = explode(' ', argScript);

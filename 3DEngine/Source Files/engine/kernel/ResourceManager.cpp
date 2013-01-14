@@ -173,6 +173,11 @@ namespace engine
 		return true;
 	}
 
+	/**
+	 * Creates a new resource based on the mesh's file name.
+	 * @param		std::string		The mesh file name used to construct the resource.
+	 * @return		Resource*	
+	 */
 	Resource* ResourceManager::NewResource(std::string argMeshFileName)
 	{
 		Resource* pResource = new Resource();

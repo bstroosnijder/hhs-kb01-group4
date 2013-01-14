@@ -6,6 +6,12 @@ namespace engine
 	//---Public attributes---
 	//---Private methods---
 	
+	/**
+	 * The #scripts segment in the scene file is sent to this method for interpretation.
+	 * Each line interpreted this way is executed and loaded directly.
+	 * @param		std::string		The script which is to be parsed and executed.
+	 * @return		void
+	 */
 	void Scene::ParseAndExecuteScript(std::string argScript)
 	{
 		std::vector<std::string> parts = explode(' ', argScript);
@@ -93,10 +99,8 @@ namespace engine
 			posCamera.y = posTarget.y + 1.4f;
 			posCamera.z = posTarget.z - 5.0f;
 
-
 			pModelTarget->SetRotation(rotTarget);
-			this->pCamera->SetPosition(posCamera);
-			
+			this->pCamera->SetPosition(posCamera);	
 		}
 	}
 
