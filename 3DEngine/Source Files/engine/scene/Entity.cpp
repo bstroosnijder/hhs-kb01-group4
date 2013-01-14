@@ -39,28 +39,48 @@ namespace engine
 
 			Vector3* vector;
 			if(vectorName == "position")
+			{
 				vector = &this->position;
+			}
 			else if(vectorName == "rotation")
+			{
 				vector = &this->rotation;
+			}
 			else if(vectorName == "scaling")
+			{
 				vector = &this->scaling;
+			}
 
 			float* direction;
 			if(vectorDirection == "x")
+			{
 				direction = &vector->x;
+			}
 			else if(vectorDirection == "y")
+			{
 				direction = &vector->y;
+			}
 			else if(vectorDirection == "z")
+			{
 				direction = &vector->z;
+			}
 
 			if(amount == "++")
+			{
 				(*direction)++;
+			}
 			else if(amount == "--")
+			{
 				(*direction)--;
+			}
 			else if(amount == "+=")
+			{
 				(*direction) += (float)std::atof(value.c_str());
+			}
 			else if(amount == "-=")
+			{
 				(*direction) -= (float)std::atof(value.c_str());
+			}
 		}
 	}
 
