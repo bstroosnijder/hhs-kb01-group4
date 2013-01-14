@@ -1,11 +1,11 @@
-#include "..\..\..\..\Header Files\engine\scene\entities\Skybox.h"
+#include "..\..\..\Header Files\engine\scene\Skybox.h"
 
 namespace engine
 {
 	/**
 	 * Construct the Skybox object.
 	 */
-	Skybox::Skybox() : Entity()
+	Skybox::Skybox()
 	{
 		Logger::Log("Skybox: Initializing", Logger::INFO, __FILE__, __LINE__);
 		Logger::Log("Skybox: Finished", Logger::INFO, __FILE__, __LINE__);
@@ -159,42 +159,43 @@ namespace engine
 	void Skybox::Draw(Renderer* argPRenderer)
 	{
 		// Reset the actual world matrix again.
-		D3DXMatrixIdentity(&this->matWorld);
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
 
 		// Scaling
 		D3DXMATRIXA16 matScaling;
-		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matScaling);
+		D3DXMatrixScaling(&matScaling, 1.0f, 1.0f, 1.0f);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matScaling);
 
 		// Rotation X
 		D3DXMATRIXA16 matRotationX;
-		D3DXMatrixRotationX(&matRotationX, this->rotation.x);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationX);
+		D3DXMatrixRotationX(&matRotationX, 0.0f);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotationX);
 		// Rotation Y
 		D3DXMATRIXA16 matRotationY;
-		D3DXMatrixRotationY(&matRotationY, this->rotation.y);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationY);
+		D3DXMatrixRotationY(&matRotationY, 0.0f);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotationY);
 		// Rotation Z
 		D3DXMATRIXA16 matRotationZ;
-		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationZ);
+		D3DXMatrixRotationZ(&matRotationZ, 0.0f);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotationZ);
 
 		
-		D3DXMatrixMultiply(&this->matWorld, (D3DXMATRIXA16*)argPRenderer->GetWorldTop(), &this->matWorld);
+		D3DXMatrixMultiply(&matWorld, (D3DXMATRIXA16*)argPRenderer->GetWorldTop(), &matWorld);
 
 		D3DXVECTOR3 vecScale;
 		D3DXQUATERNION quatRotation;
 		D3DXVECTOR3 vecTranslation;
 		// Decompose the current world matrix, we need this so we counter camera movement and keep the skybox still
-		D3DXMatrixDecompose(&vecScale, &quatRotation, &vecTranslation, &this->matWorld);
+		D3DXMatrixDecompose(&vecScale, &quatRotation, &vecTranslation, &matWorld);
 		
 		// Position
 		D3DXMATRIXA16 matTranslation;
-		D3DXMatrixTranslation(&matTranslation, (vecTranslation.x + this->position.x), (vecTranslation.y + this->position.y), (vecTranslation.z + this->position.z));
+		D3DXMatrixTranslation(&matTranslation, vecTranslation.x, vecTranslation.y, vecTranslation.z);
 		D3DXMatrixInverse(&matTranslation, NULL, &matTranslation);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matTranslation);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matTranslation);
 
-		argPRenderer->LoadWorldMatrix(&this->matWorld);
+		argPRenderer->LoadWorldMatrix(&matWorld);
 
 		// Apply the matrix transformations
 		argPRenderer->TransformWorldMatrix();

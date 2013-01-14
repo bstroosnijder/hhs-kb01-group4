@@ -2,10 +2,10 @@
 #define SKYBOX_H_
 
 #include <d3dx9.h>
-#include "..\..\logger\Logger.h"
-#include "..\Entity.h"
-#include "..\..\renderer\DirectX9Renderer.h"
-#include "..\..\utils\TexturedVector3.h"
+#include "..\logger\Logger.h"
+#include "Drawable.h"
+#include "..\renderer\DirectX9Renderer.h"
+#include "..\utils\TexturedVector3.h"
 
 namespace engine
 {
@@ -13,7 +13,7 @@ namespace engine
 	 * The Skybox is the entity that fills the outer sides of the 3D world.
 	 * The "Walls", "Ceiling" and "Floor" that confine the 3D world are set up by this entity.	
 	 */
-	class Skybox : public Entity
+	class Skybox : public Drawable
 	{
 	private:
 		LPDIRECT3DTEXTURE9 textures[8];

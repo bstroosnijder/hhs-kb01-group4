@@ -298,7 +298,7 @@ namespace engine
 	{
 		this->matWorld->Push();
 		this->matView->Push();
-		//this->matProjection->Push();
+		this->matProjection->Push();
 	}
 
 	/**
@@ -390,7 +390,7 @@ namespace engine
 	{
 		this->matWorld->Pop();
 		this->matView->Pop();
-		//this->matProjection->Pop();
+		this->matProjection->Pop();
 	}
 
 	/**
