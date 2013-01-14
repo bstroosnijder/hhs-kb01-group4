@@ -84,6 +84,16 @@ namespace engine
 					(key == "KEY_LSHIFT"	&& (bool)(KEYDOWN(kState, DIK_LSHIFT) != 0)) ||
 					(key == "KEY_RIGHT"		&& (bool)(KEYDOWN(kState, DIK_RIGHT) != 0)) ||
 					(key == "KEY_SPACE"		&& (bool)(KEYDOWN(kState, DIK_SPACE) != 0)) ||
+					(key == "KEY_1"			&& (bool)(KEYDOWN(kState, DIK_1) != 0)) ||
+					(key == "KEY_2"			&& (bool)(KEYDOWN(kState, DIK_2) != 0)) ||
+					(key == "KEY_3"			&& (bool)(KEYDOWN(kState, DIK_3) != 0)) ||
+					(key == "KEY_4"			&& (bool)(KEYDOWN(kState, DIK_4) != 0)) ||
+					(key == "KEY_5"			&& (bool)(KEYDOWN(kState, DIK_5) != 0)) ||
+					(key == "KEY_6"			&& (bool)(KEYDOWN(kState, DIK_6) != 0)) ||
+					(key == "KEY_7"			&& (bool)(KEYDOWN(kState, DIK_7) != 0)) ||
+					(key == "KEY_8"			&& (bool)(KEYDOWN(kState, DIK_8) != 0)) ||
+					(key == "KEY_9"			&& (bool)(KEYDOWN(kState, DIK_9) != 0)) ||
+					(key == "KEY_0"			&& (bool)(KEYDOWN(kState, DIK_0) != 0)) ||
 					(key == "KEY_UP"		&& (bool)(KEYDOWN(kState, DIK_UP) != 0)))
 				{
 					// Tell our fans

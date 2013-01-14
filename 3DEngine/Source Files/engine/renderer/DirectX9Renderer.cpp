@@ -424,23 +424,33 @@ namespace engine
 	 */
 	void DirectX9Renderer::InputEvent(std::string argBind, float argSpeed)
 	{
-		if(argBind == "toggle_wireframe")
+		if(argBind == "light_false")
 		{
-			unsigned long renderState;
-			this->pDevice->GetRenderState(D3DRS_FILLMODE, &renderState);
-			if(renderState == D3DFILL_SOLID)
-			{
-				this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-			}
-			else
-			{
-				this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-			}
+				this->pDevice->SetRenderState(D3DRS_LIGHTING, false);
 		}
-		else if(argBind == "control_light")
+		else if(argBind == "light_true")
 		{
-			float lightLevel = (argSpeed / 2) + 1;
-			this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(lightLevel, lightLevel, lightLevel, 1.0f));
+				this->pDevice->SetRenderState(D3DRS_LIGHTING, true);
+		}
+		else if(argBind == "fill_solid")
+		{
+			this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		}
+		else if(argBind == "fill_wireframe")
+		{
+			this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		}
+		else if(argBind == "cull_ccw")
+		{
+			this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		}
+		else if(argBind == "cull_cw")
+		{
+			this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+		}
+		else if(argBind == "cull_none")
+		{
+			this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		}
 	}
 }
