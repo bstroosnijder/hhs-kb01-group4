@@ -21,7 +21,9 @@ namespace engine
 		{
 			float speed		= 1;
 			if(parts.at(1) == "CCW")
+			{
 				speed		= -1;
+			}
 			float rotSpeed	= (float)std::atof(parts.at(2).c_str());
 			float radius	= (float)std::atof(parts.at(3).c_str());
 
