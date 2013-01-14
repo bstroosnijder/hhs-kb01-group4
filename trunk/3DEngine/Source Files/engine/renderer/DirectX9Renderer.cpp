@@ -51,8 +51,6 @@ namespace engine
 		this->pDevice->SetLight(0, &gLight);
 		this->pDevice->LightEnable(0, true);
 
-		// Global Lighting
-
 		// Global Material
 		D3DMATERIAL9 gMaterial;
 		ZeroMemory(&gMaterial, sizeof(gMaterial));
