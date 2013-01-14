@@ -9,21 +9,29 @@
 #include "logger\ConsoleLog.h"
 #include "logger\TextLog.h"
 
+/**
+ * This is the 'N00b'. This class is responsible for the communication between the engine and the game developer.
+ * As the name of the class suggests, this Facade is for the weak-minded.
+ * If you value freedom, flexibility and customization, we strongly recommend you not to use this class to communicate with the engine.
+ */
+
 namespace engine
 {
 	class N00b
 	{
 	private:
 		Kernel* kernel;
+
+		Window* NewWindow();
 	public:
 		N00b();
 		~N00b();
 
 		void CleanUp();
 		void Start();
-		Window* NewWindow(std::string argTitle);
-		Window* NewWindow(std::string argTitle, int argX, int argY, int argWidth, int argHeight);
-		Scene* LoadScene(std::string argTitle, std::string argSceneFileName, Window* argPWindow);
+		
+		void LoadScene(std::string argSceneFileName);
+		void LoadScene(std::string argTitle, std::string argSceneFileName);
 	};
 }
 

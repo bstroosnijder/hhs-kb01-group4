@@ -38,7 +38,7 @@ namespace engine
 		~InputManager();
 		void CleanUp();
 		static BOOL CALLBACK SetupDeviceCallback(LPCDIDEVICEINSTANCE lpddi, void* pvRef);
-		void SetupDevices(Window* argWindow);
+		void SetupDevices(Window* argpWindow);
 
 		Keyboard* GetKeyboard();
 		Mouse* GetMouse();

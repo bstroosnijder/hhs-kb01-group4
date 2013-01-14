@@ -26,7 +26,7 @@ namespace engine
 		this->binds				= std::map<std::string, std::string>();
 		this->inputListeners	= std::list<InputListener*>();
 	}
-	
+
 	/**
 	 * This method acquires the device in case its lost.
 	 * @return		bool			True if device is acquired. Else its false
