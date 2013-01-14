@@ -17,6 +17,7 @@ namespace engine
 		std::vector<std::string> parts = explode(' ', argScript);
 		std::string funcName = parts.at(0);
 
+		// Makes the camera follow an entity only with it's position
 		if(funcName == "followPos")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
@@ -30,6 +31,7 @@ namespace engine
 
 			this->pCamera->SetPosition(posCamera);
 		}
+		// Makes the camera follow an entity including it's rotation (as in a 3d person camera)
 		else if(funcName == "followPosRot")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
@@ -52,6 +54,7 @@ namespace engine
 			this->pCamera->SetRotation(rotCamera);
 			this->pCamera->SetPosition(posCamera);
 		}
+		// TODO: ALEX
 		else if(funcName == "basHump")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
@@ -67,6 +70,7 @@ namespace engine
 			
 			pModelTarget->SetPosition(posTarget);
 		}
+		// TODO: ALEX
 		else if(funcName == "rotLeft")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
@@ -77,6 +81,7 @@ namespace engine
 
 			pModelTarget->SetRotation(posTarget);
 		}
+		// TODO: ALEX
 		else if(funcName == "rotRight")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
@@ -87,7 +92,8 @@ namespace engine
 
 			pModelTarget->SetRotation(posTarget);
 		}
-		if(funcName == "equip")
+		// TODO: ALEX
+		else if(funcName == "equip")
 		{
 			Model* pModelTarget	= this->models[parts.at(1)];
 
@@ -186,10 +192,16 @@ namespace engine
 			this->pHeightmap->Update();
 		}
 
-		std::map<std::string, Model*>::iterator it;
-		for(it = this->models.begin(); it != this->models.end(); it++)
+		std::map<std::string, Model*>::iterator modelIt;
+		for(modelIt = this->models.begin(); modelIt != this->models.end(); modelIt++)
 		{
-			it->second->Update();
+			modelIt->second->Update();
+		}
+
+		std::map<std::string, LightPoint*>::iterator lightIt;
+		for(lightIt = this->lights.begin(); lightIt != this->lights.end(); lightIt++)
+		{
+			lightIt->second->Update();
 		}
 
 		std::list<std::string>::iterator scriptIt;
@@ -219,11 +231,19 @@ namespace engine
 			this->pHeightmap->Draw(argPRenderer);
 		}
 
-		std::map<std::string, Model*>::iterator it;
-		for(it = this->models.begin(); it != this->models.end(); it++)
+		std::map<std::string, Model*>::iterator modelIt;
+		for(modelIt = this->models.begin(); modelIt != this->models.end(); modelIt++)
 		{
 			argPRenderer->Push();
-			it->second->Draw(argPRenderer);
+			modelIt->second->Draw(argPRenderer);
+			argPRenderer->Pop();
+		}
+
+		std::map<std::string, LightPoint*>::iterator lightIt;
+		for(lightIt = this->lights.begin(); lightIt != this->lights.end(); lightIt++)
+		{
+			argPRenderer->Push();
+			lightIt->second->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}
 		argPRenderer->Pop();
@@ -328,7 +348,7 @@ namespace engine
 	/**
 	 * Add an model pointer to the list of models.
 	 * @param		std::string							The key index for the model
-	 * @param		model								The model pointer to add to the collection of models.
+	 * @param		Model*								The model pointer to add to the collection of models.
 	 * @return		void
 	 */
 	void Scene::AddModel(std::string argModelName, Model* argPModel)
@@ -344,6 +364,46 @@ namespace engine
 	void Scene::RemoveModel(std::string argModelName)
 	{
 		this->models.erase(argModelName);
+	}
+
+	/**
+	 * Gets a light by name
+	 * @param		std::string							The name of the light to return
+	 * @return		LightPoint*
+	 */
+	LightPoint* Scene::GetLight(std::string argLightName)
+	{
+		return this->lights[argLightName];
+	}
+
+	/**
+	 * Obtain all the light pointers in the lights collection.
+	 * @return		std::map<std::string, LightPoint*>		The entire light collection.
+	 */
+	std::map<std::string, LightPoint*> Scene::GetLights()
+	{
+		return this->lights;
+	}
+
+	/**
+	 * Add an light pointer to the list of lights.
+	 * @param		std::string							The key index for the light
+	 * @param		LightPoint*							The light pointer to add to the collection of lights.
+	 * @return		void
+	 */
+	void Scene::AddLight(std::string argLightName, LightPoint* argPLight)
+	{
+		this->lights[argLightName] = argPLight;
+	}
+
+	/**
+	 * Remove an light pointer from the collection of lights.
+	 * @param		std::string							The light name to remove from the collection of lights.
+	 * @return		void
+	 */
+	void Scene::RemoveLight(std::string argLightName)
+	{
+		this->lights.erase(argLightName);
 	}
 	
 	/**

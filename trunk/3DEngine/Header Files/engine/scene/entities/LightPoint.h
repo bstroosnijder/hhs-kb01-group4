@@ -5,6 +5,9 @@
 
 namespace engine
 {
+	/**
+	 * Represents a light in the world
+	 */
 	class LightPoint : public Entity
 	{
 	private:

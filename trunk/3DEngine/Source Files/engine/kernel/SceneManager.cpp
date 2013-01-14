@@ -158,6 +158,7 @@ namespace engine
 		std::string dataSkybox;
 		std::string dataHeightmap;
 		std::vector<std::string> dataModels		= std::vector<std::string>();
+		std::vector<std::string> dataLights		= std::vector<std::string>();
 		std::vector<std::string> dataInput		= std::vector<std::string>();
 		std::vector<std::string> dataScripts	= std::vector<std::string>();
 
@@ -201,6 +202,10 @@ namespace engine
 				else if(curSegment == "models")
 				{
 					dataModels.push_back(line);
+				}
+				else if(curSegment == "lights")
+				{
+					dataLights.push_back(line);
 				}
 				else if(curSegment == "input")
 				{
@@ -373,6 +378,37 @@ namespace engine
 
 			// Set the number of prev tabs for the next iteration
 			numPrevTabs = numTabs;
+		}
+
+
+		// === SEGMENT: Lights ===
+		Logger::Log("\nSceneManager: +++ Segment - Lights", Logger::INFO, __FILE__, __LINE__);
+
+		if(dataModels.empty())
+		{
+			Logger::Log("SceneManager: No light data", Logger::INFO, __FILE__, __LINE__);
+		}
+		
+		// Loop through the models
+		std::vector<std::string>::iterator lightIt;
+		for(lightIt = dataLights.begin(); lightIt != dataLights.end(); lightIt++)
+		{
+			std::string dataLineLights = *lightIt;
+			// explode the light data
+			data = explode(';', dataLineLights);
+
+			std::string lightName		= data.at(0);
+			Vector3 lightPosition		= Vector3(	(float)std::atof(data.at(1).c_str()),
+													(float)std::atof(data.at(2).c_str()),
+													(float)std::atof(data.at(3).c_str()));
+			float lightRange			= (float)std::atof(data.at(4).c_str());
+			// TODO: color
+
+			LightPoint* pLightPoint		= new LightPoint();
+			pLightPoint->SetPosition(lightPosition);
+			pLightPoint->SetRange(lightRange);
+
+			pScene->AddLight(lightName, pLightPoint);
 		}
 
 

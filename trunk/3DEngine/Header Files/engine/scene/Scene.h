@@ -12,6 +12,7 @@
 #include "Heightmap.h"
 #include "entities\Camera.h"
 #include "entities\Model.h"
+#include "entities\LightPoint.h"
 
 namespace engine
 {
@@ -29,6 +30,7 @@ namespace engine
 		Skybox* pSkybox;
 		Heightmap* pHeightmap;
 		std::map<std::string, Model*> models;
+		std::map<std::string, LightPoint*> lights;
 
 		std::list<std::string> scripts;
 		void ParseAndExecuteScript(std::string argScript);
@@ -54,6 +56,11 @@ namespace engine
 		std::map<std::string, Model*> GetModels();
 		void AddModel(std::string argModelName, Model* argPModel);
 		void RemoveModel(std::string argModelName);
+		
+		LightPoint* GetLight(std::string argLightName);
+		std::map<std::string, LightPoint*> GetLights();
+		void AddLight(std::string argLightName, LightPoint* argPLight);
+		void RemoveLight(std::string argLightName);
 		
 		void AddScript(std::string argScript);
 	};
