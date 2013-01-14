@@ -171,7 +171,6 @@
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
-    <ClInclude Include="Header Files\engine\input\MouseState.h" />
     <ClInclude Include="Header Files\engine\input\InputDevice.h">
       <Filter>Header Files\engine\input</Filter>
     </ClInclude>
@@ -180,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="Header Files\engine\input\InputListener.h">
       <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\entities\LightPoint.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="Source Files\engine\input\JoyStick.cpp">
       <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

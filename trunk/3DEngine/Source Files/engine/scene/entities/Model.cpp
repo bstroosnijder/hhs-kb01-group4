@@ -12,8 +12,10 @@ namespace engine
 	 */
 	Model::Model(Resource* argPResource) : Entity()
 	{
+		Logger::Log("Model: Initializing", Logger::INFO, __FILE__, __LINE__);
 		this->pResource = argPResource;
 		this->models = std::map<std::string, Model*>();
+		Logger::Log("Model: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 	
 	/**
