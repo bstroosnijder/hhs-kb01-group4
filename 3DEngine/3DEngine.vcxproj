@@ -45,8 +45,10 @@
     <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Skybox.h" />
     <ClInclude Include="Header Files\engine\input\InputListener.h" />
+    <ClInclude Include="Header Files\engine\scene\entities\LightPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp" />
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />
     <ClCompile Include="Source Files\engine\input\JoyStick.cpp" />
     <ClCompile Include="Source Files\engine\N00b.cpp" />

@@ -212,6 +212,8 @@ namespace engine
 				vertices[vIndex].y		= offsetY + pixelY;
 				vertices[vIndex].z		= offsetZ + pixelZ;
 
+				vertices[vIndex].normal	= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
 				vertices[vIndex].u		= pixelX / ((float)(imageWidth * argPixelScale));
 				vertices[vIndex].v		= 1 - (pixelZ / ((float)(imageHeight * argPixelScale)));
 			}

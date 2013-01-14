@@ -118,6 +118,8 @@ namespace engine
 		{
 			std::string sceneName	= sceneIt->first;
 			Scene* pScene			= sceneIt->second;
+
+			// Update the scene
 			pScene->Update();
 
 			// Loop through scene windows
@@ -128,14 +130,13 @@ namespace engine
 				Window* pWindow = *windowIt;
 				// Add to the window title
 				pWindow->AddTitle(sceneName);
+
 				// Render the content of this window.
 				Renderer* pRenderer = this->winRenderer[pWindow];
 				pRenderer->Clear();
 				pRenderer->BeginScene();
-
 				// Draw the scene
 				pScene->Draw(pRenderer);
-
 				pRenderer->EndScene();
 				pRenderer->Present(pWindow);
 			}

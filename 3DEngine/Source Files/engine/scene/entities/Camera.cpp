@@ -12,6 +12,8 @@ namespace engine
 	 */
 	Camera::Camera() : Entity()
 	{
+		Logger::Log("Camera: Initializing", Logger::INFO, __FILE__, __LINE__);
+		Logger::Log("Camera: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**

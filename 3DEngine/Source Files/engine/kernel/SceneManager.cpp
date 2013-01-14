@@ -270,7 +270,6 @@ namespace engine
 		}
 
 
-
 		// === SEGMENT: Heightmap ===
 		Logger::Log("\nSceneManager: +++ Segment - Heightmap", Logger::INFO, __FILE__, __LINE__);
 

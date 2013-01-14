@@ -19,10 +19,10 @@ namespace engine
 		LPDIRECT3D9 pDirect3d;
 		LPDIRECT3DDEVICE9 pDevice;
 		
+		LPD3DXMATRIXSTACK matWorld;
 		LPD3DXMATRIXSTACK matView;
 		LPD3DXMATRIXSTACK matProjection;
 	public:
-		LPD3DXMATRIXSTACK matWorld;
 		DirectX9Renderer(HWND argHWin);
 		~DirectX9Renderer();
 		void CleanUp();
@@ -33,10 +33,16 @@ namespace engine
 		bool CreateVertexBuffer(void* argPVertexBuffer, unsigned long argSize, unsigned long argStruct, void* argPVertices);
 		bool CreateIndexBuffer(void* argPIndexBuffer, unsigned long argSize, short* argPIndices);
 		
+		void* GetWorldTop();
+		void LoadWorldMatrix(void* argPMatrix);
 		void AddToWorldMatrix(void* argPMatrix);
+
 		void TransformWorldMatrix();
 		void TransformViewMatrix();
 		void TransformProjectionMatrix();
+
+		void SetLight(unsigned long argLightIndex, void* argPLight);
+		void LightEnable(unsigned long argLightIndex, bool argEnable);
 
 		void Clear();
 		void BeginScene();

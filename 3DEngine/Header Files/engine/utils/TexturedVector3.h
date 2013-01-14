@@ -1,7 +1,7 @@
 #ifndef TEXTUREDVECTOR3_H_
 #define TEXTUREDVECTOR3_H_
 // Our custom FVF, which describes our custom vertex structure
-#define D3DFVFTexturedVector3 (D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1)
+#define D3DFVFTexturedVector3 (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1)
 
 namespace engine
 {
@@ -14,7 +14,7 @@ namespace engine
 		float y;
 		float z;
 
-		unsigned long color;
+		D3DXVECTOR3 normal;
 
 		float u;
 		float v;

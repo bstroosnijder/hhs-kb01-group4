@@ -35,12 +35,30 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_LIGHTING, true);
-		this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));
 		this->pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		
 		this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		this->pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+
+		// Global Lighting
+		D3DLIGHT9 gLight;
+		ZeroMemory(&gLight, sizeof(gLight));
+		gLight.Type			= D3DLIGHT_DIRECTIONAL;
+		gLight.Diffuse		= D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
+		gLight.Direction	= D3DXVECTOR3(-1.0f, -0.3f, -1.0f);
+		this->pDevice->SetLight(0, &gLight);
+		this->pDevice->LightEnable(0, true);
+
+		// Global Lighting
+
+		// Global Material
+		D3DMATERIAL9 gMaterial;
+		ZeroMemory(&gMaterial, sizeof(gMaterial));
+		gMaterial.Ambient	= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		gMaterial.Diffuse	= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		this->pDevice->SetMaterial(&gMaterial);
 
 		// Set matrices to the identity
 		this->SetupMatricis();
@@ -50,7 +68,6 @@ namespace engine
 
 	/**
 	 * Destructs the DirectX9Renderer object.
-	 * @return		void
 	 */
 	DirectX9Renderer::~DirectX9Renderer()
 	{
@@ -170,6 +187,26 @@ namespace engine
 	}
 
 	/**
+	 * Returns the current top of the world matrix stack
+	 * @return		void*
+	 */
+	void* DirectX9Renderer::GetWorldTop()
+	{
+		return this->matWorld->GetTop();
+	}
+
+	/**
+	 * Loads a matrix as the new world matrix
+	 * @param		void*				The matrix to be the new world matrix
+	 * @return		void
+	 */
+	void DirectX9Renderer::LoadWorldMatrix(void* argPMatrix)
+	{
+		D3DXMATRIXA16* pMatrix = (D3DXMATRIXA16*)argPMatrix;
+		this->matWorld->LoadMatrix(pMatrix);
+	}
+
+	/**
 	 * Adds a new matrix to the world matrix via multiplication
 	 * @param		void*				The matrix to multiply the current world matrix with
 	 * @return		void
@@ -213,6 +250,29 @@ namespace engine
 	}
 
 	/**
+	 * Sets a light struct in the given index
+	 * @param		unsigned long		The index of the light struct
+	 * @param		void*				A pointer to the light struct
+	 * @return		void
+	 */
+	void DirectX9Renderer::SetLight(unsigned long argLightIndex, void* argPLight)
+	{
+		D3DLIGHT9* pLight = (D3DLIGHT9*)argPLight;
+		this->pDevice->SetLight(argLightIndex, pLight);
+	}
+
+	/**
+	 * Enables the light at the given index
+	 * @param		unsigned long		The index of the light struct
+	 * @param		bool				A bool to indicate the status of the light
+	 * @return		void
+	 */
+	void DirectX9Renderer::LightEnable(unsigned long argLightIndex, bool argEnable)
+	{
+		this->pDevice->LightEnable(argLightIndex, argEnable);
+	}
+
+	/**
 	 * Clears the screen.
 	 * TODO more info
 	 * @return		void
@@ -243,41 +303,81 @@ namespace engine
 		//this->matProjection->Push();
 	}
 
+	/**
+	 * Sets the stream to the given vertex buffer
+	 * @param		void*				The vertex buffer to use
+	 * @param		unsigned long		The size of a single vertex in the buffer
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetStreamSource(void* argPVertexBuffer, unsigned long argSizePerVertex)
 	{
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer	= (LPDIRECT3DVERTEXBUFFER9)argPVertexBuffer;
 		this->pDevice->SetStreamSource(0, pVertexBuffer, 0, argSizePerVertex);
 	}
-
+	
+	/**
+	 * Sets The FVF to use for the next thing that comes throu the pipeline
+	 * @param		unsigned long		The FVF to use
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetFVF(unsigned long argStruct)
 	{
 		this->pDevice->SetFVF(argStruct);
 	}
 
+	/**
+	 * Sets the index buffer to use with a vertex buffer
+	 * @param		void*				The vertex buffer to use
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetIndices(void* argPIndexBuffer)
 	{
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer	= (LPDIRECT3DINDEXBUFFER9)argPIndexBuffer;
 		this->pDevice->SetIndices(pIndexBuffer);
 	}
 
+	/**
+	 * Sets a material to use on the current pipeline
+	 * @param		void*				The material to use
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetMaterial(void* argPMaterial)
 	{
 		D3DMATERIAL9* pMaterial				= (D3DMATERIAL9*)argPMaterial;
 		this->pDevice->SetMaterial(pMaterial);
 	}
 
+	/**
+	 * Sets a texture to use on the current pipeline
+	 * @param		unsigned long		The index of the texture
+	 * @param		void*				The texture to use
+	 * @return		void
+	 */
 	void DirectX9Renderer::SetTexture(unsigned long argIndex, void* argPTexture)
 	{
 		LPDIRECT3DTEXTURE9 pTexture			= (LPDIRECT3DTEXTURE9)argPTexture;
 		this->pDevice->SetTexture(argIndex, pTexture);
 	}
 
+	/**
+	 * Draws the current pipeline as a primitive
+	 * @param		unsigned long		The primitive type
+	 * @param		unsigned long		The number of primitives to draw
+	 * @return		void
+	 */
 	void DirectX9Renderer::DrawPrimitive(unsigned long argPrimitiveType, unsigned long argNumPrimitives)
 	{
 		D3DPRIMITIVETYPE primitiveType		= (D3DPRIMITIVETYPE)argPrimitiveType;
 		this->pDevice->DrawPrimitive(primitiveType, 0, argNumPrimitives);
 	}
 
+	/**
+	 * Draws the current pipeline as an indexed primitive
+	 * @param		unsigned long		The primitive type
+	 * @param		unsigned long		The number of vertices in the vertex buffer
+	 * @param		unsigned long		The number of primitives to draw
+	 * @return		void
+	 */
 	void DirectX9Renderer::DrawIndexedPrimitive(unsigned long argPrimitiveType, unsigned long argNumVertices, unsigned long argNumPrimitives)
 	{
 		D3DPRIMITIVETYPE primitiveType		= (D3DPRIMITIVETYPE)argPrimitiveType;

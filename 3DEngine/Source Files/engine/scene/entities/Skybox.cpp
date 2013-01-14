@@ -29,51 +29,70 @@ namespace engine
 	
 	void Skybox::SetupVertices(Renderer* argPRenderer)
 	{
-		float boxSize					= 2.5f;
+		float boxSize					= 2.0f;
 
-		unsigned long numVertices = 16;
+		// 8 vertices for a cube, and 3 per corner of the cube.
+		unsigned long numVertices = 8 * 3;
 		unsigned long vertexArraySize	= numVertices * sizeof(TexturedVector3);
 		TexturedVector3 vertices[]		=
 		{
-			// Front Top Left
-			{-boxSize, boxSize, boxSize, 0xFFCCCCCC, 1.0f, 0.0f },
-			// Front Top Right
-			{ boxSize, boxSize, boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
-			// Front Bottom Left
-			{-boxSize,-boxSize, boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
-			// Front Bottom Right
-			{ boxSize,-boxSize, boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
+			// (00) Front Top Left
+			{-boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 0.0f, 0.0f },
+			// (01) Front Top Right
+			{ boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 1.0f, 0.0f },
+			// (02) Front Bottom Left
+			{-boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 0.0f, 1.0f },
+			// (03) Front Bottom Right
+			{ boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 1.0f, 1.0f },
 
-			// Back Top Left
-			{-boxSize, boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
-			// Back Top Right
-			{ boxSize, boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 0.0f },
-			// Back Bottom Left
-			{-boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
-			// Back Bottom Right
-			{ boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
+			// (04) Back Top Left
+			{-boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 1.0f, 0.0f },
+			// (05) Back Top Right
+			{ boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 0.0f, 0.0f },
+			// (06) Back Bottom Left
+			{-boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 1.0f, 1.0f },
+			// (07) Back Bottom Right
+			{ boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 0.0f, 1.0f },
 
+			// (08) Left Top Left
+			{-boxSize, boxSize,-boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 0.0f, 0.0f },
+			// (09) Left Top Right
+			{-boxSize, boxSize, boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 1.0f, 0.0f },
+			// (10) Left Bottom Left
+			{-boxSize,-boxSize,-boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 0.0f, 1.0f },
+			// (11) Left Bottom Right
+			{-boxSize,-boxSize, boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 1.0f, 1.0f },
 
-			// Front Top Left
-			{-boxSize, boxSize, boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
-			// Front Top Right
-			{ boxSize, boxSize, boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
-			// Back Top Left
-			{-boxSize, boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
-			// Back Top Right
-			{ boxSize, boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 0.0f },
+			// (12) Right Top Left
+			{ boxSize, boxSize, boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 0.0f, 0.0f },
+			// (13) Right Top Right
+			{ boxSize, boxSize,-boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 1.0f, 0.0f },
+			// (14) Right Bottom Left
+			{ boxSize,-boxSize, boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 0.0f, 1.0f },
+			// (15) Right Bottom Right
+			{ boxSize,-boxSize,-boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 1.0f, 1.0f },
 
-			// Front Bottom Left
-			{-boxSize,-boxSize, boxSize, 0xFFCCCCCC, 0.0f, 1.0f },
-			// Front Bottom Right
-			{ boxSize,-boxSize, boxSize, 0xFFCCCCCC, 1.0f, 1.0f },
-			// Back Bottom Left
-			{-boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 0.0f, 0.0f },
-			// Back Bottom Right
-			{ boxSize,-boxSize,-boxSize, 0xFFCCCCCC, 1.0f, 0.0f }
+			// (16) Top Top Left
+			{-boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 0.0f, 0.0f },
+			// (17) Top Top Right
+			{ boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 1.0f, 0.0f },
+			// (18) Top Bottom Left
+			{-boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 0.0f, 1.0f },
+			// (19) Top Bottom Right
+			{ boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 1.0f, 1.0f },
+
+			// (20) Bottom Top Left
+			{-boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 0.0f, 0.0f },
+			// (21) Bottom Top Right
+			{ boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 1.0f, 0.0f },
+			// (22) Bottom Bottom Left
+			{-boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 0.0f, 1.0f },
+			// (23) Bottom Bottom Right
+			{ boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 1.0f, 1.0f }
 		};
 		
-		unsigned long indexArraySize	= 36 * sizeof(short);
+		// 3 indexes per triangle, 2 triangles per square, 6 squares per cube
+		unsigned long indexArraySize	= ((3 * 2) * 6) * sizeof(short);
 		short indices[]					=
 		{
 			// Front
@@ -85,20 +104,20 @@ namespace engine
 			6, 7, 4,
 
 			// Left
-			4, 0, 6,
-			2, 6, 0,
+			8, 9, 10,
+			11, 10, 9,
 
 			// Right
-			1, 5, 3,
-			7, 3, 5,
+			12, 13, 14,
+			15, 14, 13,
 
 			// Top
-			11, 9, 8,
-			8, 10, 11,
+			16, 17, 18,
+			19, 18, 17,
 
 			// Bottom
-			12, 13, 15,
-			15, 14, 12
+			20, 21, 22,
+			23, 22, 21
 		};
 
 		// Create the vertex buffer
@@ -114,7 +133,6 @@ namespace engine
 
 	void Skybox::Draw(Renderer* argPRenderer)
 	{
-		DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
 		// Reset the actual world matrxi again
 		D3DXMatrixIdentity(&this->matWorld);
 
@@ -136,8 +154,8 @@ namespace engine
 		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
 		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationZ);
 
-
-		D3DXMatrixMultiply(&this->matWorld, pRenderer->matWorld->GetTop(), &this->matWorld);
+		
+		D3DXMatrixMultiply(&this->matWorld, (D3DXMATRIXA16*)argPRenderer->GetWorldTop(), &this->matWorld);
 
 		D3DXVECTOR3 vecScale;
 		D3DXQUATERNION quatRotation;
@@ -151,7 +169,7 @@ namespace engine
 		D3DXMatrixInverse(&matTranslation, NULL, &matTranslation);
 		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matTranslation);
 
-		pRenderer->matWorld->LoadMatrix(&this->matWorld);
+		argPRenderer->LoadWorldMatrix(&this->matWorld);
 
 		// Apply the matrix transformations
 		argPRenderer->TransformWorldMatrix();
@@ -162,12 +180,16 @@ namespace engine
 		// Turn of the Z axis
 		pDevice->SetRenderState(D3DRS_ZENABLE, false);
 		
-
 		argPRenderer->SetStreamSource(this->pVertexBuffer, sizeof(TexturedVector3));
 		argPRenderer->SetIndices(this->pIndexBuffer);
 		argPRenderer->SetFVF(D3DFVFTexturedVector3);
 		argPRenderer->SetTexture(0, this->textures[0]);
-		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 16, 12);
+
+		// 3 vertices per corner
+		unsigned long numVertices	= 8 * 3;
+		// 2 triangles per square, 6 squares per cube
+		unsigned long numPrimitives	= 6 * 2;
+		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, numVertices, numPrimitives);
 
 		pDevice->SetRenderState(D3DRS_ZENABLE, true);
 	}
