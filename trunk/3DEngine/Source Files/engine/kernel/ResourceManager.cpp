@@ -49,7 +49,10 @@ namespace engine
 		for(itTextures = this->textures.begin(); itTextures != this->textures.end(); itTextures++)
 		{
 			LPDIRECT3DTEXTURE9 texture = itTextures->second;
-			texture->Release();
+			if (texture != 0x00000000)
+			{
+				texture->Release();
+			}
 		}
 		this->textures.clear();
 	}
