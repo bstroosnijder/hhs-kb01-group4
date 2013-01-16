@@ -18,9 +18,9 @@ namespace engine
 	private:
 		Bitmap* pBitmap;
 		LPDIRECT3DTEXTURE9 textures[8];
-
-		unsigned long numPrimitives;
+		
 		unsigned long numVertices;
+		unsigned long numPrimitives;
 
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;

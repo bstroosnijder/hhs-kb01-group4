@@ -16,15 +16,22 @@ namespace engine
 	class Skybox : public Drawable
 	{
 	private:
+		float size;
+
+		unsigned long numVertices;
+		unsigned long numPrimitives;
+
 		LPDIRECT3DTEXTURE9 textures[8];
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;
+
+		void CreateFace();
 	public:
 		Skybox();
 		~Skybox();
 		void CleanUp();
 
-		void SetupVertices(Renderer* argPRenderer);
+		void SetupVertices(Renderer* argPRenderer, unsigned long argBoxSize);
 
 		void Update();
 		void Draw(Renderer* argPRenderer);

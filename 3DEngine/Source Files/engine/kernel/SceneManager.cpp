@@ -265,11 +265,12 @@ namespace engine
 			// Explode the heightmap data
 			data = explode(';', dataSkybox);
 
-			std::string skyTexture = data.at(0);
+			std::string skyTexture	= data.at(0);
+			unsigned long skySize	= (unsigned long)std::atof(data.at(1).c_str());
 			argPResourceManager->LoadTexture(argPRenderer, skyTexture);
 
 			Skybox* pSkybox = new Skybox();
-			pSkybox->SetupVertices(argPRenderer);
+			pSkybox->SetupVertices(argPRenderer, skySize);
 			pSkybox->SetTexture(0, argPResourceManager->GetTexture(skyTexture));
 			pScene->SetSkybox(pSkybox);
 		}
@@ -402,11 +403,15 @@ namespace engine
 													(float)std::atof(data.at(2).c_str()),
 													(float)std::atof(data.at(3).c_str()));
 			float lightRange			= (float)std::atof(data.at(4).c_str());
-			// TODO: color
+			float colorR				= (float)std::atof(data.at(5).c_str());
+			float colorG				= (float)std::atof(data.at(6).c_str());
+			float colorB				= (float)std::atof(data.at(7).c_str());
+			float colorA				= (float)std::atof(data.at(8).c_str());
 
 			LightPoint* pLightPoint		= new LightPoint();
 			pLightPoint->SetPosition(lightPosition);
 			pLightPoint->SetRange(lightRange);
+			pLightPoint->SetColor(colorR, colorG, colorB, colorA);
 
 			pScene->AddLight(lightName, pLightPoint);
 		}

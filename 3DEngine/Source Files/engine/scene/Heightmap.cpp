@@ -188,16 +188,16 @@ namespace engine
 		long imageWidth					= this->pBitmap->GetImageWidth();
 		long imageHeight				= this->pBitmap->GetImageHeight();
 
-		float offsetX					= -(((float)imageWidth) / 2);
+		float offsetX					= -(((float)(imageWidth * argPixelScale)) / 2);
 		float offsetY					= 0;
-		float offsetZ					= -(((float)imageHeight) / 2);
+		float offsetZ					= -(((float)(imageHeight * argPixelScale)) / 2);
 		
 		// --- Create the vertex array ---
-		this->numPrimitives				= (imageWidth * imageHeight) * 2;
 		this->numVertices				= imageWidth * imageHeight;
+		this->numPrimitives				= this->numVertices * 2;
 		unsigned long vertexArraySize	= this->numVertices * sizeof(TexturedVector3);
 
-		TexturedVector3* vertices			= new TexturedVector3[this->numVertices];
+		TexturedVector3* vertices		= new TexturedVector3[this->numVertices];
 
 		for(long z = 0; z < imageHeight; z++)
 		{
