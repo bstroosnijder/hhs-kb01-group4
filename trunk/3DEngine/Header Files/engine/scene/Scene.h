@@ -8,7 +8,7 @@
 #include "..\logger\Logger.h"
 #include "..\kernel\ResourceManager.h"
 #include "..\renderer\Renderer.h"
-#include "entities\Skybox.h"
+#include "Skybox.h"
 #include "Heightmap.h"
 #include "entities\Camera.h"
 #include "entities\Model.h"

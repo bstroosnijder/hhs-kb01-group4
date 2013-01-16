@@ -38,6 +38,7 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));
 		this->pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		
+		// Set sampler states
 		this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		this->pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);

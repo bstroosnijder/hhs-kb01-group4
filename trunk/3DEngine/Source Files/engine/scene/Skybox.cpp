@@ -43,98 +43,141 @@ namespace engine
 	 * @param		Renderer*			A pointer to the renderer used to render the vertices.
 	 * @return		void
 	 */
-	void Skybox::SetupVertices(Renderer* argPRenderer)
+	void Skybox::SetupVertices(Renderer* argPRenderer, unsigned long argBoxSize)
 	{
-		float boxSize					= 2.0f;
-
-		// 8 vertices for a cube, and 3 per corner of the cube.
-		unsigned long numVertices = 8 * 3;
-		unsigned long vertexArraySize	= numVertices * sizeof(TexturedVector3);
-		TexturedVector3 vertices[]		=
-		{
-			// (00) Front Top Left
-			{-boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 0.0f, 0.0f },
-			// (01) Front Top Right
-			{ boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 1.0f, 0.0f },
-			// (02) Front Bottom Left
-			{-boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 0.0f, 1.0f },
-			// (03) Front Bottom Right
-			{ boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 0.0f,-1.0f), 1.0f, 1.0f },
-
-			// (04) Back Top Left
-			{-boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 1.0f, 0.0f },
-			// (05) Back Top Right
-			{ boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 0.0f, 0.0f },
-			// (06) Back Bottom Left
-			{-boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 1.0f, 1.0f },
-			// (07) Back Bottom Right
-			{ boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 0.0f, 1.0f), 0.0f, 1.0f },
-
-			// (08) Left Top Left
-			{-boxSize, boxSize,-boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 0.0f, 0.0f },
-			// (09) Left Top Right
-			{-boxSize, boxSize, boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 1.0f, 0.0f },
-			// (10) Left Bottom Left
-			{-boxSize,-boxSize,-boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 0.0f, 1.0f },
-			// (11) Left Bottom Right
-			{-boxSize,-boxSize, boxSize, D3DXVECTOR3( 1.0f, 0.0f, 0.0f), 1.0f, 1.0f },
-
-			// (12) Right Top Left
-			{ boxSize, boxSize, boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 0.0f, 0.0f },
-			// (13) Right Top Right
-			{ boxSize, boxSize,-boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 1.0f, 0.0f },
-			// (14) Right Bottom Left
-			{ boxSize,-boxSize, boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 0.0f, 1.0f },
-			// (15) Right Bottom Right
-			{ boxSize,-boxSize,-boxSize, D3DXVECTOR3(-1.0f, 0.0f, 0.0f), 1.0f, 1.0f },
-
-			// (16) Top Top Left
-			{-boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 0.0f, 0.0f },
-			// (17) Top Top Right
-			{ boxSize, boxSize,-boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 1.0f, 0.0f },
-			// (18) Top Bottom Left
-			{-boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 0.0f, 1.0f },
-			// (19) Top Bottom Right
-			{ boxSize, boxSize, boxSize, D3DXVECTOR3( 0.0f,-1.0f, 0.0f), 1.0f, 1.0f },
-
-			// (20) Bottom Top Left
-			{-boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 0.0f, 0.0f },
-			// (21) Bottom Top Right
-			{ boxSize,-boxSize, boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 1.0f, 0.0f },
-			// (22) Bottom Bottom Left
-			{-boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 0.0f, 1.0f },
-			// (23) Bottom Bottom Right
-			{ boxSize,-boxSize,-boxSize, D3DXVECTOR3( 0.0f, 1.0f, 0.0f), 1.0f, 1.0f }
-		};
+		float numFaces					= 6;
+		float offset					= (argBoxSize - 1) / 2.0f;
 		
-		// 3 indexes per triangle, 2 triangles per square, 6 squares per cube
-		unsigned long indexArraySize	= ((3 * 2) * 6) * sizeof(short);
-		short indices[]					=
+		// --- Create the vertex array ---
+		unsigned long numVerticesFace	= argBoxSize * argBoxSize;
+		this->numVertices				= numVerticesFace * 6;
+		this->numPrimitives				= this->numVertices * 2;
+		unsigned long vertexArraySize	= this->numVertices * sizeof(TexturedVector3);
+		TexturedVector3* vertices		= new TexturedVector3[this->numVertices];
+
+		// For each side of the cube
+		// (0) = Front
+		// (1) = Back
+		// (2) = Left
+		// (3) = Right
+		// (4) = Top
+		// (5) = Bottom
+		for(unsigned long iFace = 0; iFace < numFaces; iFace++)
 		{
-			// Front
-			0, 1, 2,
-			3, 2, 1,
+			unsigned long curIndex = iFace * numVerticesFace;
+			for(long z = 0; z < argBoxSize; z++)
+			{
+				for(long x = 0; x < argBoxSize; x++)
+				{
+					unsigned long vIndex	= curIndex + ((z * argBoxSize) + x);
 
-			// Back
-			5, 4, 7,
-			6, 7, 4,
+					float pixelX;
+					float pixelY;
+					float pixelZ;
+					float pixelU;
+					float pixelV;
 
-			// Left
-			8, 9, 10,
-			11, 10, 9,
+					// Face: Front
+					if(iFace == 0)
+					{
+						pixelX				= x - offset;
+						pixelY				= offset - z;
+						pixelZ				= offset;
+						pixelU				= pixelX / argBoxSize;
+						pixelV				= pixelY / argBoxSize;
+					}
+					// Face: Back
+					else if(iFace == 1)
+					{
+						pixelX				= offset - x;
+						pixelY				= offset - z;
+						pixelZ				= -offset;
+						pixelU				= pixelX / argBoxSize;
+						pixelV				= pixelY / argBoxSize;
+					}
+					// Face: Left
+					else if(iFace == 2)
+					{
+						pixelZ				= offset - x;
+						pixelY				= offset - z;
+						pixelX				= offset;
+						pixelU				= pixelZ / argBoxSize;
+						pixelV				= pixelY / argBoxSize;
+					}
+					// Face: Right
+					else if(iFace == 3)
+					{
+						pixelZ				= x - offset;
+						pixelY				= offset - z;
+						pixelX				= -offset;
+						pixelU				= pixelZ / argBoxSize;
+						pixelV				= pixelY / argBoxSize;
+					}
+					// Face: Top
+					else if(iFace == 4)
+					{
+						pixelX				= offset - x;
+						pixelZ				= offset - z;
+						pixelY				= offset;
+						pixelU				= pixelX / argBoxSize;
+						pixelV				= pixelZ / argBoxSize;
+					}
+					// Face: Bottom
+					else
+					{
+						pixelX				= x - offset;
+						pixelZ				= offset - z;
+						pixelY				= -offset;
+						pixelU				= pixelX / argBoxSize;
+						pixelV				= pixelZ / argBoxSize;
+					}
 
-			// Right
-			12, 13, 14,
-			15, 14, 13,
+					vertices[vIndex].x		= pixelX;
+					vertices[vIndex].y		= pixelY;
+					vertices[vIndex].z		= pixelZ;
+					vertices[vIndex].normal	= D3DXVECTOR3(-pixelX, -pixelY, -pixelZ);
+					vertices[vIndex].u		= pixelU;
+					vertices[vIndex].v		= pixelV;
+				}
+			}
+		}
 
-			// Top
-			16, 17, 18,
-			19, 18, 17,
 
-			// Bottom
-			20, 21, 22,
-			23, 22, 21
-		};
+		// --- Create the index array ---
+		unsigned long numIndices		= this->numPrimitives * 3;
+		unsigned long indexArraySize	= numIndices * sizeof(short);
+		short* indices					= new short[numIndices];
+		
+		int index						= 0;
+		for(unsigned long iFace = 0; iFace < numFaces; iFace++)
+		{
+			unsigned long curIndex = iFace * numVerticesFace;
+			for(long z = 0; z < (argBoxSize - 1); z++)
+			{
+				for(long x = 0; x < (argBoxSize - 1); x++)
+				{
+					// Top Left
+					indices[index]			= (short)(curIndex + ((z * argBoxSize) + x));
+					index++;
+					// Top Right
+					indices[index]			= (short)(curIndex + ((z * argBoxSize) + (x + 1)));
+					index++;
+					// Bottom Left
+					indices[index]			= (short)(curIndex + (((z + 1) * argBoxSize) + x));
+					index++;
+				
+					// Bottom Right
+					indices[index]			= (short)(curIndex + (((z + 1) * argBoxSize) + (x + 1)));
+					index++;
+					// Bottom Left
+					indices[index]			= (short)(curIndex + (((z + 1) * argBoxSize) + x));
+					index++;
+					// Top Right
+					indices[index]			= (short)(curIndex + ((z * argBoxSize) + (x + 1)));
+					index++;
+				}
+			}
+		}
 
 		// Create the vertex buffer
 		argPRenderer->CreateVertexBuffer(&this->pVertexBuffer, vertexArraySize, D3DFVFTexturedVector3, vertices);
@@ -210,12 +253,7 @@ namespace engine
 		argPRenderer->SetIndices(this->pIndexBuffer);
 		argPRenderer->SetFVF(D3DFVFTexturedVector3);
 		argPRenderer->SetTexture(0, this->textures[0]);
-
-		// 3 vertices per corner
-		unsigned long numVertices	= 8 * 3;
-		// 2 triangles per square, 6 squares per cube
-		unsigned long numPrimitives	= 6 * 2;
-		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, numVertices, numPrimitives);
+		argPRenderer->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, this->numVertices, this->numPrimitives);
 
 		pDevice->SetRenderState(D3DRS_ZENABLE, true);
 	}
