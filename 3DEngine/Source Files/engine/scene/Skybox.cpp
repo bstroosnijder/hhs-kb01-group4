@@ -65,9 +65,9 @@ namespace engine
 		for(unsigned long iFace = 0; iFace < numFaces; iFace++)
 		{
 			unsigned long curIndex = iFace * numVerticesFace;
-			for(long z = 0; z < argBoxSize; z++)
+			for(unsigned long z = 0; z < argBoxSize; z++)
 			{
-				for(long x = 0; x < argBoxSize; x++)
+				for(unsigned long x = 0; x < argBoxSize; x++)
 				{
 					unsigned long vIndex	= curIndex + ((z * argBoxSize) + x);
 
@@ -152,9 +152,9 @@ namespace engine
 		for(unsigned long iFace = 0; iFace < numFaces; iFace++)
 		{
 			unsigned long curIndex = iFace * numVerticesFace;
-			for(long z = 0; z < (argBoxSize - 1); z++)
+			for(unsigned long z = 0; z < (argBoxSize - 1); z++)
 			{
-				for(long x = 0; x < (argBoxSize - 1); x++)
+				for(unsigned long x = 0; x < (argBoxSize - 1); x++)
 				{
 					// Top Left
 					indices[index]			= (short)(curIndex + ((z * argBoxSize) + x));

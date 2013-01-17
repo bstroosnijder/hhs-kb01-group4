@@ -12,6 +12,7 @@ namespace engine
 	{
 	private:
 		float range;
+		D3DXCOLOR color;
 	public:
 		LightPoint();
 		~LightPoint();
@@ -22,6 +23,8 @@ namespace engine
 
 		void SetRange(float argRange);
 		float GetRange();
+
+		void SetColor(float argColorR, float argColorG, float argColorB, float argColorA);
 	};
 }
 
