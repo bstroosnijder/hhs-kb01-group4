@@ -16,24 +16,31 @@ namespace engine
 	class Heightmap : public Drawable
 	{
 	private:
-		Bitmap* pBitmap;
+		long width;
+		long height;
+		float offsetX;
+		float offsetY;
+		float offsetZ;
+
+
 		LPDIRECT3DTEXTURE9 textures[8];
 		
 		unsigned long numVertices;
 		unsigned long numPrimitives;
+		TexturedVector3* vertices;
 
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;
 		
-		void SmoothMap(TexturedVector3* argVertices, unsigned long argNumIterations);
-		void CalculateNormals(TexturedVector3* argVertices);
+		void SmoothMap(unsigned long argNumIterations);
+		void CalculateNormals();
 	public:
 		Heightmap();
 		~Heightmap();
 		void CleanUp();
 		
-		void LoadMap(std::string argMapFileName);
-		void SetupVertices(Renderer* argPRenderer, float argPixelScale, unsigned long argSmoothing);
+		void SetupVertices(Renderer* argPRenderer, std::string argMapFileName, float argPixelScale, unsigned long argSmoothing);
+		float GetHeight(float argX, float argZ);
 
 		void Update();
 		void Draw(Renderer* argPRenderer);

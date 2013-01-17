@@ -51,6 +51,10 @@ namespace engine
 	void Model::Draw(Renderer* argPRenderer)
 	{
 		Entity::Draw(argPRenderer);
+		// Apply the matrix transformations
+		argPRenderer->TransformWorldMatrix();
+		argPRenderer->TransformViewMatrix();
+		argPRenderer->TransformProjectionMatrix();
 
 		// Get the mesh
 		LPD3DXMESH mesh = this->pResource->pMesh->mesh;
@@ -59,7 +63,7 @@ namespace engine
 
 		for(unsigned long i = 0; i < this->pResource->pMesh->numMaterials; i++)
 		{
-			//argPRenderer->SetMaterial(&pMeshMaterials[i]);
+			argPRenderer->SetMaterial(&pMeshMaterials[i]);
 			argPRenderer->SetTexture(0, pMeshTextures[i]);
 			mesh->DrawSubset(i);
 		}
