@@ -31,6 +31,7 @@ namespace engine
 		Heightmap* pHeightmap;
 		std::map<std::string, Model*> models;
 		std::map<std::string, LightPoint*> lights;
+		std::map<std::string, Entity*> entities;
 
 		std::list<std::string> scripts;
 		void ParseAndExecuteScript(std::string argScript);
@@ -52,15 +53,10 @@ namespace engine
 		Heightmap* GetHeightmap();
 		void SetHeightmap(Heightmap* argPHeightmap);
 		
-		Model* GetModel(std::string argModelName);
-		std::map<std::string, Model*> GetModels();
-		void AddModel(std::string argModelName, Model* argPModel);
-		void RemoveModel(std::string argModelName);
-		
-		LightPoint* GetLight(std::string argLightName);
-		std::map<std::string, LightPoint*> GetLights();
-		void AddLight(std::string argLightName, LightPoint* argPLight);
-		void RemoveLight(std::string argLightName);
+		Entity* GetEntity(std::string argEntityName);
+		std::map<std::string, Entity*> GetEntities();
+		void AddEntity(std::string argEntityName, Entity* argPEntity);
+		void RemoveEntity(std::string argEntityName);
 		
 		void AddScript(std::string argScript);
 	};

@@ -14,17 +14,20 @@ namespace engine
 	{
 		Logger::Log("DirectX9Renderer: Initializing", Logger::INFO, __FILE__, __LINE__);
 
+		// Sets the light index to zero
+		this->lightIndex							= 0;
+
 		D3DPRESENT_PARAMETERS presentParameters;
 		pDirect3d = Direct3DCreate9(D3D_SDK_VERSION);
 		ZeroMemory(&presentParameters, sizeof(presentParameters));
 
-		presentParameters.Windowed = true;
-		presentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-		presentParameters.BackBufferFormat = D3DFMT_UNKNOWN;
-		presentParameters.EnableAutoDepthStencil = true;
-		presentParameters.AutoDepthStencilFormat = D3DFMT_D16;
-		presentParameters.BackBufferWidth = 800;
-		presentParameters.BackBufferHeight = 600;
+		presentParameters.Windowed					= true;
+		presentParameters.SwapEffect				= D3DSWAPEFFECT_DISCARD;
+		presentParameters.BackBufferFormat			= D3DFMT_UNKNOWN;
+		presentParameters.EnableAutoDepthStencil	= true;
+		presentParameters.AutoDepthStencilFormat	= D3DFMT_D16;
+		presentParameters.BackBufferWidth			= 800;
+		presentParameters.BackBufferHeight			= 600;
 
 		this->pDirect3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, argHWin,
 								D3DCREATE_SOFTWARE_VERTEXPROCESSING,
@@ -35,7 +38,7 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		this->pDevice->SetRenderState(D3DRS_ZENABLE, true);
 		this->pDevice->SetRenderState(D3DRS_LIGHTING, true);
-		this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));
+		this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(150, 150, 150));
 		this->pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		
 		// Set sampler states
@@ -249,6 +252,17 @@ namespace engine
 	}
 
 	/**
+	 * Returns the next index for the light objects
+	 * @return		unsigned long
+	 */
+	unsigned long DirectX9Renderer::GetNextLightIndex()
+	{
+		unsigned long curIndex = this->lightIndex;
+		this->lightIndex++;
+		return curIndex;
+	}
+
+	/**
 	 * Sets a light struct in the given index
 	 * @param		unsigned long		The index of the light struct
 	 * @param		void*				A pointer to the light struct
@@ -450,6 +464,11 @@ namespace engine
 		else if(argBind == "cull_none")
 		{
 			this->pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		}
+		else if(argBind == "clight")
+		{
+			unsigned long colorRGB = (unsigned long)(argSpeed * 255);
+			this->pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(colorRGB, colorRGB, colorRGB));
 		}
 	}
 }

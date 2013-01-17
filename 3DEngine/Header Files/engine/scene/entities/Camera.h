@@ -5,7 +5,6 @@
 #include <string>
 #include "..\..\logger\Logger.h"
 #include "..\Entity.h"
-#include "..\..\input\InputListener.h"
 #include "..\..\renderer\Renderer.h"
 
 namespace engine
@@ -15,7 +14,7 @@ namespace engine
 	 * The camera takes care of this. It Acts the same as a normal entity would except that it flips the world matrix.
 	 * this is because if we want to move the view 10 forward, we have to move the world 10 backward.
 	 */
-	class Camera : public Entity, public InputListener
+	class Camera : public Entity
 	{
 	public:
 		Camera();

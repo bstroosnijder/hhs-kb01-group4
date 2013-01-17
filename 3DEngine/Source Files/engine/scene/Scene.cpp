@@ -192,16 +192,11 @@ namespace engine
 			this->pHeightmap->Update();
 		}
 
-		std::map<std::string, Model*>::iterator modelIt;
-		for(modelIt = this->models.begin(); modelIt != this->models.end(); modelIt++)
+		std::map<std::string, Entity*>::iterator entityIt;
+		for(entityIt = this->entities.begin(); entityIt != this->entities.end(); entityIt++)
 		{
-			modelIt->second->Update();
-		}
-
-		std::map<std::string, LightPoint*>::iterator lightIt;
-		for(lightIt = this->lights.begin(); lightIt != this->lights.end(); lightIt++)
-		{
-			lightIt->second->Update();
+			Entity* pEntity = entityIt->second;
+			pEntity->Update();
 		}
 
 		std::list<std::string>::iterator scriptIt;
@@ -231,19 +226,12 @@ namespace engine
 			this->pHeightmap->Draw(argPRenderer);
 		}
 
-		std::map<std::string, Model*>::iterator modelIt;
-		for(modelIt = this->models.begin(); modelIt != this->models.end(); modelIt++)
+		std::map<std::string, Entity*>::iterator entityIt;
+		for(entityIt = this->entities.begin(); entityIt != this->entities.end(); entityIt++)
 		{
+			Entity* pEntity = entityIt->second;
 			argPRenderer->Push();
-			modelIt->second->Draw(argPRenderer);
-			argPRenderer->Pop();
-		}
-
-		std::map<std::string, LightPoint*>::iterator lightIt;
-		for(lightIt = this->lights.begin(); lightIt != this->lights.end(); lightIt++)
-		{
-			argPRenderer->Push();
-			lightIt->second->Draw(argPRenderer);
+			pEntity->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}
 		argPRenderer->Pop();
@@ -327,85 +315,45 @@ namespace engine
 	}
 
 	/**
-	 * Gets a model by name
-	 * @param		std::string							The name of the model to return
-	 * @return		Model*
+	 * Gets a entity by name
+	 * @param		std::string							The name of the entity to return
+	 * @return		Entity*
 	 */
-	Model* Scene::GetModel(std::string argModelName)
+	Entity* Scene::GetEntity(std::string argEntityName)
 	{
-		return this->models[argModelName];
+		return this->entities[argEntityName];
 	}
 
 	/**
-	 * Obtain all the model pointers in the models collection.
-	 * @return		std::map<std::string, Model*>		The entire model collection.
+	 * Obtain all the entity pointers in the entities collection.
+	 * @return		std::map<std::string, Entity*>		The entire entity collection.
 	 */
-	std::map<std::string, Model*> Scene::GetModels()
+	std::map<std::string, Entity*> Scene::GetEntities()
 	{
-		return this->models;
+		return this->entities;
 	}
 
 	/**
-	 * Add an model pointer to the list of models.
-	 * @param		std::string							The key index for the model
-	 * @param		Model*								The model pointer to add to the collection of models.
+	 * Add an entity pointer to the list of entities.
+	 * @param		std::string							The key index for the entity
+	 * @param		Entity*								The entity pointer to add to the collection of entities.
 	 * @return		void
 	 */
-	void Scene::AddModel(std::string argModelName, Model* argPModel)
+	void Scene::AddEntity(std::string argEntityName, Entity* argPEntity)
 	{
-		this->models[argModelName] = argPModel;
+		this->entities[argEntityName] = argPEntity;
 	}
 
 	/**
-	 * Remove an model pointer from the collection of models.
-	 * @param		std::string							The model name to remove from the collection of models.
+	 * Remove an entity pointer from the collection of entities.
+	 * @param		std::string							The entity name to remove from the collection of entities.
 	 * @return		void
 	 */
-	void Scene::RemoveModel(std::string argModelName)
+	void Scene::RemoveEntity(std::string argEntityName)
 	{
-		this->models.erase(argModelName);
+		this->entities.erase(argEntityName);
 	}
 
-	/**
-	 * Gets a light by name
-	 * @param		std::string							The name of the light to return
-	 * @return		LightPoint*
-	 */
-	LightPoint* Scene::GetLight(std::string argLightName)
-	{
-		return this->lights[argLightName];
-	}
-
-	/**
-	 * Obtain all the light pointers in the lights collection.
-	 * @return		std::map<std::string, LightPoint*>		The entire light collection.
-	 */
-	std::map<std::string, LightPoint*> Scene::GetLights()
-	{
-		return this->lights;
-	}
-
-	/**
-	 * Add an light pointer to the list of lights.
-	 * @param		std::string							The key index for the light
-	 * @param		LightPoint*							The light pointer to add to the collection of lights.
-	 * @return		void
-	 */
-	void Scene::AddLight(std::string argLightName, LightPoint* argPLight)
-	{
-		this->lights[argLightName] = argPLight;
-	}
-
-	/**
-	 * Remove an light pointer from the collection of lights.
-	 * @param		std::string							The light name to remove from the collection of lights.
-	 * @return		void
-	 */
-	void Scene::RemoveLight(std::string argLightName)
-	{
-		this->lights.erase(argLightName);
-	}
-	
 	/**
 	 * Adds a script to the scene to be executed during the update
 	 * @param		std::string				The script to add

@@ -9,12 +9,20 @@ namespace engine
 
 	/**
 	 * Construct the Light Point object.
+	 * @param		unsigned long		The index of the light
 	 */
-	LightPoint::LightPoint()
+	LightPoint::LightPoint(unsigned long argIndex) : Entity()
 	{
 		Logger::Log("LightPoint: Initializing", Logger::INFO, __FILE__, __LINE__);
-		this->range = 100.0f;
-		this->AddScript("doOrbitAtPlace y CW 0.007 56");
+		
+		this->index			= argIndex;
+		ZeroMemory(&this->light, sizeof(this->light));
+		this->light.Type	= D3DLIGHT_POINT;
+
+		this->enabled		= false;
+		this->range			= 100.0f;
+		this->color			= D3DCOLOR_RGBA(255, 255, 255, 255);
+
 		Logger::Log("LightPoint: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
@@ -46,7 +54,7 @@ namespace engine
 
 	/**
 	 * Draw the model
-	 * @param		Renderer*		The renderer to use.
+	 * @param		Renderer*			The renderer to use.
 	 * @return		void
 	 */
 	void LightPoint::Draw(Renderer* argPRenderer)
@@ -58,22 +66,39 @@ namespace engine
 		D3DXVECTOR3 vecPosition;
 		D3DXMatrixDecompose(&vecScale, &quadRotation, &vecPosition, (D3DXMATRIXA16*)argPRenderer->GetWorldTop());
 
-		D3DLIGHT9 light;
-		ZeroMemory(&light, sizeof(light));
-		light.Type			= D3DLIGHT_POINT;
-		light.Diffuse		= this->color;
-		light.Position		= D3DXVECTOR3(vecPosition.x, vecPosition.y, vecPosition.z);
-		light.Range			= this->range;
-		light.Attenuation0	= 0.0f;
-		light.Attenuation1	= 0.125f;
-		light.Attenuation2	= 0.0f;
-		argPRenderer->SetLight(1, &light);
-		argPRenderer->LightEnable(1, true);
+		this->light.Diffuse			= this->color;
+		this->light.Position		= vecPosition;
+		this->light.Range			= this->range;
+		this->light.Attenuation0	= 0.0f;
+		this->light.Attenuation1	= 0.125f;
+		this->light.Attenuation2	= 0.0f;
+
+		argPRenderer->SetLight(this->index, &light);
+		argPRenderer->LightEnable(this->index, true);
+	}
+
+	/**
+	 * Sets the light index
+	 * @param		unsigned long		The index of the light
+	 * @return		void
+	 */
+	void LightPoint::SetIndex(unsigned long argIndex)
+	{
+		this->index = argIndex;
+	}
+
+	/**
+	 * Gets the light index
+	 * @return		unsigned long
+	 */
+	unsigned long LightPoint::GetIndex()
+	{
+		return this->index;
 	}
 
 	/**
 	 * Sets the range for the light point
-	 * @param		float			The range of the light
+	 * @param		float				The range of the light
 	 * @return		void
 	 */
 	void LightPoint::SetRange(float argRange)
@@ -92,10 +117,10 @@ namespace engine
 
 	/**
 	 * Sets the color of the light
-	 * @param		float			The Red color value
-	 * @param		float			The Green color value
-	 * @param		float			The Blue color value
-	 * @param		float			The Alpha color value
+	 * @param		float				The Red color value
+	 * @param		float				The Green color value
+	 * @param		float				The Blue color value
+	 * @param		float				The Alpha color value
 	 * @return		void
 	 */
 	void LightPoint::SetColor(float argColorR, float argColorG, float argColorB, float argColorA)
