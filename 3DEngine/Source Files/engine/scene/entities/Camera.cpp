@@ -96,14 +96,14 @@ namespace engine
 		if(argBind == "move_forward")
 		{
 			this->position.x += (sin(this->rotation.y) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
+			//this->position.y -= (tan(this->rotation.x) * argSpeed);
 			this->position.z += (cos(this->rotation.y) * argSpeed);
 		}
 		// Move Backward=
 		else if(argBind == "move_backward")
 		{
 			this->position.x -= (sin(this->rotation.y) * argSpeed);
-			//this->position.y += (sin(this->rotation.x) * argSpeed);
+			//this->position.y += (tan(this->rotation.x) * argSpeed);
 			this->position.z -= (cos(this->rotation.y) * argSpeed);
 		}
 		// =Move Forward or Backward
