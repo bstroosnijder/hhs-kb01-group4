@@ -117,6 +117,55 @@ namespace engine
 		// Rerun the algorithm
 		this->SmoothMap(argVertices, numIterationsLeft);
 	}
+
+	/**
+	 * Calculates the normals of the heightmap
+	 * 
+	 * @param		TexturedVector3*		The array with vertices to calculate the normals of
+	 * @return		void
+	 */
+	void Heightmap::CalculateNormals(TexturedVector3* argVertices)
+	{
+		long imageWidth					= this->pBitmap->GetImageWidth();
+		long imageHeight				= this->pBitmap->GetImageHeight();
+
+		for(long z = 0; z < imageHeight; z++)
+		{
+			for(long x = 0; x < imageWidth; x++)
+			{
+				long vIndex	= (z * imageWidth) + x;
+
+				float normalX	= 0.0f;
+				float normalY	= 1.0f;
+				float normalZ	= 0.0f;
+
+				if(x > 0)
+				{
+					normalX		+= argVertices[vIndex - 1].y;
+				}
+
+				if(x < (imageWidth - 1))
+				{
+					normalX		-= argVertices[vIndex + 1].y;
+				}
+
+				if(z > 0)
+				{
+					normalZ		+= argVertices[vIndex - imageWidth].y;
+				}
+
+				if(z < (imageHeight - 1))
+				{
+					normalZ		-= argVertices[vIndex + imageWidth].y;
+				}
+
+				
+				argVertices[vIndex].normal.x	= normalX;
+				argVertices[vIndex].normal.y	= normalY;
+				argVertices[vIndex].normal.z	= normalZ;
+			}
+		}
+	}
 	
 	//---Public methods---
 	
@@ -222,6 +271,9 @@ namespace engine
 
 		// Smooth the map
 		this->SmoothMap(vertices, argSmoothing);
+		// Calculate the normals
+		this->CalculateNormals(vertices);
+
 		
 		// --- Create the index array ---
 		unsigned long numIndices		= this->numPrimitives * 3;

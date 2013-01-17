@@ -26,6 +26,7 @@ namespace engine
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;
 		
 		void SmoothMap(TexturedVector3* argVertices, unsigned long argNumIterations);
+		void CalculateNormals(TexturedVector3* argVertices);
 	public:
 		Heightmap();
 		~Heightmap();
