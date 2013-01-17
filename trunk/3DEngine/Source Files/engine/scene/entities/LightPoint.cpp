@@ -12,10 +12,10 @@ namespace engine
 	 */
 	LightPoint::LightPoint()
 	{
-		Logger::Log("Camera: Initializing", Logger::INFO, __FILE__, __LINE__);
+		Logger::Log("LightPoint: Initializing", Logger::INFO, __FILE__, __LINE__);
 		this->range = 100.0f;
 		this->AddScript("doOrbitAtPlace y CW 0.007 56");
-		Logger::Log("Camera: Finished", Logger::INFO, __FILE__, __LINE__);
+		Logger::Log("LightPoint: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -61,7 +61,7 @@ namespace engine
 		D3DLIGHT9 light;
 		ZeroMemory(&light, sizeof(light));
 		light.Type			= D3DLIGHT_POINT;
-		light.Diffuse		= D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
+		light.Diffuse		= this->color;
 		light.Position		= D3DXVECTOR3(vecPosition.x, vecPosition.y, vecPosition.z);
 		light.Range			= this->range;
 		light.Attenuation0	= 0.0f;
@@ -88,5 +88,18 @@ namespace engine
 	float LightPoint::GetRange()
 	{
 		return this->range;
+	}
+
+	/**
+	 * Sets the color of the light
+	 * @param		float			The Red color value
+	 * @param		float			The Green color value
+	 * @param		float			The Blue color value
+	 * @param		float			The Alpha color value
+	 * @return		void
+	 */
+	void LightPoint::SetColor(float argColorR, float argColorG, float argColorB, float argColorA)
+	{
+		this->color = D3DXCOLOR((argColorR / 255), (argColorG / 255), (argColorB / 255), (argColorA / 255));
 	}
 }
