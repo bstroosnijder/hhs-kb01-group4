@@ -20,7 +20,7 @@ namespace engine
 		// Makes the camera follow an entity only with it's position
 		if(funcName == "followPos")
 		{
-			Model* pModelTarget	= this->models[parts.at(1)];
+			Entity* pModelTarget	= this->entities[parts.at(1)];
 
 			Vector3 posTarget = pModelTarget->GetPosition();
 			Vector3 posCamera = this->pCamera->GetPosition();
@@ -34,7 +34,7 @@ namespace engine
 		// Makes the camera follow an entity including it's rotation (as in a 3d person camera)
 		else if(funcName == "followPosRot")
 		{
-			Model* pModelTarget	= this->models[parts.at(1)];
+			Entity* pModelTarget	= this->entities[parts.at(1)];
 			if(pModelTarget == NULL)
 				return;
 			
@@ -48,32 +48,21 @@ namespace engine
 			rotCamera.z = rotTarget.z;
 
 			posCamera.x = posTarget.x - (sin(rotCamera.y) * 10);
-			posCamera.y = posTarget.y + 2 + (tan(rotCamera.x) * 10);
+			//posCamera.y = posTarget.y + (cos(rotCamera.x) + (tan(rotCamera.z) + (sin(posCamera.z))* 10));
+			/*if (rotCamera.y > 2)
+			{
+				rotCamera.y =2;
+			}*/
+			//posCamera.y = posTarget.y + (cos(rotCamera.x) + (cos(rotCamera.z) /*+ (cos(rotTarget.x))*/* 10));
 			posCamera.z = posTarget.z - (cos(rotCamera.y) * 10);
 			
 			this->pCamera->SetRotation(rotCamera);
 			this->pCamera->SetPosition(posCamera);
 		}
-		// TODO: ALEX
-		else if(funcName == "basHump")
-		{
-			Model* pModelTarget	= this->models[parts.at(1)];
-
-			Vector3 posTarget = pModelTarget->GetPosition();
-
-			posTarget.x += 0.01f;
-
-			if ( posTarget.x >= 0.3f)
-			{
-				posTarget.x = 0.1f;
-			}
-			
-			pModelTarget->SetPosition(posTarget);
-		}
-		// TODO: ALEX
+		// makes a entity rotate left
 		else if(funcName == "rotLeft")
 		{
-			Model* pModelTarget	= this->models[parts.at(1)];
+			Entity* pModelTarget	= this->entities[parts.at(1)];
 
 			Vector3 posTarget = pModelTarget->GetRotation();
 
@@ -81,32 +70,16 @@ namespace engine
 
 			pModelTarget->SetRotation(posTarget);
 		}
-		// TODO: ALEX
+		// makes a entity rotate right
 		else if(funcName == "rotRight")
 		{
-			Model* pModelTarget	= this->models[parts.at(1)];
+			Entity* pModelTarget	= this->entities[parts.at(1)];
 
 			Vector3 posTarget = pModelTarget->GetRotation();
 
 			posTarget.y += 0.10f;
 
 			pModelTarget->SetRotation(posTarget);
-		}
-		// TODO: ALEX
-		else if(funcName == "equip")
-		{
-			Model* pModelTarget	= this->models[parts.at(1)];
-
-			Vector3 posTarget = pModelTarget->GetPosition();
-			Vector3 rotTarget = pModelTarget->GetRotation();
-			Vector3 posCamera = this->pCamera->GetPosition();
-
-			posCamera.x = posTarget.x - 1.0f;
-			posCamera.y = posTarget.y + 1.4f;
-			posCamera.z = posTarget.z - 5.0f;
-
-			pModelTarget->SetRotation(rotTarget);
-			this->pCamera->SetPosition(posCamera);	
 		}
 	}
 
