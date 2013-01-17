@@ -16,10 +16,11 @@ namespace engine
 		Logger::Log("LightPoint: Initializing", Logger::INFO, __FILE__, __LINE__);
 		
 		this->index			= argIndex;
+		this->enabled		= true;
+
 		ZeroMemory(&this->light, sizeof(this->light));
 		this->light.Type	= D3DLIGHT_POINT;
 
-		this->enabled		= false;
 		this->range			= 100.0f;
 		this->color			= D3DCOLOR_RGBA(255, 255, 255, 255);
 
@@ -72,9 +73,9 @@ namespace engine
 		this->light.Attenuation0	= 0.0f;
 		this->light.Attenuation1	= 0.125f;
 		this->light.Attenuation2	= 0.0f;
-
+		
 		argPRenderer->SetLight(this->index, &light);
-		argPRenderer->LightEnable(this->index, true);
+		argPRenderer->LightEnable(this->index, this->enabled);
 	}
 
 	/**

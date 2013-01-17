@@ -74,8 +74,6 @@ namespace engine
 					float pixelX;
 					float pixelY;
 					float pixelZ;
-					float pixelU;
-					float pixelV;
 
 					// Face: Front
 					if(iFace == 0)
@@ -83,8 +81,6 @@ namespace engine
 						pixelX				= x - offset;
 						pixelY				= offset - z;
 						pixelZ				= offset;
-						pixelU				= pixelX / argBoxSize;
-						pixelV				= pixelY / argBoxSize;
 					}
 					// Face: Back
 					else if(iFace == 1)
@@ -92,8 +88,6 @@ namespace engine
 						pixelX				= offset - x;
 						pixelY				= offset - z;
 						pixelZ				= -offset;
-						pixelU				= pixelX / argBoxSize;
-						pixelV				= pixelY / argBoxSize;
 					}
 					// Face: Left
 					else if(iFace == 2)
@@ -101,8 +95,6 @@ namespace engine
 						pixelZ				= offset - x;
 						pixelY				= offset - z;
 						pixelX				= offset;
-						pixelU				= pixelZ / argBoxSize;
-						pixelV				= pixelY / argBoxSize;
 					}
 					// Face: Right
 					else if(iFace == 3)
@@ -110,8 +102,6 @@ namespace engine
 						pixelZ				= x - offset;
 						pixelY				= offset - z;
 						pixelX				= -offset;
-						pixelU				= pixelZ / argBoxSize;
-						pixelV				= pixelY / argBoxSize;
 					}
 					// Face: Top
 					else if(iFace == 4)
@@ -119,8 +109,6 @@ namespace engine
 						pixelX				= offset - x;
 						pixelZ				= offset - z;
 						pixelY				= offset;
-						pixelU				= pixelX / argBoxSize;
-						pixelV				= pixelZ / argBoxSize;
 					}
 					// Face: Bottom
 					else
@@ -128,16 +116,14 @@ namespace engine
 						pixelX				= x - offset;
 						pixelZ				= offset - z;
 						pixelY				= -offset;
-						pixelU				= pixelX / argBoxSize;
-						pixelV				= pixelZ / argBoxSize;
 					}
 
 					vertices[vIndex].x		= pixelX;
 					vertices[vIndex].y		= pixelY;
 					vertices[vIndex].z		= pixelZ;
 					vertices[vIndex].normal	= D3DXVECTOR3(-pixelX, -pixelY, -pixelZ);
-					vertices[vIndex].u		= pixelU;
-					vertices[vIndex].v		= pixelV;
+					vertices[vIndex].u		= (float)x / (float)(argBoxSize - 1);
+					vertices[vIndex].v		= (float)z / (float)(argBoxSize - 1);
 				}
 			}
 		}

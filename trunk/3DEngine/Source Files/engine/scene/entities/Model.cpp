@@ -59,7 +59,7 @@ namespace engine
 
 		for(unsigned long i = 0; i < this->pResource->pMesh->numMaterials; i++)
 		{
-			argPRenderer->SetMaterial(&pMeshMaterials[i]);
+			//argPRenderer->SetMaterial(&pMeshMaterials[i]);
 			argPRenderer->SetTexture(0, pMeshTextures[i]);
 			mesh->DrawSubset(i);
 		}

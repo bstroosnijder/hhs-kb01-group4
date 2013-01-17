@@ -48,12 +48,7 @@ namespace engine
 			rotCamera.z = rotTarget.z;
 
 			posCamera.x = posTarget.x - (sin(rotCamera.y) * 10);
-			//posCamera.y = posTarget.y + (cos(rotCamera.x) + (tan(rotCamera.z) + (sin(posCamera.z))* 10));
-			/*if (rotCamera.y > 2)
-			{
-				rotCamera.y =2;
-			}*/
-			//posCamera.y = posTarget.y + (cos(rotCamera.x) + (cos(rotCamera.z) /*+ (cos(rotTarget.x))*/* 10));
+			posCamera.y = posTarget.y + 2 + (tan(rotCamera.x) * 10);
 			posCamera.z = posTarget.z - (cos(rotCamera.y) * 10);
 			
 			this->pCamera->SetRotation(rotCamera);
@@ -97,7 +92,7 @@ namespace engine
 		this->pCamera		= new Camera();
 		this->pSkybox		= NULL;
 		this->pHeightmap	= NULL;
-		this->models		= std::map<std::string, Model*>();
+		this->entities		= std::map<std::string, Entity*>();
 		this->scripts		= std::list<std::string>();
 		
 		Logger::Log("Scene: Finished", Logger::INFO, __FILE__, __LINE__);
@@ -139,12 +134,12 @@ namespace engine
 			delete this->pHeightmap;
 		}
 
-		std::map<std::string, Model*>::iterator itModels;
-		for(itModels = this->models.begin(); itModels != this->models.end(); itModels++)
+		std::map<std::string, Entity*>::iterator entitiesIt;
+		for(entitiesIt = this->entities.begin(); entitiesIt != this->entities.end(); entitiesIt++)
 		{
-			delete itModels->second;
+			delete entitiesIt->second;
 		}
-		this->models.clear();
+		this->entities.clear();
 
 		this->scripts.clear();
 	}

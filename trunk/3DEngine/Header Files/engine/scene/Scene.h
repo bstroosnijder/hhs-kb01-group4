@@ -29,8 +29,6 @@ namespace engine
 		Camera* pCamera;
 		Skybox* pSkybox;
 		Heightmap* pHeightmap;
-		std::map<std::string, Model*> models;
-		std::map<std::string, LightPoint*> lights;
 		std::map<std::string, Entity*> entities;
 
 		std::list<std::string> scripts;
