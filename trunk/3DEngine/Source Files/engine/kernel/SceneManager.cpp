@@ -157,7 +157,7 @@ namespace engine
 		std::string dataCamera;
 		std::string dataSkybox;
 		std::string dataHeightmap;
-		std::vector<std::string> dataModels		= std::vector<std::string>();
+		std::vector<std::string> dataEntities	= std::vector<std::string>();
 		std::vector<std::string> dataLights		= std::vector<std::string>();
 		std::vector<std::string> dataInput		= std::vector<std::string>();
 		std::vector<std::string> dataScripts	= std::vector<std::string>();
@@ -199,13 +199,9 @@ namespace engine
 				{
 					dataHeightmap = line;
 				}
-				else if(curSegment == "models")
+				else if(curSegment == "entities")
 				{
-					dataModels.push_back(line);
-				}
-				else if(curSegment == "lights")
-				{
-					dataLights.push_back(line);
+					dataEntities.push_back(line);
 				}
 				else if(curSegment == "input")
 				{
@@ -307,113 +303,119 @@ namespace engine
 		}
 
 
-		// === SEGMENT: Models ===
-		Logger::Log("\nSceneManager: +++ Segment - Models", Logger::INFO, __FILE__, __LINE__);
+		// === SEGMENT: Entities ===
+		Logger::Log("\nSceneManager: +++ Segment - Entities", Logger::INFO, __FILE__, __LINE__);
 
-		if(dataModels.empty())
+		if(dataEntities.empty())
 		{
-			Logger::Log("SceneManager: No model data", Logger::INFO, __FILE__, __LINE__);
+			Logger::Log("SceneManager: No entity data", Logger::INFO, __FILE__, __LINE__);
 		}
 
-		std::vector<Model*> modelStack = std::vector<Model*>();
+		std::vector<Entity*> entityStack	= std::vector<Entity*>();
 		int numPrevTabs = 0;
-		// Loop through the models
-		std::vector<std::string>::iterator modelIt;
-		for(modelIt = dataModels.begin(); modelIt != dataModels.end(); modelIt++)
+		// Loop through the entities
+		std::vector<std::string>::iterator entityIt;
+		for(entityIt = dataEntities.begin(); entityIt != dataEntities.end(); entityIt++)
 		{
-			std::string dataLineModel = *modelIt;
-			// explode the resource data
-			data = explode(';', dataLineModel);
+			std::string dataLineEntity		= *entityIt;
+			// explode the entity data
+			data = explode(';', dataLineEntity);
 
-			std::string modelName		= data.at(0);
-			std::string modelResource	= data.at(10);
-			argPResourceManager->LoadMesh(argPRenderer, modelResource);
+			std::string entityName			= data.at(0);
+			std::string entityType			= data.at(1);
 
-			int numTabs					= std::count(modelName.begin(), modelName.end(), '\t');
-			// Remove the tabs from the model name
-			modelName = modelName.substr(numTabs);
-			if(!modelStack.empty() && numTabs <= numPrevTabs)
+			int numTabs						= std::count(entityName.begin(), entityName.end(), '\t');
+			// Remove the tabs from the entity name
+			entityName						= entityName.substr(numTabs);
+			if(!entityStack.empty() && numTabs <= numPrevTabs)
 			{
 				for(long i = 0; i <= (numPrevTabs - numTabs); i++)
 				{
-					modelStack.pop_back();
+					entityStack.pop_back();
 				}
 			}
 
-			
-			Logger::Log("SceneManager: Creating model: " + modelName, Logger::INFO, __FILE__, __LINE__);
+			// The entity
+			Entity* pEntity;
+			// The properties of the entity
+			Vector3 position;
+			Vector3 rotation;
+			Vector3 scaling;
 
-			Vector3 position			= Vector3(	(float)std::atof(data.at(1).c_str()),
-													(float)std::atof(data.at(2).c_str()),
-													(float)std::atof(data.at(3).c_str()));
-			Vector3 rotation			= Vector3(	(float)std::atof(data.at(4).c_str()),
-													(float)std::atof(data.at(5).c_str()),
-													(float)std::atof(data.at(6).c_str()));
-			Vector3 scaling				= Vector3(	(float)std::atof(data.at(7).c_str()),
-													(float)std::atof(data.at(8).c_str()),
-													(float)std::atof(data.at(9).c_str()));
-
-			Model* pModel = new Model(argPResourceManager->NewResource(modelResource));
-			pModel->SetPosition(position);
-			pModel->SetRotation(rotation);
-			pModel->SetScaling(scaling);
-
-			for(unsigned long i = 11; i < data.size(); i++)
+			if(entityType == "model")
 			{
-				std::string modelTexture = data.at(i);
-				argPResourceManager->LoadTexture(argPRenderer, modelTexture);
+				Logger::Log("SceneManager: Creating model: " + entityName, Logger::INFO, __FILE__, __LINE__);
 
-				pModel->SetTexture((i - 11), argPResourceManager->GetTexture(modelTexture));
+				std::string modelMesh	= data.at(11);
+				argPResourceManager->LoadMesh(argPRenderer, modelMesh);
+
+				position			= Vector3(	(float)std::atof(data.at(2).c_str()),
+												(float)std::atof(data.at(3).c_str()),
+												(float)std::atof(data.at(4).c_str()));
+				rotation			= Vector3(	(float)std::atof(data.at(5).c_str()),
+												(float)std::atof(data.at(6).c_str()),
+												(float)std::atof(data.at(7).c_str()));
+				scaling				= Vector3(	(float)std::atof(data.at(8).c_str()),
+												(float)std::atof(data.at(9).c_str()),
+												(float)std::atof(data.at(10).c_str()));
+				
+				// Create the model
+				pEntity				= new Model(argPResourceManager->NewResource(modelMesh));
+				unsigned long iTex	= 12;
+				for(unsigned long i = iTex; i < data.size(); i++)
+				{
+					std::string modelTexture = data.at(i);
+					argPResourceManager->LoadTexture(argPRenderer, modelTexture);
+
+					((Model*)pEntity)->SetTexture((i - iTex), argPResourceManager->GetTexture(modelTexture));
+				}
+
 			}
-
-			if(!modelStack.empty() && numTabs > 0)
+			else if(entityType == "light")
 			{
-				modelStack.back()->AddModel(modelName, pModel);
+				Logger::Log("SceneManager: Creating light: " + entityName, Logger::INFO, __FILE__, __LINE__);
+
+				position			= Vector3(	(float)std::atof(data.at(2).c_str()),
+												(float)std::atof(data.at(3).c_str()),
+												(float)std::atof(data.at(4).c_str()));
+				rotation			= Vector3(0.0f, 0.0f, 0.0f);
+				scaling				= Vector3(1.0f, 1.0f, 1.0f);
+				float lightRange	= (float)std::atof(data.at(5).c_str());
+				float colorR		= (float)std::atof(data.at(6).c_str());
+				float colorG		= (float)std::atof(data.at(7).c_str());
+				float colorB		= (float)std::atof(data.at(8).c_str());
+				float colorA		= (float)std::atof(data.at(9).c_str());
+				
+				// Create the lightpoint
+				pEntity				= new LightPoint(argPRenderer->GetNextLightIndex());
+				((LightPoint*)pEntity)->SetRange(lightRange);
+				((LightPoint*)pEntity)->SetColor(colorR, colorG, colorB, colorA);
 			}
 			else
 			{
-				pScene->AddModel(modelName, pModel);
+				Logger::Log("SceneManager: Unsupported entity type: " + entityType, Logger::WARNING, __FILE__, __LINE__);
 			}
 
-			modelStack.push_back(pModel);
+			// Set entity properties
+			pEntity->SetPosition(position);
+			pEntity->SetRotation(rotation);
+			pEntity->SetScaling(scaling);
 
+			// Add entity to the last entity in the stack
+			if(!entityStack.empty() && numTabs > 0)
+			{
+				entityStack.back()->AddEntity(entityName, pEntity);
+			}
+			// Add entity to the scene
+			else
+			{
+				pScene->AddEntity(entityName, pEntity);
+			}
+
+			// Add the new entity to the stack
+			entityStack.push_back(pEntity);
 			// Set the number of prev tabs for the next iteration
 			numPrevTabs = numTabs;
-		}
-
-
-		// === SEGMENT: Lights ===
-		Logger::Log("\nSceneManager: +++ Segment - Lights", Logger::INFO, __FILE__, __LINE__);
-
-		if(dataModels.empty())
-		{
-			Logger::Log("SceneManager: No light data", Logger::INFO, __FILE__, __LINE__);
-		}
-		
-		// Loop through the models
-		std::vector<std::string>::iterator lightIt;
-		for(lightIt = dataLights.begin(); lightIt != dataLights.end(); lightIt++)
-		{
-			std::string dataLineLights = *lightIt;
-			// explode the light data
-			data = explode(';', dataLineLights);
-
-			std::string lightName		= data.at(0);
-			Vector3 lightPosition		= Vector3(	(float)std::atof(data.at(1).c_str()),
-													(float)std::atof(data.at(2).c_str()),
-													(float)std::atof(data.at(3).c_str()));
-			float lightRange			= (float)std::atof(data.at(4).c_str());
-			float colorR				= (float)std::atof(data.at(5).c_str());
-			float colorG				= (float)std::atof(data.at(6).c_str());
-			float colorB				= (float)std::atof(data.at(7).c_str());
-			float colorA				= (float)std::atof(data.at(8).c_str());
-
-			LightPoint* pLightPoint		= new LightPoint();
-			pLightPoint->SetPosition(lightPosition);
-			pLightPoint->SetRange(lightRange);
-			pLightPoint->SetColor(colorR, colorG, colorB, colorA);
-
-			pScene->AddLight(lightName, pLightPoint);
 		}
 
 
@@ -465,15 +467,14 @@ namespace engine
 				{
 					pInputListener = pScene->GetCamera();
 				}
-				else if (entity == "renderer")
+				else if(entity == "renderer")
 				{
 					DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
-
 					pInputListener = (InputListener*) pRenderer;
 				}
 				else
 				{
-					pInputListener = pScene->GetModel(entity);
+					pInputListener = pScene->GetEntity(entity);
 				}
 
 
@@ -538,36 +539,35 @@ namespace engine
 		// Loop through the scripts
 		for(unsigned int lineIndex = 0; lineIndex < dataScripts.size(); lineIndex++)
 		{
-			std::string dataLineScript = dataScripts[lineIndex];
+			std::string dataLineScript	= dataScripts[lineIndex];
 			// explode the script data
-			data = explode(';', dataLineScript);
-
-			std::string modelName = data.at(0);
+			data						= explode(';', dataLineScript);
+			std::string entityName		= data.at(0);
 
 			for(unsigned long i = 1; i < data.size(); i++)
 			{
-				if(modelName.empty())
+				if(entityName.empty())
 				{
 					Logger::Log("SceneManager: Adding script to scene", Logger::INFO, __FILE__, __LINE__);
 					pScene->AddScript(data.at(i));
 				}
-				else if(modelName == "camera")
+				else if(entityName == "camera")
 				{
 					Logger::Log("SceneManager: Adding script to camera", Logger::INFO, __FILE__, __LINE__);
 					pScene->GetCamera()->AddScript(data.at(i));
 				}
 				else
 				{
-					Logger::Log("SceneManager: Adding script to model: " + modelName, Logger::INFO, __FILE__, __LINE__);
-					std::vector<std::string> modelNameParts = explode(':', modelName);
+					Logger::Log("SceneManager: Adding script to entity: " + entityName, Logger::INFO, __FILE__, __LINE__);
+					std::vector<std::string> entityNameParts	= explode(':', entityName);
 
-					Model* pModel = pScene->GetModel(modelNameParts.front());
-					for(unsigned long j = 1; j < modelNameParts.size(); j++)
+					Entity* pEntity								= pScene->GetEntity(entityNameParts.front());
+					for(unsigned long j = 1; j < entityNameParts.size(); j++)
 					{
-						pModel = pModel->GetModel(modelNameParts.at(j));
+						pEntity = pEntity->GetEntity(entityNameParts.at(j));
 					}
 
-					pModel->AddScript(data.at(i));
+					pEntity->AddScript(data.at(i));
 				}
 			}
 		}

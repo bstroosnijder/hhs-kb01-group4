@@ -11,6 +11,8 @@ namespace engine
 	 */
 	class Renderer
 	{
+	protected:
+		unsigned long lightIndex;
 	public:
 		static const unsigned int DIRECTX_9;
 		static const unsigned int OPEN_GL;
@@ -29,6 +31,7 @@ namespace engine
 		virtual void TransformViewMatrix()=0;
 		virtual void TransformProjectionMatrix()=0;
 
+		virtual unsigned long GetNextLightIndex()=0;
 		virtual void SetLight(unsigned long argLightIndex, void* argPLight)=0;
 		virtual void LightEnable(unsigned long argLightIndex, bool argEnable)=0;
 

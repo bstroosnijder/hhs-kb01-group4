@@ -41,6 +41,7 @@ namespace engine
 		void TransformViewMatrix();
 		void TransformProjectionMatrix();
 
+		unsigned long GetNextLightIndex();
 		void SetLight(unsigned long argLightIndex, void* argPLight);
 		void LightEnable(unsigned long argLightIndex, bool argEnable);
 

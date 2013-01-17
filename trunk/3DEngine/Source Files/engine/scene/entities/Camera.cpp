@@ -172,5 +172,10 @@ namespace engine
 			this->rotation = Vector3(0.0f, 0.0f, 0.0f);
 			this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
 		}
+		// Use the default from entity
+		else
+		{
+			Entity::InputEvent(argBind, argSpeed);
+		}
 	}
 }
