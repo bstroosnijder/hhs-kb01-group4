@@ -165,6 +165,22 @@ namespace engine
 		{
 			Entity* pEntity = entityIt->second;
 			pEntity->Update();
+
+			//Vector3 pos		= pEntity->GetPosition();
+			//float lev		= 5.0f;
+			//float height	= this->pHeightmap->GetHeight(pos.x, pos.z);
+
+			//if((pos.y - lev) > height)
+			//{
+			//	pos.y -= 0.1f;
+			//}
+			//else
+			//{
+			//	pos.y = height + lev;
+			//}
+
+			//pEntity->SetPosition(pos);
+
 		}
 
 		std::list<std::string>::iterator scriptIt;

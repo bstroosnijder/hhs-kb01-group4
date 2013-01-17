@@ -61,6 +61,10 @@ namespace engine
 	void LightPoint::Draw(Renderer* argPRenderer)
 	{
 		Entity::Draw(argPRenderer);
+		// Apply the matrix transformations
+		argPRenderer->TransformWorldMatrix();
+		argPRenderer->TransformViewMatrix();
+		argPRenderer->TransformProjectionMatrix();
 
 		D3DXVECTOR3 vecScale;
 		D3DXQUATERNION quadRotation;

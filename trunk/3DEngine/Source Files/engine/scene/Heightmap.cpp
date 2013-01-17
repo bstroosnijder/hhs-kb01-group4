@@ -12,11 +12,10 @@ namespace engine
 	 * Adding it's own value to that and deviding it by 2. This gives us the average of the 2 values 
 	 * and makes the terrain smoother.
 	 * 
-	 * @param		TexturedVector3*		The array with vertices to smooth out
 	 * @param		unsigned long			The number of iterations to execute this function
 	 * @return		void
 	 */
-	void Heightmap::SmoothMap(TexturedVector3* argVertices, unsigned long argNumIterations)
+	void Heightmap::SmoothMap(unsigned long argNumIterations)
 	{
 		// check if the iteration count has reached 0
 		if(argNumIterations == 0)
@@ -25,17 +24,13 @@ namespace engine
 		}
 		unsigned long numIterationsLeft	= argNumIterations - 1;
 
-		long imageWidth					= this->pBitmap->GetImageWidth();
-		long imageHeight				= this->pBitmap->GetImageHeight();
-
 		TexturedVector3* tempVertices	= new TexturedVector3[this->numVertices];
-		
 		// Calculate new Y value, but don't set it yet or we corrupt the data
-		for(long z = 0; z < imageHeight; z++)
+		for(long z = 0; z < this->height; z++)
 		{
-			for(long x = 0; x < imageWidth; x++)
+			for(long x = 0; x < this->width; x++)
 			{
-				long vIndex	= (z * imageWidth) + x;
+				long vIndex	= (z * this->width) + x;
 
 				int numSections			= 0;
 				float sectionsTotal		= 0.0f;
@@ -44,41 +39,41 @@ namespace engine
 				if((x - 1) >= 0)
 				{
 					numSections++;
-					sectionsTotal += argVertices[vIndex - 1].y;
+					sectionsTotal += this->vertices[vIndex - 1].y;
 
 					// Check: left top
 					if((z - 1) >= 0)
 					{
 						numSections++;
-						sectionsTotal += argVertices[(vIndex - 1) - imageWidth].y;
+						sectionsTotal += this->vertices[(vIndex - 1) - this->width].y;
 					}
 
 					// Check: left bottom
-					if((z + 1) < imageHeight)
+					if((z + 1) < this->height)
 					{
 						numSections++;
-						sectionsTotal += argVertices[(vIndex - 1) + imageWidth].y;
+						sectionsTotal += this->vertices[(vIndex - 1) + this->width].y;
 					}
 				}
 
 				// Check: right
-				if((x + 1) < imageWidth)
+				if((x + 1) < this->width)
 				{
 					numSections++;
-					sectionsTotal += argVertices[vIndex + 1].y;
+					sectionsTotal += this->vertices[vIndex + 1].y;
 
 					// Check: right top
 					if((z - 1) >= 0)
 					{
 						numSections++;
-						sectionsTotal += argVertices[(vIndex + 1) - imageWidth].y;
+						sectionsTotal += this->vertices[(vIndex + 1) - this->width].y;
 					}
 
 					// Check: right bottom
-					if((z + 1) < imageHeight)
+					if((z + 1) < this->height)
 					{
 						numSections++;
-						sectionsTotal += argVertices[(vIndex + 1) + imageWidth].y;
+						sectionsTotal += this->vertices[(vIndex + 1) + this->width].y;
 					}
 				}
 
@@ -86,28 +81,28 @@ namespace engine
 				if((z - 1) >= 0)
 				{
 					numSections++;
-					sectionsTotal += argVertices[vIndex - imageWidth].y;
+					sectionsTotal += this->vertices[vIndex - this->width].y;
 				}
 
 				// Check: bottom
-				if((z + 1) < imageHeight)
+				if((z + 1) < this->height)
 				{
 					numSections++;
-					sectionsTotal += argVertices[vIndex + imageWidth].y;
+					sectionsTotal += this->vertices[vIndex + this->width].y;
 				}
 
 				// Set the new value
-				tempVertices[vIndex].y = (argVertices[vIndex].y + (sectionsTotal / numSections)) * 0.5f;
+				tempVertices[vIndex].y = (this->vertices[vIndex].y + (sectionsTotal / numSections)) * 0.5f;
 			}
 		}
 
 		// Actually set the new values
-		for(long z = 0; z < imageHeight; z++)
+		for(long z = 0; z < this->height; z++)
 		{
-			for(long x = 0; x < imageWidth; x++)
+			for(long x = 0; x < this->width; x++)
 			{
-				long vIndex	= (z * imageWidth) + x;
-				argVertices[vIndex].y	= tempVertices[vIndex].y;
+				long vIndex	= (z * this->width) + x;
+				this->vertices[vIndex].y	= tempVertices[vIndex].y;
 			}
 		}
 
@@ -115,25 +110,20 @@ namespace engine
 		delete tempVertices;
 
 		// Rerun the algorithm
-		this->SmoothMap(argVertices, numIterationsLeft);
+		this->SmoothMap(numIterationsLeft);
 	}
 
 	/**
 	 * Calculates the normals of the heightmap
-	 * 
-	 * @param		TexturedVector3*		The array with vertices to calculate the normals of
 	 * @return		void
 	 */
-	void Heightmap::CalculateNormals(TexturedVector3* argVertices)
+	void Heightmap::CalculateNormals()
 	{
-		long imageWidth					= this->pBitmap->GetImageWidth();
-		long imageHeight				= this->pBitmap->GetImageHeight();
-
-		for(long z = 0; z < imageHeight; z++)
+		for(long z = 0; z < this->height; z++)
 		{
-			for(long x = 0; x < imageWidth; x++)
+			for(long x = 0; x < this->width; x++)
 			{
-				long vIndex	= (z * imageWidth) + x;
+				long vIndex	= (z * this->width) + x;
 
 				float normalX	= 0.0f;
 				float normalY	= 1.0f;
@@ -141,28 +131,28 @@ namespace engine
 
 				if(x > 0)
 				{
-					normalX		+= argVertices[vIndex - 1].y;
+					normalX		+= this->vertices[vIndex - 1].y;
 				}
 
-				if(x < (imageWidth - 1))
+				if(x < (this->width - 1))
 				{
-					normalX		-= argVertices[vIndex + 1].y;
+					normalX		-= this->vertices[vIndex + 1].y;
 				}
 
 				if(z > 0)
 				{
-					normalZ		+= argVertices[vIndex - imageWidth].y;
+					normalZ		+= this->vertices[vIndex - this->width].y;
 				}
 
-				if(z < (imageHeight - 1))
+				if(z < (this->height - 1))
 				{
-					normalZ		-= argVertices[vIndex + imageWidth].y;
+					normalZ		-= this->vertices[vIndex + this->width].y;
 				}
 
 				
-				argVertices[vIndex].normal.x	= normalX;
-				argVertices[vIndex].normal.y	= normalY;
-				argVertices[vIndex].normal.z	= normalZ;
+				this->vertices[vIndex].normal.x	= normalX;
+				this->vertices[vIndex].normal.y	= normalY;
+				this->vertices[vIndex].normal.z	= normalZ;
 			}
 		}
 	}
@@ -175,8 +165,6 @@ namespace engine
 	Heightmap::Heightmap()
 	{
 		Logger::Log("Heightmap: Initializing", Logger::INFO, __FILE__, __LINE__);
-
-		this->pBitmap = new Bitmap();
 
 		for(unsigned long i = 0; i < 8; i++)
 		{
@@ -216,63 +204,62 @@ namespace engine
 	}
 
 	/**
-	 * Passes the file forward to the bitmap class so that it can load the pixel data.
-	 * @param		std::string				The file name of the BMP file to load
-	 */
-	void Heightmap::LoadMap(std::string argMapFileName)
-	{
-		this->pBitmap->Load(argMapFileName);
-	}
-
-	/**
 	 * Takes the pixel data from the Bitmap class and generates a vertices array with the Y value as the pixel value.
 	 * @param		Renderer*				The renderer to use
+	 * @param		std::string				The file name of the BMP file to load
 	 * @param		float					The scaling of each pixel
 	 * @param		unsigned long			The number of smoothing iteration to do
 	 * @return		void
 	 */
-	void Heightmap::SetupVertices(Renderer* argPRenderer, float argPixelScale, unsigned long argSmoothing)
+	void Heightmap::SetupVertices(Renderer* argPRenderer, std::string argMapFileName, float argPixelScale, unsigned long argSmoothing)
 	{
-		unsigned char* pixelData		= this->pBitmap->GetPixelData();
-		long imageWidth					= this->pBitmap->GetImageWidth();
-		long imageHeight				= this->pBitmap->GetImageHeight();
+		// Load the bitmap
+		Bitmap* pBitmap					= new Bitmap();
+		pBitmap->Load(argMapFileName);
 
-		float offsetX					= -(((float)(imageWidth * argPixelScale)) / 2);
-		float offsetY					= 0;
-		float offsetZ					= -(((float)(imageHeight * argPixelScale)) / 2);
+		// Fetch the bitmap data, width and height
+		unsigned char* pixelData		= pBitmap->GetPixelData();
+		this->width						= pBitmap->GetImageWidth();
+		this->height					= pBitmap->GetImageHeight();
+
+		// Delete the bitmap
+		delete pBitmap;
+
+		this->offsetX					= -(((float)(this->width * argPixelScale)) / 2);
+		this->offsetY					= 0;
+		this->offsetZ					= -(((float)(this->height * argPixelScale)) / 2);
 		
 		// --- Create the vertex array ---
-		this->numVertices				= imageWidth * imageHeight;
+		this->numVertices				= this->width * this->height;
 		this->numPrimitives				= this->numVertices * 2;
 		unsigned long vertexArraySize	= this->numVertices * sizeof(TexturedVector3);
+		this->vertices					= new TexturedVector3[this->numVertices];
 
-		TexturedVector3* vertices		= new TexturedVector3[this->numVertices];
-
-		for(long z = 0; z < imageHeight; z++)
+		for(long z = 0; z < this->height; z++)
 		{
-			for(long x = 0; x < imageWidth; x++)
+			for(long x = 0; x < this->width; x++)
 			{
-				long vIndex				= (z * imageWidth) + x;
-				float pixelX			= x * argPixelScale;
-				float pixelY			= pixelData[vIndex] / 15.0f;
-				float pixelZ			= z * argPixelScale;
+				long vIndex						= (z * this->width) + x;
+				float pixelX					= x * argPixelScale;
+				float pixelY					= pixelData[vIndex] / 15.0f;
+				float pixelZ					= z * argPixelScale;
 
-				vertices[vIndex].x		= offsetX + pixelX;
-				vertices[vIndex].y		= offsetY + pixelY;
-				vertices[vIndex].z		= offsetZ + pixelZ;
+				this->vertices[vIndex].x		= this->offsetX + pixelX;
+				this->vertices[vIndex].y		= this->offsetY + pixelY;
+				this->vertices[vIndex].z		= this->offsetZ + pixelZ;
 
-				vertices[vIndex].normal	= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+				this->vertices[vIndex].normal	= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-				vertices[vIndex].u		= pixelX / ((float)(imageWidth * argPixelScale));
-				vertices[vIndex].v		= 1 - (pixelZ / ((float)(imageHeight * argPixelScale)));
+				this->vertices[vIndex].u		= pixelX / ((float)(this->width * argPixelScale));
+				this->vertices[vIndex].v		= 1 - (pixelZ / ((float)(this->height * argPixelScale)));
 			}
 		}
 
 
 		// Smooth the map
-		this->SmoothMap(vertices, argSmoothing);
+		this->SmoothMap(argSmoothing);
 		// Calculate the normals
-		this->CalculateNormals(vertices);
+		this->CalculateNormals();
 
 		
 		// --- Create the index array ---
@@ -282,40 +269,94 @@ namespace engine
 		short* indices					= new short[numIndices];
 		
 		int index						= 0;
-		for(long z = 0; z < (imageHeight - 1); z++)
+		for(long z = 0; z < (this->height - 1); z++)
 		{
-			for(long x = 0; x < (imageWidth - 1); x++)
+			for(long x = 0; x < (this->width - 1); x++)
 			{
 				// Top Left
-				indices[index]			= (short)((z * imageWidth) + x);
+				indices[index]			= (short)((z * this->width) + x);
 				index++;
 				// Bottom Left
-				indices[index]			= (short)(((z + 1) * imageWidth) + x);
+				indices[index]			= (short)(((z + 1) * this->width) + x);
 				index++;
 				// Top Right
-				indices[index]			= (short)((z * imageWidth) + (x + 1));
+				indices[index]			= (short)((z * this->width) + (x + 1));
 				index++;
 				
 				// Bottom Right
-				indices[index]			= (short)(((z + 1) * imageWidth) + (x + 1));
+				indices[index]			= (short)(((z + 1) * this->width) + (x + 1));
 				index++;
 				// Top Right
-				indices[index]			= (short)((z * imageWidth) + (x + 1));
+				indices[index]			= (short)((z * this->width) + (x + 1));
 				index++;
 				// Bottom Left
-				indices[index]			= (short)(((z + 1) * imageWidth) + x);
+				indices[index]			= (short)(((z + 1) * this->width) + x);
 				index++;
 			}
 		}
 
 		
 		// Create the vertex buffer.
-		argPRenderer->CreateVertexBuffer(&this->pVertexBuffer, vertexArraySize, D3DFVFTexturedVector3, vertices);
-		delete vertices;
+		argPRenderer->CreateVertexBuffer(&this->pVertexBuffer, vertexArraySize, D3DFVFTexturedVector3, this->vertices);
 		
 		// Create the index buffer.
 		argPRenderer->CreateIndexBuffer(&this->pIndexBuffer, indexArraySize, indices);
-		delete indices;
+	}
+	
+	/**
+	 * Get the height data from an X and Z coordinate
+	 * @param		long		The x coordinate
+	 * @param		long		The Z coordinate
+	 * @return		float		The Y value (height data)
+	 */
+	float Heightmap::GetHeight(float argX, float argZ)
+	{
+		int num		= 0;
+		float sum	= 0.0f;
+
+		long ceilX	= (long)std::ceil(argX - this->offsetX);
+		long ceilZ	= (long)std::ceil(argZ - this->offsetZ);
+		long floorX	= (long)std::floor(argX - this->offsetX);
+		long floorZ	= (long)std::floor(argZ - this->offsetZ);
+
+		// Top
+		if(ceilZ < ((this->offsetZ + this->height) - 1))
+		{
+			// Left
+			if(floorX > this->offsetX)
+			{
+				num++;
+				sum+= this->vertices[(ceilZ * this->width) + floorX].y;
+			}
+
+			// Right
+			if(ceilX < ((this->offsetZ + this->width) - 1))
+			{
+				num++;
+				sum+= this->vertices[(ceilZ * this->width) + ceilX].y;
+			}
+		}
+
+		// Bottom
+		if(floorZ > this->offsetZ)
+		{
+			// Left
+			if(floorX > this->offsetX)
+			{
+				num++;
+				sum+= this->vertices[(floorZ * this->width) + floorX].y;
+			}
+
+			// Right
+			if(ceilX < ((this->offsetZ + this->width) - 1))
+			{
+				num++;
+				sum+= this->vertices[(floorZ * this->width) + ceilX].y;
+			}
+		}
+
+		// Return the average height of the 4 pixels
+		return sum / num;
 	}
 
 	/**

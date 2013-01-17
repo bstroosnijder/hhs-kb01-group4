@@ -49,6 +49,7 @@ namespace engine
 	 */
 	void Camera::Draw(Renderer* argPRenderer)
 	{
+		// Reset our world matrix
 		D3DXMatrixIdentity(&this->matWorld);
 
 		// Scaling

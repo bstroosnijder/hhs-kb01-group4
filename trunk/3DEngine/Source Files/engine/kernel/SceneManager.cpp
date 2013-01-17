@@ -290,8 +290,7 @@ namespace engine
 
 			Heightmap* pHeightmap = new Heightmap();
 			pScene->SetHeightmap(pHeightmap);
-			pHeightmap->LoadMap(mapFileName);
-			pHeightmap->SetupVertices(argPRenderer, pixelScale, smoothingIterations);
+			pHeightmap->SetupVertices(argPRenderer, mapFileName, pixelScale, smoothingIterations);
 
 			for(unsigned long i = 3; i < data.size(); i++)
 			{
