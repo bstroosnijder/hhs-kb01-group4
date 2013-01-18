@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header Files\engine\input\InputDevice.h" />
+    <ClInclude Include="Header Files\engine\input\JoyStick.h" />
+    <ClInclude Include="Header Files\engine\scene\Drawable.h" />
+    <ClInclude Include="Header Files\engine\input\Keyboard.h" />
+    <ClInclude Include="Header Files\engine\input\Mouse.h" />
+    <ClInclude Include="Header Files\engine\kernel\InputManager.h" />
+    <ClInclude Include="Header Files\engine\kernel\Kernel.h" />
+    <ClInclude Include="Header Files\engine\kernel\ResourceManager.h" />
+    <ClInclude Include="Header Files\engine\kernel\SceneManager.h" />
+    <ClInclude Include="Header Files\engine\kernel\WindowManager.h" />
+    <ClInclude Include="Header Files\engine\logger\ConsoleLog.h" />
+    <ClInclude Include="Header Files\engine\logger\Logger.h" />
+    <ClInclude Include="Header Files\engine\logger\LogStrategy.h" />
+    <ClInclude Include="Header Files\engine\logger\TextLog.h" />
+    <ClInclude Include="Header Files\engine\N00b.h" />
+    <ClInclude Include="Header Files\engine\renderer\DirectX9Renderer.h" />
+    <ClInclude Include="Header Files\engine\renderer\Renderer.h" />
+    <ClInclude Include="header files\engine\resource\mesh.h" />
+    <ClInclude Include="Header Files\engine\resource\Resource.h" />
+    <ClInclude Include="Header Files\engine\Sandbox.h" />
+    <ClInclude Include="Header Files\engine\scene\entities\Camera.h" />
+    <ClInclude Include="Header Files\engine\scene\entities\Model.h" />
+    <ClInclude Include="Header Files\engine\scene\Entity.h" />
+    <ClInclude Include="Header Files\engine\scene\Scene.h" />
+    <ClInclude Include="Header Files\engine\utils\Bitmap.h" />
+    <ClInclude Include="Header Files\engine\utils\explode.h" />
+    <ClInclude Include="header files\engine\utils\fileExists.h" />
+    <ClInclude Include="Header Files\engine\utils\Vector3.h" />
+    <ClInclude Include="Header Files\engine\window\Win32Window.h" />
+    <ClInclude Include="Header Files\engine\window\Window.h" />
+    <ClInclude Include="Header Files\engine\scene\Heightmap.h" />
+    <ClInclude Include="Header Files\engine\utils\TexturedVector3.h" />
+    <ClInclude Include="Header Files\engine\scene\Skybox.h" />
+    <ClInclude Include="Header Files\engine\input\InputListener.h" />
+    <ClInclude Include="Header Files\engine\scene\entities\LightPoint.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp" />
+    <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />
+    <ClCompile Include="Source Files\engine\input\JoyStick.cpp" />
+    <ClCompile Include="Source Files\engine\N00b.cpp" />
+    <ClCompile Include="Source Files\main.cpp" />
+    <ClCompile Include="Source Files\engine\scene\Skybox.cpp" />
+    <ClCompile Include="Source Files\engine\scene\Heightmap.cpp" />
+    <ClCompile Include="Source Files\engine\input\Keyboard.cpp" />
+    <ClCompile Include="Source Files\engine\input\Mouse.cpp" />
+    <ClCompile Include="Source Files\engine\kernel\InputManager.cpp" />
+    <ClCompile Include="Source Files\engine\kernel\Kernel.cpp" />
+    <ClCompile Include="Source Files\engine\kernel\ResourceManager.cpp" />
+    <ClCompile Include="Source Files\engine\kernel\SceneManager.cpp" />
+    <ClCompile Include="Source Files\engine\kernel\WindowManager.cpp" />
+    <ClCompile Include="Source Files\engine\logger\ConsoleLog.cpp" />
+    <ClCompile Include="Source Files\engine\logger\Logger.cpp" />
+    <ClCompile Include="Source Files\engine\logger\TextLog.cpp" />
+    <ClCompile Include="Source Files\engine\renderer\DirectX9Renderer.cpp" />
+    <ClCompile Include="Source Files\engine\renderer\Renderer.cpp" />
+    <ClCompile Include="Source Files\engine\Sandbox.cpp" />
+    <ClCompile Include="Source Files\engine\scene\entities\Camera.cpp" />
+    <ClCompile Include="Source Files\engine\scene\entities\Model.cpp" />
+    <ClCompile Include="Source Files\engine\scene\Entity.cpp" />
+    <ClCompile Include="Source Files\engine\scene\Scene.cpp" />
+    <ClCompile Include="Source Files\engine\utils\Bitmap.cpp" />
+    <ClCompile Include="Source Files\engine\utils\explode.cpp" />
+    <ClCompile Include="Source Files\engine\utils\fileExists.cpp" />
+    <ClCompile Include="Source Files\engine\window\Win32Window.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0771E178-34CE-4F57-B617-85D6D7B75094}</ProjectGuid>
+    <RootNamespace>My3DEngine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;winmm.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

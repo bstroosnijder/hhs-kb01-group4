@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3a4f6caa-2d11-4d3a-acd0-bf2151b304a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{29f88b32-0558-4900-80ca-158be7dec2b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{14dd7603-2901-4537-a122-258ad8f47fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{b13cc8c1-0247-4a5d-a551-b4865217ec0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\kernel">
+      <UniqueIdentifier>{6def05c8-7e2a-4959-ac1e-a3b0ecc20379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\logger">
+      <UniqueIdentifier>{53599088-4483-4cbe-86f6-055258cc3eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\scene">
+      <UniqueIdentifier>{979c5425-d220-48a5-88d0-2ccebcc9e2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{a11a2137-97ac-43e1-9289-6cbbd802f1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\kernel">
+      <UniqueIdentifier>{be7a2683-d6ef-4214-8df2-f443edce9617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\logger">
+      <UniqueIdentifier>{ccee35f7-47c6-4c11-9624-79b889ab1275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\scene">
+      <UniqueIdentifier>{2af26ff9-9153-467f-90c0-83cb2dbcaf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\window">
+      <UniqueIdentifier>{db2e4290-21df-4cf4-ac57-5926cdb1ad47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\window">
+      <UniqueIdentifier>{bea5175d-40c1-4213-a455-4c5422e213fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\renderer">
+      <UniqueIdentifier>{ebe6d034-e5f1-4996-8c3a-44b57f363207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\renderer">
+      <UniqueIdentifier>{1c486d0c-26eb-4b5c-a21e-706783a6bba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\scene\entities">
+      <UniqueIdentifier>{9b3f3271-383a-4436-9d14-2e949639bd90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\scene\entities">
+      <UniqueIdentifier>{422ee034-d4bc-4220-99b5-c95060d5941a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\utils">
+      <UniqueIdentifier>{ddfc1ad5-f700-4e8f-8c0b-d626735abd59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\resource">
+      <UniqueIdentifier>{ede20f68-a0c9-4225-b0da-1b91fcf14e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{9a57c892-8e4c-4caf-a1ce-fa8c19829805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\models">
+      <UniqueIdentifier>{458b3e36-8817-40d6-af16-639719a71e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\utils">
+      <UniqueIdentifier>{7c2f3d1c-21f4-4b39-91d0-2eb730225940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\scenes">
+      <UniqueIdentifier>{5c2ec98c-2984-4e7b-a7e4-20b4e87c55f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\input">
+      <UniqueIdentifier>{79512ece-08f4-47a0-a3ab-d166e5c2fd1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine\input">
+      <UniqueIdentifier>{722c9327-3a48-493a-904d-886f93decd2b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Header Files\engine\N00b.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\Sandbox.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\InputManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\ResourceManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\SceneManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\WindowManager.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\kernel\Kernel.h">
+      <Filter>Header Files\engine\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\ConsoleLog.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\Logger.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\LogStrategy.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\logger\TextLog.h">
+      <Filter>Header Files\engine\logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\renderer\DirectX9Renderer.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\renderer\Renderer.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\resource\Resource.h">
+      <Filter>Header Files\engine\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Entity.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Scene.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\Vector3.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\explode.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\window\Win32Window.h">
+      <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\window\Window.h">
+      <Filter>Header Files\engine\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\entities\Model.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\entities\Camera.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\Keyboard.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\Mouse.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\Bitmap.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Heightmap.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="header files\engine\resource\mesh.h">
+      <Filter>Header Files\engine\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\TexturedVector3.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Drawable.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="header files\engine\utils\fileExists.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\InputDevice.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\JoyStick.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\input\InputListener.h">
+      <Filter>Header Files\engine\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\entities\LightPoint.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\Skybox.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source Files\engine\Sandbox.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Entity.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Scene.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\WindowManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\SceneManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\ResourceManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\InputManager.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\kernel\Kernel.cpp">
+      <Filter>Source Files\engine\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\logger\ConsoleLog.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\logger\Logger.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\logger\TextLog.cpp">
+      <Filter>Source Files\engine\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\renderer\DirectX9Renderer.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\renderer\Renderer.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\utils\explode.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\window\Win32Window.cpp">
+      <Filter>Source Files\engine\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\Camera.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\Model.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\Keyboard.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\Mouse.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\utils\Bitmap.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Heightmap.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\utils\fileExists.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\InputDevice.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\main.cpp" />
+    <ClCompile Include="Source Files\engine\N00b.cpp">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\input\JoyStick.cpp">
+      <Filter>Source Files\engine\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\Skybox.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
