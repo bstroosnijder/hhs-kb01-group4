@@ -183,6 +183,9 @@
     <ClInclude Include="Header Files\engine\scene\Skybox.h">
       <Filter>Header Files\engine\scene</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\scene\SceneBuilder.h">
+      <Filter>Header Files\engine\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
@@ -265,6 +268,9 @@
       <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
     <ClCompile Include="Source Files\engine\scene\Skybox.cpp">
+      <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\SceneBuilder.cpp">
       <Filter>Source Files\engine\scene</Filter>
     </ClCompile>
   </ItemGroup>

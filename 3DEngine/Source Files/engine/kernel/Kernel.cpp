@@ -88,6 +88,40 @@ namespace engine
 		MSG msg;
         ZeroMemory(&msg, sizeof(msg));
 
+		// Check if we have unloaded scenes, and sets them up with a SceneBuilder
+		std::map<std::string, Scene*> scenes = this->pSceneManager->GetScenes();
+		std::map<std::string, Scene*>::iterator sceneIt;
+		for(sceneIt = scenes.begin(); sceneIt != scenes.end(); sceneIt++)
+		{
+			std::string sceneName	= sceneIt->first;
+			Scene* pScene			= sceneIt->second;
+
+			if(!pScene->isLoaded())
+			{
+				Logger::Log("Kernel: Unloaded scene found, Starting SceneBuilder", Logger::INFO, __FILE__, __LINE__);
+				SceneBuilder* pSceneBuilder = new SceneBuilder(sceneName, pScene,
+					this->pResourceManager, this->renderers[Renderer::DIRECTX_9]);
+
+				Keyboard* pKeyboard = this->pInputManager->GetKeyboard();
+				pKeyboard->AddInputListener(pScene->GetCamera());
+				pKeyboard->AddBind("KEY_W",			"move_forward");
+				pKeyboard->AddBind("KEY_S",			"move_backward");
+				pKeyboard->AddBind("KEY_Q",			"move_left");
+				pKeyboard->AddBind("KEY_E",			"move_right");
+				pKeyboard->AddBind("KEY_SPACE",		"move_up");
+				pKeyboard->AddBind("KEY_LSHIFT",	"move_down");
+				pKeyboard->AddInputListener(pSceneBuilder);
+				pKeyboard->AddBind("KEY_GRAVE",		"do_command");
+
+				Mouse* pMouse = this->pInputManager->GetMouse();
+				pMouse->AddInputListener(pScene->GetCamera());
+				pMouse->AddBind("MOUSE_X",			"turn_left_right");
+				pMouse->AddBind("MOUSE_Y",			"pan_up_down");
+				//pMouse->AddInputListener(pSceneBuilder);
+			}
+		}
+
+
         while(this->pWindowManager->GetWindowCount() > 0)
         {
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))

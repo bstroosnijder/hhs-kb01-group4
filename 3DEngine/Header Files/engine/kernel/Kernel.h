@@ -6,6 +6,7 @@
 #include "..\logger\Logger.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
+#include "..\scene\SceneBuilder.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
 #include "..\renderer\Renderer.h"

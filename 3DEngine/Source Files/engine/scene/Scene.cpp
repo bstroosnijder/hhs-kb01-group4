@@ -86,7 +86,9 @@ namespace engine
 	Scene::Scene()
 	{
 		Logger::Log("Scene: Initializing", Logger::INFO, __FILE__, __LINE__);
-
+		
+		this->loaded		= false;
+		this->running		= true;
 		this->windows = std::list<Window*>();
 		
 		this->pCamera		= new Camera();
@@ -145,48 +147,70 @@ namespace engine
 	}
 
 	/**
+	 * Gets the loaded status
+	 * @return		bool
+	 */
+	bool Scene::isLoaded()
+	{
+		return this->loaded;
+	}
+
+	/**
+	 * Sets the loaded status
+	 * @param		bool		The loaded status
+	 * @return		void
+	 */
+	void Scene::SetLoaded(bool argLoaded)
+	{
+		this->loaded = argLoaded;
+	}
+
+	/**
 	 * Update each entity in the models collection.
 	 * @return		void
 	 */
 	void Scene::Update()
 	{
 		this->pCamera->Update();
-		if(this->pSkybox != NULL)
+		if(this->running)
 		{
-			this->pSkybox->Update();
-		}
-		if(this->pHeightmap != NULL)
-		{
-			this->pHeightmap->Update();
-		}
+			if(this->pSkybox != NULL)
+			{
+				this->pSkybox->Update();
+			}
+			if(this->pHeightmap != NULL)
+			{
+				this->pHeightmap->Update();
+			}
 
-		std::map<std::string, Entity*>::iterator entityIt;
-		for(entityIt = this->entities.begin(); entityIt != this->entities.end(); entityIt++)
-		{
-			Entity* pEntity = entityIt->second;
-			pEntity->Update();
+			std::map<std::string, Entity*>::iterator entityIt;
+			for(entityIt = this->entities.begin(); entityIt != this->entities.end(); entityIt++)
+			{
+				Entity* pEntity = entityIt->second;
+				pEntity->Update();
 
-			//Vector3 pos		= pEntity->GetPosition();
-			//float lev		= 5.0f;
-			//float height	= this->pHeightmap->GetHeight(pos.x, pos.z);
+				//Vector3 pos		= pEntity->GetPosition();
+				//float lev		= 5.0f;
+				//float height	= this->pHeightmap->GetHeight(pos.x, pos.z);
 
-			//if((pos.y - lev) > height)
-			//{
-			//	pos.y -= 0.1f;
-			//}
-			//else
-			//{
-			//	pos.y = height + lev;
-			//}
+				//if((pos.y - lev) > height)
+				//{
+				//	pos.y -= 0.1f;
+				//}
+				//else
+				//{
+				//	pos.y = height + lev;
+				//}
 
-			//pEntity->SetPosition(pos);
+				//pEntity->SetPosition(pos);
 
-		}
+			}
 
-		std::list<std::string>::iterator scriptIt;
-		for (scriptIt = this->scripts.begin(); scriptIt != this->scripts.end(); scriptIt++)
-		{
-			this->ParseAndExecuteScript(*scriptIt);
+			std::list<std::string>::iterator scriptIt;
+			for (scriptIt = this->scripts.begin(); scriptIt != this->scripts.end(); scriptIt++)
+			{
+				this->ParseAndExecuteScript(*scriptIt);
+			}
 		}
 	}
 
@@ -219,6 +243,20 @@ namespace engine
 			argPRenderer->Pop();
 		}
 		argPRenderer->Pop();
+	}
+
+	/**
+	 * Processes any input events
+	 * @param		std::string		the bind to execute
+	 * @param		float			the speed
+	 * @return		void
+	 */
+	void Scene::InputEvent(std::string argBind, float argSpeed)
+	{
+		if(argBind == "pause")
+		{
+			this->running = !this->running;
+		}
 	}
 
 	/**

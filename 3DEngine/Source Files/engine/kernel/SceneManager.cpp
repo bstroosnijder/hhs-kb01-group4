@@ -292,12 +292,13 @@ namespace engine
 			pScene->SetHeightmap(pHeightmap);
 			pHeightmap->SetupVertices(argPRenderer, mapFileName, pixelScale, smoothingIterations);
 
-			for(unsigned long i = 3; i < data.size(); i++)
+			unsigned long iTex = 3;
+			for(unsigned long i = iTex; i < data.size(); i++)
 			{
 				std::string mapTexture = data.at(i);
 				argPResourceManager->LoadTexture(argPRenderer, mapTexture);
 
-				pHeightmap->SetTexture((i - 3), argPResourceManager->GetTexture(mapTexture));
+				pHeightmap->SetTexture((i - iTex), argPResourceManager->GetTexture(mapTexture));
 			}
 		}
 
@@ -431,7 +432,7 @@ namespace engine
 		for(inputIt = dataInput.begin(); inputIt != dataInput.end(); inputIt++)
 		{
 			std::string dataLineInput = *inputIt;
-			// explode the resource data
+			// explode the input data
 			data = explode(';', dataLineInput);
 
 			std::string action	= data.at(0);
@@ -466,10 +467,14 @@ namespace engine
 				{
 					pInputListener = pScene->GetCamera();
 				}
+				else if(entity == "scene")
+				{
+					pInputListener = pScene;
+				}
 				else if(entity == "renderer")
 				{
 					DirectX9Renderer* pRenderer = (DirectX9Renderer*)argPRenderer;
-					pInputListener = (InputListener*) pRenderer;
+					pInputListener = pRenderer;
 				}
 				else
 				{
@@ -571,6 +576,7 @@ namespace engine
 			}
 		}
 
+		pScene->SetLoaded(true);
 		Logger::Log("SceneManager: Scenefile: " + argSceneFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
 		return pScene;
 	}
