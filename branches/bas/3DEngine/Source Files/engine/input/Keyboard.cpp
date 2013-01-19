@@ -75,10 +75,12 @@ namespace engine
 				if(	(key == "KEY_A"			&& (bool)(KEYDOWN(kState, DIK_A) != 0)) ||
 					(key == "KEY_D"			&& (bool)(KEYDOWN(kState, DIK_D) != 0)) ||
 					(key == "KEY_E"			&& (bool)(KEYDOWN(kState, DIK_E) != 0)) ||
+					(key == "KEY_P"			&& (bool)(KEYDOWN(kState, DIK_P) != 0)) ||
 					(key == "KEY_Q"			&& (bool)(KEYDOWN(kState, DIK_Q) != 0)) ||
 					(key == "KEY_S"			&& (bool)(KEYDOWN(kState, DIK_S) != 0)) ||
 					(key == "KEY_W"			&& (bool)(KEYDOWN(kState, DIK_W) != 0)) ||
 					(key == "KEY_DOWN"		&& (bool)(KEYDOWN(kState, DIK_DOWN) != 0)) ||
+					(key == "KEY_GRAVE"		&& (bool)(KEYDOWN(kState, DIK_GRAVE) != 0)) ||
 					(key == "KEY_HOME"		&& (bool)(KEYDOWN(kState, DIK_HOME) != 0)) ||
 					(key == "KEY_LEFT"		&& (bool)(KEYDOWN(kState, DIK_LEFT) != 0)) ||
 					(key == "KEY_LSHIFT"	&& (bool)(KEYDOWN(kState, DIK_LSHIFT) != 0)) ||

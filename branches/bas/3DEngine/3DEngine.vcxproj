@@ -46,8 +46,10 @@
     <ClInclude Include="Header Files\engine\scene\Skybox.h" />
     <ClInclude Include="Header Files\engine\input\InputListener.h" />
     <ClInclude Include="Header Files\engine\scene\entities\LightPoint.h" />
+    <ClInclude Include="Header Files\engine\scene\SceneBuilder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\engine\scene\SceneBuilder.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp" />
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />
     <ClCompile Include="Source Files\engine\input\JoyStick.cpp" />

@@ -5,6 +5,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "..\input\InputListener.h"
 #include "..\logger\Logger.h"
 #include "..\kernel\ResourceManager.h"
 #include "..\renderer\Renderer.h"
@@ -21,9 +22,11 @@ namespace engine
 	 * This class is responsible for maintaining and managing the entities inside him.
 	 * This class is also responsible for calling upon all his entities to draw and/or update themselves.
 	 */
-	class Scene
+	class Scene : public InputListener
 	{
 	private:
+		bool loaded;
+		bool running;
 		std::list<Window*> windows;
 		
 		Camera* pCamera;
@@ -38,8 +41,13 @@ namespace engine
 		~Scene();
 		void CleanUp();
 
+		bool isLoaded();
+		void SetLoaded(bool argLoaded);
+
 		virtual void Update();
 		virtual void Draw(Renderer* argPRenderer);
+
+		void InputEvent(std::string argBind, float argSpeed);
 
 		void AddWindow(Window* argPWindow);
 		void RemoveWindow(Window* argPWindow);
