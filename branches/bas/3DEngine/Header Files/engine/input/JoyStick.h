@@ -4,12 +4,14 @@
 
 #include <map>
 #include <list>
+#include <vector>
 #include <string>
 #include <d3d9.h>
 #include <dinput.h>
 #include "InputDevice.h"
 #include "..\logger\logger.h"
 #include "..\window\Win32Window.h"
+#include "..\utils\explode.h"
 
 namespace engine
 {

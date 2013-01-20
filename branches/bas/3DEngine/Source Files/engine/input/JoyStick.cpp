@@ -85,68 +85,70 @@ namespace engine
 			std::map<std::string, std::string>::iterator bindsIt;
 			for(bindsIt = this->binds.begin(); bindsIt != this->binds.end(); bindsIt++)
 			{
-				std::string key		= bindsIt->first;
-				std::string bind	= bindsIt->second;
-				float speed			= 1.0f;
+				int doNotify					= 0;
+				std::vector<std::string> keys	= explode(':', bindsIt->first);
+				std::string bind				= bindsIt->second;
+				float speed						= 1.0f;
 
-				if(	(key == "KEY_1"				&& ((jState.rgbButtons[0] & 0x80) != 0)) ||
-					(key == "KEY_2"				&& ((jState.rgbButtons[1] & 0x80) != 0)) ||
-					(key == "KEY_3"				&& ((jState.rgbButtons[2] & 0x80) != 0)) ||
-					(key == "KEY_4"				&& ((jState.rgbButtons[3] & 0x80) != 0)) ||
-					(key == "KEY_5"				&& ((jState.rgbButtons[4] & 0x80) != 0)) ||
-					(key == "KEY_6"				&& ((jState.rgbButtons[5] & 0x80) != 0)) ||
-					(key == "KEY_7"				&& ((jState.rgbButtons[6] & 0x80) != 0)) ||
-					(key == "KEY_8"				&& ((jState.rgbButtons[7] & 0x80) != 0)) ||
-					(key == "KEY_UP"			&& (jState.rgdwPOV[0] == 0)) ||
-					(key == "KEY_DOWN"			&& (jState.rgdwPOV[0] == 18000)) ||
-					(key == "KEY_LEFT"			&& (jState.rgdwPOV[0] == 27000)) ||
-					(key == "KEY_RIGHT"			&& (jState.rgdwPOV[0] == 9000)) ||
-					(key == "KEY_UP_LEFT"		&& (jState.rgdwPOV[0] == 31500)) ||
-					(key == "KEY_UP_RIGHT"		&& (jState.rgdwPOV[0] == 4500)) ||
-					(key == "KEY_DOWN_LEFT"		&& (jState.rgdwPOV[0] == 22500)) ||
-					(key == "KEY_DOWN_RIGHT"	&& (jState.rgdwPOV[0] == 13500)))
+				std::vector<std::string>::iterator keysIt;
+				for(keysIt = keys.begin(); keysIt != keys.end(); keysIt++)
 				{
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
+					std::string key = *keysIt;
+
+					if(	(key == "KEY_1"				&& ((jState.rgbButtons[0] & 0x80) != 0)) ||
+						(key == "KEY_2"				&& ((jState.rgbButtons[1] & 0x80) != 0)) ||
+						(key == "KEY_3"				&& ((jState.rgbButtons[2] & 0x80) != 0)) ||
+						(key == "KEY_4"				&& ((jState.rgbButtons[3] & 0x80) != 0)) ||
+						(key == "KEY_5"				&& ((jState.rgbButtons[4] & 0x80) != 0)) ||
+						(key == "KEY_6"				&& ((jState.rgbButtons[5] & 0x80) != 0)) ||
+						(key == "KEY_7"				&& ((jState.rgbButtons[6] & 0x80) != 0)) ||
+						(key == "KEY_8"				&& ((jState.rgbButtons[7] & 0x80) != 0)) ||
+						(key == "KEY_UP"			&& (jState.rgdwPOV[0] == 0)) ||
+						(key == "KEY_DOWN"			&& (jState.rgdwPOV[0] == 18000)) ||
+						(key == "KEY_LEFT"			&& (jState.rgdwPOV[0] == 27000)) ||
+						(key == "KEY_RIGHT"			&& (jState.rgdwPOV[0] == 9000)) ||
+						(key == "KEY_UP_LEFT"		&& (jState.rgdwPOV[0] == 31500)) ||
+						(key == "KEY_UP_RIGHT"		&& (jState.rgdwPOV[0] == 4500)) ||
+						(key == "KEY_DOWN_LEFT"		&& (jState.rgdwPOV[0] == 22500)) ||
+						(key == "KEY_DOWN_RIGHT"	&& (jState.rgdwPOV[0] == 13500)))
+					{
+						doNotify++;
+					}
+					else if(key == "LSTICK_X" && ((jState.lX <= (SHRT_MAX - optSmoothness)) || (jState.lX >= (SHRT_MAX + optSmoothness))))
+					{
+						float stickPos = (float)jState.lX - SHRT_MAX;
+						speed = (stickPos / optSmoothness) * optSensitivity;
+						doNotify++;
+					}
+					else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - optSmoothness)) || (jState.lY >= (SHRT_MAX + optSmoothness))))
+					{
+						float stickPos = (float)jState.lY - SHRT_MAX;
+						speed = (stickPos / optSmoothness) * optSensitivity;
+						doNotify++;
+					}
+					else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - optSmoothness)) || (jState.lRx >= (SHRT_MAX + optSmoothness))))
+					{
+						float stickPos = (float)jState.lRx - SHRT_MAX;
+						speed = (stickPos / optSmoothness) * optSensitivity;
+						doNotify++;
+					}
+					else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - optSmoothness)) || (jState.lRy >= (SHRT_MAX + optSmoothness))))
+					{
+						float stickPos = (float)jState.lRy - SHRT_MAX;
+						speed = (stickPos / optSmoothness) * optSensitivity;
+						doNotify++;
+					}
+					else if((key == "LTRIGGER"	&& (jState.lZ >= (SHRT_MAX + optSmoothness))) ||
+							(key == "RTRIGGER"	&& (jState.lZ <= (SHRT_MAX - optSmoothness))))
+					{
+						float triggerPos = (float)jState.lZ - SHRT_MAX;
+						speed = (triggerPos / optSmoothness) * optSensitivity;
+						doNotify++;
+					}
 				}
-				else if(key == "LSTICK_X" && ((jState.lX <= (SHRT_MAX - optSmoothness)) || (jState.lX >= (SHRT_MAX + optSmoothness))))
+				
+				if(doNotify == keys.size())
 				{
-					float stickPos = (float)jState.lX - SHRT_MAX;
-					speed = (stickPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
-				}
-				else if(key == "LSTICK_Y" && ((jState.lY <= (SHRT_MAX - optSmoothness)) || (jState.lY >= (SHRT_MAX + optSmoothness))))
-				{
-					float stickPos = (float)jState.lY - SHRT_MAX;
-					speed = (stickPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
-				}
-				else if(key == "RSTICK_X" && ((jState.lRx <= (SHRT_MAX - optSmoothness)) || (jState.lRx >= (SHRT_MAX + optSmoothness))))
-				{
-					float stickPos = (float)jState.lRx - SHRT_MAX;
-					speed = (stickPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
-				}
-				else if(key == "RSTICK_Y" && ((jState.lRy <= (SHRT_MAX - optSmoothness)) || (jState.lRy >= (SHRT_MAX + optSmoothness))))
-				{
-					float stickPos = (float)jState.lRy - SHRT_MAX;
-					speed = (stickPos / optSmoothness) * optSensitivity;
-
-					// Tell our fans
-					this->NotifyInputListeners(bind, speed);
-				}
-				else if((key == "LTRIGGER"	&& (jState.lZ >= (SHRT_MAX + optSmoothness))) ||
-						(key == "RTRIGGER"	&& (jState.lZ <= (SHRT_MAX - optSmoothness))))
-				{
-					float triggerPos = (float)jState.lZ - SHRT_MAX;
-					speed = (triggerPos / optSmoothness) * optSensitivity;
-
 					// Tell our fans
 					this->NotifyInputListeners(bind, speed);
 				}
