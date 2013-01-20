@@ -71,162 +71,368 @@ namespace engine
 	 */
 	void SceneBuilder::InputEvent(std::string argBind, float argSpeed)
 	{
-		if(argBind == "do_command")
+		if(argBind == "spawn")
 		{
-			// The line buffer used to read lines from the file
-			char cLine[256];
-			// exploded line data
+			// buffer and data storage
+			std::string buffer;
 			std::vector<std::string> data;
 
-			Logger::Log("SceneBuilder: Starting command parser\nEnter Command:", Logger::INFO, __FILE__, __LINE__);
+			std::string eName;
+			Logger::Log("SceneBuilder: What is the entity ID? (has to be unique)", Logger::INFO, __FILE__, __LINE__);
+			std::cin >> eName;
 
-			// Reads the command line
-			std::cin.getline(cLine, sizeof(cLine));
-			// explodes the data
-			data = explode(' ', std::string(cLine));
+			std::string eType;
+			Logger::Log("SceneBuilder: What type of entity is it? (model, light, sound)", Logger::INFO, __FILE__, __LINE__);
+			std::cin >> eType;
 
-			// Check the command
-			std::string command	= data.at(0);
+			Vector3 pos;
+			Logger::Log("SceneBuilder: What is the position vector? (x;y;z) | (camera) | (center)", Logger::INFO, __FILE__, __LINE__);
+			std::cin >> buffer;
 
-			// Spawn a entity / model / light
-			if(command == "spawn")
+			if(buffer == "camera")
 			{
-				// Name of the entity
-				std::string name	= data.at(1);
-				// What is the type of entity
-				std::string type	= data.at(2);
-				// The entity we are going to add
-				Entity* pEntity;
+				pos = this->pScene->GetCamera()->GetPosition();
+			}
+			else if(buffer == "center")
+			{
+				pos = Vector3(0.0f, 0.0f, 0.0f);
+			}
+			else
+			{
+				data = explode(';', buffer);
+				pos.x = (float)std::atof(data.at(0).c_str());
+				pos.y = (float)std::atof(data.at(1).c_str());
+				pos.z = (float)std::atof(data.at(2).c_str());
+			}
 
-				Vector3 cPos		= this->pScene->GetCamera()->GetPosition();
-				Vector3 cRot		= this->pScene->GetCamera()->GetRotation();
-				Vector3 cScale		= this->pScene->GetCamera()->GetScaling();
+			Entity* pEntity;
+			if(eType == "model")
+			{
+				Logger::Log("SceneBuilder: Creating new model", Logger::INFO, __FILE__, __LINE__);
 
-				if(type == "model")
+				std::string fileName;
+				Logger::Log("SceneBuilder: Where is the mesh file located? (searching in dir 'Resource Files/Models/')", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> fileName;
+
+				this->pResourceManager->LoadMesh(this->pRenderer, fileName);
+				pEntity = new Model(this->pResourceManager->NewResource(fileName));
+
+				Vector3 rot;
+				Logger::Log("SceneBuilder: What is the rotation vector? (x;y;z) | (camera) | (center)", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+
+				if(buffer == "camera")
 				{
-					Logger::Log("SceneBuilder: Spawning a model", Logger::WARNING, __FILE__, __LINE__);
-					// Get the mesh file and load it
-					std::string mMesh	= data.at(12);
-					this->pResourceManager->LoadMesh(this->pRenderer, mMesh);
-					// Create a new model
-					pEntity			= new Model(this->pResourceManager->NewResource(mMesh));
-
-					pEntity->SetPosition(Vector3(	this->FloatIfStringDefault(data.at(3), cPos.x),
-													this->FloatIfStringDefault(data.at(4), cPos.y),
-													this->FloatIfStringDefault(data.at(5), cPos.z)));
-					pEntity->SetRotation(Vector3(	this->FloatIfStringDefault(data.at(6), cRot.x),
-													this->FloatIfStringDefault(data.at(7), cRot.y),
-													this->FloatIfStringDefault(data.at(8), cRot.z)));
-					pEntity->SetScaling(Vector3(	this->FloatIfStringDefault(data.at(9), cScale.x),
-													this->FloatIfStringDefault(data.at(10), cScale.y),
-													this->FloatIfStringDefault(data.at(11), cScale.z)));
-					unsigned long iTex	= 13;
-					for(unsigned long i = iTex; i < data.size(); i++)
-					{
-						std::string mTexture = data.at(i);
-						this->pResourceManager->LoadTexture(this->pRenderer, mTexture);
-
-						((Model*)pEntity)->SetTexture((i - iTex), this->pResourceManager->GetTexture(mTexture));
-					}
+					rot = this->pScene->GetCamera()->GetRotation();
 				}
-				else if(type == "light")
+				else if(buffer == "center")
 				{
-					Logger::Log("SceneBuilder: Spawning a light", Logger::INFO, __FILE__, __LINE__);
-					// Create a new light
-					pEntity				= new LightPoint(this->pRenderer->GetNextLightIndex());
-					float lRange		= (float)std::atof(data.at(6).c_str());
-					float lColorR		= (float)std::atof(data.at(7).c_str());
-					float lColorG		= (float)std::atof(data.at(8).c_str());
-					float lColorB		= (float)std::atof(data.at(9).c_str());
-					float lColorA		= (float)std::atof(data.at(10).c_str());
+					rot = Vector3(0.0f, 0.0f, 0.0f);
+				}
+				else
+				{
+					data = explode(';', buffer);
+					rot.x = (float)std::atof(data.at(0).c_str());
+					rot.y = (float)std::atof(data.at(1).c_str());
+					rot.z = (float)std::atof(data.at(2).c_str());
+				}
+				pEntity->SetRotation(rot);
+
+				Vector3 scale;
+				Logger::Log("SceneBuilder: What is the scale vector? (x;y;z) | (camera) | (center)", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+
+				if(buffer == "camera")
+				{
+					scale = this->pScene->GetCamera()->GetRotation();
+				}
+				else if(buffer == "center")
+				{
+					scale = Vector3(1.0f, 1.0f, 1.0f);
+				}
+				else
+				{
+					data = explode(';', buffer);
+					scale.x = (float)std::atof(data.at(0).c_str());
+					scale.y = (float)std::atof(data.at(1).c_str());
+					scale.z = (float)std::atof(data.at(2).c_str());
+				}
+				pEntity->SetRotation(rot);
+			}
+			else if(eType == "light")
+			{
+				Logger::Log("SceneBuilder: Creating new light", Logger::INFO, __FILE__, __LINE__);
+				pEntity = new LightPoint(this->pRenderer->GetNextLightIndex());
+
+				Logger::Log("SceneBuilder: What is the radius of the light entity?", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+				((LightPoint*)pEntity)->SetRange((float)std::atof(buffer.c_str()));
+
+				Logger::Log("SceneBuilder: What is the color of the light entity? (r;g;b;a)", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+				data = explode(';', buffer);
+				((LightPoint*)pEntity)->SetColor(	(float)std::atof(data.at(0).c_str()),
+													(float)std::atof(data.at(1).c_str()),
+													(float)std::atof(data.at(2).c_str()),
+													(float)std::atof(data.at(3).c_str()));
+
+			}
+			else if(eType == "sound")
+			{
+				Logger::Log("SceneBuilder: Creating new sound", Logger::INFO, __FILE__, __LINE__);
+
+				std::string fileName;
+				Logger::Log("SceneBuilder: Where is the wave file located? (searching in dir 'Resource Files/Sounds/')", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> fileName;
+
+				this->pResourceManager->LoadWav(fileName);
+				pEntity = new Sound(this->pResourceManager->GetWav(fileName));
+			}
+			else
+			{
+				Logger::Log("SceneBuilder: The type " + eType + " is not supported", Logger::WARNING, __FILE__, __LINE__);
+				return;
+			}
+			
+			pEntity->SetPosition(pos);
+			Logger::Log("SceneBuilder: Adding entity to scene", Logger::INFO, __FILE__, __LINE__);
+			this->pScene->AddEntity(eName, pEntity);
+		}
+		else if(argBind == "load")
+		{
+			// buffer and data storage
+			std::string buffer;
+			std::vector<std::string> data;
+
+			std::string type;
+			Logger::Log("SceneBuilder: What do you want to load? skybox/heightmap", Logger::INFO, __FILE__, __LINE__);
+			std::cin >> type;
+
+			if(type == "skybox")
+			{
+				Logger::Log("SceneBuilder: Creating new skybox", Logger::INFO, __FILE__, __LINE__);
+				Skybox* pSkybox = new Skybox();
+
+				Logger::Log("SceneBuilder: How large should the skybox be?", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+				pSkybox->SetupVertices(this->pRenderer, (unsigned long)std::atol(buffer.c_str()));
+
+				std::string fileName;
+				Logger::Log("SceneBuilder: Where is the texture file located? (searching in dir 'Resource Files/Textures/')", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> fileName;
+
+				this->pResourceManager->LoadTexture(this->pRenderer, fileName);
+				pSkybox->SetTexture(0, this->pResourceManager->GetTexture(fileName));
+				
+				Logger::Log("SceneBuilder: Adding skybox to scene", Logger::INFO, __FILE__, __LINE__);
+				this->pScene->SetSkybox(pSkybox);
+			}
+			else if(type == "heightmap")
+			{
+				Logger::Log("SceneBuilder: Creating new heightmap", Logger::INFO, __FILE__, __LINE__);
+				Heightmap* pHeightmap = new Heightmap();
+
+				std::string bitmapFileName;
+				Logger::Log("SceneBuilder: Where is the bitmap located? (searching in dir 'Resource Files/Textures/')", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> bitmapFileName;
+
+				float pixelScale;
+				Logger::Log("SceneBuilder: How large should each pixel be scaled?", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+				pixelScale = (float)std::atof(buffer.c_str());
+
+				unsigned long smoothing;
+				Logger::Log("SceneBuilder: How smooth should the heightmap be?", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> buffer;
+				smoothing = (unsigned long)std::atol(buffer.c_str());
+
+				std::string textureFileName;
+				Logger::Log("SceneBuilder: Where is the texture located? (searching in dir 'Resource Files/Textures/')", Logger::INFO, __FILE__, __LINE__);
+				std::cin >> textureFileName;
+
+				pHeightmap->SetupVertices(this->pRenderer, bitmapFileName, pixelScale, smoothing);
+				this->pResourceManager->LoadTexture(this->pRenderer, textureFileName);
+				pHeightmap->SetTexture(0, this->pResourceManager->GetTexture(textureFileName));
+				
+				Logger::Log("SceneBuilder: Adding heightmap to scene", Logger::INFO, __FILE__, __LINE__);
+				this->pScene->SetHeightmap(pHeightmap);
+			}
+			else
+			{
+				Logger::Log("SceneBuilder: The type " + type + " is not supported", Logger::WARNING, __FILE__, __LINE__);
+				return;
+			}
+		}
+		else if(argBind == "delete")
+		{
+		}
+		else if(argBind == "clear")
+		{
+			std::string clear = "n";
+			Logger::Log("SceneBuilder: Are you sure you want to clear the scene? y/n", Logger::WARNING, __FILE__, __LINE__);
+			std::cin >> clear;
+
+			if(clear.empty() && clear == "n")
+			{
+				Logger::Log("SceneBuilder: Not clearing the scene", Logger::INFO, __FILE__, __LINE__);
+				return;
+			}
+
+			
+			// === Segment: Camera ===
+			Camera* pCamera	= this->pScene->GetCamera();
+			Logger::Log("SceneBuilder: Clearing camera data", Logger::INFO, __FILE__, __LINE__);
+			pCamera->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			pCamera->SetRotation(Vector3(0.0f, 0.0f, 0.0f));
+			pCamera->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
+
+			// === SEGMENT: Skybox ===
+			Logger::Log("SceneBuilder: Clearing skybox data", Logger::INFO, __FILE__, __LINE__);
+			pScene->SetSkybox(NULL);
+
+			// === SEGMENT: Heightmap ===
+			Logger::Log("SceneBuilder: Clearing heightmap data", Logger::INFO, __FILE__, __LINE__);
+			pScene->SetHeightmap(NULL);
+
+			// === SEGMENT: Entities ===
+			Logger::Log("SceneBuilder: Writing entity data", Logger::INFO, __FILE__, __LINE__);
+			pScene->GetEntities().clear();
+
+			// === SEGMENT: Scripts ===
+			Logger::Log("SceneBuilder: Writing script data", Logger::INFO, __FILE__, __LINE__);
+			pScene->GetScripts().clear();
+		}
+		else if(argBind == "save")
+		{
+			std::string rDir		= "Resource Files\\Scenes\\";
+			// Parse a default file name
+			std::string rFileName = rDir + this->fileName + ".scene";
+
+			// Where do we save, lets ask the user
+			Logger::Log("SceneBuilder: Give me a file name pl0x!", Logger::INFO, __FILE__, __LINE__);
+			std::cin >> rFileName;
+			Logger::Log(rFileName, Logger::INFO, __FILE__, __LINE__);
+			
+			// Does it already exists?
+			if(fileExists(rDir + rFileName))
+			{
+				// Are we allowed to overwrite?
+				std::string overwrite = "n";
+				Logger::Log("SceneBuilder: The file already exists, overwrite? y/n", Logger::WARNING, __FILE__, __LINE__);
+				std::cin >> overwrite;
+
+				if(overwrite.empty() || overwrite == "n")
+				{
+					Logger::Log("SceneBuilder: Didn't save the file", Logger::INFO, __FILE__, __LINE__);
+					return;
+				}
+			}
+
+			
+			// Create the output stream
+			std::ofstream out	= std::ofstream(rDir + rFileName);
+
+
+			// === Segment: Camera ===
+			Camera* pCamera	= this->pScene->GetCamera();
+			Logger::Log("SceneBuilder: Writing camera data", Logger::INFO, __FILE__, __LINE__);
+			out << "#camera" << std::endl;
+
+			Vector3 cPos	= pCamera->GetPosition();
+			out << cPos.x << ";" << cPos.y << ";" << cPos.z << ";";
+
+			Vector3 cRot	= pCamera->GetRotation();
+			out << cRot.x << ";" << cRot.y << ";" << cRot.z << ";";
+
+			Vector3 cScale	= pCamera->GetScaling();
+			out << cScale.x << ";" << cScale.y << ";" << cScale.z << std::endl;
+
+			
+			// === SEGMENT: Skybox ===
+			Skybox* pSkybox	= this->pScene->GetSkybox();
+			if(pSkybox != NULL)
+			{
+				Logger::Log("SceneBuilder: Writing skybox data", Logger::INFO, __FILE__, __LINE__);
+				out << "#skybox" << std::endl;
+				
+				std::string skyTexture	= "";
+				out << skyTexture << ";";
+
+				float skySize			= pSkybox->GetSize();
+				out << skySize << std::endl;
+			}
+
+			
+			// === SEGMENT: Heightmap ===
+			Heightmap* pHeightmap	= this->pScene->GetHeightmap();
+			if(pHeightmap != NULL)
+			{
+				Logger::Log("SceneBuilder: Writing heightmap data", Logger::INFO, __FILE__, __LINE__);
+				out << "#heightmap" << std::endl;
+				
+				std::string mapBitmap	= "";
+				out << mapBitmap << ";";
+
+				float mapScaling		= 1.0f;
+				out << mapScaling << ";";
+
+				long mapSmoothing		= 1;
+				out << mapSmoothing << ";";
+
+				std::string mapTexture	= "";
+				out << mapTexture << std::endl;
+			}
+
+
+			// === SEGMENT: Entities ===
+			std::map<std::string, Entity*> entities = pScene->GetEntities();
+			std::vector<Entity*> entityStack	= std::vector<Entity*>();
+			Logger::Log("SceneBuilder: Writing entity data", Logger::INFO, __FILE__, __LINE__);
+			out << "#entities" << std::endl;
+
+			std::map<std::string, Entity*>::iterator entitiesIt;
+			for(entitiesIt = entities.begin(); entitiesIt != entities.end(); entitiesIt++)
+			{
+				// Add the entity to the stack
+				Entity* pEntity		= entitiesIt->second;
+				entityStack.push_back(pEntity);
+				
+				std::string eName	= entitiesIt->first;
+				out << eName << ";";
+
+				std::string eType	= "";
+				out << eType << ";";
+				
+				Vector3 ePos		= pEntity->GetPosition();
+				out << ePos.x << ";" << ePos.y << ";" << ePos.z << ";";
+
+				if(static_cast<LightPoint*>(pEntity))
+				{
+				}
+				else if(static_cast<Sound*>(pEntity))
+				{
+				}
+				// Default save model
+				else
+				{
+					Vector3 eRot		= pEntity->GetRotation();
+					out << eRot.x << ";" << eRot.y << ";" << eRot.z << ";";
 					
+					Vector3 eScale		= pEntity->GetScaling();
+					out << eScale.x << ";" << eScale.y << ";" << eScale.z << ";";
 
-					pEntity->SetPosition(Vector3(	this->FloatIfStringDefault(data.at(3), cPos.x),
-													this->FloatIfStringDefault(data.at(4), cPos.y),
-													this->FloatIfStringDefault(data.at(5), cPos.z)));
-					pEntity->SetRotation(Vector3(0.0f, 0.0f, 0.0f));
-					pEntity->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
-					((LightPoint*)pEntity)->SetRange(lRange);
-					((LightPoint*)pEntity)->SetColor(lColorR, lColorG, lColorB, lColorA);
-				}
-				else
-				{
-					Logger::Log("SceneBuilder: Unsupported entity type: " + type, Logger::WARNING, __FILE__, __LINE__);
+					// TODO: TEXTURES
 				}
 
-				this->pScene->AddEntity(name, pEntity);
+				out << std::endl;
+				// TODO: SUB ENTITIES
+				//out << this->WriteSubEntities(pEntity);
 			}
-			// Load skybox / heightmap
-			else if(command == "load")
-			{
-				// What is the type what we load
-				std::string type	= data.at(1);
-
-				if(type == "skybox")
-				{
-					Logger::Log("SceneBuilder: Loading a skybox", Logger::INFO, __FILE__, __LINE__);
-
-					std::string skyTexture	= data.at(2);
-					unsigned long skySize	= (unsigned long)std::atof(data.at(3).c_str());
-					this->pResourceManager->LoadTexture(this->pRenderer, skyTexture);
-
-					Skybox* pSkybox = new Skybox();
-					pSkybox->SetupVertices(this->pRenderer, skySize);
-					pSkybox->SetTexture(0, this->pResourceManager->GetTexture(skyTexture));
-					this->pScene->SetSkybox(pSkybox);
-				}
-				else if(type == "heightmap")
-				{
-					Logger::Log("SceneBuilder: Loading a heightmap", Logger::INFO, __FILE__, __LINE__);
-
-					std::string mapFileName				= data.at(2);
-					float pixelScale					= (float)std::atof(data.at(3).c_str());
-					unsigned long smoothingIterations	= (unsigned long)std::atof(data.at(4).c_str());
-
-					Heightmap* pHeightmap = new Heightmap();
-					this->pScene->SetHeightmap(pHeightmap);
-					pHeightmap->SetupVertices(this->pRenderer, mapFileName, pixelScale, smoothingIterations);
-
-					unsigned long iTex = 5;
-					for(unsigned long i = iTex; i < data.size(); i++)
-					{
-						std::string mapTexture = data.at(i);
-						this->pResourceManager->LoadTexture(this->pRenderer, mapTexture);
-
-						pHeightmap->SetTexture((i - iTex), this->pResourceManager->GetTexture(mapTexture));
-					}
-				}
-				else
-				{
-					Logger::Log("SceneBuilder: Unsupported load type: " + type, Logger::WARNING, __FILE__, __LINE__);
-				}
-			}
-			// Save the heightmap and write to a file
-			else if(command == "save")
-			{
-				// Set the dir to save to
-				std::string fileDir	= "Resource Files\\Scenes\\";
-				// Set the file extension
-				std::string fileExt	= ".scene";
-				// Create the output stream
-				std::ofstream out	= std::ofstream(fileDir + this->fileName + fileExt);
-				
-				// === SEGMENT: Camera ===
-				Camera* pCamera	= this->pScene->GetCamera();
-				out << "#camera" << std::endl;
-
-				Vector3 cPos	= pCamera->GetPosition();
-				out << cPos.x << ";" << cPos.y << ";" << cPos.z << ";";
-				Vector3 cRot	= pCamera->GetRotation();
-				out << cRot.x << ";" << cRot.y << ";" << cRot.z << ";";
-				Vector3 cScale	= pCamera->GetScaling();
-				out << cScale.x << ";" << cScale.y << ";" << cScale.z << std::endl;
-				
 
 
-				// Close and save the output stream
-				out.close();
-			}
+			Logger::Log("SceneBuilder: Closing file", Logger::INFO, __FILE__, __LINE__);
+			// Save the scene file
+			out.close();
 		}
 	}
 

@@ -65,6 +65,7 @@ namespace engine
 		void AddEntity(std::string argEntityName, Entity* argPEntity);
 		void RemoveEntity(std::string argEntityName);
 		
+		std::list<std::string> GetScripts();
 		void AddScript(std::string argScript);
 	};
 }

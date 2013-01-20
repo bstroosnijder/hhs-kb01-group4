@@ -41,6 +41,15 @@ namespace engine
 	}
 
 	/**
+	 * Getter for the size
+	 * @return		float
+	 */
+	float Skybox::GetSize()
+	{
+		return this->size;
+	}
+	
+	/**
 	 * Setter for the position
 	 * @param		Vector3					The new position for the skybox
 	 * @return		void
@@ -59,10 +68,11 @@ namespace engine
 	void Skybox::SetupVertices(Renderer* argPRenderer, unsigned long argBoxSize)
 	{
 		float numFaces					= 6;
-		float offset					= (argBoxSize - 1) / 2.0f;
+		this->size						= argBoxSize;
+		float offset					= (this->size - 1) / 2.0f;
 		
 		// --- Create the vertex array ---
-		unsigned long numVerticesFace	= argBoxSize * argBoxSize;
+		unsigned long numVerticesFace	= this->size * this->size;
 		this->numVertices				= numVerticesFace * 6;
 		this->numPrimitives				= this->numVertices * 2;
 		unsigned long vertexArraySize	= this->numVertices * sizeof(TexturedVector3);
@@ -78,11 +88,11 @@ namespace engine
 		for(unsigned long iFace = 0; iFace < numFaces; iFace++)
 		{
 			unsigned long curIndex = iFace * numVerticesFace;
-			for(unsigned long z = 0; z < argBoxSize; z++)
+			for(unsigned long z = 0; z < this->size; z++)
 			{
-				for(unsigned long x = 0; x < argBoxSize; x++)
+				for(unsigned long x = 0; x < this->size; x++)
 				{
-					unsigned long vIndex	= curIndex + ((z * argBoxSize) + x);
+					unsigned long vIndex	= curIndex + ((z * this->size) + x);
 
 					float pixelX;
 					float pixelY;
@@ -135,8 +145,8 @@ namespace engine
 					vertices[vIndex].y		= pixelY;
 					vertices[vIndex].z		= pixelZ;
 					vertices[vIndex].normal	= D3DXVECTOR3(-pixelX, -pixelY, -pixelZ);
-					vertices[vIndex].u		= (float)x / (float)(argBoxSize - 1);
-					vertices[vIndex].v		= (float)z / (float)(argBoxSize - 1);
+					vertices[vIndex].u		= (float)x / (float)(this->size - 1);
+					vertices[vIndex].v		= (float)z / (float)(this->size - 1);
 				}
 			}
 		}
@@ -151,28 +161,28 @@ namespace engine
 		for(unsigned long iFace = 0; iFace < numFaces; iFace++)
 		{
 			unsigned long curIndex = iFace * numVerticesFace;
-			for(unsigned long z = 0; z < (argBoxSize - 1); z++)
+			for(unsigned long z = 0; z < (this->size - 1); z++)
 			{
-				for(unsigned long x = 0; x < (argBoxSize - 1); x++)
+				for(unsigned long x = 0; x < (this->size - 1); x++)
 				{
 					// Top Left
-					indices[index]			= (short)(curIndex + ((z * argBoxSize) + x));
+					indices[index]			= (short)(curIndex + ((z * this->size) + x));
 					index++;
 					// Top Right
-					indices[index]			= (short)(curIndex + ((z * argBoxSize) + (x + 1)));
+					indices[index]			= (short)(curIndex + ((z * this->size) + (x + 1)));
 					index++;
 					// Bottom Left
-					indices[index]			= (short)(curIndex + (((z + 1) * argBoxSize) + x));
+					indices[index]			= (short)(curIndex + (((z + 1) * this->size) + x));
 					index++;
 				
 					// Bottom Right
-					indices[index]			= (short)(curIndex + (((z + 1) * argBoxSize) + (x + 1)));
+					indices[index]			= (short)(curIndex + (((z + 1) * this->size) + (x + 1)));
 					index++;
 					// Bottom Left
-					indices[index]			= (short)(curIndex + (((z + 1) * argBoxSize) + x));
+					indices[index]			= (short)(curIndex + (((z + 1) * this->size) + x));
 					index++;
 					// Top Right
-					indices[index]			= (short)(curIndex + ((z * argBoxSize) + (x + 1)));
+					indices[index]			= (short)(curIndex + ((z * this->size) + (x + 1)));
 					index++;
 				}
 			}

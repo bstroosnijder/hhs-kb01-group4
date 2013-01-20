@@ -378,6 +378,15 @@ namespace engine
 	}
 
 	/**
+	 * Gets all the scripts from the scene
+	 * @return		std::list<std::string>
+	 */
+	std::list<std::string> Scene::GetScripts()
+	{
+		return this->scripts;
+	}
+
+	/**
 	 * Adds a script to the scene to be executed during the update
 	 * @param		std::string				The script to add
 	 * @return		void

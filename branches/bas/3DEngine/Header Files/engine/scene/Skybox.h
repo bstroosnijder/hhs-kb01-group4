@@ -33,6 +33,7 @@ namespace engine
 		~Skybox();
 		void CleanUp();
 
+		float GetSize();
 		void SetPosition(Vector3 argPosition);
 
 		void SetupVertices(Renderer* argPRenderer, unsigned long argBoxSize);
