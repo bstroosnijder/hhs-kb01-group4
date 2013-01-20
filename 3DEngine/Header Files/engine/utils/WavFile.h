@@ -49,7 +49,6 @@ namespace engine
 	{
 	private:
 		WavChunkDescription wavHeader;
-		unsigned char* sData;
 
 		ALuint source;
 		ALuint buffer;

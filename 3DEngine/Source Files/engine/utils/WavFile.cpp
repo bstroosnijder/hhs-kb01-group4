@@ -84,13 +84,27 @@ namespace engine
 				 wavDataChunk.type[2] != 't' ||
 				 wavDataChunk.type[3] != 'a'));
 
-		this->sData = new unsigned char[wavDataChunk.size];
-		std::fread(this->sData, sizeof(unsigned char), wavDataChunk.size, pFile);
+		// Size per sample in the buffer
+		long sizePerSample;
+		// Create the sound buffer
+		void* sBuffer;
+		if(this->wavHeader.bitsPerSample == 16)
+		{
+			sizePerSample = sizeof(int);
+			sBuffer = new int[wavDataChunk.size];
+		}
+		// Default to 8bit
+		else
+		{
+			sizePerSample = sizeof(unsigned char);
+			sBuffer = new unsigned char[wavDataChunk.size];
+		}
+		std::fread(sBuffer, sizePerSample, wavDataChunk.size, pFile);
 
 
 		alGenSources(1, &this->source);
 		alGenBuffers(1, &this->buffer);
-		alBufferData(this->buffer, this->format, this->sData, wavDataChunk.size, this->frecuency);
+		alBufferData(this->buffer, this->format, sBuffer, wavDataChunk.size, this->frecuency);
 		
 		Logger::Log("WavFile: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
