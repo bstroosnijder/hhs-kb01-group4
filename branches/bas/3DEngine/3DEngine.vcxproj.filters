@@ -186,6 +186,12 @@
     <ClInclude Include="Header Files\engine\scene\SceneBuilder.h">
       <Filter>Header Files\engine\scene</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\utils\WavFile.h">
+      <Filter>Header Files\engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="header files\engine\scene\entities\sound.h">
+      <Filter>Header Files\engine\scene\entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
@@ -272,6 +278,12 @@
     </ClCompile>
     <ClCompile Include="Source Files\engine\scene\SceneBuilder.cpp">
       <Filter>Source Files\engine\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\utils\WavFile.cpp">
+      <Filter>Source Files\engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\scene\entities\Sound.cpp">
+      <Filter>Source Files\engine\scene\entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

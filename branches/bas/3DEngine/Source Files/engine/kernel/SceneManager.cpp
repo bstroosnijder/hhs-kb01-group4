@@ -391,6 +391,21 @@ namespace engine
 				((LightPoint*)pEntity)->SetRange(lightRange);
 				((LightPoint*)pEntity)->SetColor(colorR, colorG, colorB, colorA);
 			}
+			else if(entityType == "sound")
+			{
+				Logger::Log("SceneManager: Creating sound: " + entityName, Logger::INFO, __FILE__, __LINE__);
+				position			= Vector3(	(float)std::atof(data.at(2).c_str()),
+												(float)std::atof(data.at(3).c_str()),
+												(float)std::atof(data.at(4).c_str()));
+				rotation			= Vector3(0.0f, 0.0f, 0.0f);
+				scaling				= Vector3(1.0f, 1.0f, 1.0f);
+				std::string wavFile	= data.at(5);
+				
+				// Load the sound
+				argPResourceManager->LoadWav(wavFile);
+				// Create the sound
+				pEntity				= new Sound(argPResourceManager->GetWav(wavFile));
+			}
 			else
 			{
 				Logger::Log("SceneManager: Unsupported entity type: " + entityType, Logger::WARNING, __FILE__, __LINE__);

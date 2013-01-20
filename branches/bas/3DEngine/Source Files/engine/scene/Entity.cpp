@@ -122,7 +122,11 @@ namespace engine
 	{
 		Logger::Log("Entity: Initializing", Logger::INFO, __FILE__, __LINE__);
 
-		this->SetScaling(Vector3(1.0f, 1.0f, 1.0f));
+		this->position	= Vector3(0.0f, 0.0f, 0.0f);
+		this->rotation	= Vector3(0.0f, 0.0f, 0.0f);
+		this->scaling	= Vector3(1.0f, 1.0f, 1.0f);
+		this->speed		= Vector3(0.0f, 0.0f, 0.0f);
+
 		this->entities	= std::map<std::string, Entity*>();
 		this->scripts	= std::list<std::string>();
 
@@ -159,6 +163,62 @@ namespace engine
 			std::string script	= *scriptIt;
 			this->ParseAndExecuteScript(script);
 		}
+
+		// Update position acording to speed
+		this->position.x	+= this->speed.x;
+		this->position.y	+= this->speed.y;
+		this->position.z	+= this->speed.z;
+
+		// The speed at which the speed decays
+		float decay = 0.1f;
+		// Slow down on the x axis
+		if(this->speed.x != 0.0f)
+		{
+			if(this->speed.x > decay)
+			{
+				this->speed.x -= decay;
+			}
+			else if(this->speed.x < -decay)
+			{
+				this->speed.x += decay;
+			}
+			else
+			{
+				this->speed.x = 0.0f;
+			}
+		}
+		// Slow down on the y axis
+		if(this->speed.y != 0.0f)
+		{
+			if(this->speed.y > decay)
+			{
+				this->speed.y -= decay;
+			}
+			else if(this->speed.y < -decay)
+			{
+				this->speed.y += decay;
+			}
+			else
+			{
+				this->speed.y = 0.0f;
+			}
+		}
+		// Slow down on the z axis
+		if(this->speed.z != 0.0f)
+		{
+			if(this->speed.z > decay)
+			{
+				this->speed.z -= decay;
+			}
+			else if(this->speed.z < -decay)
+			{
+				this->speed.z += decay;
+			}
+			else
+			{
+				this->speed.z = 0.0f;
+			}
+		}
 		
 		// Update our sub entities
 		std::map<std::string, Entity*>::iterator entityIt;
@@ -182,19 +242,11 @@ namespace engine
 		D3DXMATRIXA16 matScaling;
 		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
 		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matScaling);
-		
-		// Rotation X
-		D3DXMATRIXA16 matRotationX;
-		D3DXMatrixRotationX(&matRotationX, this->rotation.x);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationX);
-		// Rotation Y
-		D3DXMATRIXA16 matRotationY;
-		D3DXMatrixRotationY(&matRotationY, this->rotation.y);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationY);
-		// Rotation Z
-		D3DXMATRIXA16 matRotationZ;
-		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationZ);
+
+		// Rotation
+		D3DXMATRIXA16 matRotation;
+		D3DXMatrixRotationYawPitchRoll(&matRotation, this->rotation.y, this->rotation.x, this->rotation.z);
+		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotation);
 
 		// Position
 		D3DXMATRIXA16 matPosition;
@@ -231,64 +283,58 @@ namespace engine
 		// Move Forward
 		if(argBind == "move_forward")
 		{
-			this->position.x -= (sin(this->rotation.y) * argSpeed);
-			//this->position.y += (sin(this->rotation.x) * argSpeed);
-			this->position.z -= (cos(this->rotation.y) * argSpeed);
+			this->speed.x	= -(sin(this->rotation.y) * argSpeed);
+			this->speed.z	= -(cos(this->rotation.y) * argSpeed);
 		}
 		// Move Backward
 		else if(argBind == "move_backward")
 		{
-			this->position.x += (sin(this->rotation.y) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y) * argSpeed);
+			this->speed.x	= (sin(this->rotation.y) * argSpeed);
+			this->speed.z	= (cos(this->rotation.y) * argSpeed);
 		}
 		// Move Forward or Backward
 		else if(argBind == "move_forward_backward")
 		{
-			this->position.x += (sin(this->rotation.y) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y) * argSpeed);
+			this->speed.x	= (sin(this->rotation.y) * argSpeed);
+			this->speed.z	= (cos(this->rotation.y) * argSpeed);
 		}
 		// Move Left
 		else if(argBind == "move_left")
 		{
-			this->position.x -= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y += (sin(this->rotation.x) * argSpeed);
-			this->position.z -= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			this->speed.x	= -(sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			this->speed.z	= -(cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 		}
 		// Move Right
 		else if(argBind == "move_right")
 		{
-			this->position.x += (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			this->speed.x	= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			this->speed.z	= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 		}
 		// Move Left or Right
 		else if(argBind == "move_left_right")
 		{
-			this->position.x += (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			this->speed.x	= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
+			this->speed.z	= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
 		}
 		// Move Up
 		else if(argBind == "move_up")
 		{
-			this->position.y += argSpeed;
+			this->speed.y	= argSpeed;
 		}
 		// Move Down
 		else if(argBind == "move_down")
 		{
-			this->position.y -= argSpeed;
+			this->speed.y	= -argSpeed;
 		}
 		// Turn Left
 		else if(argBind == "turn_left")
 		{
-			this->rotation.y = (float)(argSpeed / 10);
+			this->rotation.y -= (float)(argSpeed / 10);
 		}
 		// Turn Right
 		else if(argBind == "turn_right")
 		{
-			this->rotation.y = (float)(argSpeed / 10);
+			this->rotation.y += (float)(argSpeed / 10);
 		}
 		// Turn Left or Right
 		else if(argBind == "turn_left_right")
@@ -351,6 +397,16 @@ namespace engine
 	}
 
 	/**
+	 * Setter for the speed
+	 * @param		Vector3					The new speed for the entity
+	 * @return		void
+	 */
+	void Entity::SetSpeed(Vector3 argSpeed)
+	{
+		this->speed = argSpeed;
+	}
+
+	/**
 	 * Getter for the position
 	 * @return		Vector3					The position of the entity
 	 */
@@ -369,12 +425,21 @@ namespace engine
 	}
 	
 	/**
-	 * Getter for the rotation
+	 * Getter for the scaling
 	 * @return		Vector3					The scaling of the entity
 	 */
 	Vector3 Entity::GetScaling()
 	{
 		return this->scaling;
+	}
+	
+	/**
+	 * Getter for the speed
+	 * @return		Vector3					The speed of the entity
+	 */
+	Vector3 Entity::GetSpeed()
+	{
+		return this->speed;
 	}
 
 	/**

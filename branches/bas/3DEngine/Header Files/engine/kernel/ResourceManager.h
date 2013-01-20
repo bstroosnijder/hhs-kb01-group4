@@ -9,7 +9,8 @@
 #include "..\utils\fileExists.h"
 #include "..\renderer\Renderer.h"
 #include "..\resource\Resource.h"
-#include "..\resource\\Mesh.h"
+#include "..\resource\Mesh.h"
+#include "..\utils\WavFile.h"
 
 namespace engine
 {
@@ -22,6 +23,7 @@ namespace engine
 	private:
 		std::map<std::string, Mesh*> meshes;
 		std::map<std::string, LPDIRECT3DTEXTURE9> textures;
+		std::map<std::string, WavFile*> wavs;
 	public:
 		ResourceManager();
 		~ResourceManager();
@@ -32,6 +34,9 @@ namespace engine
 
 		LPDIRECT3DTEXTURE9 GetTexture(std::string argTextureFileName);
 		bool LoadTexture(Renderer* argPRenderer, std::string argTextureFileName);
+
+		WavFile* GetWav(std::string argWavFileName);
+		bool LoadWav(std::string argWavFileName);
 
 		Resource* NewResource(std::string argMeshFileName);
 	};

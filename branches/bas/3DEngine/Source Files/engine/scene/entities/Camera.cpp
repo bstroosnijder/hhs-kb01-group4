@@ -52,37 +52,28 @@ namespace engine
 		// Reset our world matrix
 		D3DXMatrixIdentity(&this->matWorld);
 
-		// Scaling
-		D3DXMATRIXA16 matScaling;
-		D3DXMatrixScaling(&matScaling, this->scaling.x, this->scaling.y, this->scaling.z);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matScaling);
-		
-		// Rotation X
-		D3DXMATRIXA16 matRotationX;
-		D3DXMatrixRotationX(&matRotationX, this->rotation.x);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationX);
-		// Rotation Y
-		D3DXMATRIXA16 matRotationY;
-		D3DXMatrixRotationY(&matRotationY, this->rotation.y);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationY);
-		// Rotation Z
-		D3DXMATRIXA16 matRotationZ;
-		D3DXMatrixRotationZ(&matRotationZ, this->rotation.z);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matRotationZ);
-
-		// Position
-		D3DXMATRIXA16 matPosition;
-		D3DXMatrixTranslation(&matPosition, this->position.x, this->position.y, this->position.z);
-		D3DXMatrixMultiply(&this->matWorld, &this->matWorld, &matPosition);
-		
-		D3DXMatrixInverse(&this->matWorld, NULL, &this->matWorld);
+		D3DXVECTOR3 vecEyePoint(this->position.x, this->position.y, this->position.z);
+		D3DXVECTOR3 vecLookAt(	this->position.x + (sin(this->rotation.y) * cos(this->rotation.x)),
+								this->position.y - (sin(this->rotation.x)),
+								this->position.z + (cos(this->rotation.y) * cos(this->rotation.x)));
+		D3DXVECTOR3 vecUp(0.0f, 1.0f, 0.0f);
+		D3DXMatrixLookAtLH(&this->matWorld, &vecEyePoint, &vecLookAt, &vecUp);
 		// Multiplies the entity world matrix with the renderer's world matrix (this->matWorld * renderer->matWorld)
-		argPRenderer->AddToWorldMatrix(&this->matWorld);
+		argPRenderer->AddToViewMatrix(&this->matWorld);
+
 
 		// Apply the matrix transformations
 		argPRenderer->TransformWorldMatrix();
 		argPRenderer->TransformViewMatrix();
 		argPRenderer->TransformProjectionMatrix();
+
+		// The the camera as the OpenAL Listener
+		ALfloat alPos[]		= { this->position.x, this->position.y, this->position.z };
+		alListenerfv(AL_POSITION, alPos);
+		ALfloat alVel[]		= { this->speed.x, this->speed.y, this->speed.z };
+		alListenerfv(AL_VELOCITY, alVel);
+		ALfloat alOri[]		= { -(sin(this->rotation.y) * cos(this->rotation.x)), (sin(this->rotation.x)), -(cos(this->rotation.y) * cos(this->rotation.x)), 0.0f, 1.0f, 0.0f };
+		alListenerfv(AL_ORIENTATION, alOri);
 	}
 
 	/**
@@ -93,90 +84,37 @@ namespace engine
 	 */
 	void Camera::InputEvent(std::string argBind, float argSpeed)
 	{
-		// Move Forward
-		if(argBind == "move_forward")
+		// For certain events the camera needs to reverse the speed
+		if(	argBind == "move_forward" ||
+			argBind == "move_backward" ||
+			argBind == "move_forward_backward" ||
+			argBind == "move_left" ||
+			argBind == "move_right" ||
+			argBind == "move_left_right" ||
+			argBind == "pan_up" ||
+			argBind == "pan_down" ||
+			argBind == "pan_up_down")
 		{
-			this->position.x += (sin(this->rotation.y) * argSpeed);
-			//this->position.y -= (tan(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y) * argSpeed);
+			argSpeed *= -1.0f;
 		}
-		// Move Backward=
-		else if(argBind == "move_backward")
+		
+		// The max rotation we can allow on the x axis
+		float threshold = (D3DX_PI / 2) - 0.1f;
+		// We can't overturn the x axis or wierd stuff happens
+		if(	argBind == "pan_up" ||
+			argBind == "pan_down" ||
+			argBind == "pan_up_down")
 		{
-			this->position.x -= (sin(this->rotation.y) * argSpeed);
-			//this->position.y += (tan(this->rotation.x) * argSpeed);
-			this->position.z -= (cos(this->rotation.y) * argSpeed);
-		}
-		// =Move Forward or Backward
-		else if(argBind == "move_forward_backward")
-		{
-			this->position.x -= (sin(this->rotation.y) * argSpeed);
-			//this->position.y += (sin(this->rotation.x) * argSpeed);
-			this->position.z -= (cos(this->rotation.y) * argSpeed);
-		}
-		// Move Left
-		else if(argBind == "move_left")
-		{
-			this->position.x += (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y -= (sin(this->rotation.x) * argSpeed);
-			this->position.z += (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-		}
-		// Move Right
-		else if(argBind == "move_right")
-		{
-			this->position.x -= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y += (sin(this->rotation.x) * argSpeed);
-			this->position.z -= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-		}
-		// Move Left or Right
-		else if(argBind == "move_left_right")
-		{
-			this->position.x -= (sin(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-			//this->position.y += (sin(this->rotation.x) * argSpeed);
-			this->position.z -= (cos(this->rotation.y - (D3DX_PI / 2)) * argSpeed);
-		}
-		// Move Up
-		else if(argBind == "move_up")
-		{
-			this->position.y += argSpeed;
-		}
-		// Move Down
-		else if(argBind == "move_down")
-		{
-			this->position.y -= argSpeed;
-		}
-		// Turn Left
-		else if(argBind == "turn_left")
-		{
-			this->rotation.y -= (float)(argSpeed / 10);
-		}
-		// Turn Right || Turn Left or Right
-		else if(argBind == "turn_right" || argBind == "turn_left_right")
-		{
-			this->rotation.y += (float)(argSpeed / 10);
-		}
-		// Pan Up
-		else if(argBind == "pan_up")
-		{
-			this->rotation.x -= (float)(argSpeed / 10);
-		}
-		// Pan Down || Pan Up or Down
-		else if(argBind == "pan_down" || argBind == "pan_up_down")
-		{
-			this->rotation.x += (float)(argSpeed / 10);
+			if(this->rotation.x > threshold && argSpeed < 0.0f)
+			{
+				argSpeed = 0.0f;
+			}
+			else if(this->rotation.x < -threshold && argSpeed > 0.0f)
+			{
+				argSpeed = 0.0f;
+			}
 		}
 
-		// Reset
-		else if(argBind == "reset")
-		{
-			this->position = Vector3(0.0f, 0.0f, 0.0f);
-			this->rotation = Vector3(0.0f, 0.0f, 0.0f);
-			this->scaling  = Vector3(1.0f, 1.0f, 1.0f);
-		}
-		// Use the default from entity
-		else
-		{
-			Entity::InputEvent(argBind, argSpeed);
-		}
+		Entity::InputEvent(argBind, argSpeed);
 	}
 }

@@ -3,6 +3,8 @@
 
 #include <map>
 #include <string>
+#include <al.h>
+#include <alc.h>
 #include "..\..\logger\Logger.h"
 #include "..\Entity.h"
 #include "..\..\renderer\Renderer.h"

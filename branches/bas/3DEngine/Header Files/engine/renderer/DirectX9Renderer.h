@@ -36,6 +36,9 @@ namespace engine
 		void* GetWorldTop();
 		void LoadWorldMatrix(void* argPMatrix);
 		void AddToWorldMatrix(void* argPMatrix);
+		
+		void* GetViewTop();
+		void AddToViewMatrix(void* argPMatrix);
 
 		void TransformWorldMatrix();
 		void TransformViewMatrix();
