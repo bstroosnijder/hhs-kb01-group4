@@ -33,6 +33,7 @@
     <ClInclude Include="Header Files\engine\Sandbox.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Camera.h" />
     <ClInclude Include="Header Files\engine\scene\entities\Model.h" />
+    <ClInclude Include="header files\engine\scene\entities\sound.h" />
     <ClInclude Include="Header Files\engine\scene\Entity.h" />
     <ClInclude Include="Header Files\engine\scene\Scene.h" />
     <ClInclude Include="Header Files\engine\utils\Bitmap.h" />
@@ -47,8 +48,10 @@
     <ClInclude Include="Header Files\engine\input\InputListener.h" />
     <ClInclude Include="Header Files\engine\scene\entities\LightPoint.h" />
     <ClInclude Include="Header Files\engine\scene\SceneBuilder.h" />
+    <ClInclude Include="Header Files\engine\utils\WavFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\engine\scene\entities\Sound.cpp" />
     <ClCompile Include="Source Files\engine\scene\SceneBuilder.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp" />
     <ClCompile Include="Source Files\engine\input\InputDevice.cpp" />
@@ -78,6 +81,7 @@
     <ClCompile Include="Source Files\engine\utils\explode.cpp" />
     <ClCompile Include="Source Files\engine\utils\fileExists.cpp" />
     <ClCompile Include="Source Files\engine\window\Win32Window.cpp" />
+    <ClCompile Include="Source Files\engine\utils\WavFile.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0771E178-34CE-4F57-B617-85D6D7B75094}</ProjectGuid>
@@ -106,10 +110,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +122,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;winmm.lib;dinput8.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;winmm.lib;dinput8.lib;dxguid.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

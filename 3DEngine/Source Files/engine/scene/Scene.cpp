@@ -226,6 +226,7 @@ namespace engine
 		if(this->pSkybox != NULL)
 		{
 			argPRenderer->Push();
+			this->pSkybox->SetPosition(this->pCamera->GetPosition());
 			this->pSkybox->Draw(argPRenderer);
 			argPRenderer->Pop();
 		}

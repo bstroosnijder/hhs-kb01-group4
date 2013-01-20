@@ -10,7 +10,7 @@ namespace engine
 	/**
 	 * Construct the DirectX9Renderer object.
 	 */
-	DirectX9Renderer::DirectX9Renderer(HWND argHWin)
+	DirectX9Renderer::DirectX9Renderer(HWND argHWin) : Renderer()
 	{
 		Logger::Log("DirectX9Renderer: Initializing", Logger::INFO, __FILE__, __LINE__);
 
@@ -73,6 +73,7 @@ namespace engine
 	 */
 	DirectX9Renderer::~DirectX9Renderer()
 	{
+		Logger::Log("DirectX9Renderer: Disposing", Logger::INFO, __FILE__, __LINE__);
 		this->CleanUp();
 	}
 
@@ -220,6 +221,26 @@ namespace engine
 	}
 
 	/**
+	 * Returns the current top of the view matrix stack
+	 * @return		void*
+	 */
+	void* DirectX9Renderer::GetViewTop()
+	{
+		return this->matView->GetTop();
+	}
+
+	/**
+	 * Adds a new matrix to the view matrix via multiplication
+	 * @param		void*				The matrix to multiply the current view matrix with
+	 * @return		void
+	 */
+	void DirectX9Renderer::AddToViewMatrix(void* argPMatrix)
+	{
+		D3DXMATRIXA16* pMatrix = (D3DXMATRIXA16*)argPMatrix;
+		this->matView->MultMatrixLocal(pMatrix);
+	}
+
+	/**
 	 * Transforms the world matrix
 	 * @return		void
 	 */
@@ -234,10 +255,10 @@ namespace engine
 	 */
 	void DirectX9Renderer::TransformViewMatrix()
 	{
-		D3DXVECTOR3 vEyePt(0.0f, 0.0f, 0.0f);
-		D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 1.0f);
-		D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-		D3DXMatrixLookAtLH(this->matView->GetTop(), &vEyePt, &vLookatPt, &vUpVec);
+		//D3DXVECTOR3 vEyePt(0.0f, 0.0f, 0.0f);
+		//D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 1.0f);
+		//D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+		//D3DXMatrixLookAtLH(this->matView->GetTop(), &vEyePt, &vLookatPt, &vUpVec);
 		this->pDevice->SetTransform(D3DTS_VIEW, this->matView->GetTop());
 	}
 

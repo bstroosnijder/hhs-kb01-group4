@@ -14,6 +14,7 @@
 #include "entities\Camera.h"
 #include "entities\Model.h"
 #include "entities\LightPoint.h"
+#include "entities\Sound.h"
 
 namespace engine
 {

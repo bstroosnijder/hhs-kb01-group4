@@ -1,6 +1,7 @@
 #ifndef BITMAP_H_
 #define BITMAP_H_
 
+#include <string>
 #include <fstream>
 #include "..\logger\Logger.h"
 

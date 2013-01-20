@@ -1,6 +1,8 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
+#include <al.h>
+#include <alc.h>
 #include "..\logger\Logger.h"
 #include "..\window\Window.h"
 
@@ -12,11 +14,18 @@ namespace engine
 	class Renderer
 	{
 	protected:
+		ALCdevice* pALDevice;
+		ALCcontext* pALContext;
+
 		unsigned long lightIndex;
 	public:
 		static const unsigned int DIRECTX_9;
 		static const unsigned int OPEN_GL;
-		
+
+		Renderer();
+		virtual ~Renderer();
+		void CleanUp();
+
 		virtual void* GetDevice()=0;
 		virtual void SetupMatricis()=0;
 
@@ -26,6 +35,9 @@ namespace engine
 		virtual void* GetWorldTop()=0;
 		virtual void LoadWorldMatrix(void* argPMatrix)=0;
 		virtual void AddToWorldMatrix(void* argPMatrix)=0;
+		
+		virtual void* GetViewTop()=0;
+		virtual void AddToViewMatrix(void* argPMatrix)=0;
 
 		virtual void TransformWorldMatrix()=0;
 		virtual void TransformViewMatrix()=0;

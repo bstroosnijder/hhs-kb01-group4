@@ -8,6 +8,9 @@ namespace engine
 	Skybox::Skybox()
 	{
 		Logger::Log("Skybox: Initializing", Logger::INFO, __FILE__, __LINE__);
+
+		this->position = Vector3(0.0f, 0.0f, 0.0f);
+
 		Logger::Log("Skybox: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
 
@@ -35,6 +38,16 @@ namespace engine
 		{
 			this->pIndexBuffer->Release();
 		}
+	}
+
+	/**
+	 * Setter for the position
+	 * @param		Vector3					The new position for the skybox
+	 * @return		void
+	 */
+	void Skybox::SetPosition(Vector3 argPosition)
+	{
+		this->position = argPosition;
 	}
 	
 	/**
@@ -196,35 +209,18 @@ namespace engine
 		D3DXMatrixScaling(&matScaling, 1.0f, 1.0f, 1.0f);
 		D3DXMatrixMultiply(&matWorld, &matWorld, &matScaling);
 
-		// Rotation X
-		D3DXMATRIXA16 matRotationX;
-		D3DXMatrixRotationX(&matRotationX, 0.0f);
-		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotationX);
-		// Rotation Y
-		D3DXMATRIXA16 matRotationY;
-		D3DXMatrixRotationY(&matRotationY, 0.0f);
-		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotationY);
-		// Rotation Z
-		D3DXMATRIXA16 matRotationZ;
-		D3DXMatrixRotationZ(&matRotationZ, 0.0f);
-		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotationZ);
+		// Rotation
+		D3DXMATRIXA16 matRotation;
+		D3DXMatrixRotationYawPitchRoll(&matRotation, 0.0f, 0.0f, 0.0f);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matRotation);
 
-		
-		D3DXMatrixMultiply(&matWorld, (D3DXMATRIXA16*)argPRenderer->GetWorldTop(), &matWorld);
-
-		D3DXVECTOR3 vecScale;
-		D3DXQUATERNION quatRotation;
-		D3DXVECTOR3 vecTranslation;
-		// Decompose the current world matrix, we need this so we counter camera movement and keep the skybox still
-		D3DXMatrixDecompose(&vecScale, &quatRotation, &vecTranslation, &matWorld);
-		
 		// Position
-		D3DXMATRIXA16 matTranslation;
-		D3DXMatrixTranslation(&matTranslation, vecTranslation.x, vecTranslation.y, vecTranslation.z);
-		D3DXMatrixInverse(&matTranslation, NULL, &matTranslation);
-		D3DXMatrixMultiply(&matWorld, &matWorld, &matTranslation);
+		D3DXMATRIXA16 matPosition;
+		D3DXMatrixTranslation(&matPosition, this->position.x, this->position.y, this->position.z);
+		D3DXMatrixMultiply(&matWorld, &matWorld, &matPosition);
 
 		argPRenderer->LoadWorldMatrix(&matWorld);
+
 
 		// Apply the matrix transformations
 		argPRenderer->TransformWorldMatrix();

@@ -5,6 +5,7 @@
 #include "..\logger\Logger.h"
 #include "Drawable.h"
 #include "..\renderer\DirectX9Renderer.h"
+#include "..\utils\Vector3.h"
 #include "..\utils\TexturedVector3.h"
 
 namespace engine
@@ -17,6 +18,7 @@ namespace engine
 	{
 	private:
 		float size;
+		Vector3 position;
 
 		unsigned long numVertices;
 		unsigned long numPrimitives;
@@ -30,6 +32,8 @@ namespace engine
 		Skybox();
 		~Skybox();
 		void CleanUp();
+
+		void SetPosition(Vector3 argPosition);
 
 		void SetupVertices(Renderer* argPRenderer, unsigned long argBoxSize);
 

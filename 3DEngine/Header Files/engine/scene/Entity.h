@@ -28,6 +28,7 @@ namespace engine
 		Vector3 position;
 		Vector3 rotation;
 		Vector3 scaling;
+		Vector3 speed;
 		
 		std::list<std::string> scripts;
 		std::map<std::string, Entity*> entities;
@@ -45,10 +46,12 @@ namespace engine
 		void SetPosition(Vector3 argPosition);
 		void SetRotation(Vector3 argRotation);
 		void SetScaling(Vector3 argScaling);
+		void SetSpeed(Vector3 argSpeed);
 
 		Vector3 GetPosition();
 		Vector3 GetRotation();
 		Vector3 GetScaling();
+		Vector3 GetSpeed();
 		
 		void AddScript(std::string argScript);
 		Entity* GetEntity(std::string argEntityName);

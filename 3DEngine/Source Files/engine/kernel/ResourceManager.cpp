@@ -14,8 +14,9 @@ namespace engine
 	{
 		Logger::Log("ResourceManager: Initializing", Logger::INFO, __FILE__, __LINE__);
 
-		this->meshes = std::map<std::string, Mesh*>();
-		this->textures = std::map<std::string, LPDIRECT3DTEXTURE9>();
+		this->meshes	= std::map<std::string, Mesh*>();
+		this->textures	= std::map<std::string, LPDIRECT3DTEXTURE9>();
+		this->wavs		= std::map<std::string, WavFile*>();
 
 		Logger::Log("ResourceManager: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -170,6 +171,47 @@ namespace engine
 		this->textures[argTextureFileName] = texture;
 		
 		Logger::Log("ResourceManager: Texture: " + argTextureFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
+		return true;
+	}
+	
+	/**
+	 * Gets a wav by name
+	 * @param		std::string				The name of the wav to get
+	 * @return		WavFile*
+	 */
+	WavFile* ResourceManager::GetWav(std::string argWavFileName)
+	{
+		return this->wavs[argWavFileName];
+	}
+
+	/**
+	 * Loads a wav
+	 * @param		std::string				The filename of the wav
+	 * @return		bool
+	 */
+	bool ResourceManager::LoadWav(std::string argWavFileName)
+	{
+		Logger::Log("ResourceManager: Loading sound: " + argWavFileName, Logger::INFO, __FILE__, __LINE__);
+
+		if(this->wavs.count(argWavFileName) > 0)
+		{
+			Logger::Log("ResourceManager: Sound already in memory", Logger::INFO, __FILE__, __LINE__);
+			return true;
+		}
+
+		// Parse the correct file name
+		std::string fileName = std::string("Resource Files\\Sounds\\" + argWavFileName);
+		// Check if the sound exists
+		if (!fileExists(fileName))
+		{
+			Logger::Log("ResourceManager: Sound not found: " + fileName, Logger::WARNING, __FILE__, __LINE__);
+			return false;
+		}
+
+		// Make the new sound
+		this->wavs[argWavFileName] = new WavFile(fileName);
+
+		Logger::Log("ResourceManager: Sound: " + argWavFileName + " loaded", Logger::INFO, __FILE__, __LINE__);
 		return true;
 	}
 
