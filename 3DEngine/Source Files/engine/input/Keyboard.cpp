@@ -81,6 +81,7 @@ namespace engine
 						(key == "KEY_C"			&& (bool)(KEYDOWN(kState, DIK_C) != 0)) ||
 						(key == "KEY_D"			&& (bool)(KEYDOWN(kState, DIK_D) != 0)) ||
 						(key == "KEY_E"			&& (bool)(KEYDOWN(kState, DIK_E) != 0)) ||
+						(key == "KEY_L"			&& (bool)(KEYDOWN(kState, DIK_L) != 0)) ||
 						(key == "KEY_P"			&& (bool)(KEYDOWN(kState, DIK_P) != 0)) ||
 						(key == "KEY_Q"			&& (bool)(KEYDOWN(kState, DIK_Q) != 0)) ||
 						(key == "KEY_S"			&& (bool)(KEYDOWN(kState, DIK_S) != 0)) ||
