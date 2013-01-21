@@ -11,6 +11,7 @@
 #include "InputManager.h"
 #include "..\renderer\Renderer.h"
 #include "..\renderer\DirectX9Renderer.h"
+#include "..\renderer\fps.h"
 
 namespace engine
 {
@@ -28,6 +29,7 @@ namespace engine
 		SceneManager* pSceneManager;
 		std::map<unsigned int, Renderer*> renderers;
 		std::map<Window*, Renderer*> winRenderer;
+		fps* pFPSCounter;
 	public:
 		Kernel();
 		~Kernel();

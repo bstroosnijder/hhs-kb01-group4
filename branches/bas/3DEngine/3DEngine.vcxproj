@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="Header Files\engine\input\InputDevice.h" />
     <ClInclude Include="Header Files\engine\input\JoyStick.h" />
+    <ClInclude Include="Header Files\engine\renderer\fps.h" />
     <ClInclude Include="Header Files\engine\scene\Drawable.h" />
     <ClInclude Include="Header Files\engine\input\Keyboard.h" />
     <ClInclude Include="Header Files\engine\input\Mouse.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Header Files\engine\utils\WavFile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source Files\engine\renderer\fps.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\Sound.cpp" />
     <ClCompile Include="Source Files\engine\scene\SceneBuilder.cpp" />
     <ClCompile Include="Source Files\engine\scene\entities\LightPoint.cpp" />
@@ -110,10 +112,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DXSDK_DIR)Include;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;C:\Program Files\OpenAL 1.1 SDK\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(DXSDK_DIR)Lib\x86;C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;C:\Program Files\OpenAL 1.1 SDK\libs\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
