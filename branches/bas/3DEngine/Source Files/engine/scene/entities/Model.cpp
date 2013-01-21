@@ -10,7 +10,7 @@ namespace engine
 	/**
 	 * Constructs the Scene object, initialising the Window and Entity collection.
 	 */
-	Model::Model(Resource* argPResource) : Entity()
+	Model::Model(Resource* argPResource) : Entity(Entity::MODEL)
 	{
 		Logger::Log("Model: Initializing", Logger::INFO, __FILE__, __LINE__);
 		this->pResource = argPResource;

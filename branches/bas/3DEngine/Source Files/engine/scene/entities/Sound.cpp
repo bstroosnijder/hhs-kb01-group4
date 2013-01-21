@@ -10,11 +10,16 @@ namespace engine
 	/**
 	 * Construct the Sound object.
 	 */
-	Sound::Sound(WavFile* argPWavFile)
+	Sound::Sound(WavFile* argPWavFile) : Entity(Entity::SOUND)
 	{
 		Logger::Log("Sound: Initializing", Logger::INFO, __FILE__, __LINE__);
 
 		this->pWavFile = argPWavFile;
+
+
+		alGenSources(1, &this->source);
+		alGenBuffers(1, &this->buffer);
+		alBufferData(this->buffer, this->pWavFile->GetFormat(), this->pWavFile->GetBuffer(), this->pWavFile->GetBufferSize(), this->pWavFile->GetFrecuency());
 
 		Logger::Log("Sound: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -45,7 +50,7 @@ namespace engine
 		Entity::Update();
 
 		ALenum state;
-		alGetSourcei(this->pWavFile->GetSource(), AL_SOURCE_STATE, &state);
+		alGetSourcei(this->source, AL_SOURCE_STATE, &state);
 		if(!(state == AL_PLAYING))
 		{
 			this->Play();
@@ -66,17 +71,15 @@ namespace engine
 		D3DXVECTOR3 vecPos;
 		D3DXMatrixDecompose(&vecScale, &quadRot, &vecPos, (D3DXMATRIXA16*)argPRenderer->GetWorldTop());
 
-		// The WavFile source object
-		ALuint source = this->pWavFile->GetSource();
 		// Set the source of the sound
-		alSourcei (source, AL_BUFFER, this->pWavFile->GetBuffer());
-		alSourcef (source, AL_PITCH, 1.0f);
-		alSourcef (source, AL_GAIN, 1.0f);
+		alSourcei (this->source, AL_BUFFER, this->buffer);
+		alSourcef (this->source, AL_PITCH, 1.0f);
+		alSourcef (this->source, AL_GAIN, 1.0f);
 		ALfloat alPos[]		= { vecPos.x, vecPos.y, vecPos.z };
-		alSourcefv(source, AL_POSITION, alPos);
+		alSourcefv(this->source, AL_POSITION, alPos);
 		ALfloat alVel[]		= { this->speed.x, this->speed.y, this->speed.z };
-		alSourcefv(source, AL_VELOCITY, alVel);
-		alSourcei (source, AL_LOOPING, AL_FALSE);
+		alSourcefv(this->source, AL_VELOCITY, alVel);
+		alSourcei (this->source, AL_LOOPING, AL_FALSE);
 	}
 
 	/**
@@ -85,7 +88,7 @@ namespace engine
 	 */
 	void Sound::Play()
 	{
-		alSourcePlay(this->pWavFile->GetSource());
+		alSourcePlay(this->source);
 	}
 
 	/**
@@ -94,7 +97,7 @@ namespace engine
 	 */
 	void Sound::Pause()
 	{
-		alSourcePause(this->pWavFile->GetSource());
+		alSourcePause(this->source);
 	}
 
 	/**
@@ -103,6 +106,6 @@ namespace engine
 	 */
 	void Sound::Stop()
 	{
-		alSourceStop(this->pWavFile->GetSource());
+		alSourceStop(this->source);
 	}
 }

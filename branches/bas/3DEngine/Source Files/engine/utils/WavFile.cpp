@@ -84,27 +84,22 @@ namespace engine
 				 wavDataChunk.type[2] != 't' ||
 				 wavDataChunk.type[3] != 'a'));
 
+		// Set the buffer size
+		this->bufferSize = wavDataChunk.size;
 		// Size per sample in the buffer
 		long sizePerSample;
-		// Create the sound buffer
-		void* sBuffer;
 		if(this->wavHeader.bitsPerSample == 16)
 		{
 			sizePerSample = sizeof(int);
-			sBuffer = new int[wavDataChunk.size];
+			this->buffer = new int[this->bufferSize];
 		}
 		// Default to 8bit
 		else
 		{
 			sizePerSample = sizeof(unsigned char);
-			sBuffer = new unsigned char[wavDataChunk.size];
+			this->buffer = new unsigned char[this->bufferSize];
 		}
-		std::fread(sBuffer, sizePerSample, wavDataChunk.size, pFile);
-
-
-		alGenSources(1, &this->source);
-		alGenBuffers(1, &this->buffer);
-		alBufferData(this->buffer, this->format, sBuffer, wavDataChunk.size, this->frecuency);
+		std::fread(this->buffer, sizePerSample, this->bufferSize, pFile);
 		
 		Logger::Log("WavFile: Finished", Logger::INFO, __FILE__, __LINE__);
 	}
@@ -125,22 +120,40 @@ namespace engine
 	void WavFile::CleanUp()
 	{
 	}
-
+	
 	/**
-	 * Gets the source
-	 * @return		ALuint
+	 * Gets the buffer size
+	 * @return		unsigned long
 	 */
-	ALuint WavFile::GetSource()
+	unsigned long WavFile::GetBufferSize()
 	{
-		return this->source;
+		return this->bufferSize;
 	}
 
 	/**
 	 * Gets the buffer
-	 * @return		ALuint
+	 * @return		void*
 	 */
-	ALuint WavFile::GetBuffer()
+	void* WavFile::GetBuffer()
 	{
 		return this->buffer;
+	}
+
+	/**
+	 * Gets the frecuency
+	 * @return		ALuint
+	 */
+	ALuint WavFile::GetFrecuency()
+	{
+		return this->frecuency;
+	}
+
+	/**
+	 * Gets the format
+	 * @return		ALuint
+	 */
+	ALuint WavFile::GetFormat()
+	{
+		return this->format;
 	}
 }

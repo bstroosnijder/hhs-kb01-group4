@@ -11,7 +11,7 @@ namespace engine
 	 * Construct the Light Point object.
 	 * @param		unsigned long		The index of the light
 	 */
-	LightPoint::LightPoint(unsigned long argIndex) : Entity()
+	LightPoint::LightPoint(unsigned long argIndex) : Entity(Entity::LIGHTPOINT)
 	{
 		Logger::Log("LightPoint: Initializing", Logger::INFO, __FILE__, __LINE__);
 		
@@ -118,6 +118,15 @@ namespace engine
 	float LightPoint::GetRange()
 	{
 		return this->range;
+	}
+
+	/**
+	 * Gets the color of the light
+	 * @return		D3DXCOLOR
+	 */
+	D3DXCOLOR LightPoint::GetColor()
+	{
+		return this->color;
 	}
 
 	/**

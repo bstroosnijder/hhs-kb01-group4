@@ -113,6 +113,7 @@ namespace engine
 				pKeyboard->AddInputListener(pSceneBuilder);
 				pKeyboard->AddBind("KEY_LCONTROL:KEY_E",	"spawn");
 				pKeyboard->AddBind("KEY_LCONTROL:KEY_L",	"load");
+				pKeyboard->AddBind("KEY_LCONTROL:KEY_M",	"modify");
 				pKeyboard->AddBind("KEY_LCONTROL:KEY_D",	"delete");
 				pKeyboard->AddBind("KEY_LCONTROL:KEY_C",	"clear");
 				pKeyboard->AddBind("KEY_LCONTROL:KEY_S",	"save");

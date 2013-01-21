@@ -10,7 +10,7 @@ namespace engine
 	/**
 	 * Constructs the Camera object.
 	 */
-	Camera::Camera() : Entity()
+	Camera::Camera() : Entity(Entity::CAMERA)
 	{
 		Logger::Log("Camera: Initializing", Logger::INFO, __FILE__, __LINE__);
 		Logger::Log("Camera: Finished", Logger::INFO, __FILE__, __LINE__);

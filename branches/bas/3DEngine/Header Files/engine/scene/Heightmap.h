@@ -22,6 +22,9 @@ namespace engine
 		float offsetY;
 		float offsetZ;
 
+		float scaling;
+		long smoothing;
+
 
 		LPDIRECT3DTEXTURE9 textures[8];
 		
@@ -38,7 +41,10 @@ namespace engine
 		Heightmap();
 		~Heightmap();
 		void CleanUp();
-		
+
+		float GetScaling();
+		long GetSmoothing();
+
 		void SetupVertices(Renderer* argPRenderer, std::string argMapFileName, float argPixelScale, unsigned long argSmoothing);
 		float GetHeight(float argX, float argZ);
 

@@ -50,8 +50,9 @@ namespace engine
 	private:
 		WavChunkDescription wavHeader;
 
-		ALuint source;
-		ALuint buffer;
+		unsigned long bufferSize;
+		void* buffer;
+
 		ALuint frecuency;
 		ALuint format;
 	public:
@@ -59,8 +60,11 @@ namespace engine
 		~WavFile();
 		void CleanUp();
 
-		ALuint GetSource();
-		ALuint GetBuffer();
+		unsigned long GetBufferSize();
+		void* GetBuffer();
+
+		ALuint GetFrecuency();
+		ALuint GetFormat();
 	};
 }
 

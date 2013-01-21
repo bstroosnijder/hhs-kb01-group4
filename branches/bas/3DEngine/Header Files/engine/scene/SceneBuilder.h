@@ -1,6 +1,7 @@
 #ifndef SCENEBUILDER_H_
 #define SCENEBUILDER_H_
 
+#include <map>
 #include <vector>
 #include <string>
 #include "..\input\InputListener.h"
@@ -19,6 +20,14 @@ namespace engine
 		Scene* pScene;
 		ResourceManager* pResourceManager;
 		Renderer* pRenderer;
+
+		std::string skyboxTexture;
+		std::string heightmapBitmap;
+		std::string heightmapTextures[8];
+
+		std::map<std::string, std::string> modelMesh;
+		std::map<std::string, std::map<unsigned long, std::string>> modelTextures;
+		std::map<std::string, std::string> soundWavFile;
 
 		float FloatIfStringDefault(std::string argValue, float argDefault);
 	public:
