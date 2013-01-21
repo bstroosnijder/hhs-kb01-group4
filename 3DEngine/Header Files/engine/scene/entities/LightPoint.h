@@ -31,6 +31,7 @@ namespace engine
 		void SetRange(float argRange);
 		float GetRange();
 
+		D3DXCOLOR GetColor();
 		void SetColor(float argColorR, float argColorG, float argColorB, float argColorA);
 	};
 }

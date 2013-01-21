@@ -204,6 +204,24 @@ namespace engine
 	}
 
 	/**
+	 * Gets the scaling
+	 * @return		float
+	 */
+	float Heightmap::GetScaling()
+	{
+		return this->scaling;
+	}
+
+	/**
+	 * Gets the smoothing
+	 * @return		long
+	 */
+	long Heightmap::GetSmoothing()
+	{
+		return this->smoothing;
+	}
+
+	/**
 	 * Takes the pixel data from the Bitmap class and generates a vertices array with the Y value as the pixel value.
 	 * @param		Renderer*				The renderer to use
 	 * @param		std::string				The file name of the BMP file to load
@@ -221,13 +239,17 @@ namespace engine
 		unsigned char* pixelData		= pBitmap->GetPixelData();
 		this->width						= pBitmap->GetImageWidth();
 		this->height					= pBitmap->GetImageHeight();
+		
+		// Save the heightmap data
+		this->scaling					= argPixelScale;
+		this->smoothing					= argSmoothing;
 
 		// Delete the bitmap
 		delete pBitmap;
 
-		this->offsetX					= -(((float)(this->width * argPixelScale)) / 2);
+		this->offsetX					= -(((float)(this->width * this->scaling)) / 2);
 		this->offsetY					= 0;
-		this->offsetZ					= -(((float)(this->height * argPixelScale)) / 2);
+		this->offsetZ					= -(((float)(this->height * this->scaling)) / 2);
 		
 		// --- Create the vertex array ---
 		this->numVertices				= this->width * this->height;
@@ -240,9 +262,9 @@ namespace engine
 			for(long x = 0; x < this->width; x++)
 			{
 				long vIndex						= (z * this->width) + x;
-				float pixelX					= x * argPixelScale;
+				float pixelX					= x * this->scaling;
 				float pixelY					= pixelData[vIndex] / 15.0f;
-				float pixelZ					= z * argPixelScale;
+				float pixelZ					= z * this->scaling;
 
 				this->vertices[vIndex].x		= this->offsetX + pixelX;
 				this->vertices[vIndex].y		= this->offsetY + pixelY;
@@ -250,8 +272,8 @@ namespace engine
 
 				this->vertices[vIndex].normal	= D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-				this->vertices[vIndex].u		= pixelX / ((float)(this->width * argPixelScale));
-				this->vertices[vIndex].v		= 1 - (pixelZ / ((float)(this->height * argPixelScale)));
+				this->vertices[vIndex].u		= pixelX / ((float)(this->width * this->scaling));
+				this->vertices[vIndex].v		= 1 - (pixelZ / ((float)(this->height * this->scaling)));
 			}
 		}
 

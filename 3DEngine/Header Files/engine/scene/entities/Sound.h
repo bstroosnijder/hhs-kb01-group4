@@ -1,6 +1,8 @@
 #ifndef SOUND_H_
 #define SOUND_H_
 
+#include <al.h>
+#include <alc.h>
 #include "..\Entity.h"
 #include "..\..\utils\WavFile.h"
 
@@ -13,6 +15,9 @@ namespace engine
 	{
 	private:
 		WavFile* pWavFile;
+
+		ALuint source;
+		ALuint buffer;
 	public:
 		Sound(WavFile* argPWavFile);
 		~Sound();

@@ -23,6 +23,7 @@ namespace engine
 	class Entity : public Drawable, public InputListener
 	{
 	private:
+		const int type;
 	protected:
 		D3DXMATRIXA16 matWorld;
 		Vector3 position;
@@ -34,9 +35,15 @@ namespace engine
 		std::map<std::string, Entity*> entities;
 		void ParseAndExecuteScript(std::string argScript);
 	public:
-		Entity();
+		static const int CAMERA;
+		static const int MODEL;
+		static const int LIGHTPOINT;
+		static const int SOUND;
+
+		Entity(const int argType);
 		virtual ~Entity();
 		virtual void CleanUp();
+		const int GetType();
 
 		virtual void Update();
 		virtual void Draw(Renderer* argPRenderer);

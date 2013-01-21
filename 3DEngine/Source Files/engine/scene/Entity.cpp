@@ -4,6 +4,12 @@ namespace engine
 {
 	//---Private attributes---
 	//---Public attributes---
+	
+	const int Entity::CAMERA		= 0;
+	const int Entity::MODEL			= 1;
+	const int Entity::LIGHTPOINT	= 2;
+	const int Entity::SOUND			= 3;
+
 	//---Private methods---
 	
 	/**
@@ -118,7 +124,7 @@ namespace engine
 	/**
 	 * Constructs the Scene object, initialising the Window and Entity collection.
 	 */
-	Entity::Entity()
+	Entity::Entity(const int argType) : type(argType)
 	{
 		Logger::Log("Entity: Initializing", Logger::INFO, __FILE__, __LINE__);
 
@@ -148,6 +154,15 @@ namespace engine
 	 */
 	void Entity::CleanUp()
 	{
+	}
+	
+	/**
+	 * Gets the entity type
+	 * @return		const int
+	 */
+	const int Entity::GetType()
+	{
+		return this->type;
 	}
 
 	/**
