@@ -192,6 +192,9 @@
     <ClInclude Include="header files\engine\scene\entities\sound.h">
       <Filter>Header Files\engine\scene\entities</Filter>
     </ClInclude>
+    <ClInclude Include="Header Files\engine\renderer\fps.h">
+      <Filter>Header Files\engine\renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Files\engine\Sandbox.cpp">
@@ -284,6 +287,9 @@
     </ClCompile>
     <ClCompile Include="Source Files\engine\scene\entities\Sound.cpp">
       <Filter>Source Files\engine\scene\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Files\engine\renderer\fps.cpp">
+      <Filter>Source Files\engine\renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

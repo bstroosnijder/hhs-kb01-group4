@@ -21,6 +21,7 @@ namespace engine
 		this->pResourceManager	= new ResourceManager();
 		this->pInputManager		= new InputManager();
 		this->pSceneManager		= new SceneManager();
+		this->pFPSCounter		= new fps();
 
 		//Initialise and fill the renderers map with the default renderers.
 		this->renderers			= std::map<unsigned int, Renderer*>();
@@ -178,6 +179,7 @@ namespace engine
 				pScene->Draw(pRenderer);
 				pRenderer->EndScene();
 				pRenderer->Present(pWindow);
+				this->pFPSCounter->FPScount();
 			}
 		}
 	}

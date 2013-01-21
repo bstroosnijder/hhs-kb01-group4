@@ -31,7 +31,9 @@ namespace engine
 
 			float speed		= 1;
 			if(dir == "CCW")
+			{
 				speed		= -1;
+			}
 			float rotSpeed	= (float)std::atof(parts.at(3).c_str());
 			float radius	= (float)std::atof(parts.at(4).c_str());
 
