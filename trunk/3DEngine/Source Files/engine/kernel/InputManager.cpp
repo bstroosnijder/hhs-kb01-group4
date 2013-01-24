@@ -112,8 +112,8 @@ namespace engine
 	}
 
 	/**
-	 * Gets the mouse object
-	 * @return		Mouse*
+	 * Gets the joystick object
+	 * @return		Joystick*
 	 */
 	JoyStick* InputManager::GetJoyStick()
 	{

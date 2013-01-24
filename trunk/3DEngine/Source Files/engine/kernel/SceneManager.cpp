@@ -43,7 +43,7 @@ namespace engine
 	}
 
 	/**
-	 * Returns the number of scenes currently in the scenes vector
+	 * Returns the number of scenes currently in the scenes collection
 	 * @return		int
 	 */
 	int SceneManager::GetSceneCount()

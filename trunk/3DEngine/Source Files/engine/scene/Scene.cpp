@@ -43,12 +43,12 @@ namespace engine
 			Vector3 rotCamera = this->pCamera->GetRotation();
 			Vector3 posCamera = this->pCamera->GetPosition();
 
-			rotCamera.x = (rotTarget.x * -1);
+			rotCamera.x = (rotTarget.x * -1) - (D3DX_PI/2);
 			rotCamera.y = rotTarget.y + D3DX_PI;
 			rotCamera.z = rotTarget.z;
 
 			posCamera.x = posTarget.x - (sin(rotCamera.y) * 10);
-			posCamera.y = posTarget.y + 2 + (tan(rotCamera.x) * 10);
+			posCamera.y = posTarget.y +2+ (tan(rotCamera.x) * 10);
 			posCamera.z = posTarget.z - (cos(rotCamera.y) * 10);
 			
 			this->pCamera->SetRotation(rotCamera);

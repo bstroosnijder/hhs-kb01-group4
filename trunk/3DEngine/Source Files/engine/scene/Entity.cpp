@@ -116,7 +116,7 @@ namespace engine
 	//---Public methods---
 
 	/**
-	 * Constructs the Scene object, initialising the Window and Entity collection.
+	 * Constructs the Entity object, initialising the Window and Entity collection.
 	 */
 	Entity::Entity()
 	{
@@ -130,7 +130,7 @@ namespace engine
 	}
 
 	/**
-	 * Destructs the Scene object.
+	 * Destructs the Entity object.
 	 */
 	Entity::~Entity()
 	{

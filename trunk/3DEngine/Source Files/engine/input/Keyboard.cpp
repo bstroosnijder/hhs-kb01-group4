@@ -14,7 +14,7 @@ namespace engine
 	/**
 	 * Constructs the keyboard
 	 * @param		HWND						The window that is receiving input
-	 * @param		LPDIRECTINPUT8				???
+	 * @param		LPDIRECTINPUT8				The directinput8 device
 	 */
 	Keyboard::Keyboard(Window* argPWindow, LPDIRECTINPUT8 argPInput) : InputDevice()
 	{
