@@ -12,6 +12,7 @@ namespace engine
 	 */
 	ConsoleLog::ConsoleLog()
 	{
+		//constructor is empty because nothing needs to happen
 	}
 
 	/**
@@ -29,6 +30,7 @@ namespace engine
 	 */
 	void ConsoleLog::CleanUp()
 	{
+		//nothing to clean up here
 	}
 
 	/**
