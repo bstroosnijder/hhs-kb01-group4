@@ -39,7 +39,6 @@ namespace engine
 		void CleanUp();
 		
 		void SetupVertices(Renderer* argPRenderer, std::string argMapFileName, float argPixelScale, unsigned long argSmoothing);
-		float GetHeight(float argX, float argZ);
 
 		void Update();
 		void Draw(Renderer* argPRenderer);

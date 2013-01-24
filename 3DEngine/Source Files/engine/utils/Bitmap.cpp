@@ -15,19 +15,19 @@ namespace engine
 		char buffer[sizeof(unsigned long)];
 
 		// --- READ FILE HEADER ---
-		// Read the BMP type bytes
+		// Read the BMP type
 		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfType));
 		memcpy(&this->bitmapFileHeader.bfType, &buffer, sizeof(this->bitmapFileHeader.bfType));
 
-		// Read the file size bytes
+		// Read the file size
 		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfSize));
 		memcpy(&this->bitmapFileHeader.bfSize, &buffer, sizeof(this->bitmapFileHeader.bfSize));
 
-		// Read the first reserved bytes
+		// Read the first reserved
 		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfReserved1));
 		memcpy(&this->bitmapFileHeader.bfReserved1, &buffer, sizeof(this->bitmapFileHeader.bfReserved1));
 		
-		// Read the second reserved bytes
+		// Read the second reserved
 		inStream.read(buffer, sizeof(this->bitmapFileHeader.bfReserved2));
 		memcpy(&this->bitmapFileHeader.bfReserved2, &buffer, sizeof(this->bitmapFileHeader.bfReserved2));
 		
@@ -37,40 +37,51 @@ namespace engine
 
 
 		// --- READ INFO HEADER ---
+		// Reads the size of the info header
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biSize));
 		memcpy(&this->bitmapInfoHeader.biSize, &buffer, sizeof(this->bitmapInfoHeader.biSize));
 		
+		// Read the width in pixels
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biWidth));
 		memcpy(&this->bitmapInfoHeader.biWidth, &buffer, sizeof(this->bitmapInfoHeader.biWidth));
 		// Save the image width for easy access later
 		this->imageWidth = this->bitmapInfoHeader.biWidth;
 		
+		// Read the height in pixels
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biHeight));
 		memcpy(&this->bitmapInfoHeader.biHeight, &buffer, sizeof(this->bitmapInfoHeader.biHeight));
 		// Save the image height for easy access later
 		this->imageHeight = this->bitmapInfoHeader.biHeight;
 		
+		// Read how many planes are in the image
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biPlanes));
 		memcpy(&this->bitmapInfoHeader.biPlanes, &buffer, sizeof(this->bitmapInfoHeader.biPlanes));
 		
+		// Read how many bits per pixel this image has
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biBitCount));
 		memcpy(&this->bitmapInfoHeader.biBitCount, &buffer, sizeof(this->bitmapInfoHeader.biBitCount));
 		
+		// Read what kind of compression is used
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biCompression));
 		memcpy(&this->bitmapInfoHeader.biCompression, &buffer, sizeof(this->bitmapInfoHeader.biCompression));
 		
+		// Read the size of the image
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biSizeImage));
 		memcpy(&this->bitmapInfoHeader.biSizeImage, &buffer, sizeof(this->bitmapInfoHeader.biSizeImage));
 		
+		// Read how many pixels per meter over the X axis
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biXPelsPerMeter));
 		memcpy(&this->bitmapInfoHeader.biXPelsPerMeter, &buffer, sizeof(this->bitmapInfoHeader.biXPelsPerMeter));
 		
+		// Read how many pixels per meter over the Y axis
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biYPelsPerMeter));
 		memcpy(&this->bitmapInfoHeader.biYPelsPerMeter, &buffer, sizeof(this->bitmapInfoHeader.biYPelsPerMeter));
 		
+		// Reads what colors are in the color table
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biClrUsed));
 		memcpy(&this->bitmapInfoHeader.biClrUsed, &buffer, sizeof(this->bitmapInfoHeader.biClrUsed));
 		
+		// Reads the count of important colors
 		inStream.read(buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 		memcpy(&this->bitmapInfoHeader.biClrImportant, &buffer, sizeof(this->bitmapInfoHeader.biClrImportant));
 
@@ -122,21 +133,37 @@ namespace engine
 		return true;
 	}
 
+	/**
+	 * Gets the pixel data
+	 * @return		char*
+	 */
 	unsigned char* Bitmap::GetPixelData()
 	{
 		return this->pPixelData;
 	}
 
+	/**
+	 * Gets the image width
+	 * @return		long
+	 */
 	long Bitmap::GetImageWidth()
 	{
 		return this->imageWidth;
 	}
 
+	/**
+	 * Gets the image height
+	 * @return		long
+	 */
 	long Bitmap::GetImageHeight()
 	{
 		return this->imageHeight;
 	}
 
+	/**
+	 * Gets the total pixel count
+	 * @return		unsigned long
+	 */
 	unsigned long Bitmap::GetPixelCount()
 	{
 		return this->pixelCount;

@@ -129,21 +129,25 @@ namespace engine
 				float normalY	= 1.0f;
 				float normalZ	= 0.0f;
 
+				// Add: Left pixel
 				if(x > 0)
 				{
 					normalX		+= this->vertices[vIndex - 1].y;
 				}
 
+				// Add: Right pixel
 				if(x < (this->width - 1))
 				{
 					normalX		-= this->vertices[vIndex + 1].y;
 				}
 
+				// Add: Top pixel
 				if(z > 0)
 				{
 					normalZ		+= this->vertices[vIndex - this->width].y;
 				}
 
+				// Add: Bottom pixel
 				if(z < (this->height - 1))
 				{
 					normalZ		-= this->vertices[vIndex + this->width].y;
@@ -301,62 +305,6 @@ namespace engine
 		
 		// Create the index buffer.
 		argPRenderer->CreateIndexBuffer(&this->pIndexBuffer, indexArraySize, indices);
-	}
-	
-	/**
-	 * Get the height data from an X and Z coordinate
-	 * @param		long		The x coordinate
-	 * @param		long		The Z coordinate
-	 * @return		float		The Y value (height data)
-	 */
-	float Heightmap::GetHeight(float argX, float argZ)
-	{
-		int num		= 0;
-		float sum	= 0.0f;
-
-		long ceilX	= (long)std::ceil(argX - this->offsetX);
-		long ceilZ	= (long)std::ceil(argZ - this->offsetZ);
-		long floorX	= (long)std::floor(argX - this->offsetX);
-		long floorZ	= (long)std::floor(argZ - this->offsetZ);
-
-		// Top
-		if(ceilZ < ((this->offsetZ + this->height) - 1))
-		{
-			// Left
-			if(floorX > this->offsetX)
-			{
-				num++;
-				sum+= this->vertices[(ceilZ * this->width) + floorX].y;
-			}
-
-			// Right
-			if(ceilX < ((this->offsetZ + this->width) - 1))
-			{
-				num++;
-				sum+= this->vertices[(ceilZ * this->width) + ceilX].y;
-			}
-		}
-
-		// Bottom
-		if(floorZ > this->offsetZ)
-		{
-			// Left
-			if(floorX > this->offsetX)
-			{
-				num++;
-				sum+= this->vertices[(floorZ * this->width) + floorX].y;
-			}
-
-			// Right
-			if(ceilX < ((this->offsetZ + this->width) - 1))
-			{
-				num++;
-				sum+= this->vertices[(floorZ * this->width) + ceilX].y;
-			}
-		}
-
-		// Return the average height of the 4 pixels
-		return sum / num;
 	}
 
 	/**
