@@ -10,7 +10,7 @@ namespace engine
 	/**
 	 * Construct the DirectX9Renderer object.
 	 */
-	DirectX9Renderer::DirectX9Renderer(HWND argHWin)
+	DirectX9Renderer::DirectX9Renderer(HWND argHWin) : Renderer()
 	{
 		Logger::Log("DirectX9Renderer: Initializing", Logger::INFO, __FILE__, __LINE__);
 
@@ -412,6 +412,7 @@ namespace engine
 	 * Ends a scene.
 	 * Calls upon the directx device to end a scene.
 	 * This is necessary for the directx's API to help it do magic.
+	 * @return		void
 	 */
 	void DirectX9Renderer::EndScene()
 	{

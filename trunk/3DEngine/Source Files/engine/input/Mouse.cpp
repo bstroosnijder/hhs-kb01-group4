@@ -40,7 +40,7 @@ namespace engine
 	}
 
 	/**
-	 * Destructs the Keyboard object.
+	 * Destructs the keyboard object.
 	 */
 	Mouse::~Mouse()
 	{

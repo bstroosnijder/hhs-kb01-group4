@@ -16,8 +16,6 @@ namespace engine
 	class Skybox : public Drawable
 	{
 	private:
-		float size;
-
 		unsigned long numVertices;
 		unsigned long numPrimitives;
 

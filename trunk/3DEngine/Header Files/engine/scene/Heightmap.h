@@ -21,13 +21,12 @@ namespace engine
 		float offsetX;
 		float offsetY;
 		float offsetZ;
-
-
-		LPDIRECT3DTEXTURE9 textures[8];
 		
 		unsigned long numVertices;
 		unsigned long numPrimitives;
 		TexturedVector3* vertices;
+
+		LPDIRECT3DTEXTURE9 textures[8];
 
 		LPDIRECT3DVERTEXBUFFER9 pVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9 pIndexBuffer;

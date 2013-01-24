@@ -18,12 +18,12 @@ namespace engine
 	class Logger
 	{
 	private:
+		static std::list<LogStrategy*> strategies;
 		static char* Logger::GetSeverity(int argSeverity);
 	public:
 		static const int INFO;
 		static const int WARNING;
 		static const int FATAL;
-		static std::list<LogStrategy*> strategies;
 
 		static void AddStrategy(LogStrategy* argPStrat);
 		static void RemoveStrategy(LogStrategy* argPStrat);
