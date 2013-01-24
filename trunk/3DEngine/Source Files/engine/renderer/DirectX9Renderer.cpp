@@ -23,9 +23,9 @@ namespace engine
 
 		presentParameters.Windowed					= true;
 		presentParameters.SwapEffect				= D3DSWAPEFFECT_DISCARD;
-		presentParameters.BackBufferFormat			= D3DFMT_UNKNOWN;
+		presentParameters.BackBufferFormat			= D3DFMT_A8R8G8B8;
 		presentParameters.EnableAutoDepthStencil	= true;
-		presentParameters.AutoDepthStencilFormat	= D3DFMT_D16;
+		presentParameters.AutoDepthStencilFormat	= D3DFMT_D24S8;
 		presentParameters.BackBufferWidth			= 800;
 		presentParameters.BackBufferHeight			= 600;
 
@@ -42,9 +42,9 @@ namespace engine
 		this->pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		
 		// Set sampler states
-		//this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-		//this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-		//this->pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+		this->pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+		this->pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+		this->pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
 		// Global Lighting
 		D3DLIGHT9 gLight;
@@ -287,12 +287,11 @@ namespace engine
 
 	/**
 	 * Clears the screen.
-	 * TODO more info
 	 * @return		void
 	 */
 	void DirectX9Renderer::Clear()
 	{
-		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+		this->pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	}
 
 	/**
