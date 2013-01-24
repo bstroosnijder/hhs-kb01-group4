@@ -33,7 +33,6 @@ namespace engine
 		Scene* GetScene(std::string argSceneName);
 		std::map<std::string, Scene*> GetScenes();
 
-		Scene* NewScene(std::string argPSceneName);
 		Scene* LoadScene(ResourceManager* argPResourceManager, InputManager* argPInputManager,
 			Renderer* argPRenderer, std::string argSceneName, std::string argSceneFileName);
 		void RemoveScene(std::string argSceneName);
