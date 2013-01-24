@@ -9,13 +9,13 @@ namespace engine
 
 	/**
 	 * Constructs the Win32Window object.
-	 * @param		char*				argPTitle is the title for the new window
+	 * @param		std::string			argTitle is the title for the new window
 	 * @param		unsigned int		argX is the x-axis position for the new window
 	 * @param		unsigned int		argY is the y-axis position for the new window
 	 * @param		unsigned int		argWidth is the width for the new window
 	 * @param		unsigned int		argHeight is the height for the new window
 	 */
-	Win32Window::Win32Window(std::string argTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight)
+	Win32Window::Win32Window(std::string argTitle, int argX, int argY, unsigned int argWidth, unsigned int argHeight) : Window()
 	{
 		this->title = argTitle;
 		this->x = argX;

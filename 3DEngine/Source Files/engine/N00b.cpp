@@ -49,7 +49,7 @@ namespace engine
 		this->kernel = new Kernel();
 		Logger::AddStrategy(new ConsoleLog());
 		Logger::AddStrategy(new TextLog());
-		Logger::Log("Main: Initializing", Logger::INFO, __FILE__, __LINE__);
+		Logger::Log("N00b: Initializing", Logger::INFO, __FILE__, __LINE__);
 	}
 
 	/**
@@ -78,7 +78,7 @@ namespace engine
 	 */
 	void N00b::Start()
 	{
-		Logger::Log("Main: Starting", engine::Logger::INFO, __FILE__, __LINE__);
+		Logger::Log("N00b: Starting", engine::Logger::INFO, __FILE__, __LINE__);
 		this->kernel->Start();
 	}
 
@@ -90,8 +90,7 @@ namespace engine
 	void N00b::LoadScene(std::string argSceneFileName)
 	{
 		//Default scene title
-		std::string title = "Default Scene";
-
+		std::string title = "defaultScene";
 		this->LoadScene(title, argSceneFileName);
 	}
 

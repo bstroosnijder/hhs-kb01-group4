@@ -11,8 +11,6 @@ namespace engine
 	 */
 	class Window
 	{
-	private:
-		
 	protected:
 		std::string title;
 		int x;

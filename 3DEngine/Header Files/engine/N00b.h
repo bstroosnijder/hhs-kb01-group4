@@ -11,10 +11,7 @@
 
 /**
  * This is the 'N00b'. This class is responsible for the communication between the engine and the game developer.
- * As the name of the class suggests, this Facade is for the weak-minded.
- * If you value freedom, flexibility and customization, we strongly recommend you not to use this class to communicate with the engine.
- * Use Sandbox instead. Trust us...
- * Just do it.
+ * It is a simplified version with ease of use and a quick startup in mind.
  */
 
 namespace engine

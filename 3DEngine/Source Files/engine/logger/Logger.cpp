@@ -3,7 +3,6 @@
 namespace engine
 {
 	//---Private attributes---
-	
 	//---Public attributes---
 
 	// One-time initialisation of the logger's constant variables.

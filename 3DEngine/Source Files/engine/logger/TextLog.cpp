@@ -12,7 +12,6 @@ namespace engine
 	 */
 	TextLog::TextLog()
 	{
-		//this->fout = std::ofstream("Logs\\log.txt", std::ofstream::app);
 		this->fout = std::ofstream("Logs\\log.txt");
 	}
 
