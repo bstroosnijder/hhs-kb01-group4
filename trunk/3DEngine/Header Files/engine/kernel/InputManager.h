@@ -46,7 +46,6 @@ namespace engine
 
 		bool HasDevice(unsigned long argDeviceIndex);
 		InputDevice* GetDevice(unsigned long argDeviceIndex);
-		void UpdateDevice(unsigned long argDeviceIndex);
 
 		void InputBeat();
 	};

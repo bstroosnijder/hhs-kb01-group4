@@ -71,18 +71,6 @@ namespace engine
 	}
 	
 	/**
-	 * Creates a new empty scene
-	 * @param		std::string		The identifier of the scene
-	 * @return		Scene*
-	 */
-	Scene* SceneManager::NewScene(std::string argPSceneName)
-	{
-		Scene* pScene = new Scene();
-		this->scenes[argPSceneName] = pScene;
-		return pScene;
-	}
-	
-	/**
 	 * Loads a scene file and parses it acording to a format:
 	 * #resources
 	 * <resource type>;<filename>

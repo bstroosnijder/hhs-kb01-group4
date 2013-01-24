@@ -31,6 +31,7 @@ namespace engine
 	 */
 	void Camera::CleanUp()
 	{
+		//nothing to clean up here
 	}
 
 	/**

@@ -63,8 +63,8 @@ namespace engine
 
 	/**
 	 * @param		LPCDIDEVICEINSTANCE		The instance of the device
-	 * @param		void*					???
-
+	 * @param		void*					Application-defined 32-bit value to be passed to the enumeration callback each time it is called.
+	 * @return		BOOL CALLBACK					
 	 */
 	BOOL CALLBACK InputManager::SetupDeviceCallback(LPCDIDEVICEINSTANCE lpddi, void* pvRef)
 	{
@@ -164,27 +164,6 @@ namespace engine
 		}
 
 		return pDevice;
-	}
-
-	/**
-	 * Updates a device
-	 * @param		unsigned long		The device index to check
-	 * @return		void
-	 */
-	void InputManager::UpdateDevice(unsigned long argDeviceIndex)
-	{
-		if(argDeviceIndex == InputManager::KEYBOARD)
-		{
-			this->pKeyboard->UpdateState();
-		}
-		else if(argDeviceIndex == InputManager::MOUSE)
-		{
-			this->pMouse->UpdateState();
-		}
-		else if(argDeviceIndex == InputManager::JOYSTICK)
-		{
-			this->pJoyStick->UpdateState();
-		}
 	}
 
 	/**
