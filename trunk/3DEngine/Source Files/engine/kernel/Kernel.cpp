@@ -88,13 +88,16 @@ namespace engine
 		MSG msg;
         ZeroMemory(&msg, sizeof(msg));
 
+		// As long as we have windows, keep going
         while(this->pWindowManager->GetWindowCount() > 0)
         {
+			// If we get a message, lets process it like we should
             if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
             {
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
             }
+			// Otherwise, just render stuff! :)
 			else
 			{
 				this->HeartBeat();

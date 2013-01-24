@@ -55,6 +55,7 @@ namespace engine
 	 */
 	void Win32Window::CleanUp()
 	{
+		delete this->hWin;
 	}
 
 	/**

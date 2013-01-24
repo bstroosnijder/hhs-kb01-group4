@@ -32,6 +32,7 @@ namespace engine
 	 */
 	void Model::CleanUp()
 	{
+		delete this->pResource;
 	}
 
 	/**

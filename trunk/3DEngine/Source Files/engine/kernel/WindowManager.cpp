@@ -104,10 +104,10 @@ namespace engine
 	/**
 	 * Listen to what windows tells our window
 	 * @param		HWND						The window handle to the window
-	 * @param		UINT						halp?
-	 * @param		WPARAM						halp?
-	 * @param		LPARAM						halp?
-	 * @return		LRESULT						halp?
+	 * @param		UINT						The message ID
+	 * @param		WPARAM						First parameter
+	 * @param		LPARAM						Second parameter
+	 * @return		LRESULT
 	 */
 	LRESULT WINAPI WindowManager::MsgProc(HWND argHWin, UINT argMsg, WPARAM argWParam, LPARAM argLParam)
 	{

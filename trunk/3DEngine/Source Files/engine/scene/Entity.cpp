@@ -144,7 +144,6 @@ namespace engine
 	 */
 	void Entity::CleanUp()
 	{
-		delete this->matWorld;
 		//it del all
 		std::map<std::string, Entity*>::iterator entityIt;
 		for(entityIt = this->entities.begin(); entityIt != this->entities.end(); entityIt++)
