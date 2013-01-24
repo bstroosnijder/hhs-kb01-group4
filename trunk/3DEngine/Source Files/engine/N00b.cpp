@@ -108,6 +108,15 @@ namespace engine
 		this->kernel->GetInputManager()->SetupDevices(pWindow);
 		//Tell the kernel to load a scene based on the a specified filename and give the scene the specified title.
 		Scene* pScene = this->kernel->LoadScene(argTitle, argSceneFileName);
+
+		// Check if the scene is actually created
+		if(pScene == NULL)
+		{
+			Logger::Log("Unable to create scene", engine::Logger::INFO, __FILE__, __LINE__);
+			std::system("pause");
+			std::exit(-1);
+		}
+
 		//Add the window to the scene, making sure the created scene has at least one window to display itself in.
 		pScene->AddWindow(pWindow);
 	}
