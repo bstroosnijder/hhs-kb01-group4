@@ -15,7 +15,7 @@ namespace engine
 		this->fout = std::ofstream("Logs\\log.txt");
 	}
 
-	/**
+/**
 	 * Destructs the TextLog object.
 	 * @return		void
 	 */
